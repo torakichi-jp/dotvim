@@ -44,7 +44,7 @@ NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
 NeoBundleLazy 'Shougo/vinarise'
 NeoBundle 'thinca/vim-visualstar'
-NeoBundle 'thinca/vim-singleton'
+"NeoBundle 'thinca/vim-singleton'
 NeoBundle 'thinca/vim-tabrecent'
 NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'thinca/vim-ref'
@@ -60,6 +60,7 @@ NeoBundleLazy 'mattn/zencoding-vim'
 NeoBundle 'tyru/vim-altercmd'
 NeoBundle 'tyru/restart.vim'
 NeoBundle 'tyru/open-browser.vim'
+NeoBundle 'tyru/open-browser-github.vim'
 NeoBundle 'tyru/winmove.vim'
 NeoBundle 'tyru/nextfile.vim'
 NeoBundle 'chrismetcalf/vim-taglist'
@@ -88,7 +89,7 @@ NeoBundle 'https://bitbucket.org/anyakichi/vim-circomp'
 NeoBundle 'https://bitbucket.org/anyakichi/vim-qfutil'
 NeoBundle 'fuenor/im_control.vim'
 NeoBundle 'rhysd/accelerated-jk'
-NeoBundle 'yonchu/accelerated-smooth-scroll'
+"NeoBundle 'yonchu/accelerated-smooth-scroll'
 NeoBundleLazy 'rhysd/clever-f.vim'
 NeoBundleLazy 'goldfeld/vim-seek'
 "NeoBundleLazy 'tpope/vim-surround'
@@ -408,9 +409,9 @@ let g:toggle_pairs = {
 let g:foldCCtext_tail = 'v:foldend-v:foldstart+1'
 
 " accelerated-smooth-scroll
-let g:ac_smooth_scroll_no_default_key_mappings = 1
-let g:ac_smooth_scroll_du_sleep_time_msec = 1
-let g:ac_smooth_scroll_fb_sleep_time_msec = 1
+"let g:ac_smooth_scroll_no_default_key_mappings = 1
+"let g:ac_smooth_scroll_du_sleep_time_msec = 1
+"let g:ac_smooth_scroll_fb_sleep_time_msec = 1
 
 "*******************************************************************************
 " Option Settings:
@@ -521,7 +522,7 @@ let g:vim_indent_cont = 0
 "if has('vim_starting')
 "	runtime macros/editexisting.vim
 "endif
-call singleton#enable()
+"call singleton#enable()
 
 " %による移動強化
 runtime macros/matchit.vim
