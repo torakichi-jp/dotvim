@@ -1,0 +1,13 @@
+#include <stdio.h>
+
+void foo(void)
+{
+	puts("foo");
+}
+
+int main(void)
+{
+	foo();
+	return 0;
+}
+

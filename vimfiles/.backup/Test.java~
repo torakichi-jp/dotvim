@@ -1,0 +1,17 @@
+
+public class Test {
+	int a;
+	int b;
+
+	Test(int a, int b) {
+		this.a = a;
+		this.b = b;
+	}
+	Test() {
+		this(10, 20);
+	}
+	void show() {
+		System.out.println(a);
+		System.out.println(b);
+	}
+}
