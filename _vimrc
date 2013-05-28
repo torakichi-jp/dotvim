@@ -18,26 +18,18 @@ augroup END
 
 
 "*******************************************************************************
-" Plugin Bundles:
+" Plugins:
 "*******************************************************************************
 
 " required
-filetype off
-
 if has('vim_starting')
 	set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
 call neobundle#rc(expand('~/.vim/bundle'))
 
+" bundles
 NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/vimproc', {
-	\ 'build' : {
-	\		'windows' : 'make -f make_mingw32.mak',
-	\		'cygwin' : 'make -f make_cygwin.mak',
-	\		'mac' : 'make -f make_mac.mak',
-	\		'unix' : 'make -f make_unix.mak',
-	\ }
-\ }
+NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/neocomplcache'
@@ -90,7 +82,6 @@ NeoBundle 'https://bitbucket.org/anyakichi/vim-circomp'
 NeoBundle 'https://bitbucket.org/anyakichi/vim-qfutil'
 NeoBundle 'fuenor/im_control.vim'
 NeoBundle 'rhysd/accelerated-jk'
-"NeoBundle 'yonchu/accelerated-smooth-scroll'
 NeoBundleLazy 'rhysd/clever-f.vim'
 NeoBundleLazy 'goldfeld/vim-seek'
 "NeoBundleLazy 'tpope/vim-surround'
@@ -163,9 +154,6 @@ NeoBundleLazy 'mattn/unite-nyancat'
 NeoBundleLazy 'osyo-manga/unite-shimapan'
 NeoBundleLazy 'mattn/hahhah-vim'
 
-filetype plugin on
-filetype indent on
-
 " Installation check.
 NeoBundleCheck
 "if neobundle#exists_not_installed_bundles()
@@ -174,6 +162,9 @@ NeoBundleCheck
 "	echomsg 'Please execute '':NeoBundleInstall'' command.'
 "	" finish
 "endif
+
+" required
+filetype plugin indent on
 
 
 "*******************************************************************************
@@ -197,9 +188,20 @@ let g:loaded_getscriptPlugin = 1
 " netrw.vimを無効にする
 let g:loaded_netrwPlugin = 1
 
-" visual_studio.vimを無効にする
-"let g:loaded_plugin_visual_studio = 1
-"let g:visual_studio_has_python = 0
+" vimproc
+let s:bundle = neobundle#get('vimproc')
+function! s:bundle.hooks.on_source(bundle)
+	if !has('win64') && !has('win32')
+		call neobundle#config('vimproc', {
+			\ 'build' : {
+			\		'windows' : 'make -f make_mingw32.mak',
+			\		'cygwin' : 'make -f make_cygwin.mak',
+			\		'mac' : 'make -f make_mac.mak',
+			\		'unix' : 'make -f make_unix.mak',
+			\ }
+		\ })
+	endif
+endfunction
 
 " NERD_commenter
 let g:NERDCreateDefaultMappings = 0
@@ -413,6 +415,8 @@ let g:foldCCtext_tail = 'v:foldend-v:foldstart+1'
 "let g:ac_smooth_scroll_no_default_key_mappings = 1
 "let g:ac_smooth_scroll_du_sleep_time_msec = 1
 "let g:ac_smooth_scroll_fb_sleep_time_msec = 1
+
+unlet s:bundle
 
 "*******************************************************************************
 " Option Settings:
