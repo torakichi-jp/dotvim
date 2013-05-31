@@ -490,8 +490,8 @@ set wrap						" 右端で折り返し
 set textwidth=0					" テキスト幅
 set selectmode=					" セレクトモードを使わない
 set incsearch					" インクリメンタルサーチを有効
-set hlsearch					" 検索ハイライト有効
-"set noignorecase				" 大文字小文字を無視しない
+set nohlsearch					" 検索ハイライト無効
+set ignorecase					" 大文字小文字を無視
 set smartcase					" 大文字が含まれるときのみ無視しない
 set grepprg=grep\ -nH			" grepプログラム
 "set grepprg=ack\ -H			" grepにackを使う
