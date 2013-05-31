@@ -9,6 +9,13 @@ scriptencoding utf-8
 set nocompatible	" vi非互換
 set shellslash		" パス区切りを/にする
 
+" .vim or vimfiles
+if has('win32') || has('win64')
+	let s:dotvim = expand('~/vimfiles')
+else
+	let s:dotvim = expand('~/.vim')
+endif
+
 " <Leader>設定
 let g:mapleader=','
 
@@ -24,9 +31,9 @@ augroup END
 
 " required
 if has('vim_starting')
-	set runtimepath+=~/.vim/bundle/neobundle.vim
+	let &runtimepath = &runtimepath . ',' . s:dotvim . '/bundle/neobundle.vim'
 endif
-call neobundle#rc(expand('~/.vim/bundle'))
+call neobundle#rc(s:dotvim . '/bundle')
 
 " bundles
 NeoBundleFetch 'Shougo/neobundle.vim'
@@ -495,11 +502,11 @@ set listchars=tab:>-,trail:_,extends:>,precedes:<
 " タイトル行の表示設定
 "set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:~:h\")})%)%(\ %a%)%(\ -\ %{v:servername}%)
 
-set backup						" バックアップする
-"set updatecount=0				" スワップファイルなし
-set backupdir=~/.vim/.backup	" バックアップを作成するディレクトリ
-set undofile					" アンドゥファイルを作成する
-set undodir=~/.vim/.undo		" アンドゥファイルを作成するディレクトリ
+set backup								" バックアップする
+"set updatecount=0						" スワップファイルなし
+let &backupdir = s:dotvim . '/.backup'	" バックアップを作成するディレクトリ
+set undofile							" アンドゥファイルを作成する
+let &undodir = s:dotvim . '/.undo'		" アンドゥファイルを作成するディレクトリ
 
 " capslock.vim
 " capslockモード中なら表示を追加
@@ -1441,4 +1448,8 @@ function! GVimSettings()
 	call QFixGrepMenubar("Plugin.QFixGrep(&G)","g,")
 
 endfunction
+
+
+" unlet variables.
+unlet s:dotvim
 
