@@ -851,16 +851,8 @@ nnoremap gj j
 nnoremap gk k
 
 " 行頭／行末移動
-NXnoremap <silent> <C-h> @=&wrap ? 'g0' : '0'<CR>
-NXnoremap <silent> <C-l> @=&wrap ? 'g$' : '$'<CR>
-
-" ウィンドウ先頭／末尾へ移動
-NXnoremap <C-j> L
-NXnoremap <C-k> H
-
-" 次／前のエラー箇所へ移動
-nnoremap <silent> <C-n> :<C-u>lnext<CR>
-nnoremap <silent> <C-p> :<C-u>lprevious<CR>
+NXnoremap <silent> H @=&wrap ? 'g0' : '0'<CR>
+NXnoremap <silent> L @=&wrap ? 'g$' : '$'<CR>
 
 " すべて選択
 nnoremap ga ggVG
@@ -1019,9 +1011,9 @@ nmap <Leader>xa <Plug>NERDCommenterAltDelims
 "nnoremap n nzz
 "nnoremap N Nzz
 
-" 警告ありの終了にする
-nnoremap ZZ :<C-u>wqall<CR>
-nnoremap ZQ :<C-u>qall<CR>
+" 無効にしておく
+nnoremap ZZ <Nop>
+nnoremap ZQ <Nop>
 
 " ウィンドウ関連
 nnoremap <C-Down>	<C-w>j
@@ -1183,6 +1175,7 @@ nmap [Space]n [Neocon]
 nnoremap <silent> [Neocon]e :<C-u>NeoComplCacheEnable<CR>
 nnoremap <silent> [Neocon]e :<C-u>NeoComplCacheDisable<CR>
 nnoremap <silent> [Neocon]t :<C-u>NeoComplCacheToggle<CR>
+nnoremap <silent> [Neocon]l :<C-u>NeoComplCacheLock<CR>
 nnoremap <silent> [Neocon]cb :<C-u>NeoComplCacheCachingBuffer<CR>
 nnoremap <silent> [Neocon]ci :<C-u>NeoComplCacheCachingInclude<CR>
 nnoremap <silent> [Neocon]cd :<C-u>NeoComplCacheCachingDictionary<CR>
