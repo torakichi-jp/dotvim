@@ -808,6 +808,12 @@ augroup MyAutocmd
 	" pathを親ディレクトリも辿るように設定
 	autocmd FileType c,cpp,vim,html setlocal path+=;/
 
+	" 前回のカーソル位置を復元
+	autocmd BufReadPost *
+		\ if line('''"') > 1 && line('''"') <= line('$') |
+			\ execute 'normal! g`"' |
+		\ endif
+
 augroup END
 
 
