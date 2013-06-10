@@ -86,7 +86,6 @@ NeoBundle 'basyura/bitly.vim'
 NeoBundle 'mattn/favstar-vim'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'LeafCage/foldCC'
-NeoBundle 'https://bitbucket.org/anyakichi/vim-circomp'
 NeoBundle 'https://bitbucket.org/anyakichi/vim-qfutil'
 NeoBundle 'rhysd/accelerated-jk'
 NeoBundleLazy 'rhysd/clever-f.vim'
@@ -212,10 +211,6 @@ endfunction
 " NERD_commenter
 let g:NERDCreateDefaultMappings = 0
 let g:NERDSpaceDelims = 0
-
-" vim-circomp
-" デフォルトマッピングなし
-let g:circomp_no_mappings = 1
 
 " vimfiler
 let g:vimfiler_as_default_explorer = 1
@@ -1193,13 +1188,6 @@ inoremap <expr> <CR> pumvisible() ? neocomplete#smart_close_popup() : '<CR>'
 inoremap <expr> <C-y> neocomplete#close_popup()
 inoremap <expr> <C-e> neocomplete#cancel_popup()
 inoremap <expr> <C-g> neocomplete#undo_completion()
-
-" circomp
-imap <silent> <expr> <C-n> pumvisible() ? '<Down>' : circomp#start()
-imap <silent> <expr> <C-p> pumvisible() ? '<Up>' : circomp#start()
-imap <silent> <expr> <Tab> pumvisible() ? circomp#next() : '<Tab>'
-imap <silent> <expr> <S-Tab> pumvisible() ? circomp#prev() : '<S-Tab>'
-autocmd MyAutocmd BufEnter * call circomp#start()
 
 " IME切り替え
 inoremap <C-@> <C-^>
