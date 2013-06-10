@@ -42,18 +42,16 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'Shougo/vimfiler'
-"NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neosnippet'
 NeoBundleLazy 'Shougo/vinarise'
 NeoBundle 'thinca/vim-visualstar'
-"NeoBundle 'thinca/vim-singleton'
 NeoBundle 'thinca/vim-tabrecent'
 NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'thinca/vim-ref'
 NeoBundle 'thinca/vim-fontzoom'
 NeoBundle 'thinca/vim-openbuf'
-NeoBundleLazy 'thinca/vim-quickrun'
+NeoBundle 'thinca/vim-quickrun'
 NeoBundleLazy 'thinca/vim-vcs'
 NeoBundle 'gregsexton/VimCalc'
 NeoBundle 'mattn/calendar-vim'
@@ -222,6 +220,7 @@ let g:vimfiler_safe_mode_by_default = 0
 " neocomplete
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_auto_select = 1
+let g:neocomplete#disable_auto_complete = 1
 
 " Unite設定
 let g:unite_winheight = 10
@@ -441,6 +440,7 @@ set helplang=ja                 " 日本語ヘルプ
 set hidden                      " バッファ更新を破棄しない
 set confirm                     " エラーにせず確認ダイアログを出す
 set noshowmatch                 " 対応括弧にジャンプしない
+set completeopt+=longest
 set tabstop=4                   " タブ幅
 set expandtab                   " タブ展開する
 set shiftwidth=4                " インデント幅
