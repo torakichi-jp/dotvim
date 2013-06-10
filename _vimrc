@@ -1,13 +1,12 @@
-" vim: set noet sw=4 tw=80:
 "*******************************************************************************
 "
 " Vim Settings:
 "
 "*******************************************************************************
 
-scriptencoding utf-8
-set nocompatible	" vi非互換
-set shellslash		" パス区切りを/にする
+scriptencoding utf-8	" この設定ファイルの文字コード設定
+set nocompatible		" vi非互換
+set shellslash			" パス区切りを/にする
 
 " .vim or vimfiles
 if has('win32') || has('win64')
@@ -89,7 +88,6 @@ NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'LeafCage/foldCC'
 NeoBundle 'https://bitbucket.org/anyakichi/vim-circomp'
 NeoBundle 'https://bitbucket.org/anyakichi/vim-qfutil'
-NeoBundle 'fuenor/im_control.vim'
 NeoBundle 'rhysd/accelerated-jk'
 NeoBundleLazy 'rhysd/clever-f.vim'
 NeoBundleLazy 'goldfeld/vim-seek'
@@ -165,14 +163,11 @@ NeoBundleLazy 'mattn/hahhah-vim'
 
 " Installation check.
 NeoBundleCheck
-"if neobundle#exists_not_installed_bundles()
-"	echomsg 'Not installed bundles : ' .
-"	\ string(neobundle#get_not_installed_bundle_names())
-"	echomsg 'Please execute '':NeoBundleInstall'' command.'
-"	" finish
-"endif
 
+" ファイルタイプ検出を有効に
 filetype plugin indent on
+
+" 構文強調を有効に
 if &t_Co > 1
 	syntax enable
 endif
@@ -226,33 +221,9 @@ let g:circomp_no_mappings = 1
 let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_safe_mode_by_default = 0
 
-" neocomplcache
-"let g:neocomplcache_enable_at_startup = 1
-"let g:neocomplcache_auto_completion_start_length = 2
-"let g:neocomplcache_enable_fuzzy_completion = 1
-"let g:neocomplcache_enable_auto_select = 1
-"let g:neocomplcache_enable_auto_delimiter = 1
-
 " neocomplete
 let g:neocomplete#enable_at_startup = 1
-
-" タグの更新
-"function! s:TagsUpdate()
-"	" タグの初期化（グローバルと同じ値にする）
-"	setlocal tags<
-"
-"	let GetIncludes =
-"		\ function('neocomplcache#sources#include_complete#get_include_files')
-"	let GetTagFile = function('neocomplcache#cache#encode_name')
-"
-"	" バッファのインクルードファイルからタグファイルを設定
-"	for filename in GetIncludes(bufnr('%'))
-"		let tagfile = GetTagFile('tags_output', filename)
-"		" 空白をエスケープして設定する
-"		execute 'setlocal tags+=' . substitute(tagfile, ' ', '\\ ', 'g')
-"	endfor
-"endfunction
-"autocmd MyAutocmd FileType * call <SID>TagsUpdate()
+let g:neocomplete#enable_auto_select = 1
 
 " Unite設定
 let g:unite_winheight = 10
@@ -447,6 +418,7 @@ set columns=99					" 列数(_gvimrcで再設定してる)
 set lines=36					" 行数(_gvimrcで再設定してる)
 set number						" 行番号表示
 "set relativenumber				" 相対行番号表示
+set backspace=indent,eol,start	" Backspaceの挙動
 set ruler						" ルーラー表示
 set title						" タイトルを表示
 set showcmd						" 入力中コマンドの表示
@@ -468,9 +440,6 @@ set shortmess& shortmess+=I		" 起動時のメッセージなし
 set cmdwinheight=5				" コマンドラインウィンドウの高さ
 set helpheight=0				" ヘルプの最小高
 set helplang=ja					" 日本語ヘルプ
-"if has('x11')					" ヘルプファイルの場所
-	"set helpfile=~/.vim/bundle/vimdoc-ja/doc/help.jax
-"endif
 set hidden						" バッファ更新を破棄しない
 set confirm						" エラーにせず確認ダイアログを出す
 set noshowmatch					" 対応括弧にジャンプしない
@@ -1181,19 +1150,6 @@ nnoremap <silent> [Unite]v :<C-u>Unite -auto-preview colorscheme<CR>
 nnoremap <silent> [Unite]c :<C-u>Unite history/command command<CR>
 nnoremap <silent> [Unite]q :<C-u>Unite qfixhowm<CR>
 
-" neocomplcache
-"nnoremap [Neocon] <Nop>
-"nmap [Space]n [Neocon]
-"nnoremap <silent> [Neocon]e :<C-u>NeoComplCacheEnable<CR>
-"nnoremap <silent> [Neocon]e :<C-u>NeoComplCacheDisable<CR>
-"nnoremap <silent> [Neocon]t :<C-u>NeoComplCacheToggle<CR>
-"nnoremap <silent> [Neocon]l :<C-u>NeoComplCacheLock<CR>
-"nnoremap <silent> [Neocon]cb :<C-u>NeoComplCacheCachingBuffer<CR>
-"nnoremap <silent> [Neocon]ci :<C-u>NeoComplCacheCachingInclude<CR>
-"nnoremap <silent> [Neocon]cd :<C-u>NeoComplCacheCachingDictionary<CR>
-"nnoremap <silent> [Neocon]ct :<C-u>NeoComplCacheCachingTags<CR>
-"nnoremap <silent> [Neocon]u :<C-u>call <SID>TagsUpdate()<CR>
-
 " textmanip
 " 選択したテキストの移動
 xmap <C-j> <Plug>(textmanip-move-down)
@@ -1228,28 +1184,15 @@ nnoremap <silent> <expr> K
 	\ ':Ref webdict alc ' . GetCursorWord('[a-zA-Z]*') . '<CR>'
 "nmap K <Plug>(ref-keyword)
 
-" QuickRun
-"nmap <F5> <Plug>(quickrun)
-"let g:quickrun_config = {}
-"let g:quickrun_config.cpp = {'command': 'g++'}
-
-"nnoremap <silent> <Leader>c <Esc>:set opfunc=<SID>DoCommentOp<CR>g@
-"nnoremap <silent> <Leader>C <Esc>:set opfunc=<SID>UnCommentOp<CR>g@
-"vnoremap <silent> <Leader>c <Esc>:call <SID>CommentMark(1,'<','>')<CR>
-"vnoremap <silent> <Leader>C <Esc>:call <SID>CommentMark(0,'<','>')<CR>
-
 
 "-------------------------------------------------------------------------------
 " 挿入モードキーマップ
 "-------------------------------------------------------------------------------
 
-" Uniteでネオコン
-"imap <C-k> <Plug>(neocomplcache_start_unite_quick_match)
-
-" ポップアップ決定／キャンセル
-"imap <expr> <CR> pumvisible() ? neocomplcache#smart_close_popup() : '<CR>'
-"imap <expr> <C-y> neocomplcache#close_popup()
-"imap <expr> <C-e> neocomplcache#cancel_popup()
+inoremap <expr> <CR> pumvisible() ? neocomplete#smart_close_popup() : '<CR>'
+inoremap <expr> <C-y> neocomplete#close_popup()
+inoremap <expr> <C-e> neocomplete#cancel_popup()
+inoremap <expr> <C-g> neocomplete#undo_completion()
 
 " circomp
 imap <silent> <expr> <C-n> pumvisible() ? '<Down>' : circomp#start()
@@ -1417,7 +1360,7 @@ function! GVimSettings()
 			\ "VL_ゴシック:h12:cDEFAULT",
 			\ "ＭＳ_ゴシック:h12:cDEFAULT",
 		\]
-	elseif has('x11')
+	elseif has('unix')
 		let fonts = [
 			\ "VL\ Gothic\ 10",
 			\ "DejaVu\ Sans\ Mono\ 10",
@@ -1435,14 +1378,6 @@ function! GVimSettings()
 	" GUIウィンドウ最大化・元に戻す
 	nnoremap <silent> <M-x> :<C-u>ScreenMode 4<CR>
 	nnoremap <silent> <M-r> :<C-u>Revert<CR>
-
-	" 日本語入力制御
-	if has('x11')
-		" 「日本語入力固定モード」切替キー
-		inoremap <silent> <C-j> <C-r>=IMState('FixMode')<CR>
-		" PythonによるIBus制御
-		let IM_CtrlIBusPython = 1
-	endif
 
 	"***************************************************************************
 	" GUI Menus:
