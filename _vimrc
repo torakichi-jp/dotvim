@@ -8,10 +8,12 @@ scriptencoding utf-8    " この設定ファイルの文字コード設定
 set nocompatible        " vi非互換
 set shellslash          " パス区切りを/にする
 
+" switching variables
+let s:is_gui = has('gui_running')
 let s:is_windows = has('win32') || has('win64')
 let s:is_unix = has('unix')
 
-" .vim or vimfiles
+" directory name by OS kinds (.vim or vimfiles)
 if s:is_windows
     let s:dotvim = expand('~/vimfiles')
 elseif s:is_unix
@@ -195,6 +197,7 @@ let g:loaded_getscriptPlugin = 1
 let g:loaded_netrwPlugin = 1
 
 " vimproc
+" TODO: windowsでのビルドもできるようにする
 let s:bundle = neobundle#get('vimproc')
 function! s:bundle.hooks.on_source(bundle)
     if !has('win64') && !has('win32')
