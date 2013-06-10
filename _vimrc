@@ -40,7 +40,8 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'Shougo/vimfiler'
-NeoBundle 'Shougo/neocomplcache'
+"NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neosnippet'
 NeoBundleLazy 'Shougo/vinarise'
 NeoBundle 'thinca/vim-visualstar'
@@ -171,8 +172,10 @@ NeoBundleCheck
 "	" finish
 "endif
 
-" required
 filetype plugin indent on
+if &t_Co > 1
+	syntax enable
+endif
 
 
 "*******************************************************************************
@@ -224,29 +227,32 @@ let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_safe_mode_by_default = 0
 
 " neocomplcache
-let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_auto_completion_start_length = 2
-let g:neocomplcache_enable_fuzzy_completion = 1
-let g:neocomplcache_enable_auto_select = 1
-let g:neocomplcache_enable_auto_delimiter = 1
+"let g:neocomplcache_enable_at_startup = 1
+"let g:neocomplcache_auto_completion_start_length = 2
+"let g:neocomplcache_enable_fuzzy_completion = 1
+"let g:neocomplcache_enable_auto_select = 1
+"let g:neocomplcache_enable_auto_delimiter = 1
+
+" neocomplete
+let g:neocomplete#enable_at_startup = 1
 
 " タグの更新
-function! s:TagsUpdate()
-	" タグの初期化（グローバルと同じ値にする）
-	setlocal tags<
-
-	let GetIncludes =
-		\ function('neocomplcache#sources#include_complete#get_include_files')
-	let GetTagFile = function('neocomplcache#cache#encode_name')
-
-	" バッファのインクルードファイルからタグファイルを設定
-	for filename in GetIncludes(bufnr('%'))
-		let tagfile = GetTagFile('tags_output', filename)
-		" 空白をエスケープして設定する
-		execute 'setlocal tags+=' . substitute(tagfile, ' ', '\\ ', 'g')
-	endfor
-endfunction
-autocmd MyAutocmd FileType * call <SID>TagsUpdate()
+"function! s:TagsUpdate()
+"	" タグの初期化（グローバルと同じ値にする）
+"	setlocal tags<
+"
+"	let GetIncludes =
+"		\ function('neocomplcache#sources#include_complete#get_include_files')
+"	let GetTagFile = function('neocomplcache#cache#encode_name')
+"
+"	" バッファのインクルードファイルからタグファイルを設定
+"	for filename in GetIncludes(bufnr('%'))
+"		let tagfile = GetTagFile('tags_output', filename)
+"		" 空白をエスケープして設定する
+"		execute 'setlocal tags+=' . substitute(tagfile, ' ', '\\ ', 'g')
+"	endfor
+"endfunction
+"autocmd MyAutocmd FileType * call <SID>TagsUpdate()
 
 " Unite設定
 let g:unite_winheight = 10
@@ -1176,17 +1182,17 @@ nnoremap <silent> [Unite]c :<C-u>Unite history/command command<CR>
 nnoremap <silent> [Unite]q :<C-u>Unite qfixhowm<CR>
 
 " neocomplcache
-nnoremap [Neocon] <Nop>
-nmap [Space]n [Neocon]
-nnoremap <silent> [Neocon]e :<C-u>NeoComplCacheEnable<CR>
-nnoremap <silent> [Neocon]e :<C-u>NeoComplCacheDisable<CR>
-nnoremap <silent> [Neocon]t :<C-u>NeoComplCacheToggle<CR>
-nnoremap <silent> [Neocon]l :<C-u>NeoComplCacheLock<CR>
-nnoremap <silent> [Neocon]cb :<C-u>NeoComplCacheCachingBuffer<CR>
-nnoremap <silent> [Neocon]ci :<C-u>NeoComplCacheCachingInclude<CR>
-nnoremap <silent> [Neocon]cd :<C-u>NeoComplCacheCachingDictionary<CR>
-nnoremap <silent> [Neocon]ct :<C-u>NeoComplCacheCachingTags<CR>
-nnoremap <silent> [Neocon]u :<C-u>call <SID>TagsUpdate()<CR>
+"nnoremap [Neocon] <Nop>
+"nmap [Space]n [Neocon]
+"nnoremap <silent> [Neocon]e :<C-u>NeoComplCacheEnable<CR>
+"nnoremap <silent> [Neocon]e :<C-u>NeoComplCacheDisable<CR>
+"nnoremap <silent> [Neocon]t :<C-u>NeoComplCacheToggle<CR>
+"nnoremap <silent> [Neocon]l :<C-u>NeoComplCacheLock<CR>
+"nnoremap <silent> [Neocon]cb :<C-u>NeoComplCacheCachingBuffer<CR>
+"nnoremap <silent> [Neocon]ci :<C-u>NeoComplCacheCachingInclude<CR>
+"nnoremap <silent> [Neocon]cd :<C-u>NeoComplCacheCachingDictionary<CR>
+"nnoremap <silent> [Neocon]ct :<C-u>NeoComplCacheCachingTags<CR>
+"nnoremap <silent> [Neocon]u :<C-u>call <SID>TagsUpdate()<CR>
 
 " textmanip
 " 選択したテキストの移動
@@ -1238,12 +1244,12 @@ nnoremap <silent> <expr> K
 "-------------------------------------------------------------------------------
 
 " Uniteでネオコン
-imap <C-k> <Plug>(neocomplcache_start_unite_quick_match)
+"imap <C-k> <Plug>(neocomplcache_start_unite_quick_match)
 
 " ポップアップ決定／キャンセル
-imap <expr> <CR> pumvisible() ? neocomplcache#smart_close_popup() : '<CR>'
-imap <expr> <C-y> neocomplcache#close_popup()
-imap <expr> <C-e> neocomplcache#cancel_popup()
+"imap <expr> <CR> pumvisible() ? neocomplcache#smart_close_popup() : '<CR>'
+"imap <expr> <C-y> neocomplcache#close_popup()
+"imap <expr> <C-e> neocomplcache#cancel_popup()
 
 " circomp
 imap <silent> <expr> <C-n> pumvisible() ? '<Down>' : circomp#start()
