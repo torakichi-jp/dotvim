@@ -1,3 +1,3 @@
-bundle
-.backup
-.undo
+/bundle
+/.backup
+/.undo
