@@ -4,15 +4,18 @@
 "
 "*******************************************************************************
 
-scriptencoding utf-8	" この設定ファイルの文字コード設定
-set nocompatible		" vi非互換
-set shellslash			" パス区切りを/にする
+scriptencoding utf-8    " この設定ファイルの文字コード設定
+set nocompatible        " vi非互換
+set shellslash          " パス区切りを/にする
+
+let s:is_windows = has('win32') || has('win64')
+let s:is_unix = has('unix')
 
 " .vim or vimfiles
-if has('win32') || has('win64')
-	let s:dotvim = expand('~/vimfiles')
-else
-	let s:dotvim = expand('~/.vim')
+if s:is_windows
+    let s:dotvim = expand('~/vimfiles')
+elseif s:is_unix
+    let s:dotvim = expand('~/.vim')
 endif
 
 " <Leader>設定
@@ -20,7 +23,7 @@ let g:mapleader=','
 
 " オートコマンド設定
 augroup MyAutocmd
-	autocmd!
+    autocmd!
 augroup END
 
 
@@ -30,7 +33,7 @@ augroup END
 
 " required
 if has('vim_starting')
-	let &runtimepath = &runtimepath . ',' . s:dotvim . '/bundle/neobundle.vim'
+    let &runtimepath = &runtimepath . ',' . s:dotvim . '/bundle/neobundle.vim'
 endif
 call neobundle#rc(s:dotvim . '/bundle')
 
@@ -92,12 +95,12 @@ NeoBundleLazy 'rhysd/clever-f.vim'
 NeoBundleLazy 'goldfeld/vim-seek'
 "NeoBundleLazy 'tpope/vim-surround'
 "NeoBundleLazy 't9md/vim-surround_custom_mapping', '', '', {
-"		\ 'depends' : 'vim-surround',
-"		\ 'autoload' : {
-"			\ 'mappings' : [
-"				\ ['n', '<Plug>Dsurround'], ['n', '<Plug>Csurround'],
-"				\ ['n', '<Plug>Ysurround'], ['n', '<Plug>YSurround']
-"			\ ]}}
+"       \ 'depends' : 'vim-surround',
+"       \ 'autoload' : {
+"           \ 'mappings' : [
+"               \ ['n', '<Plug>Dsurround'], ['n', '<Plug>Csurround'],
+"               \ ['n', '<Plug>Ysurround'], ['n', '<Plug>YSurround']
+"           \ ]}}
 
 " from vim.org
 NeoBundle 'Colour-Sampler-Pack'
@@ -168,7 +171,7 @@ filetype plugin indent on
 
 " 構文強調を有効に
 if &t_Co > 1
-	syntax enable
+    syntax enable
 endif
 
 
@@ -196,16 +199,16 @@ let g:loaded_netrwPlugin = 1
 " vimproc
 let s:bundle = neobundle#get('vimproc')
 function! s:bundle.hooks.on_source(bundle)
-	if !has('win64') && !has('win32')
-		call neobundle#config('vimproc', {
-			\ 'build' : {
-			\		'windows' : 'make -f make_mingw32.mak',
-			\		'cygwin' : 'make -f make_cygwin.mak',
-			\		'mac' : 'make -f make_mac.mak',
-			\		'unix' : 'make -f make_unix.mak',
-			\ }
-		\ })
-	endif
+    if !has('win64') && !has('win32')
+        call neobundle#config('vimproc', {
+            \ 'build' : {
+            \       'windows' : 'make -f make_mingw32.mak',
+            \       'cygwin' : 'make -f make_cygwin.mak',
+            \       'mac' : 'make -f make_mac.mak',
+            \       'unix' : 'make -f make_unix.mak',
+            \ }
+        \ })
+    endif
 endfunction
 
 " NERD_commenter
@@ -229,66 +232,66 @@ let g:unite_enable_start_insert = 0
 "call unite#filters#matcher_default#use(['flexmatcher'])
 " ファイル名filter
 call unite#custom_filters('file_mru,bookmark',
-	\ ['matcher_file_name', 'sorter_default', 'converter_default'])
+    \ ['matcher_file_name', 'sorter_default', 'converter_default'])
 
 call unite#custom_filters('buffer,buffer_tab,file,neocomplcache',
-	\ ['flexmatcher', 'sorter_default', 'converter_default'])
+    \ ['flexmatcher', 'sorter_default', 'converter_default'])
 
 " Unite line_migemo
 let g:unite_source_alias_aliases = {}
 let g:unite_source_alias_aliases.line_migemo = {
-	\ 'source' : 'line',
-	\ }
+    \ 'source' : 'line',
+    \ }
 call unite#custom_source('line_migemo', 'matchers', 'matcher_migemo')
 
 " unite-menu
 if !exists('g:unite_source_menu_menus')
-	let g:unite_source_menu_menus = {}
+    let g:unite_source_menu_menus = {}
 endif
 
 " メニューにエンコーディング項目を追加
 let g:unite_source_menu_menus.encoding = {
-	\'description' : 'Encoding',
+    \'description' : 'Encoding',
 \ }
 let g:unite_source_menu_menus.encoding.command_candidates = [
-	\ ['UTF-8',		'Utf8'],
-	\ ['SHIFT-JIS', 'Sjis'],
-	\ ['EUC-JP',		'Euc'],
-	\ ['JIS',		'Jis'],
-	\ ['Unicode', 'Utf16'],
-	\ ['UCS-2',		'Utf16be'],
+    \ ['UTF-8',     'Utf8'],
+    \ ['SHIFT-JIS', 'Sjis'],
+    \ ['EUC-JP',        'Euc'],
+    \ ['JIS',       'Jis'],
+    \ ['Unicode', 'Utf16'],
+    \ ['UCS-2',     'Utf16be'],
 \ ]
 
 " メニューにコマンドショートカット項目を登録
 let g:unite_source_menu_menus.shortcut = {
-	\ 'description' : 'Command Shortcut',
+    \ 'description' : 'Command Shortcut',
 \ }
 let g:unite_source_menu_menus.shortcut.command_candidates = [
-	\ ['VimShell',				'VimShell'],
-	\ ['VimShellPop',				'VimShellPop'],
-	\ ['NeoBundleInstall',		'NeoBundleInstall'],
-	\ ['NeoBundleUpdate',			'NeoBundleUpdate'],
-	\ ['NeoBundleSource',			'NeoBundleSource'],
-	\ ['NeoBundleClean',			'NeoBundleClean'],
-	\ ['NeoBundleDocs',			'NeoBundleDocs'],
-	\ ['Scratch',					'Scratch'],
-	\ ['MoveWin',					'MoveWin'],
-	\ ['Unite-Beautiful-Attack',	'Unite -auto-preview colorscheme'],
+    \ ['VimShell',              'VimShell'],
+    \ ['VimShellPop',               'VimShellPop'],
+    \ ['NeoBundleInstall',      'NeoBundleInstall'],
+    \ ['NeoBundleUpdate',           'NeoBundleUpdate'],
+    \ ['NeoBundleSource',           'NeoBundleSource'],
+    \ ['NeoBundleClean',            'NeoBundleClean'],
+    \ ['NeoBundleDocs',         'NeoBundleDocs'],
+    \ ['Scratch',                   'Scratch'],
+    \ ['MoveWin',                   'MoveWin'],
+    \ ['Unite-Beautiful-Attack',    'Unite -auto-preview colorscheme'],
 \ ]
 
 " メニューにリファレンスを登録
 let g:unite_source_menu_menus.reference = {
-	\ 'description' : 'Reference',
+    \ 'description' : 'Reference',
 \ }
 " リファレンスメニューに登録するコマンド
 let g:unite_source_menu_menus.reference.command_candidates = [
-	\ ['En-Jp Dictionary',		'call feedkeys('':Ref webdict ej '')'],
-	\ ['Jp-En Dictionary',		'call feedkeys('':Ref webdict je '')'],
-	\ ['pydoc',					'call feedkeys('':Ref pydoc '')'],
-	\ ['Wikipedia',				'call feedkeys('':Ref webdict wiki '')'],
-	\ ['Thesaurus',				'call feedkeys('':Ref webdict thesaurus '')'],
-	\ ['Boost.MPL Ref',			'OpenBrowser http://www.boost.org/doc/libs/release/libs/mpl/doc/refmanual/refmanual_toc.html'],
-	\ ['C++ Libraery Reference',	'OpenBrowser https://sites.google.com/site/cpprefjp/reference/'],
+    \ ['En-Jp Dictionary',      'call feedkeys('':Ref webdict ej '')'],
+    \ ['Jp-En Dictionary',      'call feedkeys('':Ref webdict je '')'],
+    \ ['pydoc',                 'call feedkeys('':Ref pydoc '')'],
+    \ ['Wikipedia',             'call feedkeys('':Ref webdict wiki '')'],
+    \ ['Thesaurus',             'call feedkeys('':Ref webdict thesaurus '')'],
+    \ ['Boost.MPL Ref',         'OpenBrowser http://www.boost.org/doc/libs/release/libs/mpl/doc/refmanual/refmanual_toc.html'],
+    \ ['C++ Libraery Reference',    'OpenBrowser https://sites.google.com/site/cpprefjp/reference/'],
 \ ]
 
 " Ref
@@ -302,33 +305,33 @@ unlet s:cfg
 
 " webdictサイトの設定
 let g:ref_source_webdict_sites = {
-	\ 'je'			: {'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',},
-	\ 'ej'			: {'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',},
-	\ 'wiki'			: {'url': 'http://ja.wikipedia.org/wiki/%s',},
-	\ 'alc'			: {'url': 'http://eow.alc.co.jp/search?q=%s',},
-	\ 'weblio'		: {'url': 'http://www.weblio.jp/content/%s',},
-	\ 'thesaurus'		: {'url': 'http://thesaurus.weblio.jp/content/%s',},
-	\ 'wiktionary'	: {'url': 'http://ja.wiktionary.org/wiki/%s',},
+    \ 'je'          : {'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',},
+    \ 'ej'          : {'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',},
+    \ 'wiki'            : {'url': 'http://ja.wikipedia.org/wiki/%s',},
+    \ 'alc'         : {'url': 'http://eow.alc.co.jp/search?q=%s',},
+    \ 'weblio'      : {'url': 'http://www.weblio.jp/content/%s',},
+    \ 'thesaurus'       : {'url': 'http://thesaurus.weblio.jp/content/%s',},
+    \ 'wiktionary'  : {'url': 'http://ja.wiktionary.org/wiki/%s',},
 \ }
 
 " 各サイトのフィルタ設定
 function! s:SetWebDictsFilter()
-	let ref_webdict_filtering_lines = [
-		\ ['je',			15],
-		\ ['ej',			15],
-		\ ['wiki',			17],
-		\ ['alc',			38],
-		\ ['weblio',		17],
-		\ ['thesaurus',		28],
-		\ ['wiktionary',	17],
-	\ ]
+    let ref_webdict_filtering_lines = [
+        \ ['je',            15],
+        \ ['ej',            15],
+        \ ['wiki',          17],
+        \ ['alc',           38],
+        \ ['weblio',        17],
+        \ ['thesaurus',     28],
+        \ ['wiktionary',    17],
+    \ ]
 
-	for item in ref_webdict_filtering_lines
-		let g:ref_source_webdict_sites[item[0]].filtering_lines = item[1]
-		function! g:ref_source_webdict_sites[item[0]].filter(output) dict
-			return join(split(a:output, "\n")[self.filtering_lines :], "\n")
-		endfunction
-	endfor
+    for item in ref_webdict_filtering_lines
+        let g:ref_source_webdict_sites[item[0]].filtering_lines = item[1]
+        function! g:ref_source_webdict_sites[item[0]].filter(output) dict
+            return join(split(a:output, "\n")[self.filtering_lines :], "\n")
+        endfunction
+    endfor
 endfunction
 call <SID>SetWebDictsFilter()
 delfunction s:SetWebDictsFilter
@@ -346,9 +349,9 @@ let g:nf_ignore_ext = ['exe', 'dll']
 
 "indent-guides
 let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_color_change_percent = 5
+let g:indent_guides_color_change_percent = 10
 let g:indent_guides_guide_size = 1
-"let g:indent_guides_start_level = 3
+let g:indent_guides_start_level = 2
 
 " EasyMotion
 let g:EasyMotion_leader_key = '\'
@@ -374,18 +377,18 @@ let g:MyGrep_MenuBar = 0
 "let g:auto_trailing_whitespace_simple = 1
 
 " TagList
-let Tlist_Compact_Format = 1		"空白行などを表示しない
-let Tlist_Enable_Fold_Column = 0	"折りたたみ列を表示しない
-let Tlist_Exit_OnlyWindow = 1		"タグリストウィンドウのみになったら終了
-let Tlist_Sort_Type = 'name'		"タグを名前順にソートする
+let Tlist_Compact_Format = 1        "空白行などを表示しない
+let Tlist_Enable_Fold_Column = 0    "折りたたみ列を表示しない
+let Tlist_Exit_OnlyWindow = 1       "タグリストウィンドウのみになったら終了
+let Tlist_Sort_Type = 'name'        "タグを名前順にソートする
 
 " submode
-let g:submode_timeout=0		" サブモードでのタイムアウトなし
+let g:submode_timeout=0     " サブモードでのタイムアウトなし
 
 " vim-toggle
 let g:toggle_pairs = {
-	\ 'and' : 'or',
-	\ 'or' : 'and',
+    \ 'and' : 'or',
+    \ 'or' : 'and',
 \ }
 
 " foldCC
@@ -408,75 +411,75 @@ behave mswin
 " 無名レジスタの代わりにクリップボードを使う
 "set clipboard& clipboard+=unnamed
 
-colorscheme blued				" カラースキーム
-set columns=99					" 列数(_gvimrcで再設定してる)
-set lines=36					" 行数(_gvimrcで再設定してる)
-set number						" 行番号表示
-"set relativenumber				" 相対行番号表示
-set backspace=indent,eol,start	" Backspaceの挙動
-set ruler						" ルーラー表示
-set title						" タイトルを表示
-set showcmd						" 入力中コマンドの表示
-set laststatus=2				" 常にステータス行を表示
-set showtabline=2				" タブ行を常に表示
-set switchbuf=split,newtab		" バッファの切り替えオプション
-set tabline=%!MakeTabLine()		" タブ行の表示設定
-set foldenable					" 折りたたみを有効に
-set foldcolumn=5				" 折りたたみ列を5列表示
-set foldmethod=expr				" 式で折りたたみ
-set foldexpr=foldCC##foldtext()	" 折りたたみ式
-"set cursorline					" 現在行をハイライト
-set display=lastline			" 最後の行をできるだけ表示する
-set pumheight=20				" ポップアップメニューの最大高
-set previewheight=5				" プレビューウィンドウの高さ
-set shortmess& shortmess+=I		" 起動時のメッセージなし
-"set showbreak=>\ 				" 折り返し行頭の文字列（最後の空白に注意）
-"set cpoptions+=n				" 折り返し行を行番号列から表示
-set cmdwinheight=5				" コマンドラインウィンドウの高さ
-set helpheight=0				" ヘルプの最小高
-set helplang=ja					" 日本語ヘルプ
-set hidden						" バッファ更新を破棄しない
-set confirm						" エラーにせず確認ダイアログを出す
-set noshowmatch					" 対応括弧にジャンプしない
-set tabstop=4					" タブ幅
-set noexpandtab					" タブ展開しない
-set shiftwidth=4				" インデント幅
-set softtabstop=4				" <Tab>や<BS>を入力したときの移動幅
-set virtualedit+=block			" ビジュアル矩形モードで仮想編集
-set cinoptions=:0,l1,g0,m1		" C/C++インデントオプション
+colorscheme blued               " カラースキーム
+set columns=99                  " 列数(_gvimrcで再設定してる)
+set lines=36                    " 行数(_gvimrcで再設定してる)
+set number                      " 行番号表示
+"set relativenumber             " 相対行番号表示
+set backspace=indent,eol,start  " Backspaceの挙動
+set ruler                       " ルーラー表示
+set title                       " タイトルを表示
+set showcmd                     " 入力中コマンドの表示
+set laststatus=2                " 常にステータス行を表示
+set showtabline=2               " タブ行を常に表示
+set switchbuf=split,newtab      " バッファの切り替えオプション
+set tabline=%!MakeTabLine()     " タブ行の表示設定
+set foldenable                  " 折りたたみを有効に
+set foldcolumn=5                " 折りたたみ列を5列表示
+set foldmethod=expr             " 式で折りたたみ
+set foldexpr=foldCC##foldtext() " 折りたたみ式
+"set cursorline                 " 現在行をハイライト
+set display=lastline            " 最後の行をできるだけ表示する
+set pumheight=20                " ポップアップメニューの最大高
+set previewheight=5             " プレビューウィンドウの高さ
+set shortmess& shortmess+=I     " 起動時のメッセージなし
+"set showbreak=>\               " 折り返し行頭の文字列（最後の空白に注意）
+"set cpoptions+=n               " 折り返し行を行番号列から表示
+set cmdwinheight=5              " コマンドラインウィンドウの高さ
+set helpheight=0                " ヘルプの最小高
+set helplang=ja                 " 日本語ヘルプ
+set hidden                      " バッファ更新を破棄しない
+set confirm                     " エラーにせず確認ダイアログを出す
+set noshowmatch                 " 対応括弧にジャンプしない
+set tabstop=4                   " タブ幅
+set expandtab                   " タブ展開する
+set shiftwidth=4                " インデント幅
+set softtabstop=4               " <Tab>や<BS>を入力したときの移動幅
+set virtualedit+=block          " ビジュアル矩形モードで仮想編集
+set cinoptions=:0,l1,g0,m1      " C/C++インデントオプション
 set matchpairs& matchpairs+=<:> " 括弧ペアに<>を加える
-set winaltkeys=no				" メニューのためにAltキーを使わない
-set tags+=./tags;,./**/tags		" タグファイル検索パス
-"set complete-=i				" インクルードファイルを補完検索対象から除外
-set sidescroll=1				" 水平スクロールの刻み幅
-set wildmode=longest,full		" コマンドライン補完最長一致
-set viminfo& viminfo+=/0		" 検索履歴をviminfoに記録しない
-"set lazyredraw					" マクロ実行中の画面再描画なし
-set nostartofline				" 縦移動で、できるだけ列を維持する
-set timeout						" マップ、キーコードで一定時間待つ
-set timeoutlen=3000				" マップ、キーコードの待ち時間(ms)
-set noequalalways				" ウィンドウの自動サイズ調整をしない
-set wrap						" 右端で折り返し
-set textwidth=0					" テキスト幅
-set selectmode=					" セレクトモードを使わない
-set incsearch					" インクリメンタルサーチを有効
-set nohlsearch					" 検索ハイライト無効
-set ignorecase					" 大文字小文字を無視
-set smartcase					" 大文字が含まれるときのみ無視しない
-set grepprg=grep\ -nH			" grepプログラム
-"set grepprg=ack\ -H			" grepにackを使う
-set gdefault					" 候補を全部置換する
-set wrapscan					" 最後まで行ったら最初に戻る
-set list						" 不可視文字の表示設定
+set winaltkeys=no               " メニューのためにAltキーを使わない
+set tags+=./tags;,./**/tags     " タグファイル検索パス
+"set complete-=i                " インクルードファイルを補完検索対象から除外
+set sidescroll=1                " 水平スクロールの刻み幅
+set wildmode=longest,full       " コマンドライン補完最長一致
+set viminfo& viminfo+=/0        " 検索履歴をviminfoに記録しない
+"set lazyredraw                 " マクロ実行中の画面再描画なし
+set nostartofline               " 縦移動で、できるだけ列を維持する
+set timeout                     " マップ、キーコードで一定時間待つ
+set timeoutlen=3000             " マップ、キーコードの待ち時間(ms)
+set noequalalways               " ウィンドウの自動サイズ調整をしない
+set wrap                        " 右端で折り返し
+set textwidth=0                 " テキスト幅
+set selectmode=                 " セレクトモードを使わない
+set incsearch                   " インクリメンタルサーチを有効
+set nohlsearch                  " 検索ハイライト無効
+set ignorecase                  " 大文字小文字を無視
+set smartcase                   " 大文字が含まれるときのみ無視しない
+set grepprg=grep\ -nH           " grepプログラム
+"set grepprg=ack\ -H            " grepにackを使う
+set gdefault                    " 候補を全部置換する
+set wrapscan                    " 最後まで行ったら最初に戻る
+set list                        " 不可視文字の表示設定
 set listchars=tab:>-,trail:_,extends:>,precedes:<
 " タイトル行の表示設定
 "set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:~:h\")})%)%(\ %a%)%(\ -\ %{v:servername}%)
 
-set backup								" バックアップする
-"set updatecount=0						" スワップファイルなし
-let &backupdir = s:dotvim . '/.backup'	" バックアップを作成するディレクトリ
-set undofile							" アンドゥファイルを作成する
-let &undodir = s:dotvim . '/.undo'		" アンドゥファイルを作成するディレクトリ
+set backup                              " バックアップする
+"set updatecount=0                      " スワップファイルなし
+let &backupdir = s:dotvim . '/.backup'  " バックアップを作成するディレクトリ
+set undofile                            " アンドゥファイルを作成する
+let &undodir = s:dotvim . '/.undo'      " アンドゥファイルを作成するディレクトリ
 
 " capslock.vim
 " capslockモード中なら表示を追加
@@ -485,12 +488,12 @@ let &undodir = s:dotvim . '/.undo'		" アンドゥファイルを作成するデ
 " 全角スペースの表示
 " TODO: あとでmatchadd()を使うように修正する
 "function! HighlightZenkakuSpace()
-"	hi ZenkakuSpace cterm=underline ctermfg=red gui=underline guifg=red
+"   hi ZenkakuSpace cterm=underline ctermfg=red gui=underline guifg=red
 "endfunction
 "augroup ZenkakuSpace
-"	autocmd!
-"	autocmd ColorScheme * call HighlightZenkakuSpace()
-"	autocmd VimEnter,BufWinEnter,WinEnter * match ZenkakuSpace /　/
+"   autocmd!
+"   autocmd ColorScheme * call HighlightZenkakuSpace()
+"   autocmd VimEnter,BufWinEnter,WinEnter * match ZenkakuSpace /　/
 "augroup END
 "call HighlightZenkakuSpace()
 
@@ -503,7 +506,7 @@ let g:vim_indent_cont = 0
 
 " すでにVimで同じファイルが開かれてたらそっちへフォーカス
 "if has('vim_starting')
-"	runtime macros/editexisting.vim
+"   runtime macros/editexisting.vim
 "endif
 "call singleton#enable()
 
@@ -512,82 +515,82 @@ runtime macros/matchit.vim
 
 " バックアップディレクトリがなかったら作成する
 if &backupdir!=#'' && !isdirectory(&backupdir)
-	call mkdir(&backupdir)
+    call mkdir(&backupdir)
 endif
 " スワップファイルを作成するディレクトリ
 let &directory=&backupdir
 " アンドゥファイルディレクトリがなかったら作成する
 if &undodir!=#'' && !isdirectory(&undodir)
-	call mkdir(&undodir)
+    call mkdir(&undodir)
 endif
 
 " タブページの表示行設定
 function! MakeTabLine()
-	" TODO: coding here at tabline view setting.
-	let titles = map(range(1, tabpagenr('$')), 's:TabPageLabel(v:val)')
-	let sep = ' '		" タブ間の区切り
-	let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
-	let info = ''	"好きな情報を入れる
+    " TODO: coding here at tabline view setting.
+    let titles = map(range(1, tabpagenr('$')), 's:TabPageLabel(v:val)')
+    let sep = ' '       " タブ間の区切り
+    let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
+    let info = ''   "好きな情報を入れる
 
-	" カレントディレクトリ
-	let info .= fnamemodify(getcwd(), ':~') . ' '
+    " カレントディレクトリ
+    let info .= fnamemodify(getcwd(), ':~') . ' '
 
-	return tabpages . '%=' . info	" タブリストを左に、情報を右に表示
+    return tabpages . '%=' . info   " タブリストを左に、情報を右に表示
 endfunction
 " 各タブの表示設定
 function! s:TabPageLabel(n)
-	" t:title と言う変数があったらそれを使う
-	let title = gettabvar(a:n, 'title')
-	if title !=# ''
-		return title . ' %#TabLineFill#'
-	else
-		" タブページ内のバッファのリスト
-		let bufnrs = tabpagebuflist(a:n)
+    " t:title と言う変数があったらそれを使う
+    let title = gettabvar(a:n, 'title')
+    if title !=# ''
+        return title . ' %#TabLineFill#'
+    else
+        " タブページ内のバッファのリスト
+        let bufnrs = tabpagebuflist(a:n)
 
-		" カレントタブページかどうかでハイライトを切り替える
-		let hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
+        " カレントタブページかどうかでハイライトを切り替える
+        let hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
 
-		" バッファが複数あったらバッファ数を表示
-		let no = len(bufnrs)
-		if no is 1
-			let no = ""
-		endif
-		" タブページ内に変更ありのバッファがあったら '+' を付ける
-		let mod = len(filter(copy(bufnrs), 'getbufvar(v:val, ''&modified'')')) ? '+' : ''
-		let sp = (no . mod) ==# "" ? "" : ' '  " 隙間空ける
+        " バッファが複数あったらバッファ数を表示
+        let no = len(bufnrs)
+        if no is 1
+            let no = ""
+        endif
+        " タブページ内に変更ありのバッファがあったら '+' を付ける
+        let mod = len(filter(copy(bufnrs), 'getbufvar(v:val, ''&modified'')')) ? '+' : ''
+        let sp = (no . mod) ==# "" ? "" : ' '  " 隙間空ける
 
-		" カレントバッファを取得
-		let curbufnr = bufnrs[tabpagewinnr(a:n) - 1]  " tabpagewinnr() は 1 origin
-		let curbufname = bufname(curbufnr)
+        " カレントバッファを取得
+        let curbufnr = bufnrs[tabpagewinnr(a:n) - 1]  " tabpagewinnr() は 1 origin
+        let curbufname = bufname(curbufnr)
 
-		" b:title という変数があったらそれを使う
-		let title = getbufvar(curbufnr, 'title')
-		if !empty(title)
-			let fname = title
-		elseif empty(curbufname)
-			" バッファタイプによって名前を変える
-			if &buftype ==# 'nofile'
-				let fname = '[下書き]'
-			elseif &buftype ==# 'quickfix'
-				let fname = '[Quickfix]'
-			else
-				let fname = '[無名]'
-			endif
-		else
-			"let fname = pathshorten(curbufname)
-			let fname = fnamemodify(curbufname, ':t')
-			if &buftype ==# 'help'
-				let fname = fname . ' [ヘルプ]'
-			endif
-		endif
-	endif
+        " b:title という変数があったらそれを使う
+        let title = getbufvar(curbufnr, 'title')
+        if !empty(title)
+            let fname = title
+        elseif empty(curbufname)
+            " バッファタイプによって名前を変える
+            if &buftype ==# 'nofile'
+                let fname = '[下書き]'
+            elseif &buftype ==# 'quickfix'
+                let fname = '[Quickfix]'
+            else
+                let fname = '[無名]'
+            endif
+        else
+            "let fname = pathshorten(curbufname)
+            let fname = fnamemodify(curbufname, ':t')
+            if &buftype ==# 'help'
+                let fname = fname . ' [ヘルプ]'
+            endif
+        endif
+    endif
 
-	let labeltext = no . mod . sp . fname
-	let label = '%' . a:n . 'T' . hi . ' ' . labeltext . '%T'
-	"let closelabel = '%' . a:n . 'X x %X'		" 閉じるラベル
+    let labeltext = no . mod . sp . fname
+    let label = '%' . a:n . 'T' . hi . ' ' . labeltext . '%T'
+    "let closelabel = '%' . a:n . 'X x %X'      " 閉じるラベル
 
-	"return label . closelabel . '%#TabLineFill#'
-	return label . ' %#TabLineFill#'
+    "return label . closelabel . '%#TabLineFill#'
+    return label . ' %#TabLineFill#'
 endfunction
 
 
@@ -598,90 +601,90 @@ endfunction
 command! -bar -nargs=+ NXmap call s:NXmap(<q-args>, 0)
 command! -bar -nargs=+ NXnoremap call s:NXmap(<q-args>, 1)
 function! s:NXmap(args, noremaped)
-	let remap_str = a:noremaped ? 'nore' : ""
-	execute 'n' . remap_str . 'map ' . a:args
-	execute 'x' . remap_str . 'map ' . a:args
+    let remap_str = a:noremaped ? 'nore' : ""
+    execute 'n' . remap_str . 'map ' . a:args
+    execute 'x' . remap_str . 'map ' . a:args
 endfunction
 
 " セッション保存してリスタート
 command! -bar RestartWithSession
-	\ let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
-	\ | Restart
+    \ let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
+    \ | Restart
 
 " タブページの移動
 command! -bar TabMoveNext
-	\ execute 'tabmove' tabpagenr() % tabpagenr('$')
+    \ execute 'tabmove' tabpagenr() % tabpagenr('$')
 command! -bar TabMovePrev
-	\ execute 'tabmove' (tabpagenr('$') + tabpagenr() - 2) % tabpagenr('$')
+    \ execute 'tabmove' (tabpagenr('$') + tabpagenr() - 2) % tabpagenr('$')
 
 " エンコーディングを変えて開き直す
 command! -bang -bar -nargs=? -complete=file Utf8
-							\ edit<bang> ++enc=utf-8 <args>
+                            \ edit<bang> ++enc=utf-8 <args>
 command! -bang -bar -nargs=? -complete=file Cp932
-							\ edit<bang> ++enc=cp932 <args>
+                            \ edit<bang> ++enc=cp932 <args>
 command! -bang -bar -nargs=? -complete=file Euc
-							\ edit<bang> ++enc=euc-jp <args>
+                            \ edit<bang> ++enc=euc-jp <args>
 command! -bang -bar -nargs=? -complete=file Iso2022jp
-							\ edit<bang> ++enc=iso-2022-jp <args>
+                            \ edit<bang> ++enc=iso-2022-jp <args>
 command! -bang -bar -nargs=? -complete=file Utf16
-							\ edit<bang> ++enc=ucs-2le <args>
+                            \ edit<bang> ++enc=ucs-2le <args>
 command! -bang -bar -nargs=? -complete=file Utf16be
-							\ edit<bang> ++enc=ucs-2 <args>
+                            \ edit<bang> ++enc=ucs-2 <args>
 
 " 別名
 command! -bang -bar -nargs=? -complete=file Jis
-							\ Iso2022jp<bang> <args>
+                            \ Iso2022jp<bang> <args>
 command! -bang -bar -nargs=? -complete=file Sjis
-							\ Cp932<bang> <args>
+                            \ Cp932<bang> <args>
 command! -bang -bar -nargs=? -complete=file Unicode
-							\ Utf16<bang> <args>
+                            \ Utf16<bang> <args>
 
 " Google検索
 command! -nargs=? GoogleSearch call s:GoogleSearch(<q-args>)
 function! s:GoogleSearch(word) "{{{
-	let cmd = 'rundll32 url.dll,FileProtocolHandler'
-	let search_engine = 'https://www.google.co.jp/#q='
-	exe 'VimProcBang ' . cmd . " '" . search_engine . a:word . "'"
+    let cmd = 'rundll32 url.dll,FileProtocolHandler'
+    let search_engine = 'https://www.google.co.jp/#q='
+    exe 'VimProcBang ' . cmd . " '" . search_engine . a:word . "'"
 endfunction "}}}
 
 " Explorer
 command! -nargs=? -complete=dir Explorer call s:Explorer(<q-args>)
 function! s:Explorer(dir)
-	let l:dir = a:dir
-	if a:dir == ''
-		let l:dir = '.'
-	endif
-	execute 'VimProcBang rundll32 url.dll,FileProtocolHandler ' . l:dir
+    let l:dir = a:dir
+    if a:dir == ''
+        let l:dir = '.'
+    endif
+    execute 'VimProcBang rundll32 url.dll,FileProtocolHandler ' . l:dir
 endfunction
 
 " Diff
 command! -nargs=? -complete=file Diff
-	\ if '<args>'=='' |
-		\ browse vertical diffsplit |
-	\ else |
-		\ vertical diffsplit <args> |
-	\ endif
+    \ if '<args>'=='' |
+        \ browse vertical diffsplit |
+    \ else |
+        \ vertical diffsplit <args> |
+    \ endif
 
 " Capture :mapとかのメッセージをキャプチャ
 command! -nargs=+ -complete=command Capture call s:CmdCapture(<q-args>)
 function! s:CmdCapture(args) "{{{
-	" コマンドのリダイレクト
-	redir => result
-	silent execute a:args
-	redir END
+    " コマンドのリダイレクト
+    redir => result
+    silent execute a:args
+    redir END
 
-	" 特別にオプションを設定して別ウィンドウに表示
-	new
-	setlocal bufhidden=unload
-	setlocal nobuflisted
-	setlocal buftype=nofile
-	setlocal noswapfile
-	let b:title = '[Capture: ' . a:args . ']'
-	"silent file `='[Capture ('' . a:args . '')]'`
-	silent put =result
-	1,2delete _
-	" qでウィンドウを閉じられるようにする
-	nnoremap <buffer> <silent> q :<C-u>close<CR>
+    " 特別にオプションを設定して別ウィンドウに表示
+    new
+    setlocal bufhidden=unload
+    setlocal nobuflisted
+    setlocal buftype=nofile
+    setlocal noswapfile
+    let b:title = '[Capture: ' . a:args . ']'
+    "silent file `='[Capture ('' . a:args . '')]'`
+    silent put =result
+    1,2delete _
+    " qでウィンドウを閉じられるようにする
+    nnoremap <buffer> <silent> q :<C-u>close<CR>
 endfunction "}}}
 
 
@@ -691,69 +694,69 @@ endfunction "}}}
 
 " Comment or uncomment lines from mark a to mark b.
 function! s:CommentMark(docomment, a, b)
-	if !exists('b:comment')
-		"let b:comment = CommentStr() . ' '
-		let b:comment = CommentStr()
-	endif
-	if a:docomment
-		exe "normal! '" . a:a . "_\<C-V>'" . a:b . 'I' . b:comment
-	else
-		exe "'".a:a.",'".a:b . 's/^\(\s*\)' . escape(b:comment,'/') . '/\1/e'
-	endif
+    if !exists('b:comment')
+        "let b:comment = CommentStr() . ' '
+        let b:comment = CommentStr()
+    endif
+    if a:docomment
+        exe "normal! '" . a:a . "_\<C-V>'" . a:b . 'I' . b:comment
+    else
+        exe "'".a:a.",'".a:b . 's/^\(\s*\)' . escape(b:comment,'/') . '/\1/e'
+    endif
 endfunction
 
 " Comment lines in marks set by g@ operator.
 function! s:DoCommentOp(type)
-	call s:CommentMark(1, '[', ']')
+    call s:CommentMark(1, '[', ']')
 endfunction
 
 " Uncomment lines in marks set by g@ operator.
 function! s:UnCommentOp(type)
-	call s:CommentMark(0, '[', ']')
+    call s:CommentMark(0, '[', ']')
 endfunction
 
 " Return string used to comment line for current filetype.
 function! s:CommentStr()
-	if &ft == 'cpp' || &ft == 'java' || &ft == 'javascript'
-		return '//'
-	elseif &ft == 'vim'
-		return '"'
-	elseif &ft == 'python' || &ft == 'perl' || &ft == 'sh' || &ft == 'R' || &ft == 'ruby'
-		return '#'
-	elseif &ft == 'lisp'
-		return ';'
-	endif
-	return ''
+    if &ft == 'cpp' || &ft == 'java' || &ft == 'javascript'
+        return '//'
+    elseif &ft == 'vim'
+        return '"'
+    elseif &ft == 'python' || &ft == 'perl' || &ft == 'sh' || &ft == 'R' || &ft == 'ruby'
+        return '#'
+    elseif &ft == 'lisp'
+        return ';'
+    endif
+    return ''
 endfunction
 
 " カーソル下の単語を取得
 function! GetCursorWord(pat) "{{{
-	let line = getline('.')
-	let pos = col('.')
-	let s = 0
-	while s < pos
-		let [s, e] = [match(line, a:pat, s), matchend(line, a:pat, s)]
-		if s < 0
-			break
-		elseif s < pos && pos <= e
-			return line[s : e - 1]
-		endif
-		let s += 1
-	endwhile
-	return ''
+    let line = getline('.')
+    let pos = col('.')
+    let s = 0
+    while s < pos
+        let [s, e] = [match(line, a:pat, s), matchend(line, a:pat, s)]
+        if s < 0
+            break
+        elseif s < pos && pos <= e
+            return line[s : e - 1]
+        endif
+        let s += 1
+    endwhile
+    return ''
 endfunction "}}}
 
 " ビジュアルモードで選択されていたテキストを取得
 function! GetSelectedWord() "{{{
-	let save_z = getreg('z', 1)
-	let save_z_type = getregtype('z')
+    let save_z = getreg('z', 1)
+    let save_z_type = getregtype('z')
 
-	try
-		normal! gv"zy
-		return @z
-	finally
-		call setreg('z', save_z, save_z_type)
-	endtry
+    try
+        normal! gv"zy
+        return @z
+    finally
+        call setreg('z', save_z, save_z_type)
+    endtry
 endfunction "}}}
 
 
@@ -763,26 +766,26 @@ endfunction "}}}
 
 augroup MyAutocmd
 
-	" プログラムソースなら81文字目に線を引く
-	autocmd FileType c,cpp,vim,python,ruby,perl,cs,java setlocal colorcolumn=81
+    " プログラムソースなら81文字目に線を引く
+    autocmd FileType c,cpp,vim,python,ruby,perl,cs,java setlocal colorcolumn=81
 
-	" （ヘルプとかを）qで終了
-	autocmd FileType help,ref-* nnoremap <buffer> <silent> q :<C-u>close<CR>
+    " （ヘルプとかを）qで終了
+    autocmd FileType help,ref-* nnoremap <buffer> <silent> q :<C-u>close<CR>
 
-	" コマンドラインウィンドウ用設定
-	" 挿入モードではじめる
-	autocmd CmdwinEnter * startinsert
-	" qで終了する
-	autocmd CmdwinEnter * nnoremap <buffer> <silent> q :<C-u>quit<CR>
+    " コマンドラインウィンドウ用設定
+    " 挿入モードではじめる
+    autocmd CmdwinEnter * startinsert
+    " qで終了する
+    autocmd CmdwinEnter * nnoremap <buffer> <silent> q :<C-u>quit<CR>
 
-	" pathを親ディレクトリも辿るように設定
-	autocmd FileType c,cpp,vim,html setlocal path+=;/
+    " pathを親ディレクトリも辿るように設定
+    autocmd FileType c,cpp,vim,html setlocal path+=;/
 
-	" 前回のカーソル位置を復元
-	autocmd BufReadPost *
-		\ if line('''"') > 1 && line('''"') <= line('$') |
-			\ execute 'normal! g`"' |
-		\ endif
+    " 前回のカーソル位置を復元
+    autocmd BufReadPost *
+        \ if line('''"') > 1 && line('''"') <= line('$') |
+            \ execute 'normal! g`"' |
+        \ endif
 
 augroup END
 
@@ -908,13 +911,13 @@ nnoremap <F7> :<C-u>lmake<CR>
 " なければ再描画＆検索ハイライトオフ
 noremap <silent> <CR> :<C-u>call <SID>CrExec()<CR>
 function! s:CrExec()
-	if v:count == 0
-		redraw!
-		Nohlsearch
-	else
-		execute 'normal! ' . string(v:count) . 'G'
-	endif
-	return ""
+    if v:count == 0
+        redraw!
+        Nohlsearch
+    else
+        execute 'normal! ' . string(v:count) . 'G'
+    endif
+    return ""
 endfunction
 
 " YをDなどと同じような動作にする
@@ -937,7 +940,7 @@ nnoremap [Mark] <Nop>
 nmap m [Mark]
 " ms{char}でマーク（通常のmと同じ）＆ShowMarksオン
 nnoremap <silent> [Mark]s
-	\ :<C-u>execute 'normal! m' . nr2char(getchar())<bar>ShowMarksOn<CR>
+    \ :<C-u>execute 'normal! m' . nr2char(getchar())<bar>ShowMarksOn<CR>
 " マーク位置へジャンプ(Find mark)
 nnoremap [Mark]f `
 " マーク行へジャンプ(Go to mark)
@@ -992,26 +995,26 @@ nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 
 " ウィンドウ関連
-nnoremap <C-Down>	<C-w>j
-nnoremap <C-Up>		<C-w>k
-nnoremap <C-Left>	<C-w>h
-nnoremap <C-Right>	<C-w>l
+nnoremap <C-Down>   <C-w>j
+nnoremap <C-Up>     <C-w>k
+nnoremap <C-Left>   <C-w>h
+nnoremap <C-Right>  <C-w>l
 
 " タブページ用マップ
 nnoremap [Tab] <Nop>
 nmap t [Tab]
-nnoremap			[Tab]l	gt
-nnoremap			[Tab]h	gT
-nnoremap			[Tab]e	:<C-u>tabedit<Space>
-nnoremap <silent>	[Tab]n	:<C-u>tabedit<CR>
-nnoremap <silent>	[Tab]q	:<C-u>tabclose<CR>
-nnoremap <silent>	[Tab]c	:<C-u>tabclose<CR>
-nnoremap <silent>	[Tab]o	:<C-u>tabonly<CR>
-nnoremap <silent>	[Tab]t	:<C-u>tab stag <C-r><C-w><CR>
-nnoremap <silent>	[Tab]r	:<C-u>TabRecent<CR>
-nnoremap			[Tab]w	<C-w>T
-nnoremap <silent>	[Tab]L	:<C-u>TabMoveNext<CR>
-nnoremap <silent>	[Tab]H	:<C-u>TabMovePrev<CR>
+nnoremap            [Tab]l  gt
+nnoremap            [Tab]h  gT
+nnoremap            [Tab]e  :<C-u>tabedit<Space>
+nnoremap <silent>   [Tab]n  :<C-u>tabedit<CR>
+nnoremap <silent>   [Tab]q  :<C-u>tabclose<CR>
+nnoremap <silent>   [Tab]c  :<C-u>tabclose<CR>
+nnoremap <silent>   [Tab]o  :<C-u>tabonly<CR>
+nnoremap <silent>   [Tab]t  :<C-u>tab stag <C-r><C-w><CR>
+nnoremap <silent>   [Tab]r  :<C-u>TabRecent<CR>
+nnoremap            [Tab]w  <C-w>T
+nnoremap <silent>   [Tab]L  :<C-u>TabMoveNext<CR>
+nnoremap <silent>   [Tab]H  :<C-u>TabMovePrev<CR>
 
 " タグサーチ
 nnoremap [Tag] <Nop>
@@ -1038,11 +1041,11 @@ nnoremap [WSpace]ca :<C-u>Calc<CR>
 " オプション表示
 nnoremap <C-s> :<C-u>ShowOption<Space>
 command! -nargs=1 -complete=option ShowOption
-	\ call s:ShowOption(<q-args>)
+    \ call s:ShowOption(<q-args>)
 function! s:ShowOption(opt)
-	if !empty(a:opt)
-		execute 'verb set ' . a:opt . '?'
-	endif
+    if !empty(a:opt)
+        execute 'verb set ' . a:opt . '?'
+    endif
 endfunction
 
 " オプション切り替え
@@ -1063,50 +1066,50 @@ nnoremap <silent> [Toggle]t :<C-u>setlocal expandtab! \| %retab!<CR>
 
 " オプションの切り替えとその表示
 function! s:ToggleLocalOption(opt)
-	if exists('&' . a:opt)
-		" トグルしてその値を表示
-		execute 'setlocal ' . a:opt . '! | setlocal ' . a:opt . '?'
-		return eval('&' . a:opt)
-	else
-		echo a:opt . ' というオプションは存在しません'
-		return 0
-	endif
+    if exists('&' . a:opt)
+        " トグルしてその値を表示
+        execute 'setlocal ' . a:opt . '! | setlocal ' . a:opt . '?'
+        return eval('&' . a:opt)
+    else
+        echo a:opt . ' というオプションは存在しません'
+        return 0
+    endif
 endfunction
 
 " フォールディング切り替え
 nnoremap zi :<C-u>call <SID>ToggleFolding()<CR>
 function! s:ToggleFolding()
-	if s:ToggleLocalOption('foldenable')
-		setlocal foldcolumn=5
-	else
-		setlocal foldcolumn=0
-	endif
+    if s:ToggleLocalOption('foldenable')
+        setlocal foldcolumn=5
+    else
+        setlocal foldcolumn=0
+    endif
 endfunction
 
 " リスト表示、indent-guides、行末空白ハイライトの同時切り替え
 nnoremap <silent> [Toggle]T :<C-u>call <SID>ToggleShowInfo()<CR>
 function! s:ToggleShowInfo()
-	let b:no_show_info = empty(getbufvar('%', 'no_show_info'))
-	if b:no_show_info
-		setlocal nolist
-		AutoTrailingWhitespaceDisable
-		IndentGuidesDisable
-	else
-		setlocal list
-		AutoTrailingWhitespaceEnable
-		IndentGuidesEnable
-	endif
+    let b:no_show_info = empty(getbufvar('%', 'no_show_info'))
+    if b:no_show_info
+        setlocal nolist
+        AutoTrailingWhitespaceDisable
+        IndentGuidesDisable
+    else
+        setlocal list
+        AutoTrailingWhitespaceEnable
+        IndentGuidesEnable
+    endif
 endfunction
 
 " vimfiler
 nnoremap <silent> [Space]e :<C-u>VimFilerBufferDir
-	\ -buffer-name=explorer -toggle -split -horizontal -no-quit -winheight=10<CR>
+    \ -buffer-name=explorer -toggle -split -horizontal -no-quit -winheight=10<CR>
 autocmd MyAutocmd FileType vimfiler call <SID>VimFilerSettings()
 function! s:VimFilerSettings()
-	" qとQのキーマップ入れ替え
-	" （qでバッファに残さないように終了する）
-	"nmap <buffer> q <Plug>(vimfiler_exit)
-	"nmap <buffer> Q <Plug>(vimfiler_hide)
+    " qとQのキーマップ入れ替え
+    " （qでバッファに残さないように終了する）
+    "nmap <buffer> q <Plug>(vimfiler_exit)
+    "nmap <buffer> Q <Plug>(vimfiler_hide)
 endfunction
 
 " Ref
@@ -1132,8 +1135,8 @@ nnoremap <silent> [Space]t :<C-u>Unite -buffer-name=tag tag tag/include<CR>
 nnoremap <silent> [Space]y :<C-u>Unite history/yank<CR>
 
 nnoremap [Unite] <Nop>
-nmap [Space]u	[Unite]
-nmap U			[Unite]
+nmap [Space]u   [Unite]
+nmap U          [Unite]
 nnoremap <silent> [Unite]f :<C-u>UniteWithBufferDir -buffer-name=files file_rec file/new<CR>
 nnoremap <silent> [Unite]m :<C-u>Unite -buffer-name=marks -auto-preview mark<CR>
 nnoremap <silent> [Unite]r :<C-u>Unite -buffer-name=registers register<CR>
@@ -1176,7 +1179,7 @@ call submode#map('winsize', 'n', '', '_', '<C-w>_')
 
 " Ref
 nnoremap <silent> <expr> K
-	\ ':Ref webdict alc ' . GetCursorWord('[a-zA-Z]*') . '<CR>'
+    \ ':Ref webdict alc ' . GetCursorWord('[a-zA-Z]*') . '<CR>'
 "nmap K <Plug>(ref-keyword)
 
 
@@ -1190,7 +1193,11 @@ inoremap <expr> <C-e> neocomplete#cancel_popup()
 inoremap <expr> <C-g> neocomplete#undo_completion()
 
 " IME切り替え
-inoremap <C-@> <C-^>
+if s:is_windows
+    inoremap <C-@> <C-^>
+elseif s:is_unix
+    inoremap <C-@> <C-Space>
+endif
 
 " capslock
 imap <C-l> <C-o><Plug>CapsLockToggle
@@ -1268,32 +1275,32 @@ xnoremap id  i"
 
 " 略記を展開する
 function! s:AbbrevCommentLine(head, body)
-	let till = 80	" 80行目まで
-	let offset = 2	" 2文字分のオフセット
-	let repeats = till / len(a:body) - virtcol('.') - (len(a:head) - 1) + offset
-	return a:head . repeat(a:body, repeats)
+    let till = 80   " 80行目まで
+    let offset = 2  " 2文字分のオフセット
+    let repeats = till / len(a:body) - virtcol('.') - (len(a:head) - 1) + offset
+    return a:head . repeat(a:body, repeats)
 endfunction
 
 " 略記を定義する
 function! s:AbbrevDef()
-	" コメント文字の取得
-	" 展開するときに定義されていないといけないので、b:で定義
-	let b:head = s:CommentStr()
-	if empty(b:head)
-		return
-	endif
+    " コメント文字の取得
+    " 展開するときに定義されていないといけないので、b:で定義
+    let b:head = s:CommentStr()
+    if empty(b:head)
+        return
+    endif
 
-	inoreabbrev <buffer> <expr> @= <SID>AbbrevCommentLine(b:head, '=')
-	inoreabbrev <buffer> <expr> @- <SID>AbbrevCommentLine(b:head, '-')
-	inoreabbrev <buffer> <expr> @+ <SID>AbbrevCommentLine(b:head, '+')
-	inoreabbrev <buffer> <expr> @\| <SID>AbbrevCommentLine(b:head, '\|')
-	inoreabbrev <buffer> <expr> @* <SID>AbbrevCommentLine(b:head, '*')
-	inoreabbrev <buffer> <expr> @/ <SID>AbbrevCommentLine(b:head, '/')
-	inoreabbrev <buffer> <expr> @# <SID>AbbrevCommentLine(b:head, '#')
-	inoreabbrev <buffer> <expr> @> <SID>AbbrevCommentLine(b:head, '>')
-	inoreabbrev <buffer> <expr> @< <SID>AbbrevCommentLine(b:head, '<')
-	inoreabbrev <buffer> <expr> @x <SID>AbbrevCommentLine(b:head, 'x')
-	inoreabbrev <buffer> <expr> @r <SID>AbbrevCommentLine(b:head, '<>')
+    inoreabbrev <buffer> <expr> @= <SID>AbbrevCommentLine(b:head, '=')
+    inoreabbrev <buffer> <expr> @- <SID>AbbrevCommentLine(b:head, '-')
+    inoreabbrev <buffer> <expr> @+ <SID>AbbrevCommentLine(b:head, '+')
+    inoreabbrev <buffer> <expr> @\| <SID>AbbrevCommentLine(b:head, '\|')
+    inoreabbrev <buffer> <expr> @* <SID>AbbrevCommentLine(b:head, '*')
+    inoreabbrev <buffer> <expr> @/ <SID>AbbrevCommentLine(b:head, '/')
+    inoreabbrev <buffer> <expr> @# <SID>AbbrevCommentLine(b:head, '#')
+    inoreabbrev <buffer> <expr> @> <SID>AbbrevCommentLine(b:head, '>')
+    inoreabbrev <buffer> <expr> @< <SID>AbbrevCommentLine(b:head, '<')
+    inoreabbrev <buffer> <expr> @x <SID>AbbrevCommentLine(b:head, 'x')
+    inoreabbrev <buffer> <expr> @r <SID>AbbrevCommentLine(b:head, '<>')
 endfunction
 
 " ファイルタイプ設定時に略記定義
@@ -1313,67 +1320,67 @@ cnoreabbrev @g $MYGVIMRC
 
 function! GVimSettings()
 
-	set guioptions=mgtr				" GUIオプション(詳細は:h 'go')
-	set browsedir=buffer			" browse時のディレクトリ設定(カレントバッファと同じ)
-	"set mousefocus					" マウス移動でウィンドウフォーカス
-	"set mousemodel=popup_setpos	" 右クリックでカーソル移動＆メニュー表示
+    set guioptions=mgtr             " GUIオプション(詳細は:h 'go')
+    set browsedir=buffer            " browse時のディレクトリ設定(カレントバッファと同じ)
+    "set mousefocus                 " マウス移動でウィンドウフォーカス
+    "set mousemodel=popup_setpos    " 右クリックでカーソル移動＆メニュー表示
 
-	" カラースキーム
-	colorscheme home_color
-	autocmd MyAutocmd ColorScheme * call s:SetGUIColor()
-	function! s:SetGUIColor()
-		hi TabLine		guifg=#777798 guibg=#444477 gui=NONE
-		hi TabLineFill	guifg=#666688 guibg=#CCCCFF
-		hi TabLineSel	guifg=#CCCCFF guibg=#111155 gui=bold
+    " カラースキーム
+    colorscheme home_color
+    autocmd MyAutocmd ColorScheme * call s:SetGUIColor()
+    function! s:SetGUIColor()
+        hi TabLine      guifg=#777798 guibg=#444477 gui=NONE
+        hi TabLineFill  guifg=#666688 guibg=#CCCCFF
+        hi TabLineSel   guifg=#CCCCFF guibg=#111155 gui=bold
 
-		hi FoldColumn	guifg=#818698 guibg=#363946
-		hi ColorColumn	guifg=NONE	  guibg=#333366 gui=NONE
-		hi CursorLine	guifg=NONE	  guibg=#101050 gui=NONE
-		hi SpecialKey	guifg=#444466 guibg=NONE	gui=NONE
-	endfunction
+        hi FoldColumn   guifg=#818698 guibg=#363946
+        hi ColorColumn  guifg=NONE    guibg=#333366 gui=NONE
+        hi CursorLine   guifg=NONE    guibg=#101050 gui=NONE
+        hi SpecialKey   guifg=#444466 guibg=NONE    gui=NONE
+    endfunction
 
-	" ビジュアルベル（使用しない）
-	set visualbell t_vb=
+    " ビジュアルベル（使用しない）
+    set visualbell t_vb=
 
-	" 行数、列数、行間、フォント
-	" TODO: 環境に依存するので、ローカル設定ファイルに移動すべき？
-	set lines=34		" 行
-	set columns=99		" 列
-	set linespace=0		" 行間
-	if has('win32')
-		let fonts = [
-			\ "Ricty_Diminished:h14:cDEFAULT",
-			\ "Ricty:h14:cDEFAULT",
-			\ "Migu_1M:h12:cDEFAULT",
-			\ "VL_ゴシック:h12:cDEFAULT",
-			\ "ＭＳ_ゴシック:h12:cDEFAULT",
-		\]
-	elseif has('unix')
-		let fonts = [
-			\ "VL\ Gothic\ 10",
-			\ "DejaVu\ Sans\ Mono\ 10",
-			\ "UbuntuMono\ 11",
-		\]
-	endif
-	let &guifont=join(fonts, ",")
-	unlet fonts
+    " 行数、列数、行間、フォント
+    " TODO: 環境に依存するので、ローカル設定ファイルに移動すべき？
+    set lines=34        " 行
+    set columns=99      " 列
+    set linespace=0     " 行間
+    if s:is_windows
+        let fonts = [
+            \ "Ricty_Diminished:h14:cDEFAULT",
+            \ "Ricty:h14:cDEFAULT",
+            \ "Migu_1M:h12:cDEFAULT",
+            \ "VL_ゴシック:h12:cDEFAULT",
+            \ "ＭＳ_ゴシック:h12:cDEFAULT",
+        \]
+    elseif s:is_unix
+        let fonts = [
+            \ "VL\ Gothic\ 10",
+            \ "DejaVu\ Sans\ Mono\ 10",
+            \ "UbuntuMono\ 11",
+        \]
+    endif
+    let &guifont=join(fonts, ",")
+    unlet fonts
 
 
-	"***************************************************************************
-	" Key Mappings:
-	"***************************************************************************
+    "***************************************************************************
+    " Key Mappings:
+    "***************************************************************************
 
-	" GUIウィンドウ最大化・元に戻す
-	nnoremap <silent> <M-x> :<C-u>ScreenMode 4<CR>
-	nnoremap <silent> <M-r> :<C-u>Revert<CR>
+    " GUIウィンドウ最大化・元に戻す
+    nnoremap <silent> <M-x> :<C-u>ScreenMode 4<CR>
+    nnoremap <silent> <M-r> :<C-u>Revert<CR>
 
-	"***************************************************************************
-	" GUI Menus:
-	"***************************************************************************
+    "***************************************************************************
+    " GUI Menus:
+    "***************************************************************************
 
-	" QFixHowmのGUIメニュー項目を'Plugin'内に表示する
-	call QFixMemoMenubar("Plugin.QFixMemo(&M)","g,")
-	call QFixGrepMenubar("Plugin.QFixGrep(&G)","g,")
+    " QFixHowmのGUIメニュー項目を'Plugin'内に表示する
+    call QFixMemoMenubar("Plugin.QFixMemo(&M)","g,")
+    call QFixGrepMenubar("Plugin.QFixGrep(&G)","g,")
 
 endfunction
 
