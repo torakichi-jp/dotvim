@@ -106,9 +106,9 @@ NeoBundleLazy 'goldfeld/vim-seek'
 NeoBundle 'Colour-Sampler-Pack'
 NeoBundle 'SingleCompile'
 NeoBundle 'ack.vim'
+NeoBundle 'sudo.vim'
 NeoBundleLazy 'colorsel.vim'
 NeoBundleLazy 'vimwiki'
-NeoBundleLazy 'sudo.vim'
 NeoBundleLazy 'CSApprox'
 
 " textobj
@@ -213,17 +213,23 @@ function! s:bundle.hooks.on_source(bundle)
 endfunction
 
 " NERD_commenter
-let g:NERDCreateDefaultMappings = 0
-let g:NERDSpaceDelims = 0
+let s:bundle = neobundle#get('nerdcommenter')
+function! s:bundle.hooks.on_source(bundle)
+    let g:NERDCreateDefaultMappings = 0
+    let g:NERDSpaceDelims = 0
+endfunction
+
+" neocomplete
+let s:bundle = neobundle#get('neocomplete.vim')
+function! s:bundle.hooks.on_source(bundle)
+    let g:neocomplete#enable_at_startup = 1
+    let g:neocomplete#enable_auto_select = 1
+    "let g:neocomplete#disable_auto_complete = 1
+endfunction
 
 " vimfiler
 let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_safe_mode_by_default = 0
-
-" neocomplete
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_auto_select = 1
-let g:neocomplete#disable_auto_complete = 1
 
 " Unite設定
 let g:unite_winheight = 10
