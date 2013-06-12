@@ -8,10 +8,12 @@ scriptencoding utf-8    " この設定ファイルの文字コード設定
 set nocompatible        " vi非互換
 set shellslash          " パス区切りを/にする
 
+" switching variables
+let s:is_gui = has('gui_running')
 let s:is_windows = has('win32') || has('win64')
 let s:is_unix = has('unix')
 
-" .vim or vimfiles
+" directory name by OS kinds (.vim or vimfiles)
 if s:is_windows
     let s:dotvim = expand('~/vimfiles')
 elseif s:is_unix
@@ -105,9 +107,9 @@ NeoBundleLazy 'goldfeld/vim-seek'
 NeoBundle 'Colour-Sampler-Pack'
 NeoBundle 'SingleCompile'
 NeoBundle 'ack.vim'
+NeoBundle 'sudo.vim'
 NeoBundleLazy 'colorsel.vim'
 NeoBundleLazy 'vimwiki'
-NeoBundleLazy 'sudo.vim'
 NeoBundleLazy 'CSApprox'
 
 " textobj
@@ -196,6 +198,7 @@ let g:loaded_getscriptPlugin = 1
 let g:loaded_netrwPlugin = 1
 
 " vimproc
+" TODO: windowsでのビルドもできるようにする
 let s:bundle = neobundle#get('vimproc')
 function! s:bundle.hooks.on_source(bundle)
     if !has('win64') && !has('win32')
@@ -211,17 +214,23 @@ function! s:bundle.hooks.on_source(bundle)
 endfunction
 
 " NERD_commenter
-let g:NERDCreateDefaultMappings = 0
-let g:NERDSpaceDelims = 0
+let s:bundle = neobundle#get('nerdcommenter')
+function! s:bundle.hooks.on_source(bundle)
+    let g:NERDCreateDefaultMappings = 0
+    let g:NERDSpaceDelims = 0
+endfunction
+
+" neocomplete
+let s:bundle = neobundle#get('neocomplete.vim')
+function! s:bundle.hooks.on_source(bundle)
+    let g:neocomplete#enable_at_startup = 1
+    let g:neocomplete#enable_auto_select = 1
+    "let g:neocomplete#disable_auto_complete = 1
+endfunction
 
 " vimfiler
 let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_safe_mode_by_default = 0
-
-" neocomplete
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_auto_select = 1
-let g:neocomplete#disable_auto_complete = 1
 
 " Unite設定
 let g:unite_winheight = 10
