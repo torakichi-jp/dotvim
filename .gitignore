@@ -1,10 +1,7 @@
-/.neocomplete
-/.neocomplcache
-/.tweetvim
-/.unite
-/.vimfiler
-/.vimshell
-/howm
-/vimwiki
-/.qfixmru
-/_viminfo
+/*
+!/vimfiles
+!/.gitignore
+!/.gitmodules
+!_vimrc
+!_gvimrc
+!README.md
