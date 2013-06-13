@@ -435,8 +435,8 @@ set switchbuf=split,newtab      " バッファの切り替えオプション
 set tabline=%!MakeTabLine()     " タブ行の表示設定
 set foldenable                  " 折りたたみを有効に
 set foldcolumn=5                " 折りたたみ列を5列表示
-set foldmethod=expr             " 式で折りたたみ
-set foldexpr=foldCC##foldtext() " 折りたたみ式
+"set foldmethod=expr             " 式で折りたたみ
+"set foldexpr=foldCC##foldtext() " 折りたたみ式
 "set cursorline                 " 現在行をハイライト
 set display=lastline            " 最後の行をできるだけ表示する
 set pumheight=20                " ポップアップメニューの最大高
