@@ -820,13 +820,10 @@ AlterCommand u[nite] Unite
 AlterCommand maps Unite -resume mapping
 AlterCommand out[put] Unite -resume output
 AlterCommand rest[art] RestartWithSession
-AlterCommand ex[plorer] Explorer
 AlterCommand cap[ture] Capture
 AlterCommand cdc[urrent] CdCurrent
-AlterCommand inst[all] NeoBundleInstall
 AlterCommand ack Ack
 AlterCommand ct[ags] !ctags -R
-AlterCommand the[saurus] Ref webdict thesaurus
 
 
 "*******************************************************************************
