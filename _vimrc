@@ -797,6 +797,16 @@ augroup MyAutocmd
             \ execute 'normal! g`"' |
         \ endif
 
+    " 起動時にファイル引数なしならスクラッチバッファを開く
+    autocmd VimEnter *
+        \ redir => mes |
+        \ args |
+        \ redir END |
+        \ if empty(mes) |
+            \ drop Scratch |
+        \ endif |
+        \ unlet mes
+
 augroup END
 
 
