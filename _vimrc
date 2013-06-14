@@ -829,8 +829,10 @@ AlterCommand the[saurus] Ref webdict thesaurus
 " Key Mappings:
 "*******************************************************************************
 
-" Qを削除
+" 無効にしておく
 nnoremap Q <Nop>
+nnoremap ZZ <Nop>
+nnoremap ZQ <Nop>
 
 " prefix
 nmap <Space> [Space]
@@ -844,10 +846,6 @@ nmap j <Plug>(accelerated_jk_gj)
 nmap k <Plug>(accelerated_jk_gk)
 nnoremap gj j
 nnoremap gk k
-
-" 行頭／行末移動
-NXnoremap <silent> H @=&wrap ? 'g0' : '0'<CR>
-NXnoremap <silent> L @=&wrap ? 'g$' : '$'<CR>
 
 " すべて選択
 nnoremap ga ggVG
@@ -870,6 +868,12 @@ nnoremap gw :<C-u>%substitute/\<<C-r><C-w>\>/&/gn<CR>
 
 " URLオープン
 nnoremap gx :<C-u>call openuri#cursorline()
+
+" YをDなどと同じような動作にする
+nnoremap Y y$
+
+" Visualモードでの連続貼り付け
+xnoremap p "0p<CR>
 
 " インデント
 nnoremap < <<
@@ -936,12 +940,6 @@ function! s:CrExec()
     return ""
 endfunction
 
-" YをDなどと同じような動作にする
-nnoremap Y y$
-
-" Visualモードでの連続貼り付け
-xnoremap p "0p<CR>
-
 " operator
 xmap P <Plug>(operator-replace)
 xmap O <Plug>(operator-reverse-lines)
@@ -996,20 +994,6 @@ nmap <Leader>xs <Plug>NERDCommenterSexy
 xmap <Leader>xs <Plug>NERDCommenterSexy
 nmap <Leader>xa <Plug>NERDCommenterAltDelims
 
-" SmoothScroll
-"nmap <C-f> <Plug>(smooth-scroll-ctrl-f)
-"nmap <C-b> <Plug>(smooth-scroll-ctrl-b)
-"nmap <C-d> <Plug>(smooth-scroll-ctrl-d)
-"nmap <C-u> <Plug>(smooth-scroll-ctrl-u)
-
-" 検索後ウィンドウの真ん中へ
-"nnoremap n nzz
-"nnoremap N Nzz
-
-" 無効にしておく
-nnoremap ZZ <Nop>
-nnoremap ZQ <Nop>
-
 " ウィンドウ関連
 nnoremap <C-Down>   <C-w>j
 nnoremap <C-Up>     <C-w>k
@@ -1036,9 +1020,13 @@ nnoremap <silent>   [Tab]H  :<C-u>TabMovePrev<CR>
 nnoremap [Tag] <Nop>
 nmap <C-t> [Tag]
 nnoremap [Tag]j g<C-]>
+nmap [Tag]<C-j> [Tag]j
 nnoremap [Tag]t <C-t>
+nmap [Tag]<C-t> [Tag]t
 nnoremap [Tag]n :<C-u>tnext<CR>
+nmap [Tag]<C-n> [Tag]n
 nnoremap [Tag]p :<C-u>tprevious<CR>
+nmap [Tag]<C-p> [Tag]p
 
 " 起動時設定を開く
 nnoremap <silent> [Space]v :<C-u>edit $MYVIMRC<CR>
@@ -1046,13 +1034,6 @@ nnoremap <silent> [Space]gv :<C-u>edit $MYGVIMRC<CR>
 
 " 現在のバッファを読み込み
 nnoremap [Space]<CR> :<C-u>source %<CR>
-
-" コマンド入力的なマップ
-nnoremap [WSpace]re :<C-u>RestartWithSession<CR>
-nnoremap [WSpace]nbi :<C-u>NeoBundleInstall<CR>
-nnoremap [WSpace]nbu :<C-u>NeoBundleUpdate<CR>
-nnoremap [WSpace]sh :<C-u>VimShellBufferDir -popup<CR>
-nnoremap [WSpace]ca :<C-u>Calc<CR>
 
 " オプション表示
 nnoremap <C-s> :<C-u>ShowOption<Space>
@@ -1068,17 +1049,27 @@ endfunction
 nnoremap [Toggle] <Nop>
 nmap T [Toggle]
 nnoremap [Toggle]w :<C-u>call <SID>ToggleLocalOption('wrap')<CR>
+nmap [Toggle]W [Toggle]w
 nnoremap [Toggle]l :<C-u>call <SID>ToggleLocalOption('list')<CR>
+nmap [Toggle]L [Toggle]l
 nnoremap [Toggle]h :<C-u>call <SID>ToggleLocalOption('hlsearch')<CR>
+nmap [Toggle]H [Toggle]h
 nnoremap [Toggle]n :<C-u>call <SID>ToggleLocalOption('number')<CR>
+nmap [Toggle]N [Toggle]n
 nnoremap [Toggle]r :<C-u>call <SID>ToggleLocalOption('relativenumber')<CR>
+nmap [Toggle]R [Toggle]r
 nnoremap [Toggle]c :<C-u>call <SID>ToggleLocalOption('ignorecase')<CR>
+nmap [Toggle]C [Toggle]c
 nnoremap [Toggle]e :<C-u>call <SID>ToggleLocalOption('expandtab')<CR>
+nmap [Toggle]E [Toggle]e
 nnoremap [Toggle]i :<C-u>call <SID>ToggleLocalOption('insertmode')<CR>
+nmap [Toggle]I [Toggle]i
 nnoremap [Toggle]f :<C-u>call <SID>ToggleFolding()<CR>
+nmap [Toggle]F [Toggle]f
 
 " タブ展開切り替え
 nnoremap <silent> [Toggle]t :<C-u>setlocal expandtab! \| %retab!<CR>
+nmap [Toggle]T [Toggle]t
 
 " オプションの切り替えとその表示
 function! s:ToggleLocalOption(opt)
@@ -1099,21 +1090,6 @@ function! s:ToggleFolding()
         setlocal foldcolumn=5
     else
         setlocal foldcolumn=0
-    endif
-endfunction
-
-" リスト表示、indent-guides、行末空白ハイライトの同時切り替え
-nnoremap <silent> [Toggle]T :<C-u>call <SID>ToggleShowInfo()<CR>
-function! s:ToggleShowInfo()
-    let b:no_show_info = empty(getbufvar('%', 'no_show_info'))
-    if b:no_show_info
-        setlocal nolist
-        AutoTrailingWhitespaceDisable
-        IndentGuidesDisable
-    else
-        setlocal list
-        AutoTrailingWhitespaceEnable
-        IndentGuidesEnable
     endif
 endfunction
 
@@ -1196,7 +1172,6 @@ call submode#map('winsize', 'n', '', '_', '<C-w>_')
 " Ref
 nnoremap <silent> <expr> K
     \ ':Ref webdict alc ' . GetCursorWord('[a-zA-Z]*') . '<CR>'
-"nmap K <Plug>(ref-keyword)
 
 
 "-------------------------------------------------------------------------------
