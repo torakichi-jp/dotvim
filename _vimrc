@@ -15,9 +15,9 @@ let s:is_unix = has('unix')
 
 " directory name by OS kinds (.vim or vimfiles)
 if s:is_windows
-    let s:dotvim = expand('~/vimfiles')
+    let s:dotvimdir = expand('~/vimfiles')
 elseif s:is_unix
-    let s:dotvim = expand('~/.vim')
+    let s:dotvimdir = expand('~/.vim')
 endif
 
 " <Leader>設定
@@ -35,9 +35,9 @@ augroup END
 
 " required
 if has('vim_starting')
-    let &runtimepath = &runtimepath . ',' . s:dotvim . '/bundle/neobundle.vim'
+    let &runtimepath = &runtimepath . ',' . s:dotvimdir . '/bundle/neobundle.vim'
 endif
-call neobundle#rc(s:dotvim . '/bundle')
+call neobundle#rc(s:dotvimdir . '/bundle')
 
 " bundles
 NeoBundleFetch 'Shougo/neobundle.vim'
@@ -494,9 +494,9 @@ endif
 
 set backup                              " バックアップする
 "set updatecount=0                      " スワップファイルなし
-let &backupdir = s:dotvim . '/.backup'  " バックアップを作成するディレクトリ
+let &backupdir = s:dotvimdir . '/.backup'  " バックアップを作成するディレクトリ
 set undofile                            " アンドゥファイルを作成する
-let &undodir = s:dotvim . '/.undo'      " アンドゥファイルを作成するディレクトリ
+let &undodir = s:dotvimdir . '/.undo'      " アンドゥファイルを作成するディレクトリ
 
 " capslock.vim
 " capslockモード中なら表示を追加
@@ -1305,6 +1305,8 @@ cnoreabbrev @v $MYVIMRC
 cnoreabbrev @g $MYGVIMRC
 
 
+"*******************************************************************************
 " unlet variables.
-unlet s:dotvim
+"*******************************************************************************
+unlet s:dotvimdir
 
