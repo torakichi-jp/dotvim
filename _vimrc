@@ -676,6 +676,12 @@ command! -nargs=? -complete=file Diff
         \ vertical diffsplit <args> |
     \ endif
 
+" DiffOrig
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+		  \ | wincmd p | diffthis
+endif
+
 " Capture :mapとかのメッセージをキャプチャ
 command! -nargs=+ -complete=command Capture call s:CmdCapture(<q-args>)
 function! s:CmdCapture(args) "{{{
