@@ -429,15 +429,17 @@ set backspace=indent,eol,start  " Backspaceの挙動
 set ruler                       " ルーラー表示
 set title                       " タイトルを表示
 set showcmd                     " 入力中コマンドの表示
+set cmdheight=2                 " コマンドをステータス行に表示
 set laststatus=2                " 常にステータス行を表示
 set showtabline=2               " タブ行を常に表示
+set autoindent                  " 自動インデント
 set switchbuf=split,newtab      " バッファの切り替えオプション
 set tabline=%!MakeTabLine()     " タブ行の表示設定
 set foldenable                  " 折りたたみを有効に
 set foldcolumn=5                " 折りたたみ列を5列表示
-"set foldmethod=expr             " 式で折りたたみ
+set foldmethod=manual           " 手動で折りたたみ
 "set foldexpr=foldCC##foldtext() " 折りたたみ式
-"set cursorline                 " 現在行をハイライト
+set cursorline                  " 現在行をハイライト
 set display=lastline            " 最後の行をできるだけ表示する
 set pumheight=20                " ポップアップメニューの最大高
 set previewheight=5             " プレビューウィンドウの高さ
@@ -450,7 +452,7 @@ set helplang=ja                 " 日本語ヘルプ
 set hidden                      " バッファ更新を破棄しない
 set confirm                     " エラーにせず確認ダイアログを出す
 set noshowmatch                 " 対応括弧にジャンプしない
-set completeopt+=longest
+set completeopt+=longest        " 補完オプション
 set tabstop=4                   " タブ幅
 set expandtab                   " タブ展開する
 set shiftwidth=4                " インデント幅
@@ -462,6 +464,7 @@ set winaltkeys=no               " メニューのためにAltキーを使わな�
 set tags+=./tags;,./**/tags     " タグファイル検索パス
 "set complete-=i                " インクルードファイルを補完検索対象から除外
 set sidescroll=1                " 水平スクロールの刻み幅
+set wildmenu                    " 拡張コマンドライン補完を有効
 set wildmode=longest,full       " コマンドライン補完最長一致
 set viminfo& viminfo+=/0        " 検索履歴をviminfoに記録しない
 "set lazyredraw                 " マクロ実行中の画面再描画なし
@@ -484,6 +487,9 @@ set list                        " 不可視文字の表示設定
 set listchars=tab:>-,trail:_,extends:>,precedes:<
 " タイトル行の表示設定
 "set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:~:h\")})%)%(\ %a%)%(\ -\ %{v:servername}%)
+if has('mouse')
+    set mouse=a
+endif
 
 set backup                              " バックアップする
 "set updatecount=0                      " スワップファイルなし
@@ -905,8 +911,8 @@ nnoremap + <C-a>
 nnoremap - <C-x>
 
 " cwordでヘルプを引く
-nnoremap <silent> <F1> :<C-u>help <C-r><C-w><Bar>tjump<CR>
-xnoremap <silent> <F1> :<C-u>help <C-r>=GetSelectedWord()<Bar>tjump<CR><CR>
+nnoremap <silent> <F1> :<C-u>help <C-r><C-w><CR>
+xnoremap <silent> <F1> :<C-u>help <C-r>=GetSelectedWord()<CR>
 
 " バッファのファイルがある場所をカレントディレクトリにする
 nnoremap <F2> :<C-u>cd %:p:h<Bar>pwd<CR>
@@ -1332,6 +1338,7 @@ function! GVimSettings()
 
     set guioptions=mgtr             " GUIオプション(詳細は:h 'go')
     set browsedir=buffer            " browse時のディレクトリ設定(カレントバッファと同じ)
+    set nohlsearch                  " 検索ハイライトなし
     "set mousefocus                 " マウス移動でウィンドウフォーカス
     "set mousemodel=popup_setpos    " 右クリックでカーソル移動＆メニュー表示
 
