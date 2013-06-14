@@ -65,7 +65,6 @@ NeoBundle 'tyru/restart.vim'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'tyru/open-browser-github.vim'
 NeoBundle 'tyru/winmove.vim'
-NeoBundle 'tyru/nextfile.vim'
 NeoBundle 'tyru/emap.vim'
 NeoBundle 'chrismetcalf/vim-taglist'
 NeoBundle 'taku-o/vim-toggle'
@@ -90,11 +89,7 @@ NeoBundle 'basyura/twibill.vim'
 NeoBundle 'basyura/bitly.vim'
 NeoBundle 'mattn/favstar-vim'
 NeoBundle 'scrooloose/nerdcommenter'
-NeoBundle 'LeafCage/foldCC'
-NeoBundle 'https://bitbucket.org/anyakichi/vim-qfutil'
 NeoBundle 'rhysd/accelerated-jk'
-NeoBundleLazy 'rhysd/clever-f.vim'
-NeoBundleLazy 'goldfeld/vim-seek'
 "NeoBundleLazy 'tpope/vim-surround'
 "NeoBundleLazy 't9md/vim-surround_custom_mapping', '', '', {
 "       \ 'depends' : 'vim-surround',
@@ -158,12 +153,6 @@ NeoBundle 'emonkak/vim-operator-sort'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'mattn/learn-vimscript'
 
-" jokes
-NeoBundleLazy 'koron/minimap-vim'
-NeoBundleLazy 'thinca/vim-scouter'
-NeoBundleLazy 'mattn/unite-nyancat'
-NeoBundleLazy 'osyo-manga/unite-shimapan'
-NeoBundleLazy 'mattn/hahhah-vim'
 
 " Installation check.
 NeoBundleCheck
