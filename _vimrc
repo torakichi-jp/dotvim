@@ -54,6 +54,7 @@ NeoBundle 'thinca/vim-ref'
 NeoBundle 'thinca/vim-fontzoom'
 NeoBundle 'thinca/vim-openbuf'
 NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'thinca/vim-singleton'
 NeoBundleLazy 'thinca/vim-vcs'
 NeoBundle 'gregsexton/VimCalc'
 NeoBundle 'mattn/calendar-vim'
@@ -186,6 +187,9 @@ let g:vimsyn_folding = 'af'
 let g:loaded_getscriptPlugin = 1
 " netrw.vimを無効にする
 let g:loaded_netrwPlugin = 1
+
+" Vim with singleton
+call singleton#enable()
 
 " vimproc
 " TODO: windowsでのビルドもできるようにする
