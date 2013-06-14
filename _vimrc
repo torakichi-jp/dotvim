@@ -455,6 +455,7 @@ set virtualedit+=block          " ビジュアル矩形モードで仮想編集
 set cinoptions=:0,l1,g0,m1      " C/C++インデントオプション
 set matchpairs& matchpairs+=<:> " 括弧ペアに<>を加える
 set winaltkeys=no               " メニューのためにAltキーを使わない
+set path+=;/                    " 親ディレクトリも辿る
 set tags+=./tags;,./**/tags     " タグファイル検索パス
 "set complete-=i                " インクルードファイルを補完検索対象から除外
 set sidescroll=1                " 水平スクロールの刻み幅
@@ -787,9 +788,6 @@ augroup MyAutocmd
     autocmd CmdwinEnter * startinsert
     " qで終了する
     autocmd CmdwinEnter * nnoremap <buffer> <silent> q :<C-u>quit<CR>
-
-    " pathを親ディレクトリも辿るように設定
-    autocmd FileType c,cpp,vim,html setlocal path+=;/
 
     " 前回のカーソル位置を復元
     autocmd BufReadPost *
