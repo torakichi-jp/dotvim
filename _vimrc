@@ -20,10 +20,10 @@ elseif s:is_unix
     let s:dotvimdir = expand('~/.vim')
 endif
 
-" <Leader>設定
+" setting <leader> key
 let g:mapleader=','
 
-" オートコマンド設定
+" initialize autocmd
 augroup MyAutocmd
     autocmd!
 augroup END
@@ -158,10 +158,10 @@ NeoBundle 'mattn/learn-vimscript'
 " Installation check.
 NeoBundleCheck
 
-" ファイルタイプ検出を有効に
+" required
 filetype plugin indent on
 
-" 構文強調を有効に
+" enable syntax
 if &t_Co > 1
     syntax enable
 endif
