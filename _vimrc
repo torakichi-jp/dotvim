@@ -411,46 +411,42 @@ unlet s:bundle
 " マウスの挙動をWindowsの動作にする
 behave mswin
 
+" カラースキーム
+colorscheme blued
+
 " 無名レジスタの代わりにクリップボードを使う
 "set clipboard& clipboard+=unnamed
 
-colorscheme blued               " カラースキーム
 set columns=99                  " 列数(_gvimrcで再設定してる)
 set lines=36                    " 行数(_gvimrcで再設定してる)
 set number                      " 行番号表示
 "set relativenumber             " 相対行番号表示
-set backspace=indent,eol,start  " Backspaceの挙動
 set ruler                       " ルーラー表示
 set title                       " タイトルを表示
 set showcmd                     " 入力中コマンドの表示
-set cmdheight=2                 " コマンドをステータス行に表示
+set hidden                      " バッファ更新を破棄しない
+set confirm                     " エラーにせず確認ダイアログを出す
+set backspace=indent,eol,start  " Backspaceの挙動
+set cursorline                  " 現在行をハイライト
+set display=lastline            " 最後の行をできるだけ表示する
+set cmdheight=2                 " コマンドライン行数
+set noequalalways               " ウィンドウの自動サイズ調整をしない
+set wrap                        " 右端で折り返し
+set textwidth=0                 " テキスト幅
 set laststatus=2                " 常にステータス行を表示
 set showtabline=2               " タブ行を常に表示
 set autoindent                  " 自動インデント
 set switchbuf=split,newtab      " バッファの切り替えオプション
 set tabline=%!MakeTabLine()     " タブ行の表示設定
-set foldenable                  " 折りたたみを有効に
-set foldcolumn=5                " 折りたたみ列を5列表示
-set foldmethod=manual           " 手動で折りたたみ
-"set foldexpr=foldCC##foldtext() " 折りたたみ式
-set cursorline                  " 現在行をハイライト
-set display=lastline            " 最後の行をできるだけ表示する
-set pumheight=20                " ポップアップメニューの最大高
+set helpheight=0                " ヘルプの最小高
+set helplang=ja                 " 日本語ヘルプ
+set pumheight=10                " ポップアップメニューの最大高
 set previewheight=5             " プレビューウィンドウの高さ
 set shortmess& shortmess+=I     " 起動時のメッセージなし
 "set showbreak=>\               " 折り返し行頭の文字列（最後の空白に注意）
 "set cpoptions+=n               " 折り返し行を行番号列から表示
 set cmdwinheight=5              " コマンドラインウィンドウの高さ
-set helpheight=0                " ヘルプの最小高
-set helplang=ja                 " 日本語ヘルプ
-set hidden                      " バッファ更新を破棄しない
-set confirm                     " エラーにせず確認ダイアログを出す
 set noshowmatch                 " 対応括弧にジャンプしない
-set completeopt+=longest        " 補完オプション
-set tabstop=4                   " タブ幅
-set expandtab                   " タブ展開する
-set shiftwidth=4                " インデント幅
-set softtabstop=4               " <Tab>や<BS>を入力したときの移動幅
 set virtualedit+=block          " ビジュアル矩形モードで仮想編集
 set cinoptions=:0,l1,g0,m1      " C/C++インデントオプション
 set matchpairs& matchpairs+=<:> " 括弧ペアに<>を加える
@@ -458,7 +454,7 @@ set winaltkeys=no               " メニューのためにAltキーを使わな�
 set path+=;/                    " 親ディレクトリも辿る
 set tags+=./tags;,./**/tags     " タグファイル検索パス
 "set complete-=i                " インクルードファイルを補完検索対象から除外
-set sidescroll=1                " 水平スクロールの刻み幅
+set completeopt=menu,preview,longest    " 補完オプション
 set wildmenu                    " 拡張コマンドライン補完を有効
 set wildmode=longest,full       " コマンドライン補完最長一致
 set viminfo& viminfo+=/0        " 検索履歴をviminfoに記録しない
@@ -466,31 +462,57 @@ set viminfo& viminfo+=/0        " 検索履歴をviminfoに記録しない
 set nostartofline               " 縦移動で、できるだけ列を維持する
 set timeout                     " マップ、キーコードで一定時間待つ
 set timeoutlen=3000             " マップ、キーコードの待ち時間(ms)
-set noequalalways               " ウィンドウの自動サイズ調整をしない
-set wrap                        " 右端で折り返し
-set textwidth=0                 " テキスト幅
 set selectmode=                 " セレクトモードを使わない
-set incsearch                   " インクリメンタルサーチを有効
-set nohlsearch                  " 検索ハイライト無効
-set ignorecase                  " 大文字小文字を無視
-set smartcase                   " 大文字が含まれるときのみ無視しない
 set grepprg=grep\ -nH           " grepプログラム
 "set grepprg=ack\ -H            " grepにackを使う
 set gdefault                    " 候補を全部置換する
-set wrapscan                    " 最後まで行ったら最初に戻る
+set sidescroll=1                " 水平スクロールの刻み幅
+set sidescrolloff=1             " 水平スクロールでカーソル周辺の表示文字数
 set list                        " 不可視文字の表示設定
 set listchars=tab:>-,trail:_,extends:>,precedes:<
+
+" tab, indent option
+set tabstop=4           " タブ幅
+set expandtab           " タブ展開する
+set shiftwidth=4        " インデント幅
+set softtabstop=4       " <Tab>や<BS>を入力したときの移動幅
+
+" searching option
+set incsearch           " インクリメンタルサーチを有効
+set nohlsearch          " 検索ハイライト無効
+set ignorecase          " 大文字小文字を無視
+set smartcase           " 大文字が含まれるときのみ無視しない
+set wrapscan            " 最後まで行ったら最初に戻る
+
+" folding option
+set foldenable          " 折りたたみを有効に
+set foldcolumn=5        " 折りたたみ列を5列表示
+set foldmethod=manual   " 手動で折りたたみ
+"set foldexpr=foldCC##foldtext()    " 折りたたみ式
+
 " タイトル行の表示設定
 "set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:~:h\")})%)%(\ %a%)%(\ -\ %{v:servername}%)
+
 if has('mouse')
     set mouse=a
 endif
 
+" backup option
 set backup                              " バックアップする
 "set updatecount=0                      " スワップファイルなし
 let &backupdir = s:dotvimdir . '/.backup'  " バックアップを作成するディレクトリ
 set undofile                            " アンドゥファイルを作成する
 let &undodir = s:dotvimdir . '/.undo'      " アンドゥファイルを作成するディレクトリ
+" バックアップディレクトリがなかったら作成する
+if &backupdir!=#'' && !isdirectory(&backupdir)
+    call mkdir(&backupdir)
+endif
+" スワップファイルを作成するディレクトリ
+let &directory=&backupdir
+" アンドゥファイルディレクトリがなかったら作成する
+if &undodir!=#'' && !isdirectory(&undodir)
+    call mkdir(&undodir)
+endif
 
 " capslock.vim
 " capslockモード中なら表示を追加
@@ -515,25 +537,8 @@ let g:doxygen_enhanced_color = 1
 " VimScriptの行連結バックスラッシュをインデントしない
 let g:vim_indent_cont = 0
 
-" すでにVimで同じファイルが開かれてたらそっちへフォーカス
-"if has('vim_starting')
-"   runtime macros/editexisting.vim
-"endif
-"call singleton#enable()
-
 " %による移動強化
 runtime macros/matchit.vim
-
-" バックアップディレクトリがなかったら作成する
-if &backupdir!=#'' && !isdirectory(&backupdir)
-    call mkdir(&backupdir)
-endif
-" スワップファイルを作成するディレクトリ
-let &directory=&backupdir
-" アンドゥファイルディレクトリがなかったら作成する
-if &undodir!=#'' && !isdirectory(&undodir)
-    call mkdir(&undodir)
-endif
 
 " タブページの表示行設定
 function! MakeTabLine()
@@ -679,7 +684,7 @@ command! -nargs=? -complete=file Diff
 " DiffOrig
 if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-		  \ | wincmd p | diffthis
+          \ | wincmd p | diffthis
 endif
 
 " Capture :mapとかのメッセージをキャプチャ
