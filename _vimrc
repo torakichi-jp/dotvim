@@ -464,9 +464,6 @@ set nostartofline               " 縦移動で、できるだけ列を維持す�
 set timeout                     " マップ、キーコードで一定時間待つ
 set timeoutlen=3000             " マップ、キーコードの待ち時間(ms)
 set selectmode=                 " セレクトモードを使わない
-set grepprg=grep\ -nH           " grepプログラム
-"set grepprg=ack\ -H            " grepにackを使う
-set gdefault                    " 候補を全部置換する
 set sidescroll=1                " 水平スクロールの刻み幅
 set sidescrolloff=1             " 水平スクロールでカーソル周辺の表示文字数
 set list                        " 不可視文字の表示設定
@@ -484,12 +481,14 @@ set nohlsearch          " 検索ハイライト無効
 set ignorecase          " 大文字小文字を無視
 set smartcase           " 大文字が含まれるときのみ無視しない
 set wrapscan            " 最後まで行ったら最初に戻る
+set grepprg=grep\ -nH   " grepプログラム
+"set grepprg=ack\ -H    " grepにackを使う
+set gdefault            " 候補を全部置換する
 
 " folding option
 set foldenable          " 折りたたみを有効に
-set foldcolumn=5        " 折りたたみ列を5列表示
+set foldcolumn=2        " 折りたたみ列数
 set foldmethod=manual   " 手動で折りたたみ
-"set foldexpr=foldCC##foldtext()    " 折りたたみ式
 
 " タイトル行の表示設定
 "set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:~:h\")})%)%(\ %a%)%(\ -\ %{v:servername}%)
