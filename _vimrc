@@ -1037,6 +1037,15 @@ nnoremap <silent>   [Tab]r  :<C-u>TabRecent<CR>
 nnoremap            [Tab]w  <C-w>T
 nnoremap <silent>   [Tab]L  :<C-u>TabMoveNext<CR>
 nnoremap <silent>   [Tab]H  :<C-u>TabMovePrev<CR>
+nnoremap            [Tab]1  1gt
+nnoremap            [Tab]2  2gt
+nnoremap            [Tab]3  3gt
+nnoremap            [Tab]4  4gt
+nnoremap            [Tab]5  5gt
+nnoremap            [Tab]6  6gt
+nnoremap            [Tab]7  7gt
+nnoremap            [Tab]8  8gt
+nnoremap            [Tab]9  9gt
 
 " タグサーチ
 nnoremap [Tag] <Nop>
