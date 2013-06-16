@@ -83,7 +83,7 @@ NeoBundle 't9md/vim-textmanip'
 NeoBundle 'fuenor/qfixhowm'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'Lokaltog/vim-powerline'
+NeoBundleLazy 'Lokaltog/vim-powerline'
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'basyura/TweetVim'
 NeoBundle 'basyura/twibill.vim'
@@ -223,16 +223,20 @@ function! s:bundle.hooks.on_source(bundle)
 endfunction
 
 " powerline
-let g:Powerline_symbols = 'compatible'
-let g:Powerline_mode_n = 'Normal'
-let g:Powerline_mode_i = 'Insert'
-let g:Powerline_mode_R = 'Replace'
-let g:Powerline_mode_v = 'Visual'
-let g:Powerline_mode_V = 'V-Line'
-let g:Powerline_mode_cv = 'V-Block'
-let g:Powerline_mode_s = 'Select'
-let g:Powerline_mode_S = 'S-Line'
-let g:Powerline_mode_cs = 'S-Block'
+if s:is_gui
+    NeoBundleSource vim-powerline
+    let g:Powerline_symbols = 'compatible'
+    let g:Powerline_stl_path_style = 'relative'
+    let g:Powerline_mode_n = ' N '
+    let g:Powerline_mode_i = 'Insert'
+    let g:Powerline_mode_R = 'Replace'
+    let g:Powerline_mode_v = 'Visual'
+    let g:Powerline_mode_V = 'V-Line'
+    let g:Powerline_mode_cv = 'V-Block'
+    let g:Powerline_mode_s = 'Select'
+    let g:Powerline_mode_S = 'S-Line'
+    let g:Powerline_mode_cs = 'S-Block'
+endif
 
 " vimfiler
 let g:vimfiler_as_default_explorer = 1
@@ -241,23 +245,6 @@ let g:vimfiler_safe_mode_by_default = 0
 " Unite設定
 let g:unite_winheight = 10
 let g:unite_enable_start_insert = 0
-
-" filterとか
-" デフォルトmatcher
-"call unite#filters#matcher_default#use(['flexmatcher'])
-" ファイル名filter
-call unite#custom_filters('file_mru,bookmark',
-    \ ['matcher_file_name', 'sorter_default', 'converter_default'])
-
-call unite#custom_filters('buffer,buffer_tab,file,neocomplcache',
-    \ ['flexmatcher', 'sorter_default', 'converter_default'])
-
-" Unite line_migemo
-let g:unite_source_alias_aliases = {}
-let g:unite_source_alias_aliases.line_migemo = {
-    \ 'source' : 'line',
-    \ }
-call unite#custom_source('line_migemo', 'matchers', 'matcher_migemo')
 
 " unite-menu
 if !exists('g:unite_source_menu_menus')
@@ -356,11 +343,6 @@ let g:ref_source_webdict_sites.default = 'ej'
 
 " QFixHowm
 let mygrep = 'grep'
-
-" nextfile.vim
-let g:nf_include_dotfiles = 1
-let g:nf_loop_files = 1
-let g:nf_ignore_ext = ['exe', 'dll']
 
 "indent-guides
 let g:indent_guides_enable_on_vim_startup = 1
@@ -1338,5 +1320,8 @@ cnoreabbrev @g $MYGVIMRC
 "*******************************************************************************
 " unlet variables.
 "*******************************************************************************
+unlet s:is_gui
+unlet s:is_windows
+unlet s:is_unix
 unlet s:dotvimdir
 
