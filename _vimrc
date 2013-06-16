@@ -222,6 +222,18 @@ function! s:bundle.hooks.on_source(bundle)
     "let g:neocomplete#disable_auto_complete = 1
 endfunction
 
+" powerline
+let g:Powerline_symbols = 'compatible'
+let g:Powerline_mode_n = 'Normal'
+let g:Powerline_mode_i = 'Insert'
+let g:Powerline_mode_R = 'Replace'
+let g:Powerline_mode_v = 'Visual'
+let g:Powerline_mode_V = 'V-Line'
+let g:Powerline_mode_cv = 'V-Block'
+let g:Powerline_mode_s = 'Select'
+let g:Powerline_mode_S = 'S-Line'
+let g:Powerline_mode_cs = 'S-Block'
+
 " vimfiler
 let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_safe_mode_by_default = 0
