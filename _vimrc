@@ -222,9 +222,9 @@ function! s:bundle.hooks.on_source(bundle)
 endfunction
 
 " neocomplete
+let g:neocomplete#enable_at_startup = 1
 let s:bundle = neobundle#get('neocomplete.vim')
 function! s:bundle.hooks.on_source(bundle)
-    let g:neocomplete#enable_at_startup = 1
     let g:neocomplete#enable_auto_select = 1
     "let g:neocomplete#disable_auto_complete = 1
 endfunction
