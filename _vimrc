@@ -200,18 +200,18 @@ call singleton#enable()
 
 " vimproc
 " TODO: windowsでのビルドもできるようにする
+if !s:is_windows
+    call neobundle#config('vimproc', {
+        \ 'build' : {
+        \       'windows' : 'make -f make_mingw32.mak',
+        \       'cygwin' : 'make -f make_cygwin.mak',
+        \       'mac' : 'make -f make_mac.mak',
+        \       'unix' : 'make -f make_unix.mak',
+        \ }
+    \ })
+endif
 let s:bundle = neobundle#get('vimproc')
 function! s:bundle.hooks.on_source(bundle)
-    if !has('win64') && !has('win32')
-        call neobundle#config('vimproc', {
-            \ 'build' : {
-            \       'windows' : 'make -f make_mingw32.mak',
-            \       'cygwin' : 'make -f make_cygwin.mak',
-            \       'mac' : 'make -f make_mac.mak',
-            \       'unix' : 'make -f make_unix.mak',
-            \ }
-        \ })
-    endif
 endfunction
 
 " NERD_commenter
