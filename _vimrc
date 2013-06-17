@@ -853,8 +853,8 @@ nnoremap gk k
 nnoremap ga ggVG
 
 " grep
-nnoremap gr :<C-u>lgrep <C-r><C-w> *
-xnoremap gr :<C-u>lgrep <C-r>=GetSelectedWord()<CR> *
+nnoremap gr :<C-u>grep <C-r><C-w> *
+xnoremap gr :<C-u>grep <C-r>=GetSelectedWord()<CR> *
 
 " Google検索
 nnoremap <silent> gs :<C-u>GoogleSearch <C-r>=GetCursorWord('[a-zA-Z]*')<CR><CR>
@@ -864,6 +864,9 @@ xnoremap <silent> gs :<C-u>GoogleSearch <C-r>=GetSelectedWord()<CR><CR>
 NXmap gh <Plug>(quickhl-toggle)
 NXmap gH <Plug>(quickhl-reset)
 nmap gm <Plug>(quickhl-match)
+
+" 画面再描画
+nnoremap gl <C-l>
 
 " 単語を数える :%substitute/\<word\>/&/gn
 nnoremap gw :<C-u>%substitute/\<<C-r><C-w>\>/&/gn<CR>
@@ -898,13 +901,17 @@ nmap b <Plug>(textobj-wiw-p)
 nmap e <Plug>(textobj-wiw-N)
 nmap ge <Plug>(textobj-wiw-P)
 
-" クリップボードレジスタ
-noremap <C-a> "*
+" 行頭、行末へ移動
+nnoremap <C-h> g0
+nnoremap <C-l> g$
 
 " toggle.vim
-nmap <C-c> <Plug>ToggleN
-imap <C-c> <Plug>ToggleI
-vmap <C-c> <Plug>ToggleV
+nmap <C-a> <Plug>ToggleN
+imap <C-a> <Plug>ToggleI
+vmap <C-a> <Plug>ToggleV
+
+" クリップボードレジスタ
+noremap <C-c> "*
 
 " vim-fontzoom
 let g:fontzoom_no_default_key_mappings = 1
@@ -927,7 +934,7 @@ nnoremap <F2> :<C-u>cd %:p:h<Bar>pwd<CR>
 nnoremap <silent> <F4> :<C-u>TlistToggle<CR>
 
 " make
-nnoremap <F7> :<C-u>lmake<CR>
+nnoremap <F7> :<C-u>make<CR>
 
 " カウント指定があれば<CR>で行移動
 " なければ再描画＆検索ハイライトオフ
@@ -1189,6 +1196,7 @@ nnoremap <silent> <expr> K
 " 挿入モードキーマップ
 "-------------------------------------------------------------------------------
 
+" 補完
 inoremap <expr> <CR> pumvisible() ? neocomplete#smart_close_popup() : '<CR>'
 inoremap <expr> <C-y> neocomplete#close_popup()
 inoremap <expr> <C-e> neocomplete#cancel_popup()
