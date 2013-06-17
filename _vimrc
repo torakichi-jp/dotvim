@@ -75,12 +75,6 @@ NeoBundle 'kana/vim-niceblock'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'dannyob/quickfixstatus'
 NeoBundle 'deris/vim-rengbang'
-NeoBundle 'deris/vim-operator-rengbang', {
-    \ 'depends' : [
-    \   'deris/vim-rengbang',
-    \   'kana/vim-operator-user',
-    \ ]
-\ }
 NeoBundle 'jceb/vim-hier'
 NeoBundle 'ujihisa/neco-look'
 NeoBundleLazy 'ujihisa/quicklearn'
