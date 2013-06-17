@@ -395,14 +395,6 @@ let g:toggle_pairs = {
     \ 'or' : 'and',
 \ }
 
-" foldCC
-let g:foldCCtext_tail = 'v:foldend-v:foldstart+1'
-
-" accelerated-smooth-scroll
-"let g:ac_smooth_scroll_no_default_key_mappings = 1
-"let g:ac_smooth_scroll_du_sleep_time_msec = 1
-"let g:ac_smooth_scroll_fb_sleep_time_msec = 1
-
 unlet s:bundle
 
 "*******************************************************************************
