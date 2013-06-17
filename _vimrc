@@ -900,6 +900,9 @@ nmap ge <Plug>(textobj-wiw-P)
 nnoremap <C-h> g0
 nnoremap <C-l> g$
 
+" 括弧ペアに移動
+map <C-j> %
+
 " toggle.vim
 nmap <C-a> <Plug>ToggleN
 imap <C-a> <Plug>ToggleI
