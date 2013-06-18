@@ -344,7 +344,8 @@ delfunction s:SetWebDictsFilter
 let g:ref_source_webdict_sites.default = 'ej'
 
 " QFixHowm
-let mygrep = 'grep'
+let g:mygrep = 'grep'
+let g:howm_fileencoding = 'utf-8'
 
 "indent-guides
 let g:indent_guides_enable_on_vim_startup = 1
