@@ -400,7 +400,7 @@ unlet s:bundle
 behave mswin
 
 " カラースキーム
-colorscheme blued
+colorscheme home_color
 
 " 無名レジスタの代わりにクリップボードを使う
 "set clipboard& clipboard+=unnamed
