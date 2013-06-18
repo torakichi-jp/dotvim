@@ -8,9 +8,10 @@
 let s:is_windows = has('win32') || has('win64')
 let s:is_unix = has('unix')
 
-set guioptions=mgtr             " GUIオプション(詳細は:h 'go')
-set browsedir=buffer            " browse時のディレクトリ設定(カレントバッファと同じ)
+set guioptions=mgtr             " gui menu, grayed menu, tearoff menu, right scrollbar
+set browsedir=buffer            " browse時のディレクトリをカレントバッファと同じに
 set nohlsearch                  " 検索ハイライトなし
+set cursorline                  " 現在行をハイライト
 "set mousefocus                 " マウス移動でウィンドウフォーカス
 "set mousemodel=popup_setpos    " 右クリックでカーソル移動＆メニュー表示
 

@@ -4,24 +4,33 @@
 "
 "*******************************************************************************
 
-scriptencoding utf-8    " この設定ファイルの文字コード設定
-set nocompatible        " vi非互換
-set shellslash          " パス区切りを/にする
+scriptencoding utf-8    " this script's encoding
+set nocompatible        " Vi Improved
+set shellslash          " path delimiter is slash
+
+" setting <leader> key
+let g:mapleader=','
 
 " switching variables
 let s:is_gui = has('gui_running')
 let s:is_windows = has('win32') || has('win64')
 let s:is_unix = has('unix')
 
-" directory name by OS kinds (.vim or vimfiles)
+" path to .vim dir
 if s:is_windows
     let s:dotvimdir = expand('~/vimfiles')
 elseif s:is_unix
     let s:dotvimdir = expand('~/.vim')
 endif
 
-" setting <leader> key
-let g:mapleader=','
+" path to .gvimrc
+if !exists($MYGVIMRC)
+    if s:is_windows
+        let $MYGVIMRC = expand('~/_gvimrc')
+    else
+        let $MYGVIMRC = expand('~/.gvimrc')
+    endif
+endif
 
 " initialize autocmd
 augroup MyAutocmd
@@ -45,6 +54,7 @@ NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'Shougo/neocomplcache.vim'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/vinarise'
 NeoBundle 'thinca/vim-visualstar'
@@ -55,6 +65,7 @@ NeoBundle 'thinca/vim-fontzoom'
 NeoBundle 'thinca/vim-openbuf'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'thinca/vim-singleton'
+NeoBundle 'thinca/vim-editvar'
 NeoBundleLazy 'thinca/vim-vcs'
 NeoBundle 'mattn/calendar-vim'
 NeoBundle 'mattn/wwwrenderer-vim'
@@ -75,8 +86,8 @@ NeoBundle 'kana/vim-tabpagecd'
 NeoBundle 'kana/vim-niceblock'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'dannyob/quickfixstatus'
-NeoBundle 'deris/vim-rengbang'
 NeoBundle 'jceb/vim-hier'
+NeoBundle 'deris/vim-rengbang'
 NeoBundle 'ujihisa/neco-look'
 NeoBundleLazy 'ujihisa/quicklearn'
 NeoBundle 'tpope/vim-capslock'
@@ -102,14 +113,12 @@ NeoBundle 'rhysd/accelerated-jk'
 "               \ ['n', '<Plug>Ysurround'], ['n', '<Plug>YSurround']
 "           \ ]}}
 
-" from vim.org
 NeoBundle 'Colour-Sampler-Pack'
 NeoBundle 'SingleCompile'
 NeoBundle 'ack.vim'
 NeoBundle 'sudo.vim'
 NeoBundleLazy 'colorsel.vim'
 NeoBundleLazy 'vimwiki'
-NeoBundleLazy 'CSApprox'
 
 " textobj
 NeoBundle 'kana/vim-textobj-user'
@@ -185,16 +194,15 @@ endif
 " mzscheme: m
 let g:vimsyn_folding = 'af'
 
-" GetLatestVimPlugin.vimを無効にする
+" disable GetLatestVimPlugin.vim
 let g:loaded_getscriptPlugin = 1
-" netrw.vimを無効にする
+" disable netrw.vim
 let g:loaded_netrwPlugin = 1
 
 " Vim with singleton
 call singleton#enable()
 
 " vimproc
-" TODO: windowsでのビルドもできるようにする
 if !s:is_windows
     call neobundle#config('vimproc', {
         \ 'build' : {
@@ -205,9 +213,6 @@ if !s:is_windows
         \ }
     \ })
 endif
-let s:bundle = neobundle#get('vimproc')
-function! s:bundle.hooks.on_source(bundle)
-endfunction
 
 " NERD_commenter
 let s:bundle = neobundle#get('nerdcommenter')
@@ -397,10 +402,10 @@ unlet s:bundle
 " Option Settings:
 "*******************************************************************************
 
-" マウスの挙動をWindowsの動作にする
+" mouse behaves windows
 behave mswin
 
-" カラースキーム
+" colorscheme
 colorscheme home_color
 
 " 無名レジスタの代わりにクリップボードを使う
@@ -416,7 +421,7 @@ set showcmd                     " 入力中コマンドの表示
 set hidden                      " バッファ更新を破棄しない
 set confirm                     " エラーにせず確認ダイアログを出す
 set backspace=indent,eol,start  " Backspaceの挙動
-set cursorline                  " 現在行をハイライト
+"set cursorline                  " 現在行をハイライト
 set display=lastline            " 最後の行をできるだけ表示する
 set cmdheight=2                 " コマンドライン行数
 set noequalalways               " ウィンドウの自動サイズ調整をしない
