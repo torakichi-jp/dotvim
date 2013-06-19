@@ -5,8 +5,9 @@
 "*******************************************************************************
 
 scriptencoding utf-8    " this script's encoding
-set nocompatible        " Vi Improved
+set nocompatible        " Vi IMproved
 set shellslash          " path delimiter is slash
+set encoding=utf-8      " internal encoding
 
 " setting <leader> key
 let g:mapleader=','
@@ -233,13 +234,9 @@ endfunction
 " powerline
 if s:is_gui
     NeoBundleSource vim-powerline
-    if s:is_unix
-        let g:Powerline_symbols = 'fancy'
-    else
-        let g:Powerline_symbols = 'compatible'
-    endif
+    let g:Powerline_symbols = 'fancy'
     let g:Powerline_stl_path_style = 'relative'
-    let g:Powerline_mode_n = ' N '
+    let g:Powerline_mode_n = ' '
     let g:Powerline_mode_i = 'Insert'
     let g:Powerline_mode_R = 'Replace'
     let g:Powerline_mode_v = 'Visual'
@@ -585,11 +582,11 @@ function! s:TabPageLabel(n)
         elseif empty(curbufname)
             " バッファタイプによって名前を変える
             if &buftype ==# 'nofile'
-                let fname = '[下書き]'
+                let fname = '[Scratch]'
             elseif &buftype ==# 'quickfix'
                 let fname = '[Quickfix]'
             else
-                let fname = '[無名]'
+                let fname = '[Unnamed]'
             endif
         else
             "let fname = pathshorten(curbufname)
