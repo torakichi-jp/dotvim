@@ -9,13 +9,13 @@ let s:is_windows = has('win32') || has('win64')
 let s:is_unix = has('unix')
 
 set guioptions=mgtr             " gui menu, grayed menu, tearoff menu, right scrollbar
-set browsedir=buffer            " browse‚ÌƒfƒBƒŒƒNƒgƒŠ‚ğƒJƒŒƒ“ƒgƒoƒbƒtƒ@‚Æ“¯‚¶‚É
-set nohlsearch                  " ŒŸõƒnƒCƒ‰ƒCƒg‚È‚µ
-set cursorline                  " Œ»İs‚ğƒnƒCƒ‰ƒCƒg
-"set mousefocus                 " ƒ}ƒEƒXˆÚ“®‚ÅƒEƒBƒ“ƒhƒEƒtƒH[ƒJƒX
-"set mousemodel=popup_setpos    " ‰EƒNƒŠƒbƒN‚ÅƒJ[ƒ\ƒ‹ˆÚ“®•ƒƒjƒ…[•\¦
+set browsedir=buffer            " browseæ™‚ã®ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ã‚«ãƒ¬ãƒ³ãƒˆãƒãƒƒãƒ•ã‚¡ã¨åŒã˜ã«
+set nohlsearch                  " æ¤œç´¢ãƒã‚¤ãƒ©ã‚¤ãƒˆãªã—
+set cursorline                  " ç¾åœ¨è¡Œã‚’ãƒã‚¤ãƒ©ã‚¤ãƒˆ
+"set mousefocus                 " ãƒã‚¦ã‚¹ç§»å‹•ã§ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ãƒ•ã‚©ãƒ¼ã‚«ã‚¹
+"set mousemodel=popup_setpos    " å³ã‚¯ãƒªãƒƒã‚¯ã§ã‚«ãƒ¼ã‚½ãƒ«ç§»å‹•ï¼†ãƒ¡ãƒ‹ãƒ¥ãƒ¼è¡¨ç¤º
 
-" ƒJƒ‰[ƒXƒL[ƒ€
+" ã‚«ãƒ©ãƒ¼ã‚¹ã‚­ãƒ¼ãƒ 
 colorscheme home_color
 autocmd MyAutocmd ColorScheme * call s:SetGUIColor()
 function! s:SetGUIColor()
@@ -29,21 +29,21 @@ function! s:SetGUIColor()
     hi SpecialKey   guifg=#444466 guibg=NONE    gui=NONE
 endfunction
 
-" ƒrƒWƒ…ƒAƒ‹ƒxƒ‹ig—p‚µ‚È‚¢j
+" ãƒ“ã‚¸ãƒ¥ã‚¢ãƒ«ãƒ™ãƒ«ï¼ˆä½¿ç”¨ã—ãªã„ï¼‰
 set visualbell t_vb=
 
-" s”A—ñ”AsŠÔAƒtƒHƒ“ƒg
-" TODO: ŠÂ‹«‚ÉˆË‘¶‚·‚é‚Ì‚ÅAƒ[ƒJƒ‹İ’èƒtƒ@ƒCƒ‹‚ÉˆÚ“®‚·‚×‚«H
-set lines=34        " s
-set columns=99      " —ñ
-set linespace=0     " sŠÔ
+" è¡Œæ•°ã€åˆ—æ•°ã€è¡Œé–“ã€ãƒ•ã‚©ãƒ³ãƒˆ
+" TODO: ç’°å¢ƒã«ä¾å­˜ã™ã‚‹ã®ã§ã€ãƒ­ãƒ¼ã‚«ãƒ«è¨­å®šãƒ•ã‚¡ã‚¤ãƒ«ã«ç§»å‹•ã™ã¹ãï¼Ÿ
+set lines=34        " è¡Œ
+set columns=99      " åˆ—
+set linespace=0     " è¡Œé–“
 if s:is_windows
     let fonts = [
         \ "Ricty_Diminished:h14:cDEFAULT",
         \ "Ricty:h14:cDEFAULT",
         \ "Migu_1M:h12:cDEFAULT",
-        \ "VL_ƒSƒVƒbƒN:h12:cDEFAULT",
-        \ "‚l‚r_ƒSƒVƒbƒN:h12:cDEFAULT",
+        \ "VL_ã‚´ã‚·ãƒƒã‚¯:h12:cDEFAULT",
+        \ "ï¼­ï¼³_ã‚´ã‚·ãƒƒã‚¯:h12:cDEFAULT",
     \]
 elseif s:is_unix
     let fonts = [
@@ -60,7 +60,7 @@ unlet fonts
 " Key Mappings:
 "*******************************************************************************
 
-" GUIƒEƒBƒ“ƒhƒEÅ‘å‰»EŒ³‚É–ß‚·
+" GUIã‚¦ã‚£ãƒ³ãƒ‰ã‚¦æœ€å¤§åŒ–ãƒ»å…ƒã«æˆ»ã™
 nnoremap <silent> <M-x> :<C-u>ScreenMode 4<CR>
 nnoremap <silent> <M-r> :<C-u>Revert<CR>
 
@@ -68,7 +68,7 @@ nnoremap <silent> <M-r> :<C-u>Revert<CR>
 " GUI Menus:
 "*******************************************************************************
 
-" QFixHowm‚ÌGUIƒƒjƒ…[€–Ú‚ğ'Plugin'“à‚É•\¦‚·‚é
+" QFixHowmã®GUIãƒ¡ãƒ‹ãƒ¥ãƒ¼é …ç›®ã‚’'Plugin'å†…ã«è¡¨ç¤ºã™ã‚‹
 call QFixMemoMenubar("Plugin.QFixMemo(&M)","g,")
 call QFixGrepMenubar("Plugin.QFixGrep(&G)","g,")
 
