@@ -233,7 +233,11 @@ endfunction
 " powerline
 if s:is_gui
     NeoBundleSource vim-powerline
-    let g:Powerline_symbols = 'compatible'
+    if s:is_unix
+        let g:Powerline_symbols = 'fancy'
+    else
+        let g:Powerline_symbols = 'compatible'
+    endif
     let g:Powerline_stl_path_style = 'relative'
     let g:Powerline_mode_n = ' N '
     let g:Powerline_mode_i = 'Insert'

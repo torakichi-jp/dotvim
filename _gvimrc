@@ -47,6 +47,7 @@ if s:is_windows
     \]
 elseif s:is_unix
     let fonts = [
+        \ "Ricty\ for\ Powerline\ 12",
         \ "VL\ Gothic\ 10",
         \ "DejaVu\ Sans\ Mono\ 10",
         \ "UbuntuMono\ 11",
