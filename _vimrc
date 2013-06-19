@@ -32,6 +32,11 @@ if !exists($MYGVIMRC)
     endif
 endif
 
+" enable syntax
+if &t_Co > 1
+    syntax enable
+endif
+
 " initialize autocmd
 augroup MyAutocmd
     autocmd!
@@ -141,7 +146,6 @@ NeoBundle 'https://bitbucket.org/anyakichi/vim-textobj-xbrackets'
 " unite, matchers, and sources
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'basyura/unite-matcher-file-name'
-NeoBundle 'natsumesou/unite-flexmatcher'
 NeoBundle 'Shougo/unite-session'
 NeoBundle 'thinca/vim-unite-history'
 NeoBundle 'h1mesuke/unite-outline'
@@ -168,17 +172,11 @@ NeoBundle 'emonkak/vim-operator-sort'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'mattn/learn-vimscript'
 
-
 " Installation check.
 NeoBundleCheck
 
-" required
+" required!
 filetype plugin indent on
-
-" enable syntax
-if &t_Co > 1
-    syntax enable
-endif
 
 
 "*******************************************************************************
@@ -279,13 +277,13 @@ let g:unite_source_menu_menus.shortcut = {
     \ 'description' : 'Command Shortcut',
 \ }
 let g:unite_source_menu_menus.shortcut.command_candidates = [
-    \ ['VimShell',              'VimShell'],
+    \ ['VimShell',                  'VimShell'],
     \ ['VimShellPop',               'VimShellPop'],
-    \ ['NeoBundleInstall',      'NeoBundleInstall'],
+    \ ['NeoBundleInstall',          'NeoBundleInstall'],
     \ ['NeoBundleUpdate',           'NeoBundleUpdate'],
     \ ['NeoBundleSource',           'NeoBundleSource'],
     \ ['NeoBundleClean',            'NeoBundleClean'],
-    \ ['NeoBundleDocs',         'NeoBundleDocs'],
+    \ ['NeoBundleDocs',             'NeoBundleDocs'],
     \ ['Scratch',                   'Scratch'],
     \ ['MoveWin',                   'MoveWin'],
     \ ['Unite-Beautiful-Attack',    'Unite -auto-preview colorscheme'],
@@ -319,10 +317,10 @@ unlet s:cfg
 let g:ref_source_webdict_sites = {
     \ 'je'          : {'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',},
     \ 'ej'          : {'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',},
-    \ 'wiki'            : {'url': 'http://ja.wikipedia.org/wiki/%s',},
+    \ 'wiki'        : {'url': 'http://ja.wikipedia.org/wiki/%s',},
     \ 'alc'         : {'url': 'http://eow.alc.co.jp/search?q=%s',},
     \ 'weblio'      : {'url': 'http://www.weblio.jp/content/%s',},
-    \ 'thesaurus'       : {'url': 'http://thesaurus.weblio.jp/content/%s',},
+    \ 'thesaurus'   : {'url': 'http://thesaurus.weblio.jp/content/%s',},
     \ 'wiktionary'  : {'url': 'http://ja.wiktionary.org/wiki/%s',},
 \ }
 
@@ -411,7 +409,7 @@ behave mswin
 " colorscheme
 colorscheme home_color
 
-" 無名レジスタの代わりにクリップボードを使う
+" use clipboard instead of unnamed register
 "set clipboard& clipboard+=unnamed
 
 set columns=99                  " 列数(_gvimrcで再設定してる)
@@ -443,11 +441,12 @@ set shortmess& shortmess+=I     " 起動時のメッセージなし
 "set showbreak=>\               " 折り返し行頭の文字列（最後の空白に注意）
 "set cpoptions+=n               " 折り返し行を行番号列から表示
 set cmdwinheight=5              " コマンドラインウィンドウの高さ
-set noshowmatch                 " 対応括弧にジャンプしない
+set showmatch                   " 対応括弧にジャンプ
+set matchtime=0                 " 対応括弧にジャンプする時間
 set virtualedit+=block          " ビジュアル矩形モードで仮想編集
 set cinoptions=:0,l1,g0,m1      " C/C++インデントオプション
 set matchpairs& matchpairs+=<:> " 括弧ペアに<>を加える
-set winaltkeys=no               " メニューのためにAltキーを使わない
+set winaltkeys=no               " GUIメニューのためにAltキーを使わない
 set path+=;/                    " 親ディレクトリも辿る
 set tags+=./tags;,./**/tags     " タグファイル検索パス
 "set complete-=i                " インクルードファイルを補完検索対象から除外
@@ -489,16 +488,16 @@ set foldmethod=manual   " 手動で折りたたみ
 " タイトル行の表示設定
 "set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:~:h\")})%)%(\ %a%)%(\ -\ %{v:servername}%)
 
+" use mouse
 if has('mouse')
     set mouse=a
 endif
 
 " backup option
-set backup                              " バックアップする
-"set updatecount=0                      " スワップファイルなし
-let &backupdir = s:dotvimdir . '/.backup'  " バックアップを作成するディレクトリ
-set undofile                            " アンドゥファイルを作成する
-let &undodir = s:dotvimdir . '/.undo'      " アンドゥファイルを作成するディレクトリ
+set backup                                  " バックアップする
+let &backupdir = s:dotvimdir . '/.backup'   " バックアップを作成するディレクトリ
+set undofile                                " アンドゥファイルを作成する
+let &undodir = s:dotvimdir . '/.undo'       " アンドゥファイルを作成するディレクトリ
 " バックアップディレクトリがなかったら作成する
 if &backupdir!=#'' && !isdirectory(&backupdir)
     call mkdir(&backupdir)
@@ -540,11 +539,11 @@ runtime macros/matchit.vim
 function! MakeTabLine()
     " TODO: coding here at tabline view setting.
     let titles = map(range(1, tabpagenr('$')), 's:TabPageLabel(v:val)')
-    let sep = ' '       " タブ間の区切り
+    let sep = ' '   " タブ間の区切り
     let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
-    let info = ''   "好きな情報を入れる
+    let info = ''   " ここに好きな情報を入れる
 
-    " カレントディレクトリ
+    " カレントディレクトリ表示
     let info .= fnamemodify(getcwd(), ':~') . ' '
 
     return tabpages . '%=' . info   " タブリストを左に、情報を右に表示
@@ -654,7 +653,11 @@ command! -bang -bar -nargs=? -complete=file Unicode
 " Google検索
 command! -nargs=? GoogleSearch call s:GoogleSearch(<q-args>)
 function! s:GoogleSearch(word) "{{{
-    let cmd = 'rundll32 url.dll,FileProtocolHandler'
+    if s:is_windows
+        let cmd = 'rundll32 url.dll,FileProtocolHandler'
+    elseif s:is_unix
+        let cmd = 'firefox'
+    endif
     let search_engine = 'https://www.google.co.jp/#q='
     exe 'VimProcBang ' . cmd . " '" . search_engine . a:word . "'"
 endfunction "}}}
@@ -1328,13 +1331,4 @@ cnoreabbrev @b \<\><Left><Left>
 " $MYVIMRC,$MYGVIMRC
 cnoreabbrev @v $MYVIMRC
 cnoreabbrev @g $MYGVIMRC
-
-
-"*******************************************************************************
-" unlet variables.
-"*******************************************************************************
-unlet s:is_gui
-unlet s:is_windows
-unlet s:is_unix
-unlet s:dotvimdir
 
