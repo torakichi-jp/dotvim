@@ -708,6 +708,15 @@ function! s:CmdCapture(args) "{{{
     nnoremap <buffer> <silent> q :<C-u>close<CR>
 endfunction "}}}
 
+" オプション表示
+command! -nargs=1 -complete=option ShowOption
+    \ call s:ShowOption(<q-args>)
+function! s:ShowOption(opt)
+    if !empty(a:opt)
+        execute 'verb set ' . a:opt . '?'
+    endif
+endfunction
+
 
 "-------------------------------------------------------------------------------
 " Functions:
@@ -844,11 +853,11 @@ nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 
 " prefix
-nmap <Space> [Space]
-nnoremap [Space] <Nop>
-nmap [Space]<Space> [WSpace]
-nnoremap [WSpace] <Nop>
-nnoremap <C-x> <Nop>
+nmap        <Space>         [Space]
+nnoremap    [Space]         <Nop>
+nmap        [Space]<Space>  [WSpace]
+nnoremap    [WSpace]        <Nop>
+nnoremap    <C-x>           <Nop>
 
 " j, kで表示行移動（gj, gkと入れ替え）
 nmap j <Plug>(accelerated_jk_gj)
@@ -919,6 +928,8 @@ map <C-j> %
 nmap <C-a> <Plug>ToggleN
 imap <C-a> <Plug>ToggleI
 vmap <C-a> <Plug>ToggleV
+
+nnoremap <C-s> :<C-u>update<CR>
 
 " クリップボードレジスタ
 noremap <C-c> "*
@@ -1063,16 +1074,6 @@ nnoremap <silent> [Space]gv :<C-u>edit $MYGVIMRC<CR>
 " 現在のバッファを読み込み
 nnoremap [Space]<CR> :<C-u>source %<CR>
 
-" オプション表示
-nnoremap <C-s> :<C-u>ShowOption<Space>
-command! -nargs=1 -complete=option ShowOption
-    \ call s:ShowOption(<q-args>)
-function! s:ShowOption(opt)
-    if !empty(a:opt)
-        execute 'verb set ' . a:opt . '?'
-    endif
-endfunction
-
 " オプション切り替え
 nnoremap [Toggle] <Nop>
 nmap T [Toggle]
@@ -1139,6 +1140,9 @@ nnoremap [Ref]e :<C-u>Ref webdict ej <C-r><C-w>
 nnoremap [Ref]j :<C-u>Ref webdict je <C-r><C-w>
 nnoremap [Ref]a :<C-u>Ref webdict alc <C-r><C-w>
 nnoremap [Ref]t :<C-u>Ref webdict thesaurus <C-r><C-w>
+
+" VimShell
+nnoremap <silent> [Space]s :<C-u>VimShell<CR>
 
 " Unite関連
 nnoremap <silent> [Space]f :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
