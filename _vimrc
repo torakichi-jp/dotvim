@@ -815,6 +815,19 @@ augroup MyAutocmd
             \ execute 'normal! g`"' |
         \ endif
 
+    " 設定されていないことが多い部分の色設定
+    autocmd ColorScheme * call <SID>set_guicolor()
+    function! s:set_guicolor()
+        hi TabLine      guifg=#777798 guibg=#444477 gui=NONE
+        hi TabLineFill  guifg=#666688 guibg=#CCCCFF
+        hi TabLineSel   guifg=#CCCCFF guibg=#111155 gui=bold
+
+        hi FoldColumn   guifg=#818698 guibg=#363946
+        hi ColorColumn  guifg=NONE    guibg=#333366 gui=NONE
+        hi CursorLine   guifg=NONE    guibg=#101050 gui=NONE
+        hi SpecialKey   guifg=#444466 guibg=NONE    gui=NONE
+    endfunction
+
     " 起動時にファイル引数なしならスクラッチバッファを開く
     "autocmd VimEnter *
     "    \ redir => mes |

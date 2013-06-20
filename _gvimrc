@@ -30,17 +30,6 @@ endfunction
 
 " カラースキーム
 colorscheme home_color
-autocmd MyAutocmd ColorScheme * call <SID>set_guicolor()
-function! s:set_guicolor()
-    hi TabLine      guifg=#777798 guibg=#444477 gui=NONE
-    hi TabLineFill  guifg=#666688 guibg=#CCCCFF
-    hi TabLineSel   guifg=#CCCCFF guibg=#111155 gui=bold
-
-    hi FoldColumn   guifg=#818698 guibg=#363946
-    hi ColorColumn  guifg=NONE    guibg=#333366 gui=NONE
-    hi CursorLine   guifg=NONE    guibg=#101050 gui=NONE
-    hi SpecialKey   guifg=#444466 guibg=NONE    gui=NONE
-endfunction
 
 " ビジュアルベル（使用しない）
 set visualbell t_vb=
