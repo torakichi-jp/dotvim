@@ -492,6 +492,11 @@ if has('mouse')
     set mouse=a
 endif
 
+" 透明度(Windows only)
+if s:is_windows
+    set transparency=240
+endif
+
 " backup option
 set backup                                  " バックアップする
 let &backupdir = s:dotvimdir . '/.backup'   " バックアップを作成するディレクトリ
