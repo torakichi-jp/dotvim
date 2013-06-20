@@ -798,12 +798,16 @@ endfunction "}}}
 
 augroup MyAutocmd
 
-    " プログラムソースなら81文字目に線を引く
+    " プログラムソースなら81文字目以降に線を引く
     autocmd FileType c,cpp,vim,python,ruby,perl,cs,java
         \ execute "setlocal colorcolumn=" . join(range(81, 9999), ',')
 
     " （ヘルプとかを）qで終了
     autocmd FileType help,ref-* nnoremap <buffer> <silent> q :<C-u>close<CR>
+
+    " gitのコミットメッセージを編集する時は、バックアップファイルを作らない
+    autocmd FileType gitcommit
+        \ setlocal nobackup | setlocal noundofile | setlocal noswapfile
 
     " コマンドラインウィンドウ用設定
     " 挿入モードではじめる
