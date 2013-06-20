@@ -205,9 +205,6 @@ let g:loaded_getscriptPlugin = 1
 " disable netrw.vim
 let g:loaded_netrwPlugin = 1
 
-" Vim with singleton
-call singleton#enable()
-
 " vimproc
 if !s:is_windows
     call neobundle#config('vimproc', {
