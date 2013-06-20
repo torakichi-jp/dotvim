@@ -7,7 +7,10 @@
 scriptencoding utf-8    " this script's encoding
 set nocompatible        " Vi IMproved
 set shellslash          " path delimiter is slash
-set encoding=utf-8      " internal encoding
+if has('win32')
+    set termencoding=cp932
+endif
+"set encoding=utf-8      " internal encoding
 
 " setting <leader> key
 let g:mapleader=','
@@ -307,12 +310,9 @@ let g:unite_source_menu_menus.reference.command_candidates = [
 
 " Ref
 let g:ref_use_vimproc = 1
-let s:lynx = 'C:/Program Files (x86)/Lynx for Win32/lynx.exe'
-let s:cfg  = 'C:/Program Files (x86)/Lynx for Win32/lynx.cfg'
-let g:ref_lynx_cmd = s:lynx.' -cfg='.s:cfg.' -dump -nonumbers %s'
-let g:ref_alc_cmd = s:lynx.' -cfg='.s:cfg.' -dump %s'
-unlet s:lynx
-unlet s:cfg
+if s:is_windows
+    let g:ref_source_webdict_encoding = 'EUC-JP'
+endif
 
 " webdictサイトの設定
 let g:ref_source_webdict_sites = {
@@ -582,11 +582,11 @@ function! s:TabPageLabel(n)
         elseif empty(curbufname)
             " バッファタイプによって名前を変える
             if &buftype ==# 'nofile'
-                let fname = '[Scratch]'
+                let fname = '[下書き]'
             elseif &buftype ==# 'quickfix'
                 let fname = '[Quickfix]'
             else
-                let fname = '[Unnamed]'
+                let fname = '[無名]'
             endif
         else
             "let fname = pathshorten(curbufname)
