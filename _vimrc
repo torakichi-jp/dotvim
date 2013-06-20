@@ -19,9 +19,10 @@ let g:mapleader=','
 let s:is_gui = has('gui_running')
 let s:is_windows = has('win32') || has('win64')
 let s:is_unix = has('unix')
+let s:is_cygwin = has('win32unix')
 
 " path to .vim dir
-if s:is_windows
+if s:is_windows || s:is_cygwin
     let s:dotvimdir = expand('~/vimfiles')
 elseif s:is_unix
     let s:dotvimdir = expand('~/.vim')
