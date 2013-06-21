@@ -493,8 +493,8 @@ if has('mouse')
 endif
 
 " 透明度(Windows only)
-if s:is_windows
-    set transparency=240
+if s:is_windows && s:is_gui
+    autocmd MyAutocmd VimEnter * set transparency=240
 endif
 
 " backup option
