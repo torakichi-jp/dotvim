@@ -121,5 +121,28 @@ let g:Powerline#Colorschemes#my#colorscheme = Pl#Colorscheme#Init([
     \ 'n': ['white', 'gray2'],
     \ 'N': ['white', 'gray0'],
     \ }),
+  \ Pl#Hi#Segments(['ctrlp:focus', 'ctrlp:byfname'], {
+    \ 'n': ['brightpurple', 'darkestpurple'],
+    \ }),
+  \
+  \ Pl#Hi#Segments(['ctrlp:prev', 'ctrlp:next', 'ctrlp:pwd'], {
+    \ 'n': ['white', 'mediumpurple'],
+    \ }),
+  \
+  \ Pl#Hi#Segments(['ctrlp:item'], {
+    \ 'n': ['darkestpurple', 'white', ['bold']],
+    \ }),
+  \
+  \ Pl#Hi#Segments(['ctrlp:marked'], {
+    \ 'n': ['brightestred', 'darkestpurple', ['bold']],
+    \ }),
+  \
+  \ Pl#Hi#Segments(['ctrlp:count'], {
+    \ 'n': ['darkestpurple', 'white'],
+    \ }),
+  \
+  \ Pl#Hi#Segments(['ctrlp:SPLIT'], {
+    \ 'n': ['white', 'darkestpurple'],
+    \ }),
   \ ])
 let g:Powerline_colorscheme='my'
