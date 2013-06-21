@@ -110,6 +110,7 @@ NeoBundle 'fuenor/qfixhowm'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundleLazy 'Lokaltog/vim-powerline'
+NeoBundleLazy 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'basyura/TweetVim'
 NeoBundle 'basyura/twibill.vim'
