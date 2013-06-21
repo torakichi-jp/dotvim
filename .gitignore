@@ -2,6 +2,7 @@
 !/vimfiles
 !/.gitignore
 !/.gitmodules
-!_vimrc
-!_gvimrc
-!README.md
+!/_vimrc
+!/_gvimrc
+!/README.md
+!/howm
