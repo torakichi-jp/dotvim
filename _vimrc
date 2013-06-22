@@ -415,8 +415,6 @@ colorscheme home_color
 " use clipboard instead of unnamed register
 "set clipboard& clipboard+=unnamed
 
-set columns=99                  " 列数(_gvimrcで再設定してる)
-set lines=36                    " 行数(_gvimrcで再設定してる)
 set number                      " 行番号表示
 "set relativenumber             " 相対行番号表示
 set ruler                       " ルーラー表示
