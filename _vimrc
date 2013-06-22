@@ -423,7 +423,7 @@ set showcmd                     " 入力中コマンドの表示
 set hidden                      " バッファ更新を破棄しない
 set confirm                     " エラーにせず確認ダイアログを出す
 set backspace=indent,eol,start  " Backspaceの挙動
-"set cursorline                  " 現在行をハイライト
+set cursorline                  " 現在行をハイライト
 set display=lastline            " 最後の行をできるだけ表示する
 set cmdheight=2                 " コマンドライン行数
 set noequalalways               " ウィンドウの自動サイズ調整をしない
