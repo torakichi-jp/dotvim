@@ -312,7 +312,8 @@ let g:unite_source_menu_menus.reference.command_candidates = [
 " Ref
 let g:ref_use_vimproc = 1
 if s:is_windows
-    let g:ref_source_webdict_encoding = 'EUC-JP'
+    "let g:ref_source_webdict_encoding = 'EUC-JP'
+    let g:ref_source_webdict_encoding = 'UTF-8'
 endif
 
 " webdictサイトの設定
