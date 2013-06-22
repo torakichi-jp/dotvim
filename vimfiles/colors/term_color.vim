@@ -7,8 +7,8 @@ highlight String        ctermfg=DarkMagenta
 highlight Comment       ctermfg=DarkGreen
 highlight CursorIM      ctermfg=Red
 highlight ColorColumn                       ctermbg=Gray
-highlight Pmenu         ctermfg=White       ctermbg=Gray
-highlight PmenuSel      ctermfg=Cyan        ctermbg=Red
+highlight Pmenu         ctermfg=White       ctermbg=Black
+highlight PmenuSel      ctermfg=Red         ctermbg=White
 highlight Statusline                        ctermbg=Blue    cterm=underline
 highlight StatuslineNC                      ctermbg=Gray    cterm=underline
 
