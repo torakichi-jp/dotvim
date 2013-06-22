@@ -22,7 +22,7 @@ let s:is_unix = has('unix')
 let s:is_cygwin = has('win32unix')
 
 " path to .vim dir
-if s:is_windows || s:is_cygwin
+if s:is_windows
     let s:dotvimdir = expand('~/vimfiles')
 elseif s:is_unix
     let s:dotvimdir = expand('~/.vim')
@@ -236,7 +236,7 @@ function! s:bundle.hooks.on_source(bundle)
 endfunction
 
 " powerline
-if s:is_gui
+if s:is_gui || !s:is_windows
     NeoBundleSource vim-powerline
     let g:Powerline_symbols = 'fancy'
     let g:Powerline_stl_path_style = 'relative'
