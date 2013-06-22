@@ -410,7 +410,7 @@ unlet s:bundle
 behave mswin
 
 " colorscheme
-colorscheme home_color
+colorscheme term_color
 
 " use clipboard instead of unnamed register
 "set clipboard& clipboard+=unnamed
