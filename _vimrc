@@ -418,7 +418,7 @@ colorscheme term_color
 set number                      " 行番号表示
 "set relativenumber             " 相対行番号表示
 set ruler                       " ルーラー表示
-set title                       " タイトルを表示
+set notitle                     " タイトル表示なし
 set showcmd                     " 入力中コマンドの表示
 set hidden                      " バッファ更新を破棄しない
 set confirm                     " エラーにせず確認ダイアログを出す
