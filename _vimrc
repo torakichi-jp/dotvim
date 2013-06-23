@@ -1197,9 +1197,9 @@ nnoremap <silent> [Unite]c :<C-u>Unite history/command command<CR>
 nnoremap <silent> [Unite]q :<C-u>Unite qfixhowm<CR>
 
 " neocomplete
-nmap [Space]nc [Neocomplete]
-nnoremap <silent> [Neocomplete]l :<C-u>NeoCompleteLock<CR>
-nnoremap <silent> [Neocomplete]u :<C-u>NeoCompleteUnlock<CR>
+nmap [Space]nc [Neocom]
+nnoremap [Neocomplete]l :<C-u>NeoCompleteLock<CR>
+nnoremap [Neocomplete]u :<C-u>NeoCompleteUnlock<CR>
 
 " textmanip
 " 選択したテキストの移動
