@@ -133,6 +133,7 @@ NeoBundle 'ack.vim'
 NeoBundle 'sudo.vim'
 NeoBundleLazy 'colorsel.vim'
 NeoBundleLazy 'vimwiki'
+NeoBundleLazy 'CSApprox'
 
 " textobj
 NeoBundle 'kana/vim-textobj-user'
