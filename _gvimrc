@@ -15,6 +15,7 @@ set guioptions=                 " GUIオプションなし
 set browsedir=buffer            " browse時のディレクトリをカレントバッファと同じに
 set nohlsearch                  " 検索ハイライトなし
 set cursorline                  " 現在行をハイライト
+set title                       " タイトルを表示
 "set mousefocus                 " マウス移動でウィンドウフォーカス
 "set mousemodel=popup_setpos    " 右クリックでカーソル移動＆メニュー表示
 
