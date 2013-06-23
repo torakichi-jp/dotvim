@@ -410,6 +410,7 @@ unlet s:bundle
 behave mswin
 
 " colorscheme
+set t_Co=256
 colorscheme term_color
 
 " use clipboard instead of unnamed register
