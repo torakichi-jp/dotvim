@@ -496,7 +496,7 @@ endif
 
 " 透明度(Windows only)
 if s:is_windows && s:is_gui
-    autocmd MyAutocmd VimEnter * set transparency=240
+    autocmd MyAutocmd VimEnter * set transparency=220
 endif
 
 " backup option
@@ -1198,8 +1198,8 @@ nnoremap <silent> [Unite]q :<C-u>Unite qfixhowm<CR>
 
 " neocomplete
 nmap [Space]nc [Neocom]
-nnoremap [Neocomplete]l :<C-u>NeoCompleteLock<CR>
-nnoremap [Neocomplete]u :<C-u>NeoCompleteUnlock<CR>
+nnoremap [Neocom]l :<C-u>NeoCompleteLock<CR>
+nnoremap [Neocom]u :<C-u>NeoCompleteUnlock<CR>
 
 " textmanip
 " 選択したテキストの移動
