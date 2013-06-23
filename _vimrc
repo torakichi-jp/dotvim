@@ -450,7 +450,7 @@ set matchpairs& matchpairs+=<:> " 括弧ペアに<>を加える
 set winaltkeys=no               " GUIメニューのためにAltキーを使わない
 set path+=;/                    " 親ディレクトリも辿る
 set tags+=./tags;,./**/tags     " タグファイル検索パス
-"set complete-=i                " インクルードファイルを補完検索対象から除外
+set complete-=it                " include,tagを補完検索対象から除外
 set completeopt=menu,preview,longest    " 補完オプション
 set wildmenu                    " 拡張コマンドライン補完を有効
 set wildmode=longest,full       " コマンドライン補完最長一致
@@ -1195,6 +1195,11 @@ nnoremap <silent> [Unite]g :<C-u>Unite -buffer-name=search -no-quit -resume grep
 nnoremap <silent> [Unite]v :<C-u>Unite -auto-preview colorscheme<CR>
 nnoremap <silent> [Unite]c :<C-u>Unite history/command command<CR>
 nnoremap <silent> [Unite]q :<C-u>Unite qfixhowm<CR>
+
+" neocomplete
+nmap [Space]nc [Neocomplete]
+nnoremap <silent> [Neocomplete]l :<C-u>NeoCompleteLock<CR>
+nnoremap <silent> [Neocomplete]u :<C-u>NeoCompleteUnlock<CR>
 
 " textmanip
 " 選択したテキストの移動
