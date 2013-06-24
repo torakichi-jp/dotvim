@@ -411,7 +411,7 @@ behave mswin
 
 " colorscheme
 set t_Co=256
-colorscheme term_color
+colorscheme blued
 
 " use clipboard instead of unnamed register
 "set clipboard& clipboard+=unnamed
