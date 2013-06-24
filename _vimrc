@@ -190,18 +190,6 @@ filetype plugin indent on
 " Plugin Settings:
 "*******************************************************************************
 
-" Vimスクリプトのシンタックスフォールディング設定
-" foldmethod=syntaxでないと意味なし
-" augroup: a
-" function: f
-" lua: l
-" perl: p
-" ruby: r
-" python: P
-" tcl: t
-" mzscheme: m
-let g:vimsyn_folding = 'af'
-
 " disable GetLatestVimPlugin.vim
 let g:loaded_getscriptPlugin = 1
 " disable netrw.vim
@@ -405,6 +393,18 @@ let g:toggle_pairs = {
 "*******************************************************************************
 " Option Settings:
 "*******************************************************************************
+
+" Vimスクリプトのシンタックスフォールディング設定
+" foldmethod=syntaxでないと意味なし
+" augroup: a
+" function: f
+" lua: l
+" perl: p
+" ruby: r
+" python: P
+" tcl: t
+" mzscheme: m
+let g:vimsyn_folding = 'af'
 
 " mouse behaves windows
 behave mswin
