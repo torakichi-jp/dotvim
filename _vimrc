@@ -401,7 +401,6 @@ let g:toggle_pairs = {
     \ 'or' : 'and',
 \ }
 
-unlet s:bundle
 
 "*******************************************************************************
 " Option Settings:
@@ -1366,4 +1365,10 @@ cnoreabbrev @b \<\><Left><Left>
 " $MYVIMRC,$MYGVIMRC
 cnoreabbrev @v $MYVIMRC
 cnoreabbrev @g $MYGVIMRC
+
+
+"*******************************************************************************
+" unlet variables
+"*******************************************************************************
+unlet s:bundle
 
