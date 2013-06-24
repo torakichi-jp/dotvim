@@ -4,7 +4,7 @@ highlight clear
 
 highlight LineNr        ctermfg=LightGreen  ctermbg=Black
 highlight CursorLineNr  ctermfg=Magenta     ctermbg=Black       cterm=underline
-highlight Normal        ctermfg=White       ctermbg=Black
+highlight Normal        ctermfg=LightGray   ctermbg=NONE
 highlight CursorIM      ctermfg=Red
 highlight ColorColumn                       ctermbg=DarkGray
 highlight Pmenu         ctermfg=Black       ctermbg=Blue
