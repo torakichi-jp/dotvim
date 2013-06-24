@@ -118,6 +118,7 @@ NeoBundle 'basyura/bitly.vim'
 NeoBundle 'mattn/favstar-vim'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'rhysd/accelerated-jk'
+NeoBundle 'tanabe/ToggleCase-vim'
 "NeoBundleLazy 'tpope/vim-surround'
 "NeoBundleLazy 't9md/vim-surround_custom_mapping', '', '', {
 "       \ 'depends' : 'vim-surround',
@@ -1234,6 +1235,9 @@ call submode#map('winsize', 'n', '', '_', '<C-w>_')
 " Ref
 nnoremap <silent> <expr> K
     \ ':Ref webdict alc ' . GetCursorWord('[a-zA-Z]*') . '<CR>'
+
+" ToggleCase
+nnoremap <silent> <C-k> :<C-u>call ToggleCase()<CR>
 
 
 "-------------------------------------------------------------------------------
