@@ -29,6 +29,9 @@ function! s:toggle_menu()
     endif
 endfunction
 
+" カラースキーム
+colorscheme home_color
+
 " ビジュアルベル（使用しない）
 set visualbell t_vb=
 
