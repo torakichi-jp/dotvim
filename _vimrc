@@ -12,7 +12,7 @@ if has('win32')
 endif
 "set encoding=utf-8      " internal encoding
 
-" 一時的にファイルタイプ関連を無効化する
+" disable filetypes temporarily
 filetype off
 filetype plugin indent off
 
@@ -25,12 +25,13 @@ let s:is_windows = has('win32') || has('win64')
 let s:is_unix = has('unix')
 let s:is_cygwin = has('win32unix')
 
-" path to .vim dir
+" path to .vim directory
 if s:is_windows
     let s:dotvimdir = expand('~/vimfiles')
 elseif s:is_unix
     let s:dotvimdir = expand('~/.vim')
 endif
+let $DOTVIM = s:dotvimdir
 
 " path to .gvimrc
 if !exists($MYGVIMRC)
@@ -227,9 +228,12 @@ endfunction
 " powerline
 if s:is_gui || !s:is_windows
     NeoBundleSource vim-powerline
+endif
+let s:bundle = neobundle#get('vim-powerline')
+function! s:bundle.hooks.on_source(bundle)
     let g:Powerline_symbols = 'fancy'
     let g:Powerline_stl_path_style = 'relative'
-    let g:Powerline_mode_n = ' '
+    let g:Powerline_mode_n = 'Normal'
     let g:Powerline_mode_i = 'Insert'
     let g:Powerline_mode_R = 'Replace'
     let g:Powerline_mode_v = 'Visual'
@@ -238,7 +242,7 @@ if s:is_gui || !s:is_windows
     let g:Powerline_mode_s = 'Select'
     let g:Powerline_mode_S = 'S-Line'
     let g:Powerline_mode_cs = 'S-Block'
-endif
+endfunction
 
 " vimfiler
 let g:vimfiler_as_default_explorer = 1
