@@ -196,21 +196,21 @@ let g:loaded_netrwPlugin = 1
 " vimproc build setting
 call neobundle#config('vimproc', {
     \ 'build' : {
-    \   'windows'   : 'make -f make_mingw32.mak',
     \   'cygwin'    : 'make -f make_cygwin.mak',
     \   'mac'       : 'make -f make_mac.mak',
     \   'unix'      : 'make -f make_unix.mak',
     \ }
 \ })
-if has('win64')
-    call neobundle#config('vimproc', {
-        \ 'build' : { 'windows' : 'nmake make_msvc64.mak', }
-    \ })
-elseif has('win32')
-    call neobundle#config('vimproc', {
-        \ 'build' : { 'windows' : 'nmake make_msvc32.mak', }
-    \ })
-endif
+" in windows, building must be manually
+"if has('win64')
+"    call neobundle#config('vimproc', {
+"        \ 'build' : { 'windows' : 'make -f make_mingw64.mak', }
+"    \ })
+"elseif has('win32')
+"    call neobundle#config('vimproc', {
+"        \ 'build' : { 'windows' : 'make -f make_mingw32.mak', }
+"    \ })
+"endif
 
 " NERD_commenter
 let s:bundle = neobundle#get('nerdcommenter')
