@@ -12,6 +12,10 @@ if has('win32')
 endif
 "set encoding=utf-8      " internal encoding
 
+" 一時的にファイルタイプ関連を無効化する
+filetype off
+filetype plugin indent off
+
 " setting <leader> key
 let g:mapleader=','
 
@@ -37,10 +41,8 @@ if !exists($MYGVIMRC)
     endif
 endif
 
-" enable syntax
-if &t_Co > 1
-    syntax enable
-endif
+" syntax
+syntax enable
 
 " initialize autocmd
 augroup MyAutocmd
@@ -182,9 +184,6 @@ NeoBundle 'mattn/learn-vimscript'
 
 " Installation check.
 NeoBundleCheck
-
-" required!
-filetype plugin indent on
 
 
 "*******************************************************************************
@@ -1375,4 +1374,10 @@ cnoreabbrev @g $MYGVIMRC
 " unlet variables
 "*******************************************************************************
 unlet s:bundle
+
+
+"*******************************************************************************
+" filetype setting
+"*******************************************************************************
+filetype plugin indent on
 
