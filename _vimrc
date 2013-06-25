@@ -213,16 +213,16 @@ call neobundle#config('vimproc', {
 "endif
 
 " NERD_commenter
-let s:bundle = neobundle#get('nerdcommenter')
-function! s:bundle.hooks.on_source(bundle)
+let s:hooks = neobundle#get_hooks('nerdcommenter')
+function! s:hooks.on_source(bundle)
     let g:NERDCreateDefaultMappings = 0
     let g:NERDSpaceDelims = 0
 endfunction
 
 " neocomplete
 let g:neocomplete#enable_at_startup = 1
-let s:bundle = neobundle#get('neocomplete.vim')
-function! s:bundle.hooks.on_source(bundle)
+let s:hooks = neobundle#get_hooks('neocomplete.vim')
+function! s:hooks.on_source(bundle)
     let g:neocomplete#enable_auto_select = 1
     "let g:neocomplete#disable_auto_complete = 1
     let g:neocomplete#auto_completion_start_length = 4
@@ -233,20 +233,6 @@ endfunction
 if s:is_gui || !s:is_windows
     NeoBundleSource vim-powerline
 endif
-let s:bundle = neobundle#get('vim-powerline')
-function! s:bundle.hooks.on_source(bundle)
-    let g:Powerline_symbols = 'fancy'
-    let g:Powerline_stl_path_style = 'relative'
-    let g:Powerline_mode_n = 'Normal'
-    let g:Powerline_mode_i = 'Insert'
-    let g:Powerline_mode_R = 'Replace'
-    let g:Powerline_mode_v = 'Visual'
-    let g:Powerline_mode_V = 'V-Line'
-    let g:Powerline_mode_cv = 'V-Block'
-    let g:Powerline_mode_s = 'Select'
-    let g:Powerline_mode_S = 'S-Line'
-    let g:Powerline_mode_cs = 'S-Block'
-endfunction
 
 " vimfiler
 let g:vimfiler_as_default_explorer = 1
@@ -906,8 +892,8 @@ nnoremap gj j
 nnoremap gk k
 
 " j, k mappings when loaded accelerated-jk
-let s:bundle = neobundle#get('accelerated-jk')
-function! s:bundle.hooks.on_source(bundle)
+let s:hooks = neobundle#get_hooks('accelerated-jk')
+function! s:hooks.on_source(bundle)
     nmap j <Plug>(accelerated_jk_gj)
     nmap k <Plug>(accelerated_jk_gk)
 endfunction
@@ -1397,7 +1383,7 @@ cnoreabbrev @g $MYGVIMRC
 "*******************************************************************************
 " Remove variables
 "*******************************************************************************
-unlet s:bundle
+unlet s:hooks
 
 
 "*******************************************************************************
