@@ -183,9 +183,6 @@ NeoBundle 'emonkak/vim-operator-sort'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'mattn/learn-vimscript'
 
-" Installation check.
-NeoBundleCheck
-
 
 "*******************************************************************************
 " Plugin Settings:
@@ -196,7 +193,7 @@ let g:loaded_getscriptPlugin = 1
 " disable netrw.vim
 let g:loaded_netrwPlugin = 1
 
-" vimproc compile setting
+" vimproc build setting
 call neobundle#config('vimproc', {
     \ 'build' : {
     \   'windows'   : 'make -f make_mingw32.mak',
@@ -1390,13 +1387,19 @@ cnoreabbrev @g $MYGVIMRC
 
 
 "*******************************************************************************
-" unlet variables
+" Remove variables
 "*******************************************************************************
 unlet s:bundle
 
 
 "*******************************************************************************
-" filetype setting
+" Filetype setting
 "*******************************************************************************
 filetype plugin indent on
+
+
+"*******************************************************************************
+" Plugin installation check
+"*******************************************************************************
+NeoBundleCheck
 
