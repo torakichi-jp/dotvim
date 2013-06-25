@@ -79,7 +79,7 @@ NeoBundle 'thinca/vim-openbuf'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'thinca/vim-singleton'
 NeoBundle 'thinca/vim-editvar'
-NeoBundleLazy 'thinca/vim-vcs'
+NeoBundle 'thinca/vim-localrc'
 NeoBundle 'mattn/calendar-vim'
 NeoBundle 'mattn/excitetranslate-vim'
 NeoBundle 'mattn/wwwrenderer-vim'
@@ -801,22 +801,32 @@ function! GetSelectedWord() "{{{
 endfunction "}}}
 
 
-"******************************************************************************
+"*******************************************************************************
 " Autocommands:
-"******************************************************************************
+"*******************************************************************************
 
 augroup MyAutocmd
 
-    " プログラムソースなら81文字目以降に線を引く
-    autocmd FileType c,cpp,vim,python,ruby,perl,cs,java
-        \ execute "setlocal colorcolumn=" . join(range(81, 9999), ',')
+    " 81文字目以降に線を引く
+    autocmd FileType * call <SID>set_colorcolumn(81)
+    autocmd VimResized * call <SID>set_colorcolumn(81)
+    function! s:set_colorcolumn(line_col)
+        if &wrap
+            if &columns > a:line_col
+                execute "setlocal colorcolumn=" . join(range(a:line_col, &columns), ',')
+            else
+                setlocal colorcolumn=
+            endif
+        else
+            execute "setlocal colorcolumn=" . join(range(a:line_col, 9999), ',')
+        endif
+    endfunction
 
     " （ヘルプとかを）qで終了
     autocmd FileType help,ref-* nnoremap <buffer> <silent> q :<C-u>close<CR>
 
     " gitのコミットメッセージを編集する時は、バックアップファイルを作らない
-    autocmd FileType gitcommit
-        \ setlocal nobackup | setlocal noundofile | setlocal noswapfile
+    autocmd FileType gitcommit setlocal nobackup noundofile noswapfile
 
     " コマンドラインウィンドウ用設定
     " 挿入モードではじめる
@@ -893,6 +903,9 @@ nnoremap <C-x><C-c> ZQ
 
 " insertion filetypes
 nnoremap <C-x><C-f> :<C-u>setfiletype<Space>
+
+" show option
+nnoremap <C-x><C-o> :<C-u>ShowOption<Space>
 
 " j, k mappings
 if !neobundle#is_sourced('accelerated-jk')
