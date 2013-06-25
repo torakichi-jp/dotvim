@@ -718,9 +718,8 @@ function! s:CmdCapture(args) "{{{
 endfunction "}}}
 
 " オプション表示
-command! -nargs=1 -complete=option ShowOption
-    \ call s:ShowOption(<q-args>)
-function! s:ShowOption(opt)
+command! -nargs=1 -complete=option ShowOption call <SID>show_option(<q-args>)
+function! s:show_option(opt)
     if !empty(a:opt)
         execute 'verb set ' . a:opt . '?'
     endif
@@ -873,7 +872,13 @@ nmap        [Space]<Space>  [WSpace]
 nnoremap    [WSpace]        <Nop>
 nnoremap    <C-x>           <Nop>
 
-" exit vim like emacs
+" open file using :browse
+nnoremap <C-x><C-e> :<C-u>browse edit<CR>
+
+" write file using :browse
+nnoremap <C-x><C-w> :<C-u>browse write<CR>
+
+" exit like emacs
 nnoremap <C-x><C-c> ZQ
 
 " insertion filetypes
@@ -882,9 +887,13 @@ nnoremap <C-x><C-f> :<C-u>setfiletype<Space>
 " show option
 nnoremap <C-x><C-o> :<C-u>ShowOption<Space>
 
+" switching buffers
+nnoremap <C-x><C-n> :<C-u>bnext<CR>
+nnoremap <C-x><C-p> :<C-u>bprevious<CR>
+
 " j, k mappings
 if !neobundle#is_sourced('accelerated-jk')
-    " j, k moves view line (chages from gj, gk)
+    " j, k moves for view line (chages from gj, gk)
     nnoremap j gj
     nnoremap k gk
 endif
@@ -996,7 +1005,11 @@ noremap <silent> <CR> :<C-u>call <SID>CrExec()<CR>
 function! s:CrExec()
     if v:count == 0
         redraw!
-        Nohlsearch
+        if exists(':Nohlsearch')
+            Nohlsearch
+        else
+            nohlsearch
+        endif
     else
         execute 'normal! ' . string(v:count) . 'G'
     endif
