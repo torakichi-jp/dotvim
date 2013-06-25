@@ -1088,18 +1088,6 @@ nnoremap            [Tab]7  7gt
 nnoremap            [Tab]8  8gt
 nnoremap            [Tab]9  9gt
 
-" タグサーチ
-nnoremap [Tag] <Nop>
-nmap <C-t> [Tag]
-nnoremap [Tag]j g<C-]>
-nmap [Tag]<C-j> [Tag]j
-nnoremap [Tag]t <C-t>
-nmap [Tag]<C-t> [Tag]t
-nnoremap [Tag]n :<C-u>tnext<CR>
-nmap [Tag]<C-n> [Tag]n
-nnoremap [Tag]p :<C-u>tprevious<CR>
-nmap [Tag]<C-p> [Tag]p
-
 " 起動時設定を開く
 nnoremap <silent> [Space]v :<C-u>edit $MYVIMRC<CR>
 nnoremap <silent> [Space]gv :<C-u>edit $MYGVIMRC<CR>
