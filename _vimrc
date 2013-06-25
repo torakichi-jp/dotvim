@@ -235,8 +235,29 @@ if s:is_gui || !s:is_windows
 endif
 
 " vimfiler
-let g:vimfiler_as_default_explorer = 1
-let g:vimfiler_safe_mode_by_default = 0
+call neobundle#config(
+    \ 'vimfiler', {
+        \ 'lazy' : 1,
+        \ 'depends' : 'Shougo/unite.vim',
+        \ 'autoload' : {
+            \ 'commands' : [
+                \ { 'name' : 'VimFiler',
+                    \ 'complete' : 'customlist,vimfiler#complete' },
+                \ { 'name' : 'VimFilerExplorer',
+                    \ 'complete' : 'customlist,vimfiler#complete' },
+                \ { 'name' : 'VimFilerBufferDir',
+                    \ 'complete' : 'customlist,vimfiler#complete' },
+            \ ],
+            \ 'mappings' : ['<Plug>(vimfiler_switch)'],
+            \ 'explorer' : 1,
+        \ }
+    \ }
+\ )
+let s:hooks = neobundle#get_hooks('vimfiler')
+function! s:hooks.on_source(bundle)
+    let g:vimfiler_as_default_explorer = 1
+    let g:vimfiler_safe_mode_by_default = 0
+endfunction
 
 " Unite設定
 let g:unite_winheight = 10
@@ -678,7 +699,12 @@ function! s:Explorer(dir)
     if a:dir == ''
         let l:dir = '.'
     endif
-    execute 'VimProcBang rundll32 url.dll,FileProtocolHandler ' . l:dir
+    if s:is_windows
+        execute 'VimProcBang rundll32 url.dll,FileProtocolHandler ' . l:dir
+    elseif s:is_unix
+        execute 'VimProcBang nautilus ' . l:dir
+    endif
+
 endfunction
 
 " Diff
