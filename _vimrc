@@ -884,11 +884,27 @@ nmap        [Space]<Space>  [WSpace]
 nnoremap    [WSpace]        <Nop>
 nnoremap    <C-x>           <Nop>
 
-" j, kで表示行移動（gj, gkと入れ替え）
-nmap j <Plug>(accelerated_jk_gj)
-nmap k <Plug>(accelerated_jk_gk)
+" exit vim like emacs
+nnoremap <C-x><C-c> ZQ
+
+" insertion filetypes
+nnoremap <C-x><C-f> :<C-u>setfiletype<Space>
+
+" j, k mappings
+if !neobundle#is_sourced('accelerated-jk')
+    " j, k moves view line (chages from gj, gk)
+    nnoremap j gj
+    nnoremap k gk
+endif
 nnoremap gj j
 nnoremap gk k
+
+" j, k mappings when loaded accelerated-jk
+let s:bundle = neobundle#get('accelerated-jk')
+function! s:bundle.hooks.on_source(bundle)
+    nmap j <Plug>(accelerated_jk_gj)
+    nmap k <Plug>(accelerated_jk_gk)
+endfunction
 
 " すべて選択
 nnoremap ga ggVG
