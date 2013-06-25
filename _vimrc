@@ -196,15 +196,22 @@ let g:loaded_getscriptPlugin = 1
 " disable netrw.vim
 let g:loaded_netrwPlugin = 1
 
-" vimproc
-if !s:is_windows
+" vimproc compile setting
+call neobundle#config('vimproc', {
+    \ 'build' : {
+    \   'windows'   : 'make -f make_mingw32.mak',
+    \   'cygwin'    : 'make -f make_cygwin.mak',
+    \   'mac'       : 'make -f make_mac.mak',
+    \   'unix'      : 'make -f make_unix.mak',
+    \ }
+\ })
+if has('win64')
     call neobundle#config('vimproc', {
-        \ 'build' : {
-        \       'windows' : 'make -f make_mingw32.mak',
-        \       'cygwin' : 'make -f make_cygwin.mak',
-        \       'mac' : 'make -f make_mac.mak',
-        \       'unix' : 'make -f make_unix.mak',
-        \ }
+        \ 'build' : { 'windows' : 'nmake make_msvc64.mak', }
+    \ })
+elseif has('win32')
+    call neobundle#config('vimproc', {
+        \ 'build' : { 'windows' : 'nmake make_msvc32.mak', }
     \ })
 endif
 
@@ -733,31 +740,8 @@ endfunction
 " Functions:
 "-------------------------------------------------------------------------------
 
-" Comment or uncomment lines from mark a to mark b.
-function! s:CommentMark(docomment, a, b)
-    if !exists('b:comment')
-        "let b:comment = CommentStr() . ' '
-        let b:comment = CommentStr()
-    endif
-    if a:docomment
-        exe "normal! '" . a:a . "_\<C-V>'" . a:b . 'I' . b:comment
-    else
-        exe "'".a:a.",'".a:b . 's/^\(\s*\)' . escape(b:comment,'/') . '/\1/e'
-    endif
-endfunction
-
-" Comment lines in marks set by g@ operator.
-function! s:DoCommentOp(type)
-    call s:CommentMark(1, '[', ']')
-endfunction
-
-" Uncomment lines in marks set by g@ operator.
-function! s:UnCommentOp(type)
-    call s:CommentMark(0, '[', ']')
-endfunction
-
 " Return string used to comment line for current filetype.
-function! s:CommentStr()
+function! s:comment_str()
     if &ft == 'cpp' || &ft == 'java' || &ft == 'javascript'
         return '//'
     elseif &ft == 'vim'
@@ -788,7 +772,7 @@ function! s:get_cursor_word(pat) "{{{
 endfunction "}}}
 
 " ビジュアルモードで選択されていたテキストを取得
-function! GetSelectedWord() "{{{
+function! s:get_selected_word() "{{{
     let save_z = getreg('z', 1)
     let save_z_type = getregtype('z')
 
@@ -928,7 +912,7 @@ nnoremap ga ggVG
 
 " grep
 nnoremap gr :<C-u>grep <C-r><C-w> *
-xnoremap gr :<C-u>grep <C-r>=GetSelectedWord()<CR> *
+xnoremap gr :<C-u>grep <C-r>=<SID>get_selected_word()<CR> *
 
 " Google検索
 nnoremap <silent> gs :<C-u>GoogleSearch <C-r>=<SID>get_cursor_word('[a-zA-Z]*')<CR><CR>
@@ -1004,7 +988,7 @@ nnoremap - <C-x>
 
 " cwordでヘルプを引く
 nnoremap <silent> <F1> :<C-u>help <C-r><C-w><CR>
-xnoremap <silent> <F1> :<C-u>help <C-r>=GetSelectedWord()<CR>
+xnoremap <silent> <F1> :<C-u>help <C-r>=<SID>get_selected_word()<CR>
 
 " バッファのファイルがある場所をカレントディレクトリにする
 nnoremap <F2> :<C-u>cd %:p:h<Bar>pwd<CR>
@@ -1135,23 +1119,23 @@ nnoremap [Space]<CR> :<C-u>source %<CR>
 " オプション切り替え
 nnoremap [Toggle] <Nop>
 nmap T [Toggle]
-nnoremap [Toggle]w :<C-u>call <SID>ToggleLocalOption('wrap')<CR>
+nnoremap [Toggle]w :<C-u>call <SID>toggle_local_option('wrap')<CR>
 nmap [Toggle]W [Toggle]w
-nnoremap [Toggle]l :<C-u>call <SID>ToggleLocalOption('list')<CR>
+nnoremap [Toggle]l :<C-u>call <SID>toggle_local_option('list')<CR>
 nmap [Toggle]L [Toggle]l
-nnoremap [Toggle]h :<C-u>call <SID>ToggleLocalOption('hlsearch')<CR>
+nnoremap [Toggle]h :<C-u>call <SID>toggle_local_option('hlsearch')<CR>
 nmap [Toggle]H [Toggle]h
-nnoremap [Toggle]n :<C-u>call <SID>ToggleLocalOption('number')<CR>
+nnoremap [Toggle]n :<C-u>call <SID>toggle_local_option('number')<CR>
 nmap [Toggle]N [Toggle]n
-nnoremap [Toggle]r :<C-u>call <SID>ToggleLocalOption('relativenumber')<CR>
+nnoremap [Toggle]r :<C-u>call <SID>toggle_local_option('relativenumber')<CR>
 nmap [Toggle]R [Toggle]r
-nnoremap [Toggle]c :<C-u>call <SID>ToggleLocalOption('ignorecase')<CR>
+nnoremap [Toggle]c :<C-u>call <SID>toggle_local_option('ignorecase')<CR>
 nmap [Toggle]C [Toggle]c
-nnoremap [Toggle]e :<C-u>call <SID>ToggleLocalOption('expandtab')<CR>
+nnoremap [Toggle]e :<C-u>call <SID>toggle_local_option('expandtab')<CR>
 nmap [Toggle]E [Toggle]e
-nnoremap [Toggle]i :<C-u>call <SID>ToggleLocalOption('insertmode')<CR>
+nnoremap [Toggle]i :<C-u>call <SID>toggle_local_option('insertmode')<CR>
 nmap [Toggle]I [Toggle]i
-nnoremap [Toggle]f :<C-u>call <SID>ToggleFolding()<CR>
+nnoremap [Toggle]f :<C-u>call <SID>toggle_folding()<CR>
 nmap [Toggle]F [Toggle]f
 
 " タブ展開切り替え
@@ -1159,7 +1143,7 @@ nnoremap <silent> [Toggle]t :<C-u>setlocal expandtab! \| %retab!<CR>
 nmap [Toggle]T [Toggle]t
 
 " オプションの切り替えとその表示
-function! s:ToggleLocalOption(opt)
+function! s:toggle_local_option(opt)
     if exists('&' . a:opt)
         " トグルしてその値を表示
         execute 'setlocal ' . a:opt . '! | setlocal ' . a:opt . '?'
@@ -1171,9 +1155,9 @@ function! s:ToggleLocalOption(opt)
 endfunction
 
 " フォールディング切り替え
-nnoremap zi :<C-u>call <SID>ToggleFolding()<CR>
-function! s:ToggleFolding()
-    if s:ToggleLocalOption('foldenable')
+nnoremap zi :<C-u>call <SID>toggle_folding()<CR>
+function! s:toggle_folding()
+    if <SID>toggle_local_option('foldenable')
         setlocal foldcolumn=5
     else
         setlocal foldcolumn=0
@@ -1198,6 +1182,10 @@ nnoremap [Ref]e :<C-u>Ref webdict ej <C-r><C-w>
 nnoremap [Ref]j :<C-u>Ref webdict je <C-r><C-w>
 nnoremap [Ref]a :<C-u>Ref webdict alc <C-r><C-w>
 nnoremap [Ref]t :<C-u>Ref webdict thesaurus <C-r><C-w>
+
+" Ref
+nnoremap <silent> <expr> K
+    \ ':Ref webdict alc ' . <SID>get_cursor_word('[a-zA-Z]*') . '<CR>'
 
 " VimShell
 nnoremap <silent> [Space]s :<C-u>VimShell<CR>
@@ -1234,6 +1222,8 @@ nnoremap <silent> [Unite]q :<C-u>Unite qfixhowm<CR>
 nmap [Space]nc [Neocom]
 nnoremap [Neocom]l :<C-u>NeoCompleteLock<CR>
 nnoremap [Neocom]u :<C-u>NeoCompleteUnlock<CR>
+inoremap <C-x><C-l> :<C-u>NeoCompleteLock<CR>
+inoremap <C-x><C-u> :<C-u>NeoCompleteUnlock<CR>
 
 " textmanip
 " 選択したテキストの移動
@@ -1263,10 +1253,6 @@ call submode#map('winsize', 'n', '', '<', '<C-w><')
 call submode#map('winsize', 'n', '', '+', '<C-w>+')
 call submode#map('winsize', 'n', '', '-', '<C-w>-')
 call submode#map('winsize', 'n', '', '_', '<C-w>_')
-
-" Ref
-nnoremap <silent> <expr> K
-    \ ':Ref webdict alc ' . <SID>get_cursor_word('[a-zA-Z]*') . '<CR>'
 
 " ToggleCase
 nnoremap <silent> <C-k> :<C-u>call ToggleCase()<CR>
@@ -1364,37 +1350,37 @@ xnoremap id  i"
 "*******************************************************************************
 
 " 略記を展開する
-function! s:AbbrevCommentLine(head, body)
-    let till = 80   " 80行目まで
+function! s:abbrev_comment_line(head, body)
+    let till = 80   " 80列目まで
     let offset = 2  " 2文字分のオフセット
     let repeats = till / len(a:body) - virtcol('.') - (len(a:head) - 1) + offset
     return a:head . repeat(a:body, repeats)
 endfunction
 
 " 略記を定義する
-function! s:AbbrevDef()
+function! s:abbrev_def()
     " コメント文字の取得
     " 展開するときに定義されていないといけないので、b:で定義
-    let b:head = s:CommentStr()
+    let b:head = <SID>comment_str()
     if empty(b:head)
         return
     endif
 
-    inoreabbrev <buffer> <expr> @= <SID>AbbrevCommentLine(b:head, '=')
-    inoreabbrev <buffer> <expr> @- <SID>AbbrevCommentLine(b:head, '-')
-    inoreabbrev <buffer> <expr> @+ <SID>AbbrevCommentLine(b:head, '+')
-    inoreabbrev <buffer> <expr> @\| <SID>AbbrevCommentLine(b:head, '\|')
-    inoreabbrev <buffer> <expr> @* <SID>AbbrevCommentLine(b:head, '*')
-    inoreabbrev <buffer> <expr> @/ <SID>AbbrevCommentLine(b:head, '/')
-    inoreabbrev <buffer> <expr> @# <SID>AbbrevCommentLine(b:head, '#')
-    inoreabbrev <buffer> <expr> @> <SID>AbbrevCommentLine(b:head, '>')
-    inoreabbrev <buffer> <expr> @< <SID>AbbrevCommentLine(b:head, '<')
-    inoreabbrev <buffer> <expr> @x <SID>AbbrevCommentLine(b:head, 'x')
-    inoreabbrev <buffer> <expr> @r <SID>AbbrevCommentLine(b:head, '<>')
+    inoreabbrev <buffer> <expr> @= <SID>abbrev_comment_line(b:head, '=')
+    inoreabbrev <buffer> <expr> @- <SID>abbrev_comment_line(b:head, '-')
+    inoreabbrev <buffer> <expr> @+ <SID>abbrev_comment_line(b:head, '+')
+    inoreabbrev <buffer> <expr> @\| <SID>abbrev_comment_line(b:head, '|')
+    inoreabbrev <buffer> <expr> @* <SID>abbrev_comment_line(b:head, '*')
+    inoreabbrev <buffer> <expr> @/ <SID>abbrev_comment_line(b:head, '/')
+    inoreabbrev <buffer> <expr> @# <SID>abbrev_comment_line(b:head, '#')
+    inoreabbrev <buffer> <expr> @> <SID>abbrev_comment_line(b:head, '>')
+    inoreabbrev <buffer> <expr> @< <SID>abbrev_comment_line(b:head, '<')
+    inoreabbrev <buffer> <expr> @x <SID>abbrev_comment_line(b:head, 'x')
+    inoreabbrev <buffer> <expr> @r <SID>abbrev_comment_line(b:head, '<>')
 endfunction
 
 " ファイルタイプ設定時に略記定義
-autocmd MyAutocmd FileType * call <SID>AbbrevDef()
+autocmd MyAutocmd FileType * call <SID>abbrev_def()
 
 " 単語境界挿入
 cnoreabbrev @b \<\><Left><Left>
