@@ -771,7 +771,7 @@ function! s:CommentStr()
 endfunction
 
 " カーソル下の単語を取得
-function! GetCursorWord(pat) "{{{
+function! s:get_cursor_word(pat) "{{{
     let line = getline('.')
     let pos = col('.')
     let s = 0
@@ -931,8 +931,8 @@ nnoremap gr :<C-u>grep <C-r><C-w> *
 xnoremap gr :<C-u>grep <C-r>=GetSelectedWord()<CR> *
 
 " Google検索
-nnoremap <silent> gs :<C-u>GoogleSearch <C-r>=GetCursorWord('[a-zA-Z]*')<CR><CR>
-xnoremap <silent> gs :<C-u>GoogleSearch <C-r>=GetSelectedWord()<CR><CR>
+nnoremap <silent> gs :<C-u>GoogleSearch <C-r>=<SID>get_cursor_word('[a-zA-Z]*')<CR><CR>
+xnoremap <silent> gs :<C-u>GoogleSearch <C-r>=<SID>get_cursor_word()<CR><CR>
 
 " quickhl
 NXmap gh <Plug>(quickhl-toggle)
@@ -1266,7 +1266,7 @@ call submode#map('winsize', 'n', '', '_', '<C-w>_')
 
 " Ref
 nnoremap <silent> <expr> K
-    \ ':Ref webdict alc ' . GetCursorWord('[a-zA-Z]*') . '<CR>'
+    \ ':Ref webdict alc ' . <SID>get_cursor_word('[a-zA-Z]*') . '<CR>'
 
 " ToggleCase
 nnoremap <silent> <C-k> :<C-u>call ToggleCase()<CR>
