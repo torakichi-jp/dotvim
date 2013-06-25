@@ -16,7 +16,7 @@ endif
 filetype off
 filetype plugin indent off
 
-" setting <leader> key
+" set <leader> key
 let g:mapleader=','
 
 " switching variables
@@ -261,7 +261,7 @@ if !exists('g:unite_source_menu_menus')
     let g:unite_source_menu_menus = {}
 endif
 
-" メニューにエンコーディング項目を追加
+" add encoding items into unite-menu
 let g:unite_source_menu_menus.encoding = {
     \'description' : 'Encoding',
 \ }
@@ -274,7 +274,7 @@ let g:unite_source_menu_menus.encoding.command_candidates = [
     \ ['UCS-2',     'Utf16be'],
 \ ]
 
-" メニューにコマンドショートカット項目を登録
+" add command shortcut items into unite-menu
 let g:unite_source_menu_menus.shortcut = {
     \ 'description' : 'Command Shortcut',
 \ }
@@ -291,11 +291,10 @@ let g:unite_source_menu_menus.shortcut.command_candidates = [
     \ ['Unite-Beautiful-Attack',    'Unite -auto-preview colorscheme'],
 \ ]
 
-" メニューにリファレンスを登録
+" add reference items
 let g:unite_source_menu_menus.reference = {
     \ 'description' : 'Reference',
 \ }
-" リファレンスメニューに登録するコマンド
 let g:unite_source_menu_menus.reference.command_candidates = [
     \ ['En-Jp Dictionary',      'call feedkeys('':Ref webdict ej '')'],
     \ ['Jp-En Dictionary',      'call feedkeys('':Ref webdict je '')'],
@@ -306,14 +305,14 @@ let g:unite_source_menu_menus.reference.command_candidates = [
     \ ['C++ Libraery Reference',    'OpenBrowser https://sites.google.com/site/cpprefjp/reference/'],
 \ ]
 
-" Ref
+" vim-ref
 let g:ref_use_vimproc = 1
 if s:is_windows
     "let g:ref_source_webdict_encoding = 'EUC-JP'
     let g:ref_source_webdict_encoding = 'UTF-8'
 endif
 
-" webdictサイトの設定
+" set webdict sites
 let g:ref_source_webdict_sites = {
     \ 'je'          : {'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',},
     \ 'ej'          : {'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',},
@@ -324,7 +323,7 @@ let g:ref_source_webdict_sites = {
     \ 'wiktionary'  : {'url': 'http://ja.wiktionary.org/wiki/%s',},
 \ }
 
-" 各サイトのフィルタ設定
+" set filter each sites
 function! s:SetWebDictsFilter()
     let ref_webdict_filtering_lines = [
         \ ['je',            15],
@@ -346,7 +345,7 @@ endfunction
 call <SID>SetWebDictsFilter()
 delfunction s:SetWebDictsFilter
 
-" デフォルトサイト
+" default site of webdict
 let g:ref_source_webdict_sites.default = 'ej'
 
 " QFixHowm
@@ -365,7 +364,9 @@ let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz0123456789'
 let g:EasyMotion_do_shade = 0
 
 " openuri
-let openuri_cmd = '!start "rundll32.exe" url.dll,FileProtocolHandler %s'
+if s:is_windows
+    let openuri_cmd = '!start "rundll32.exe" url.dll,FileProtocolHandler %s'
+endif
 
 " ShowMarksでハイライトするマーク指定
 let g:showmarks_include = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>'
@@ -396,6 +397,13 @@ let g:toggle_pairs = {
     \ 'and' : 'or',
     \ 'or' : 'and',
 \ }
+
+
+" required!
+filetype plugin indent on
+
+" plugin installation check
+NeoBundleCheck
 
 
 "*******************************************************************************
