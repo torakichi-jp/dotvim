@@ -735,25 +735,25 @@ command! -bar TabMovePrev
 
 " エンコーディングを変えて開き直す
 command! -bang -bar -nargs=? -complete=file Utf8
-                            \ edit<bang> ++enc=utf-8 <args>
+    \ edit<bang> ++enc=utf-8 <args>
 command! -bang -bar -nargs=? -complete=file Cp932
-                            \ edit<bang> ++enc=cp932 <args>
+    \ edit<bang> ++enc=cp932 <args>
 command! -bang -bar -nargs=? -complete=file Euc
-                            \ edit<bang> ++enc=euc-jp <args>
+    \ edit<bang> ++enc=euc-jp <args>
 command! -bang -bar -nargs=? -complete=file Iso2022jp
-                            \ edit<bang> ++enc=iso-2022-jp <args>
+    \ edit<bang> ++enc=iso-2022-jp <args>
 command! -bang -bar -nargs=? -complete=file Utf16
-                            \ edit<bang> ++enc=ucs-2le <args>
+    \ edit<bang> ++enc=ucs-2le <args>
 command! -bang -bar -nargs=? -complete=file Utf16be
-                            \ edit<bang> ++enc=ucs-2 <args>
+    \ edit<bang> ++enc=ucs-2 <args>
 
 " 別名
 command! -bang -bar -nargs=? -complete=file Jis
-                            \ Iso2022jp<bang> <args>
+    \ Iso2022jp<bang> <args>
 command! -bang -bar -nargs=? -complete=file Sjis
-                            \ Cp932<bang> <args>
+    \ Cp932<bang> <args>
 command! -bang -bar -nargs=? -complete=file Unicode
-                            \ Utf16<bang> <args>
+    \ Utf16<bang> <args>
 
 " Google検索
 command! -nargs=? GoogleSearch call s:GoogleSearch(<q-args>)
@@ -900,6 +900,9 @@ augroup MyAutocmd
     " （ヘルプとかを）qで終了
     autocmd FileType help,ref-* nnoremap <buffer> <silent> q :<C-u>close<CR>
 
+    " Excitetranslateバッファをqで閉じる
+    autocmd BufEnter ==Translate==\ Excite nnoremap <buffer> <silent> q :<C-u>close<CR>
+
     " gitのコミットメッセージを編集する時は、バックアップファイルを作らない
     autocmd FileType gitcommit setlocal nobackup noundofile noswapfile
 
@@ -907,7 +910,7 @@ augroup MyAutocmd
     " 挿入モードではじめる
     autocmd CmdwinEnter * startinsert
     " qで終了する
-    autocmd CmdwinEnter * nnoremap <buffer> <silent> q :<C-u>quit<CR>
+    autocmd CmdwinEnter * nnoremap <buffer> <silent> q :<C-u>close<CR>
 
     " 前回のカーソル位置を復元
     autocmd BufReadPost *
