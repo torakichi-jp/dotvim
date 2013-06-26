@@ -201,16 +201,26 @@ call neobundle#config('vimproc', {
     \   'unix'      : 'make -f make_unix.mak',
     \ }
 \ })
-" in windows, building must be manually
-"if has('win64')
-"    call neobundle#config('vimproc', {
-"        \ 'build' : { 'windows' : 'make -f make_mingw64.mak', }
-"    \ })
-"elseif has('win32')
-"    call neobundle#config('vimproc', {
-"        \ 'build' : { 'windows' : 'make -f make_mingw32.mak', }
-"    \ })
-"endif
+" if windows and if not installed msvc, building must be manually
+if has('win64') && isdirectory($VCINSTALLDIR)
+    call neobundle#config(
+        \ 'vimproc', {
+            \ 'build' : {
+                \ 'windows' : '"' . $VCINSTALLDIR . '/vcvarsall.bat" amd64 & ' .
+                    \ 'nmake /f make_msvc64.mak',
+            \ }
+        \ }
+    \ )
+elseif has('win32') && isdirectory($VCINSTALLDIR)
+    call neobundle#config(
+        \ 'vimproc', {
+            \ 'build' : {
+                \ 'windows' : '"' . $VCINSTALLDIR . '/vcvarsall.bat" x86 & ' .
+                    \ 'nmake /f make_msvc32.mak',
+            \ }
+        \ }
+    \ )
+endif
 
 " NERD_commenter
 let s:bundle = neobundle#get('nerdcommenter')
