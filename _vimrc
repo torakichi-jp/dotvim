@@ -55,6 +55,7 @@ augroup END
 " Plugins:
 "*******************************************************************************
 
+" add backward of 'runtimepath'
 let g:neobundle#enable_tail_path = 1
 
 if has('vim_starting')
@@ -66,6 +67,7 @@ call neobundle#rc(s:dotvimdir . '/bundle')
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/vimshell'
+NeoBundle 'yomi322/vim-gitcomplete'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neocomplcache.vim'
@@ -117,9 +119,6 @@ NeoBundleLazy 'Lokaltog/vim-powerline'
 NeoBundleLazy 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'basyura/TweetVim'
-NeoBundle 'basyura/twibill.vim'
-NeoBundle 'basyura/bitly.vim'
-NeoBundle 'mattn/favstar-vim'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'rhysd/accelerated-jk'
 NeoBundle 'tanabe/ToggleCase-vim'
@@ -189,13 +188,15 @@ let g:loaded_getscriptPlugin = 1
 let g:loaded_netrwPlugin = 1
 
 " vimproc build setting
-call neobundle#config('vimproc', {
-    \ 'build' : {
-    \   'cygwin'    : 'make -f make_cygwin.mak',
-    \   'mac'       : 'make -f make_mac.mak',
-    \   'unix'      : 'make -f make_unix.mak',
+call neobundle#config(
+    \ 'vimproc', {
+        \ 'build' : {
+            \ 'cygwin'    : 'make -f make_cygwin.mak',
+            \ 'mac'       : 'make -f make_mac.mak',
+            \ 'unix'      : 'make -f make_unix.mak',
+        \ }
     \ }
-\ })
+\ )
 " if windows and if not installed msvc, must build manually
 " $VCINSTALLDIR envvar have to declare in advance
 if has('win64') && isdirectory($VCINSTALLDIR)
@@ -237,7 +238,7 @@ endfunction
 
 " neocomplcache
 call neobundle#config(
-    \ 'neocomplcache', {
+    \ 'neocomplcache.vim', {
         \ 'lazy' : 1,
         \ 'autoload' : {
             \ 'commands' : 'NeoComplCacheEnable',
@@ -258,12 +259,6 @@ call neobundle#config(
         \ }
     \ }
 \ )
-
-" powerline
-if s:is_gui || !s:is_windows
-    NeoBundleSource vim-powerline
-    " powerline setting is in dotvim/vimfiles/plugin/powerline-setting.vim
-endif
 
 " vimfiler
 call neobundle#config(
@@ -290,7 +285,57 @@ function! s:hooks.on_source(bundle)
     let g:vimfiler_safe_mode_by_default = 0
 endfunction
 
+" vimshell
+call neobundle#config(
+    \'vimshell', {
+        \ 'lazy' : 1,
+        \ 'autoload' : {
+            \ 'commands' : [
+                \ {
+                    \ 'name' : 'VimShell',
+                    \ 'complete' : 'customlist,vimshell#complete',
+                \ },
+            \ ],
+            \ 'mappings' : ['<Plug>(vimshell_switch)'],
+        \}
+    \ }
+\ )
+
+" vimi-gitcomplete
+call neobundle#config(
+    \ 'vim-gitcomplete', {
+        \ 'lazy' : 1,
+        \ 'autoload' : {
+            \ 'filetype' : 'vimshell',
+        \ }
+    \ }
+\ )
+
+" vinarise
+call neobundle#config(
+    \ 'vinarise', {
+        \ 'lazy' : 1,
+        \ 'autoload' : { 'commands' : 'Vinarise' },
+    \ }
+\ )
+
 " Unite設定
+call neobundle#config(
+    \ 'unite.vim', {
+        \ 'lazy' : 1,
+        \ 'autoload' : {
+            \ 'commands' : [
+                \ {
+                    \ 'name' : 'Unite',
+                    \ 'complete' : 'customlist,unite#complete_source'
+                \ },
+                \ 'UniteWithBufferDir',
+                \ 'UniteWithCursorWord',
+                \ 'UniteWithInput',
+            \ ]
+        \ }
+    \ }
+\ )
 let g:unite_winheight = 10
 let g:unite_enable_start_insert = 0
 
@@ -306,9 +351,9 @@ let g:unite_source_menu_menus.encoding = {
 let g:unite_source_menu_menus.encoding.command_candidates = [
     \ ['UTF-8',     'Utf8'],
     \ ['SHIFT-JIS', 'Sjis'],
-    \ ['EUC-JP',        'Euc'],
+    \ ['EUC-JP',    'Euc'],
     \ ['JIS',       'Jis'],
-    \ ['Unicode', 'Utf16'],
+    \ ['Unicode',   'Utf16'],
     \ ['UCS-2',     'Utf16be'],
 \ ]
 
@@ -330,7 +375,7 @@ let g:ref_source_webdict_sites = {
     \ 'wiktionary'  : {'url': 'http://ja.wiktionary.org/wiki/%s',},
 \ }
 
-" set filter each sites
+" set filter for each sites
 function! s:SetWebDictsFilter()
     let ref_webdict_filtering_lines = [
         \ ['je',            15],
@@ -354,6 +399,24 @@ delfunction s:SetWebDictsFilter
 
 " default site of webdict
 let g:ref_source_webdict_sites.default = 'ej'
+
+" TweetVim
+call neobundle#config(
+    \ 'TweetVim', {
+        \ 'lazy' : 1,
+        \ 'depends' : [
+            \ 'basyura/twibill.vim', 'tyru/open-browser.vim',
+            \ 'basyura/bitly.vim', 'mattn/favstar-vim',
+        \ ],
+        \ 'autoload' : { 'commnads' : 'TweetVimHomeTimeline' },
+    \ }
+\ )
+
+" powerline
+if s:is_gui || !s:is_windows
+    NeoBundleSource vim-powerline
+    " powerline setting is in dotvim/vimfiles/plugin/powerline-setting.vim
+endif
 
 " surround
 call neobundle#config(
