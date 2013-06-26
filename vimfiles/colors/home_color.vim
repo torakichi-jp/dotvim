@@ -35,7 +35,7 @@ hi MatchParen		guifg=#00FFFF		guibg=#004080		gui=bold
 
 hi Comment			guifg=#669966
 hi Constant			guifg=#E77E6E
-hi String			guifg=#9933CC
+hi String			guifg=#6633CC
 hi Character		guifg=#E9C062
 hi Number			guifg=#CC3366
 hi Boolean			guifg=#CF6A4C

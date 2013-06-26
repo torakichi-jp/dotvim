@@ -69,18 +69,18 @@ function! s:hooks.on_source(bundle)
         \ }),
       \
       \ Pl#Hi#Segments(['mode_indicator', 'filename'], {
-        \ 'i': ['white', 'mediumred', ['bold']],
+        \ 'i': ['white', 'darkestgreen', ['bold']],
         \ 'n': ['white', 'darkestcyan', ['bold']],
         \ 'v': ['white', 'darkestpurple', ['bold']],
-        \ 'r': ['white', 'darkestgreen', ['bold']],
+        \ 'r': ['white', 'mediumred', ['bold']],
         \ 's': ['white', 'gray5', ['bold']],
         \ }),
       \
       \ Pl#Hi#Segments(['fileinfo'], {
-        \ 'i': ['mediumred', 'white', ['bold']],
+        \ 'i': ['darkestgreen', 'white', ['bold']],
         \ 'n': ['darkestcyan', 'white', ['bold']],
         \ 'v': ['darkestpurple', 'white', ['bold']],
-        \ 'r': ['darkestgreen', 'white', ['bold']],
+        \ 'r': ['mediumred', 'white', ['bold']],
         \ 'N': ['gray0', 'gray2', ['bold']],
         \ }),
       \

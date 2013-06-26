@@ -55,7 +55,8 @@ augroup END
 " Plugins:
 "*******************************************************************************
 
-" required
+let g:neobundle#enable_tail_path = 1
+
 if has('vim_starting')
     let &runtimepath = &runtimepath . ',' . s:dotvimdir . '/bundle/neobundle.vim'
 endif
@@ -123,13 +124,7 @@ NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'rhysd/accelerated-jk'
 NeoBundle 'tanabe/ToggleCase-vim'
 "NeoBundleLazy 'tpope/vim-surround'
-"NeoBundleLazy 't9md/vim-surround_custom_mapping', '', '', {
-"       \ 'depends' : 'vim-surround',
-"       \ 'autoload' : {
-"           \ 'mappings' : [
-"               \ ['n', '<Plug>Dsurround'], ['n', '<Plug>Csurround'],
-"               \ ['n', '<Plug>Ysurround'], ['n', '<Plug>YSurround']
-"           \ ]}}
+NeoBundle 'anyakichi/vim-surround'
 
 NeoBundle 'Colour-Sampler-Pack'
 NeoBundle 'SingleCompile'
@@ -201,7 +196,8 @@ call neobundle#config('vimproc', {
     \   'unix'      : 'make -f make_unix.mak',
     \ }
 \ })
-" if windows and if not installed msvc, building must be manually
+" if windows and if not installed msvc, must build manually
+" $VCINSTALLDIR envvar have to declare in advance
 if has('win64') && isdirectory($VCINSTALLDIR)
     call neobundle#config(
         \ 'vimproc', {
@@ -235,13 +231,38 @@ let s:hooks = neobundle#get_hooks('neocomplete.vim')
 function! s:hooks.on_source(bundle)
     let g:neocomplete#enable_auto_select = 1
     "let g:neocomplete#disable_auto_complete = 1
-    let g:neocomplete#auto_completion_start_length = 4
+    let g:neocomplete#auto_completion_start_length = 3
     let g:neocomplete#use_vimproc = 1
 endfunction
+
+" neocomplcache
+call neobundle#config(
+    \ 'neocomplcache', {
+        \ 'lazy' : 1,
+        \ 'autoload' : {
+            \ 'commands' : 'NeoComplCacheEnable',
+        \ }
+    \ }
+\ )
+
+" neosnippet
+call neobundle#config(
+    \ 'neosnippet', {
+        \ 'lazy' : 1,
+        \ 'autoload' : {
+            \ 'insert' : 1,
+            \ 'filetype' : 'snippet',
+            \ 'unite_sources' : [
+                \ 'snippet', 'neosnippet/user', 'neosnippet/runtime'
+            \ ],
+        \ }
+    \ }
+\ )
 
 " powerline
 if s:is_gui || !s:is_windows
     NeoBundleSource vim-powerline
+    " powerline setting is in dotvim/vimfiles/plugin/powerline-setting.vim
 endif
 
 " vimfiler
@@ -291,37 +312,6 @@ let g:unite_source_menu_menus.encoding.command_candidates = [
     \ ['UCS-2',     'Utf16be'],
 \ ]
 
-" add command shortcut items into unite-menu
-let g:unite_source_menu_menus.shortcut = {
-    \ 'description' : 'Command Shortcut',
-\ }
-let g:unite_source_menu_menus.shortcut.command_candidates = [
-    \ ['VimShell',                  'VimShell'],
-    \ ['VimShellPop',               'VimShellPop'],
-    \ ['NeoBundleInstall',          'NeoBundleInstall'],
-    \ ['NeoBundleUpdate',           'NeoBundleUpdate'],
-    \ ['NeoBundleSource',           'NeoBundleSource'],
-    \ ['NeoBundleClean',            'NeoBundleClean'],
-    \ ['NeoBundleDocs',             'NeoBundleDocs'],
-    \ ['Scratch',                   'Scratch'],
-    \ ['MoveWin',                   'MoveWin'],
-    \ ['Unite-Beautiful-Attack',    'Unite -auto-preview colorscheme'],
-\ ]
-
-" add reference items
-let g:unite_source_menu_menus.reference = {
-    \ 'description' : 'Reference',
-\ }
-let g:unite_source_menu_menus.reference.command_candidates = [
-    \ ['En-Jp Dictionary',      'call feedkeys('':Ref webdict ej '')'],
-    \ ['Jp-En Dictionary',      'call feedkeys('':Ref webdict je '')'],
-    \ ['pydoc',                 'call feedkeys('':Ref pydoc '')'],
-    \ ['Wikipedia',             'call feedkeys('':Ref webdict wiki '')'],
-    \ ['Thesaurus',             'call feedkeys('':Ref webdict thesaurus '')'],
-    \ ['Boost.MPL Ref',         'OpenBrowser http://www.boost.org/doc/libs/release/libs/mpl/doc/refmanual/refmanual_toc.html'],
-    \ ['C++ Libraery Reference',    'OpenBrowser https://sites.google.com/site/cpprefjp/reference/'],
-\ ]
-
 " vim-ref
 let g:ref_use_vimproc = 1
 if s:is_windows
@@ -364,6 +354,19 @@ delfunction s:SetWebDictsFilter
 
 " default site of webdict
 let g:ref_source_webdict_sites.default = 'ej'
+
+" surround
+call neobundle#config(
+    \ 'vim-surround', {
+        \ 'lazy' : 1,
+        \ 'autoload' : {
+            \ 'mappings' : [
+                \ ['n', '<Plug>Dsurround'], ['n', '<Plug>Csurround' ],
+                \ ['n', '<Plug>Ysurround'], ['n', '<Plug>YSurround' ],
+            \ ]
+        \ }
+    \ }
+\ )
 
 " QFixHowm
 let g:mygrep = 'grep'
@@ -847,7 +850,7 @@ augroup MyAutocmd
     " 前回のカーソル位置を復元
     autocmd BufReadPost *
         \ if line('''"') > 1 && line('''"') <= line('$') |
-            \ execute 'normal! g`"' |
+            \ execute 'normal! g`"zz' |
         \ endif
 
     " 設定されていないことが多い部分の色設定
@@ -890,6 +893,9 @@ AlterCommand cap[ture] Capture
 AlterCommand cdc[urrent] CdCurrent
 AlterCommand ack Ack
 AlterCommand ct[ags] !ctags -R
+AlterCommand t[ranslate] ExciteTranslate
+AlterCommand ej Ref webdict ej
+AlterCommand je Ref webdict je
 
 
 "*******************************************************************************
