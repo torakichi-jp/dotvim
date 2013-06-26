@@ -16,7 +16,7 @@ endif
 filetype off
 filetype plugin indent off
 
-" setting <leader> key
+" set <leader> key
 let g:mapleader=','
 
 " switching variables
@@ -223,16 +223,16 @@ elseif has('win32') && isdirectory($VCINSTALLDIR)
 endif
 
 " NERD_commenter
-let s:bundle = neobundle#get('nerdcommenter')
-function! s:bundle.hooks.on_source(bundle)
+let s:hooks = neobundle#get_hooks('nerdcommenter')
+function! s:hooks.on_source(bundle)
     let g:NERDCreateDefaultMappings = 0
     let g:NERDSpaceDelims = 0
 endfunction
 
 " neocomplete
 let g:neocomplete#enable_at_startup = 1
-let s:bundle = neobundle#get('neocomplete.vim')
-function! s:bundle.hooks.on_source(bundle)
+let s:hooks = neobundle#get_hooks('neocomplete.vim')
+function! s:hooks.on_source(bundle)
     let g:neocomplete#enable_auto_select = 1
     "let g:neocomplete#disable_auto_complete = 1
     let g:neocomplete#auto_completion_start_length = 4
@@ -243,24 +243,31 @@ endfunction
 if s:is_gui || !s:is_windows
     NeoBundleSource vim-powerline
 endif
-let s:bundle = neobundle#get('vim-powerline')
-function! s:bundle.hooks.on_source(bundle)
-    let g:Powerline_symbols = 'fancy'
-    let g:Powerline_stl_path_style = 'relative'
-    let g:Powerline_mode_n = 'Normal'
-    let g:Powerline_mode_i = 'Insert'
-    let g:Powerline_mode_R = 'Replace'
-    let g:Powerline_mode_v = 'Visual'
-    let g:Powerline_mode_V = 'V-Line'
-    let g:Powerline_mode_cv = 'V-Block'
-    let g:Powerline_mode_s = 'Select'
-    let g:Powerline_mode_S = 'S-Line'
-    let g:Powerline_mode_cs = 'S-Block'
-endfunction
 
 " vimfiler
-let g:vimfiler_as_default_explorer = 1
-let g:vimfiler_safe_mode_by_default = 0
+call neobundle#config(
+    \ 'vimfiler', {
+        \ 'lazy' : 1,
+        \ 'depends' : 'Shougo/unite.vim',
+        \ 'autoload' : {
+            \ 'commands' : [
+                \ { 'name' : 'VimFiler',
+                    \ 'complete' : 'customlist,vimfiler#complete' },
+                \ { 'name' : 'VimFilerExplorer',
+                    \ 'complete' : 'customlist,vimfiler#complete' },
+                \ { 'name' : 'VimFilerBufferDir',
+                    \ 'complete' : 'customlist,vimfiler#complete' },
+            \ ],
+            \ 'mappings' : ['<Plug>(vimfiler_switch)'],
+            \ 'explorer' : 1,
+        \ }
+    \ }
+\ )
+let s:hooks = neobundle#get_hooks('vimfiler')
+function! s:hooks.on_source(bundle)
+    let g:vimfiler_as_default_explorer = 1
+    let g:vimfiler_safe_mode_by_default = 0
+endfunction
 
 " Unite設定
 let g:unite_winheight = 10
@@ -271,7 +278,7 @@ if !exists('g:unite_source_menu_menus')
     let g:unite_source_menu_menus = {}
 endif
 
-" メニューにエンコーディング項目を追加
+" add encoding items into unite-menu
 let g:unite_source_menu_menus.encoding = {
     \'description' : 'Encoding',
 \ }
@@ -284,7 +291,7 @@ let g:unite_source_menu_menus.encoding.command_candidates = [
     \ ['UCS-2',     'Utf16be'],
 \ ]
 
-" メニューにコマンドショートカット項目を登録
+" add command shortcut items into unite-menu
 let g:unite_source_menu_menus.shortcut = {
     \ 'description' : 'Command Shortcut',
 \ }
@@ -301,11 +308,10 @@ let g:unite_source_menu_menus.shortcut.command_candidates = [
     \ ['Unite-Beautiful-Attack',    'Unite -auto-preview colorscheme'],
 \ ]
 
-" メニューにリファレンスを登録
+" add reference items
 let g:unite_source_menu_menus.reference = {
     \ 'description' : 'Reference',
 \ }
-" リファレンスメニューに登録するコマンド
 let g:unite_source_menu_menus.reference.command_candidates = [
     \ ['En-Jp Dictionary',      'call feedkeys('':Ref webdict ej '')'],
     \ ['Jp-En Dictionary',      'call feedkeys('':Ref webdict je '')'],
@@ -316,14 +322,14 @@ let g:unite_source_menu_menus.reference.command_candidates = [
     \ ['C++ Libraery Reference',    'OpenBrowser https://sites.google.com/site/cpprefjp/reference/'],
 \ ]
 
-" Ref
+" vim-ref
 let g:ref_use_vimproc = 1
 if s:is_windows
     "let g:ref_source_webdict_encoding = 'EUC-JP'
     let g:ref_source_webdict_encoding = 'UTF-8'
 endif
 
-" webdictサイトの設定
+" set webdict sites
 let g:ref_source_webdict_sites = {
     \ 'je'          : {'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',},
     \ 'ej'          : {'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',},
@@ -334,7 +340,7 @@ let g:ref_source_webdict_sites = {
     \ 'wiktionary'  : {'url': 'http://ja.wiktionary.org/wiki/%s',},
 \ }
 
-" 各サイトのフィルタ設定
+" set filter each sites
 function! s:SetWebDictsFilter()
     let ref_webdict_filtering_lines = [
         \ ['je',            15],
@@ -356,7 +362,7 @@ endfunction
 call <SID>SetWebDictsFilter()
 delfunction s:SetWebDictsFilter
 
-" デフォルトサイト
+" default site of webdict
 let g:ref_source_webdict_sites.default = 'ej'
 
 " QFixHowm
@@ -375,7 +381,9 @@ let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz0123456789'
 let g:EasyMotion_do_shade = 0
 
 " openuri
-let openuri_cmd = '!start "rundll32.exe" url.dll,FileProtocolHandler %s'
+if s:is_windows
+    let openuri_cmd = '!start "rundll32.exe" url.dll,FileProtocolHandler %s'
+endif
 
 " ShowMarksでハイライトするマーク指定
 let g:showmarks_include = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>'
@@ -406,6 +414,13 @@ let g:toggle_pairs = {
     \ 'and' : 'or',
     \ 'or' : 'and',
 \ }
+
+
+" required!
+filetype plugin indent on
+
+" plugin installation check
+NeoBundleCheck
 
 
 "*******************************************************************************
@@ -694,7 +709,12 @@ function! s:Explorer(dir)
     if a:dir == ''
         let l:dir = '.'
     endif
-    execute 'VimProcBang rundll32 url.dll,FileProtocolHandler ' . l:dir
+    if s:is_windows
+        execute 'VimProcBang rundll32 url.dll,FileProtocolHandler ' . l:dir
+    elseif s:is_unix
+        execute 'VimProcBang nautilus ' . l:dir
+    endif
+
 endfunction
 
 " Diff
@@ -734,9 +754,8 @@ function! s:CmdCapture(args) "{{{
 endfunction "}}}
 
 " オプション表示
-command! -nargs=1 -complete=option ShowOption
-    \ call s:ShowOption(<q-args>)
-function! s:ShowOption(opt)
+command! -nargs=1 -complete=option ShowOption call <SID>show_option(<q-args>)
+function! s:show_option(opt)
     if !empty(a:opt)
         execute 'verb set ' . a:opt . '?'
     endif
@@ -889,7 +908,13 @@ nmap        [Space]<Space>  [WSpace]
 nnoremap    [WSpace]        <Nop>
 nnoremap    <C-x>           <Nop>
 
-" exit vim like emacs
+" open file using :browse
+nnoremap <C-x><C-e> :<C-u>browse edit<CR>
+
+" write file using :browse
+nnoremap <C-x><C-w> :<C-u>browse write<CR>
+
+" exit like emacs
 nnoremap <C-x><C-c> ZQ
 
 " insertion filetypes
@@ -898,9 +923,13 @@ nnoremap <C-x><C-f> :<C-u>setfiletype<Space>
 " show option
 nnoremap <C-x><C-o> :<C-u>ShowOption<Space>
 
+" switching buffers
+nnoremap <C-x><C-n> :<C-u>bnext<CR>
+nnoremap <C-x><C-p> :<C-u>bprevious<CR>
+
 " j, k mappings
 if !neobundle#is_sourced('accelerated-jk')
-    " j, k moves view line (chages from gj, gk)
+    " j, k moves for view line (chages from gj, gk)
     nnoremap j gj
     nnoremap k gk
 endif
@@ -908,8 +937,8 @@ nnoremap gj j
 nnoremap gk k
 
 " j, k mappings when loaded accelerated-jk
-let s:bundle = neobundle#get('accelerated-jk')
-function! s:bundle.hooks.on_source(bundle)
+let s:hooks = neobundle#get_hooks('accelerated-jk')
+function! s:hooks.on_source(bundle)
     nmap j <Plug>(accelerated_jk_gj)
     nmap k <Plug>(accelerated_jk_gk)
 endfunction
@@ -1012,7 +1041,11 @@ noremap <silent> <CR> :<C-u>call <SID>CrExec()<CR>
 function! s:CrExec()
     if v:count == 0
         redraw!
-        Nohlsearch
+        if exists(':Nohlsearch')
+            Nohlsearch
+        else
+            nohlsearch
+        endif
     else
         execute 'normal! ' . string(v:count) . 'G'
     endif
@@ -1103,18 +1136,6 @@ nnoremap            [Tab]6  6gt
 nnoremap            [Tab]7  7gt
 nnoremap            [Tab]8  8gt
 nnoremap            [Tab]9  9gt
-
-" タグサーチ
-nnoremap [Tag] <Nop>
-nmap <C-t> [Tag]
-nnoremap [Tag]j g<C-]>
-nmap [Tag]<C-j> [Tag]j
-nnoremap [Tag]t <C-t>
-nmap [Tag]<C-t> [Tag]t
-nnoremap [Tag]n :<C-u>tnext<CR>
-nmap [Tag]<C-n> [Tag]n
-nnoremap [Tag]p :<C-u>tprevious<CR>
-nmap [Tag]<C-p> [Tag]p
 
 " 起動時設定を開く
 nnoremap <silent> [Space]v :<C-u>edit $MYVIMRC<CR>
@@ -1399,7 +1420,7 @@ cnoreabbrev @g $MYGVIMRC
 "*******************************************************************************
 " Remove variables
 "*******************************************************************************
-unlet s:bundle
+unlet s:hooks
 
 
 "*******************************************************************************

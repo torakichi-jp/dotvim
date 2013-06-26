@@ -1,9 +1,22 @@
-let s:bundle = neobundle#get('vim-powerline')
-if empty(s:bundle)
+if !neobundle#is_installed('vim-powerline')
     finish
 endif
 
-function! s:bundle.hooks.on_source(bundle)
+let s:hooks = neobundle#get_hooks('vim-powerline')
+function! s:hooks.on_source(bundle)
+
+    let g:Powerline_symbols = 'fancy'
+    let g:Powerline_stl_path_style = 'relative'
+    let g:Powerline_mode_n = 'Normal'
+    let g:Powerline_mode_i = 'Insert'
+    let g:Powerline_mode_R = 'Replace'
+    let g:Powerline_mode_v = 'Visual'
+    let g:Powerline_mode_V = 'V-Line'
+    let g:Powerline_mode_cv = 'V-Block'
+    let g:Powerline_mode_s = 'Select'
+    let g:Powerline_mode_S = 'S-Line'
+    let g:Powerline_mode_cs = 'S-Block'
+
     call Pl#Hi#Allocate({
       \ 'black'          : 16,
       \ 'white'          : 231,
@@ -55,19 +68,19 @@ function! s:bundle.hooks.on_source(bundle)
         \ 'N': ['gray0', 'gray0'],
         \ }),
       \
-      \ Pl#Hi#Segments(['mode_indicator'], {
-        \ 'i': ['white', 'darkestgreen', ['bold']],
+      \ Pl#Hi#Segments(['mode_indicator', 'filename'], {
+        \ 'i': ['white', 'mediumred', ['bold']],
         \ 'n': ['white', 'darkestcyan', ['bold']],
         \ 'v': ['white', 'darkestpurple', ['bold']],
-        \ 'r': ['white', 'mediumred', ['bold']],
-        \ 's': ['gray5', 'white', ['bold']],
+        \ 'r': ['white', 'darkestgreen', ['bold']],
+        \ 's': ['white', 'gray5', ['bold']],
         \ }),
       \
-      \ Pl#Hi#Segments(['fileinfo', 'filename'], {
-        \ 'i': ['white', 'darkestgreen', ['bold']],
-        \ 'n': ['white', 'darkestcyan', ['bold']],
-        \ 'v': ['white', 'darkestpurple', ['bold']],
-        \ 'r': ['white', 'mediumred', ['bold']],
+      \ Pl#Hi#Segments(['fileinfo'], {
+        \ 'i': ['mediumred', 'white', ['bold']],
+        \ 'n': ['darkestcyan', 'white', ['bold']],
+        \ 'v': ['darkestpurple', 'white', ['bold']],
+        \ 'r': ['darkestgreen', 'white', ['bold']],
         \ 'N': ['gray0', 'gray2', ['bold']],
         \ }),
       \
@@ -77,7 +90,7 @@ function! s:bundle.hooks.on_source(bundle)
         \ }),
       \
       \ Pl#Hi#Segments(['fileinfo.filepath', 'status'], {
-        \ 'n': ['gray10'],
+        \ 'n': ['black'],
         \ 'N': ['gray5'],
         \ }),
       \
