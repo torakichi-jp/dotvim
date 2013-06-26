@@ -4,26 +4,36 @@
 "
 "*******************************************************************************
 
-scriptencoding utf-8    " this script's encoding
+
+"*******************************************************************************
+" Initialize:
+"*******************************************************************************
+" {{{
+
+scriptencoding utf-8    " endoding of this script
 set nocompatible        " Vi IMproved
-set shellslash          " path delimiter is slash
-if has('win32')
-    set termencoding=cp932
-endif
-"set encoding=utf-8      " internal encoding
-
-" disable filetypes temporarily
-filetype off
-filetype plugin indent off
-
-" set <leader> key
-let g:mapleader=','
 
 " switching variables
 let s:is_gui = has('gui_running')
 let s:is_windows = has('win32') || has('win64')
 let s:is_unix = has('unix')
 let s:is_cygwin = has('win32unix')
+
+" disable filetypes temporarily
+filetype off
+filetype plugin indent off
+
+" path delimiter is slash
+set shellslash
+
+" encoding
+if s:is_windows
+    set termencoding=cp932
+endif
+"set encoding=utf-8      " internal encoding
+
+" set <leader> key
+let g:mapleader=','
 
 " path to .vim directory
 if s:is_windows
@@ -51,9 +61,11 @@ augroup MyAutocmd
 augroup END
 
 
+" }}}
 "*******************************************************************************
 " Plugins:
 "*******************************************************************************
+" {{{
 
 " add backward of 'runtimepath'
 let g:neobundle#enable_tail_path = 1
@@ -177,9 +189,11 @@ NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'mattn/learn-vimscript'
 
 
+" }}}
 "*******************************************************************************
 " Plugin Settings:
 "*******************************************************************************
+" {{{
 
 " disable GetLatestVimPlugin.vim
 let g:loaded_getscriptPlugin = 1
@@ -488,9 +502,11 @@ filetype plugin indent on
 NeoBundleCheck
 
 
+" }}}
 "*******************************************************************************
 " Option Settings:
 "*******************************************************************************
+" {{{
 
 " Vimスクリプトのシンタックスフォールディング設定
 " foldmethod=syntaxでないと意味なし
@@ -710,9 +726,12 @@ function! s:TabPageLabel(n)
 endfunction
 
 
+" }}}
 "*******************************************************************************
 " User Commands:
 "*******************************************************************************
+" {{{
+
 " NormalモードマッピングとVisualモードマッピングを一度に定義する
 command! -bar -nargs=+ NXmap call s:NXmap(<q-args>, 0)
 command! -bar -nargs=+ NXnoremap call s:NXmap(<q-args>, 1)
@@ -827,9 +846,11 @@ function! s:show_option(opt)
 endfunction
 
 
+" }}}
 "-------------------------------------------------------------------------------
 " Functions:
 "-------------------------------------------------------------------------------
+" {{{
 
 " Return string used to comment line for current filetype.
 function! s:comment_str()
@@ -876,9 +897,11 @@ function! s:get_selected_word() "{{{
 endfunction "}}}
 
 
+" }}}
 "*******************************************************************************
 " Autocommands:
 "*******************************************************************************
+" {{{
 
 augroup MyAutocmd
 
@@ -944,9 +967,12 @@ augroup MyAutocmd
 augroup END
 
 
+" }}}
 "*******************************************************************************
 " AlterCommands:
 "*******************************************************************************
+" {{{
+
 "設定ファイル内でAlterCommandを使うためにロード
 call altercmd#load()
 
@@ -963,9 +989,16 @@ AlterCommand ej Ref webdict ej
 AlterCommand je Ref webdict je
 
 
+" }}}
 "*******************************************************************************
 " Key Mappings:
 "*******************************************************************************
+" {{{
+
+"*******************************************************************************
+" Nomarl Key Mappings:
+"*******************************************************************************
+" {{{
 
 " 無効にしておく
 nnoremap Q <Nop>
@@ -1263,6 +1296,12 @@ function! s:toggle_folding()
     endif
 endfunction
 
+"}}}
+"*******************************************************************************
+" Plugin Mappings:
+"*******************************************************************************
+" {{{
+
 " vimfiler
 nnoremap <silent> [Space]e :<C-u>VimFilerBufferDir
     \ -buffer-name=explorer -toggle -split -horizontal -no-quit -winheight=10<CR>
@@ -1356,10 +1395,11 @@ call submode#map('winsize', 'n', '', '_', '<C-w>_')
 " ToggleCase
 nnoremap <silent> <C-k> :<C-u>call ToggleCase()<CR>
 
-
+" }}}
 "-------------------------------------------------------------------------------
-" 挿入モードキーマップ
+" Insertmode Mappings:
 "-------------------------------------------------------------------------------
+" {{{
 
 " 補完
 inoremap <expr> <CR> pumvisible() ? neocomplete#smart_close_popup() : '<CR>'
@@ -1379,10 +1419,11 @@ imap <C-l> <C-o><Plug>CapsLockToggle
 cmap <C-l> <Plug>CapsLockToggle
 " TODO: ステータスラインで状態表示
 
-
+" }}}
 "-------------------------------------------------------------------------------
-" コマンドラインキーマップ
+" Commandline Mappings:
 "-------------------------------------------------------------------------------
+" {{{
 
 cnoremap <C-n> <Down>
 cnoremap <C-p> <Up>
@@ -1402,10 +1443,11 @@ cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 cnoremap <expr> [ match(getcmdtype(), '[/?]') != -1 ? '\[' : '['
 
-
+" }}}
 "-------------------------------------------------------------------------------
-" テキストオブジェクト
+" Textobject Mappings:
 "-------------------------------------------------------------------------------
+" {{{
 
 " <angle>
 onoremap aa  a>
@@ -1442,11 +1484,14 @@ onoremap ad  a"
 xnoremap ad  a"
 onoremap id  i"
 xnoremap id  i"
+" }}}
 
 
+" }}}
 "*******************************************************************************
 " Abbreviates:
 "*******************************************************************************
+" {{{
 
 " 略記を展開する
 function! s:abbrev_comment_line(head, body)
@@ -1488,20 +1533,22 @@ cnoreabbrev @v $MYVIMRC
 cnoreabbrev @g $MYGVIMRC
 
 
+" }}}
 "*******************************************************************************
-" Remove variables
+" Terminating:
 "*******************************************************************************
+" {{{
+
+" remove variables
 unlet s:hooks
 
-
-"*******************************************************************************
 " Filetype setting
-"*******************************************************************************
 filetype plugin indent on
 
-
-"*******************************************************************************
 " Plugin installation check
-"*******************************************************************************
 NeoBundleCheck
+
+" }}}
+
+" vim: set fdm=marker:
 
