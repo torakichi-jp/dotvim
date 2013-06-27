@@ -100,7 +100,7 @@ NeoBundle 'mattn/calendar-vim'
 NeoBundle 'mattn/excitetranslate-vim'
 NeoBundle 'mattn/wwwrenderer-vim'
 NeoBundle 'mattn/webapi-vim'
-NeoBundle 'mattn/zencoding-vim'
+NeoBundleLazy 'mattn/zencoding-vim'
 NeoBundle 'tyru/vim-altercmd'
 NeoBundle 'tyru/restart.vim'
 NeoBundle 'tyru/open-browser.vim'
@@ -1109,26 +1109,22 @@ nmap ge <Plug>(textobj-wiw-P)
 
 " 行頭、行末へ移動
 nnoremap <C-h> g0
+xnoremap <C-h> g0
+onoremap <C-h> $
 nnoremap <C-l> g$
+xnoremap <C-l> g$
+nnoremap <C-l> $
 
 " 括弧ペアに移動
 map <C-j> %
-
-" toggle.vim
-nmap <C-a> <Plug>ToggleN
-imap <C-a> <Plug>ToggleI
-vmap <C-a> <Plug>ToggleV
 
 nnoremap <C-s> :<C-u>update<CR>
 
 " クリップボードレジスタ
 noremap <C-c> "*
 
-" vim-fontzoom
-let g:fontzoom_no_default_key_mappings = 1
-call submode#enter_with('fontzoom', 'n', '', '<C-z>', '<Nop>')
-call submode#map('fontzoom', 'n', 'r', '+', '<Plug>(fontzoom-larger)')
-call submode#map('fontzoom', 'n', 'r', '-', '<Plug>(fontzoom-smaller)')
+" 候補が複数ある場合は一度表示する
+nnoremap <C-]> g<C-]>
 
 " 数値増減
 nnoremap + <C-a>
@@ -1164,15 +1160,6 @@ function! s:CrExec()
     return ""
 endfunction
 
-" operator
-xmap P <Plug>(operator-replace)
-xmap O <Plug>(operator-reverse-lines)
-xmap R <Plug>(operator-reverse-text)
-xmap C <Plug>(operator-camelize)
-xmap D <Plug>(operator-decamelize)
-xmap T <Plug>(operator-camelize-toggle)
-xmap S <Plug>(operator-sort)
-
 " マーク関連
 nnoremap [Mark] <Nop>
 nmap m [Mark]
@@ -1204,19 +1191,6 @@ nnoremap [Mark]k [`
 " TODO: mn, mp で（アルファベット順に）次のマークに移動するコードを書きたい
 " TODO: mcでマークを1行目に移動するのではなく、ちゃんと消したい
 " TODO: つーかShowMarksを自分用に書き直す？
-
-" NERD_Commenter
-nmap <Leader>cc <Plug>NERDCommenterAlignLeft
-xmap <Leader>c <Plug>NERDCommenterComment
-nmap <Leader>C <Plug>NERDCommenterToEOL
-xmap <Leader>C <Plug>NERDCommenterAlignLeft
-nmap <Leader>u <Plug>NERDCommenterUncomment
-xmap <Leader>u <Plug>NERDCommenterUncomment
-nmap <Leader>xm <Plug>NERDCommenterMinimal
-xmap <Leader>xm <Plug>NERDCommenterMinimal
-nmap <Leader>xs <Plug>NERDCommenterSexy
-xmap <Leader>xs <Plug>NERDCommenterSexy
-nmap <Leader>xa <Plug>NERDCommenterAltDelims
 
 " ウィンドウ関連
 nnoremap <C-Down>   <C-w>j
@@ -1311,11 +1285,44 @@ endfunction
 "-------------------------------------------------------------------------------
 " {{{
 
+" toggle.vim
+nmap <C-a> <Plug>ToggleN
+imap <C-a> <Plug>ToggleI
+vmap <C-a> <Plug>ToggleV
+
+" operator
+xmap P <Plug>(operator-replace)
+xmap O <Plug>(operator-reverse-lines)
+xmap R <Plug>(operator-reverse-text)
+xmap C <Plug>(operator-camelize)
+xmap D <Plug>(operator-decamelize)
+xmap T <Plug>(operator-camelize-toggle)
+xmap S <Plug>(operator-sort)
+
+" vim-fontzoom
+let g:fontzoom_no_default_key_mappings = 1
+call submode#enter_with('fontzoom', 'n', '', '<C-z>', '<Nop>')
+call submode#map('fontzoom', 'n', 'r', '+', '<Plug>(fontzoom-larger)')
+call submode#map('fontzoom', 'n', 'r', '-', '<Plug>(fontzoom-smaller)')
+
+" NERD_Commenter
+nmap <Leader>cc <Plug>NERDCommenterAlignLeft
+xmap <Leader>c <Plug>NERDCommenterComment
+nmap <Leader>C <Plug>NERDCommenterToEOL
+xmap <Leader>C <Plug>NERDCommenterAlignLeft
+nmap <Leader>u <Plug>NERDCommenterUncomment
+xmap <Leader>u <Plug>NERDCommenterUncomment
+nmap <Leader>xm <Plug>NERDCommenterMinimal
+xmap <Leader>xm <Plug>NERDCommenterMinimal
+nmap <Leader>xs <Plug>NERDCommenterSexy
+xmap <Leader>xs <Plug>NERDCommenterSexy
+nmap <Leader>xa <Plug>NERDCommenterAltDelims
+
 " vimfiler
 nnoremap <silent> [Space]e :<C-u>VimFilerBufferDir
     \ -buffer-name=explorer -toggle -split -horizontal -no-quit -winheight=10<CR>
-autocmd MyAutocmd FileType vimfiler call <SID>VimFilerSettings()
-function! s:VimFilerSettings()
+autocmd MyAutocmd FileType vimfiler call <SID>vim_filer_settings()
+function! s:vim_filer_settings()
     " qとQのキーマップ入れ替え
     " （qでバッファに残さないように終了する）
     "nmap <buffer> q <Plug>(vimfiler_exit)
@@ -1340,7 +1347,7 @@ nnoremap <silent> [Space]s :<C-u>VimShell<CR>
 " Unite関連
 nnoremap <silent> [Space]f :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
 nnoremap <silent> [Space]m :<C-u>Unite -buffer-name=files file_mru bookmark<CR>
-nnoremap <silent> [Space]b :<C-u>Unite -buffer-name=buffers buffer_tab<CR>
+nnoremap <silent> [Space]b :<C-u>Unite -buffer-name=buffers buffer<CR>
 nnoremap <silent> [Space]/ :<C-u>Unite -buffer-name=search -start-insert line/fast<CR>
 nnoremap <silent> [Space]g/ :<C-u>Unite -buffer-name=search -start-insert line_migemo<CR>
 nnoremap <silent> [Space]* :<C-u>UniteWithCursorWord -buffer-name=search line/fast<CR>
