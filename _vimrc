@@ -679,8 +679,14 @@ function! MakeTabLine() "{{{
     let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
     let info = ''   " ここに好きな情報を入れる
 
-    " カレントディレクトリ表示
-    let info .= fnamemodify(getcwd(), ':~') . ' '
+    let cur_dir = getcwd()
+
+    " view current directory
+    let info .= fnamemodify(cur_dir, ':~') . ' '
+
+    " view git branch
+    "let branch_info = fugitive#head() "<SID>vcs_branch_name(cur_dir)
+    "let info .= empty(branch_info) ? '' : '[' . branch_info . '] '
 
     return tabpages . '%=' . info   " タブリストを左に、情報を右に表示
 endfunction "}}}
@@ -740,6 +746,55 @@ function! s:TabPageLabel(n) "{{{
     return label . ' %#TabLineFill#'
 endfunction "}}}
 
+" VCS branch name
+" Returns the name of the current branch of the given directory.
+" BUGS: git is only supported.
+let s:_vcs_branch_name_cache = {}  " dir_path = [branch_name, key_file_mtime]
+
+function! s:first_line(file)
+    let lines = readfile(a:file, '', 1)
+    return 1 <= len(lines) ? lines[0] : ''
+endfunction
+
+function! s:vcs_branch_name(dir) "{{{
+    let cache_entry = get(s:_vcs_branch_name_cache, a:dir, 0)
+    if cache_entry is 0
+    \ || cache_entry[1] < getftime(s:_vcs_branch_name_key_file(a:dir))
+        unlet cache_entry
+        let cache_entry = s:_vcs_branch_name(a:dir)
+        let s:_vcs_branch_name_cache[a:dir] = cache_entry
+    endif
+
+    return cache_entry[0]
+endfunction "}}}
+
+function! s:_vcs_branch_name_key_file(dir) "{{{
+    return a:dir . '/.git/HEAD'
+endfunction "}}}
+
+function! s:_vcs_branch_name(dir) "{{{
+    let head_file = s:_vcs_branch_name_key_file(a:dir)
+    let branch_name = ''
+
+    if filereadable(head_file)
+        let ref_info = s:first_line(head_file)
+        if ref_info =~ '^\x\{40}$'
+            let remote_refs_dir = a:dir . '/.git/refs/remotes/'
+            let remote_branches = split(glob(remote_refs_dir . '**'), "\n")
+            call filter(remote_branches, 's:first_line(v:val) ==# ref_info')
+            if 1 <= len(remote_branches)
+                let branch_name = 'remote: '. remote_branches[0][len(remote_refs_dir):]
+            endif
+        else
+            let branch_name = matchlist(ref_info, '^ref: refs/heads/\(\S\+\)$')[1]
+            if branch_name == ''
+                let branch_name = ref_info
+            endif
+        endif
+    endif
+
+    return [branch_name, getftime(head_file)]
+endfunction "}}}
 
 " }}}
 
