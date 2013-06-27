@@ -685,11 +685,14 @@ function! MakeTabLine() "{{{
     let info .= fnamemodify(cur_dir, ':~') . ' '
 
     " view git branch
-    "let branch_info = fugitive#head() "<SID>vcs_branch_name(cur_dir)
-    "let info .= empty(branch_info) ? '' : '[' . branch_info . '] '
+    let branch_info = fugitive#head() "<SID>vcs_branch_name(cur_dir)
+    if !empty(branch_info)
+        let info .= '[' . branch_info . '] '
+    endif
 
     return tabpages . '%=' . info   " タブリストを左に、情報を右に表示
 endfunction "}}}
+
 " 各タブの表示設定
 function! s:TabPageLabel(n) "{{{
     " t:title と言う変数があったらそれを使う
@@ -751,10 +754,10 @@ endfunction "}}}
 " BUGS: git is only supported.
 let s:_vcs_branch_name_cache = {}  " dir_path = [branch_name, key_file_mtime]
 
-function! s:first_line(file)
+function! s:first_line(file) "{{{
     let lines = readfile(a:file, '', 1)
     return 1 <= len(lines) ? lines[0] : ''
-endfunction
+endfunction "}}}
 
 function! s:vcs_branch_name(dir) "{{{
     let cache_entry = get(s:_vcs_branch_name_cache, a:dir, 0)
