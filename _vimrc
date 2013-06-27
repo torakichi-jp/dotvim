@@ -1036,6 +1036,9 @@ nnoremap <C-x><C-f> :<C-u>setfiletype<Space>
 " show option
 nnoremap <C-x><C-o> :<C-u>ShowOption<Space>
 
+" clipboard register
+nnoremap <C-x><C-x> "*
+
 " switching buffers
 nnoremap <C-x><C-n> :<C-u>bnext<CR>
 nnoremap <C-x><C-p> :<C-u>bprevious<CR>
@@ -1134,18 +1137,13 @@ nmap ge <Plug>(textobj-wiw-P)
 " 行頭、行末へ移動
 nnoremap <C-h> g0
 xnoremap <C-h> g0
-onoremap <C-h> $
+onoremap <C-h> 0
 nnoremap <C-l> g$
 xnoremap <C-l> g$
-nnoremap <C-l> $
+onoremap <C-l> $
 
 " 括弧ペアに移動
 map <C-j> %
-
-nnoremap <C-s> :<C-u>update<CR>
-
-" クリップボードレジスタ
-noremap <C-c> "*
 
 " 候補が複数ある場合は一度表示する
 nnoremap <C-]> g<C-]>

@@ -59,6 +59,9 @@ unlet fonts
 " Key Mappings:
 "*******************************************************************************
 
+" 保存
+nnoremap <C-s> :<C-u>update<CR>
+
 " GUIウィンドウ最大化・元に戻す
 nnoremap <silent> <M-x> :<C-u>ScreenMode 4<CR>
 nnoremap <silent> <M-r> :<C-u>Revert<CR>
