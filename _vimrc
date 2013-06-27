@@ -68,7 +68,7 @@ augroup END
 "===============================================================================
 " {{{
 
-" add backward of 'runtimepath'
+" add backward 'runtimepath'
 let g:neobundle#enable_tail_path = 1
 
 if has('vim_starting')
@@ -76,7 +76,7 @@ if has('vim_starting')
 endif
 call neobundle#rc(s:dotvimdir . '/bundle')
 
-" bundles
+" bundles "{{{
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/vimshell'
@@ -144,8 +144,9 @@ NeoBundle 'sudo.vim'
 NeoBundleLazy 'colorsel.vim'
 NeoBundleLazy 'vimwiki'
 NeoBundleLazy 'CSApprox'
+"}}}
 
-" textobj
+" textobj "{{{
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-textobj-line'
 NeoBundle 'kana/vim-textobj-underscore'
@@ -159,8 +160,9 @@ NeoBundle 'thinca/vim-textobj-plugins'
 NeoBundle 'h1mesuke/textobj-wiw'
 NeoBundle 'deris/vim-textobj-enclosedsyntax'
 NeoBundle 'https://bitbucket.org/anyakichi/vim-textobj-xbrackets'
+"}}}
 
-" unite, matchers, and sources
+" unite, matchers, and sources "{{{
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'basyura/unite-matcher-file-name'
 NeoBundle 'Shougo/unite-session'
@@ -175,18 +177,20 @@ NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'osyo-manga/unite-qfixhowm'
 NeoBundle 'kannokanno/unite-todo'
 NeoBundle 'Shougo/unite-build'
+"}}}
 
-" operator
+" operator "{{{
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'tyru/operator-camelize.vim'
 NeoBundle 'tyru/operator-reverse.vim'
 NeoBundle 'emonkak/vim-operator-sort'
+"}}}
 
-" helps
+" helps "{{{
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'mattn/learn-vimscript'
-
+"}}}
 
 " }}}
 
@@ -520,7 +524,7 @@ NeoBundleCheck
 " python: P
 " tcl: t
 " mzscheme: m
-let g:vimsyn_folding = 'af'
+let g:vimsyn_folding = 'aflprPtm'
 
 " mouse behaves windows
 behave mswin
@@ -528,6 +532,8 @@ behave mswin
 " colorscheme
 set t_Co=256
 colorscheme blued
+
+" normal options "{{{
 
 " use clipboard instead of unnamed register
 "set clipboard& clipboard+=unnamed
@@ -581,14 +587,16 @@ set sidescroll=1                " 水平スクロールの刻み幅
 set sidescrolloff=1             " 水平スクロールでカーソル周辺の表示文字数
 set list                        " 不可視文字の表示設定
 set listchars=tab:>-,trail:_,extends:>,precedes:<
+"}}}
 
-" tab, indent option
+" tab, indent option " {{{
 set tabstop=4           " タブ幅
 set expandtab           " タブ展開する
 set shiftwidth=4        " インデント幅
 set softtabstop=4       " <Tab>や<BS>を入力したときの移動幅
+" }}}
 
-" searching option
+" searching option " {{{
 set incsearch           " インクリメンタルサーチを有効
 set nohlsearch          " 検索ハイライト無効
 set ignorecase          " 大文字小文字を無視
@@ -597,13 +605,15 @@ set wrapscan            " 最後まで行ったら最初に戻る
 set grepprg=grep\ -nH   " grepプログラム
 "set grepprg=ack\ -H    " grepにackを使う
 set gdefault            " 候補を全部置換する
+" }}}
 
-" folding option
+" folding option " {{{
 set foldenable          " 折りたたみを有効に
 set foldcolumn=0        " 折りたたみ列数
 set foldmethod=manual   " 手動で折りたたみ
 set foldtext=foldCC#foldtext()
 let g:foldCCtext_enable_autofdc_adjuster = 1
+" }}}
 
 " タイトル行の表示設定
 "set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:~:h\")})%)%(\ %a%)%(\ -\ %{v:servername}%)
@@ -615,10 +625,10 @@ endif
 
 " 透明度(Windows only)
 if s:is_windows && s:is_gui
-    autocmd MyAutocmd VimEnter * set transparency=220
+    autocmd MyAutocmd VimEnter * set transparency=240
 endif
 
-" backup option
+" backup option " {{{
 set backup                                  " バックアップする
 let &backupdir = s:dotvimdir . '/.backup'   " バックアップを作成するディレクトリ
 set undofile                                " アンドゥファイルを作成する
@@ -633,6 +643,7 @@ let &directory=&backupdir
 if &undodir!=#'' && !isdirectory(&undodir)
     call mkdir(&undodir)
 endif
+" }}}
 
 " capslock.vim
 " capslockモード中なら表示を追加
@@ -661,7 +672,7 @@ let g:vim_indent_cont = 0
 runtime macros/matchit.vim
 
 " タブページの表示行設定
-function! MakeTabLine()
+function! MakeTabLine() "{{{
     " TODO: coding here at tabline view setting.
     let titles = map(range(1, tabpagenr('$')), 's:TabPageLabel(v:val)')
     let sep = ' '   " タブ間の区切り
@@ -672,9 +683,9 @@ function! MakeTabLine()
     let info .= fnamemodify(getcwd(), ':~') . ' '
 
     return tabpages . '%=' . info   " タブリストを左に、情報を右に表示
-endfunction
+endfunction "}}}
 " 各タブの表示設定
-function! s:TabPageLabel(n)
+function! s:TabPageLabel(n) "{{{
     " t:title と言う変数があったらそれを使う
     let title = gettabvar(a:n, 'title')
     if title !=# ''
@@ -727,7 +738,7 @@ function! s:TabPageLabel(n)
 
     "return label . closelabel . '%#TabLineFill#'
     return label . ' %#TabLineFill#'
-endfunction
+endfunction "}}}
 
 
 " }}}
@@ -890,7 +901,7 @@ function! s:get_cursor_word(pat) "{{{
 endfunction "}}}
 
 " ビジュアルモードで選択されていたテキストを取得
-function! s:get_selected_word() "{{{
+function! s:get_selected_text() "{{{
     let save_z = getreg('z', 1)
     let save_z_type = getregtype('z')
 
@@ -913,7 +924,7 @@ endfunction "}}}
 
 augroup MyAutocmd
 
-    " 81文字目以降に線を引く
+    " 81文字目以降に線を引く "{{{
     autocmd FileType * call <SID>set_colorcolumn(81)
     autocmd VimResized * call <SID>set_colorcolumn(81)
     function! s:set_colorcolumn(line_col)
@@ -926,7 +937,7 @@ augroup MyAutocmd
         else
             execute "setlocal colorcolumn=" . join(range(a:line_col, 9999), ',')
         endif
-    endfunction
+    endfunction "}}}
 
     " （ヘルプとかを）qで終了
     autocmd FileType help,ref-* nnoremap <buffer> <silent> q :<C-u>close<CR>
@@ -949,7 +960,7 @@ augroup MyAutocmd
             \ execute 'normal! g`"zz' |
         \ endif
 
-    " 設定されていないことが多い部分の色設定
+    " 設定されていないことが多い部分の色設定 "{{{
     autocmd ColorScheme * call <SID>set_guicolor()
     function! s:set_guicolor()
         hi TabLine      guifg=#777798 guibg=#444477 gui=NONE
@@ -960,9 +971,9 @@ augroup MyAutocmd
         hi ColorColumn  guifg=NONE    guibg=#333366 gui=NONE
         hi CursorLine   guifg=NONE    guibg=#101050 gui=underline
         hi SpecialKey   guifg=#444466 guibg=NONE    gui=NONE
-    endfunction
+    endfunction "}}}
 
-    " 起動時にファイル引数なしならスクラッチバッファを開く
+    " 起動時にファイル引数なしならスクラッチバッファを開く "{{{
     "autocmd VimEnter *
     "    \ redir => mes |
     "    \ args |
@@ -971,6 +982,7 @@ augroup MyAutocmd
     "        \ drop Scratch |
     "    \ endif |
     "    \ unlet mes
+    "}}}
 
 augroup END
 
@@ -1062,23 +1074,24 @@ endfunction
 " if cursor line is at foldclosed, l open folding
 nnoremap <expr> l foldclosed('.') < 0 ? 'l' : 'zo'
 
+" smart folding closing
 nnoremap <silent><C-\> :<C-u>call <SID>smart_foldcloser()<CR>
 function! s:smart_foldcloser() "{{{
-  if foldlevel('.') == 0
+    if foldlevel('.') == 0
+        norm! zM
+        return
+    endif
+
+    let foldc_lnum = foldclosed('.')
+    norm! zc
+    if foldc_lnum == -1
+        return
+    endif
+
+    if foldclosed('.') != foldc_lnum
+        return
+    endif
     norm! zM
-    return
-  endif
-
-  let foldc_lnum = foldclosed('.')
-  norm! zc
-  if foldc_lnum == -1
-    return
-  endif
-
-  if foldclosed('.') != foldc_lnum
-    return
-  endif
-  norm! zM
 endfunction
 "}}}
 
@@ -1087,7 +1100,7 @@ nnoremap ga ggVG
 
 " grep
 nnoremap gr :<C-u>grep <C-r><C-w> *
-xnoremap gr :<C-u>grep <C-r>=<SID>get_selected_word()<CR> *
+xnoremap gr :<C-u>grep <C-r>=<SID>get_selected_text()<CR> *
 
 " Google検索
 nnoremap <silent> gs :<C-u>GoogleSearch <C-r>=<SID>get_cursor_word('[a-zA-Z]*')<CR><CR>
@@ -1154,7 +1167,7 @@ nnoremap - <C-x>
 
 " cwordでヘルプを引く
 nnoremap <silent> <F1> :<C-u>help <C-r><C-w><CR>
-xnoremap <silent> <F1> :<C-u>help <C-r>=<SID>get_selected_word()<CR>
+xnoremap <silent> <F1> :<C-u>help <C-r>=<SID>get_selected_text()<CR>
 
 " バッファのファイルがある場所をカレントディレクトリにする
 nnoremap <F2> :<C-u>cd %:p:h<Bar>pwd<CR>
