@@ -944,7 +944,7 @@ augroup MyAutocmd
     autocmd CmdwinEnter * nnoremap <buffer> <silent> q :<C-u>close<CR>
 
     " 前回のカーソル位置を復元
-    autocmd BufReadPost *
+    autocmd BufRead *
         \ if line('''"') > 1 && line('''"') <= line('$') |
             \ execute 'normal! g`"zz' |
         \ endif
@@ -958,7 +958,7 @@ augroup MyAutocmd
 
         hi FoldColumn   guifg=#818698 guibg=#363946
         hi ColorColumn  guifg=NONE    guibg=#333366 gui=NONE
-        hi CursorLine   guifg=NONE    guibg=#101050 gui=NONE
+        hi CursorLine   guifg=NONE    guibg=#101050 gui=underline
         hi SpecialKey   guifg=#444466 guibg=NONE    gui=NONE
     endfunction
 
@@ -1057,7 +1057,7 @@ function! s:hooks.on_source(bundle)
 endfunction
 
 " if cursor line is at foldclosed, l open folding
-nnoremap <expr> l foldclosed(line('.')) < 0 ? 'l' : 'zo'
+nnoremap <expr> l foldclosed('.') < 0 ? 'l' : 'zo'
 
 nnoremap <silent><C-\> :<C-u>call <SID>smart_foldcloser()<CR>
 function! s:smart_foldcloser() "{{{
@@ -1321,8 +1321,7 @@ function! s:define_surround_keymappings()
     silent! nunmap <buffer> yS
     silent! nunmap <buffer> vs
     silent! nunmap <buffer> vS
-    silent! nunmap <buffer> yq
-    silent! nunmap <buffer> yd
+    silent! nunmap <buffer> yt
   else
     nmap <buffer> ds <Plug>Dsurround
     nmap <buffer> cs <Plug>Csurround
@@ -1330,8 +1329,7 @@ function! s:define_surround_keymappings()
     nmap <buffer> yS <Plug>YSurround
     xmap <buffer> vs <Plug>Vsurround
     xmap <buffer> vS <Plug>VSurround
-    nmap <buffer> yq <Plug>Ysurroundiw'
-    nmap <buffer> yd <Plug>Ysurroundiw"
+    nmap <buffer> yt <Plug>Ysurroundiw
   endif
 endfunction
 "}}}
@@ -1505,7 +1503,7 @@ cnoremap <C-y> <C-r>"
 " 単語境界入力
 cnoremap <C-t> \<\><Left><Left>
 " 置換
-cnoremap <C-s> :%substitute/
+cnoremap <C-s> %substitute/
 " 検索パターン入力中の特定の文字のエスケープ
 " <C-v>に続ければそのまま入力
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
