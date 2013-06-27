@@ -116,6 +116,7 @@ NeoBundle 'kana/vim-submode'
 NeoBundle 'dannyob/quickfixstatus'
 NeoBundle 'jceb/vim-hier'
 NeoBundle 'deris/vim-rengbang'
+NeoBundle 'LeafCage/foldCC', {'lazy' : 1, 'autoload' : {'filetypes' : 'vim'}}
 NeoBundle 'ujihisa/quicklearn'
 NeoBundle 'tpope/vim-capslock'
 NeoBundle 'tpope/vim-fugitive'
@@ -438,6 +439,7 @@ call neobundle#config(
             \ 'mappings' : [
                 \ ['n', '<Plug>Dsurround'], ['n', '<Plug>Csurround' ],
                 \ ['n', '<Plug>Ysurround'], ['n', '<Plug>YSurround' ],
+                \ ['n', '<Plug>Vsurround'], ['n', '<Plug>VSurround' ],
             \ ]
         \ }
     \ }
@@ -598,8 +600,10 @@ set gdefault            " 候補を全部置換する
 
 " folding option
 set foldenable          " 折りたたみを有効に
-set foldcolumn=2        " 折りたたみ列数
+set foldcolumn=0        " 折りたたみ列数
 set foldmethod=manual   " 手動で折りたたみ
+set foldtext=foldCC#foldtext()
+let g:foldCCtext_enable_autofdc_adjuster = 1
 
 " タイトル行の表示設定
 "set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:~:h\")})%)%(\ %a%)%(\ -\ %{v:servername}%)
@@ -1055,6 +1059,26 @@ endfunction
 " if cursor line is at foldclosed, l open folding
 nnoremap <expr> l foldclosed(line('.')) < 0 ? 'l' : 'zo'
 
+nnoremap <silent><C-\> :<C-u>call <SID>smart_foldcloser()<CR>
+function! s:smart_foldcloser() "{{{
+  if foldlevel('.') == 0
+    norm! zM
+    return
+  endif
+
+  let foldc_lnum = foldclosed('.')
+  norm! zc
+  if foldc_lnum == -1
+    return
+  endif
+
+  if foldclosed('.') != foldc_lnum
+    return
+  endif
+  norm! zM
+endfunction
+"}}}
+
 " すべて選択
 nnoremap ga ggVG
 
@@ -1284,6 +1308,33 @@ endfunction
 " Plugin Mappings:
 "-------------------------------------------------------------------------------
 " {{{
+
+" surround.vim"{{{
+let g:surround_no_mappings = 1
+autocmd MyAutocmd  VimEnter,FileType * call s:define_surround_keymappings()
+
+function! s:define_surround_keymappings()
+  if !&l:modifiable
+    silent! nunmap <buffer> ds
+    silent! nunmap <buffer> cs
+    silent! nunmap <buffer> ys
+    silent! nunmap <buffer> yS
+    silent! nunmap <buffer> vs
+    silent! nunmap <buffer> vS
+    silent! nunmap <buffer> yq
+    silent! nunmap <buffer> yd
+  else
+    nmap <buffer> ds <Plug>Dsurround
+    nmap <buffer> cs <Plug>Csurround
+    nmap <buffer> ys <Plug>Ysurround
+    nmap <buffer> yS <Plug>YSurround
+    xmap <buffer> vs <Plug>Vsurround
+    xmap <buffer> vS <Plug>VSurround
+    nmap <buffer> yq <Plug>Ysurroundiw'
+    nmap <buffer> yd <Plug>Ysurroundiw"
+  endif
+endfunction
+"}}}
 
 " toggle.vim
 nmap <C-a> <Plug>ToggleN
