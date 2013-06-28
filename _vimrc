@@ -685,7 +685,7 @@ function! MakeTabLine() "{{{
     let info .= fnamemodify(cur_dir, ':~') . ' '
 
     " view git branch
-    let branch_info = fugitive#head() "<SID>vcs_branch_name(cur_dir)
+    let branch_info = fugitive#head()
     if !empty(branch_info)
         let info .= '[' . branch_info . '] '
     endif
@@ -747,56 +747,6 @@ function! s:TabPageLabel(n) "{{{
 
     "return label . closelabel . '%#TabLineFill#'
     return label . ' %#TabLineFill#'
-endfunction "}}}
-
-" VCS branch name
-" Returns the name of the current branch of the given directory.
-" BUGS: git is only supported.
-let s:_vcs_branch_name_cache = {}  " dir_path = [branch_name, key_file_mtime]
-
-function! s:first_line(file) "{{{
-    let lines = readfile(a:file, '', 1)
-    return 1 <= len(lines) ? lines[0] : ''
-endfunction "}}}
-
-function! s:vcs_branch_name(dir) "{{{
-    let cache_entry = get(s:_vcs_branch_name_cache, a:dir, 0)
-    if cache_entry is 0
-    \ || cache_entry[1] < getftime(s:_vcs_branch_name_key_file(a:dir))
-        unlet cache_entry
-        let cache_entry = s:_vcs_branch_name(a:dir)
-        let s:_vcs_branch_name_cache[a:dir] = cache_entry
-    endif
-
-    return cache_entry[0]
-endfunction "}}}
-
-function! s:_vcs_branch_name_key_file(dir) "{{{
-    return a:dir . '/.git/HEAD'
-endfunction "}}}
-
-function! s:_vcs_branch_name(dir) "{{{
-    let head_file = s:_vcs_branch_name_key_file(a:dir)
-    let branch_name = ''
-
-    if filereadable(head_file)
-        let ref_info = s:first_line(head_file)
-        if ref_info =~ '^\x\{40}$'
-            let remote_refs_dir = a:dir . '/.git/refs/remotes/'
-            let remote_branches = split(glob(remote_refs_dir . '**'), "\n")
-            call filter(remote_branches, 's:first_line(v:val) ==# ref_info')
-            if 1 <= len(remote_branches)
-                let branch_name = 'remote: '. remote_branches[0][len(remote_refs_dir):]
-            endif
-        else
-            let branch_name = matchlist(ref_info, '^ref: refs/heads/\(\S\+\)$')[1]
-            if branch_name == ''
-                let branch_name = ref_info
-            endif
-        endif
-    endif
-
-    return [branch_name, getftime(head_file)]
 endfunction "}}}
 
 " }}}
@@ -1108,6 +1058,7 @@ nnoremap <C-x><C-o> :<C-u>ShowOption<Space>
 
 " clipboard register
 nnoremap <C-x><C-x> "*
+xnoremap <C-x><C-x> "*
 
 " switching buffers
 nnoremap <C-x><C-n> :<C-u>bnext<CR>
@@ -1378,7 +1329,7 @@ endfunction
 "-------------------------------------------------------------------------------
 " {{{
 
-" surround.vim"{{{
+" surround.vim "{{{
 let g:surround_no_mappings = 1
 autocmd MyAutocmd  VimEnter,FileType * call s:define_surround_keymappings()
 
@@ -1388,20 +1339,19 @@ function! s:define_surround_keymappings()
     silent! nunmap <buffer> cs
     silent! nunmap <buffer> ys
     silent! nunmap <buffer> yS
-    silent! nunmap <buffer> vs
-    silent! nunmap <buffer> vS
+    silent! xunmap <buffer> s
+    silent! xunmap <buffer> S
     silent! nunmap <buffer> yt
   else
     nmap <buffer> ds <Plug>Dsurround
     nmap <buffer> cs <Plug>Csurround
     nmap <buffer> ys <Plug>Ysurround
     nmap <buffer> yS <Plug>YSurround
-    xmap <buffer> vs <Plug>Vsurround
-    xmap <buffer> vS <Plug>VSurround
+    xmap <buffer> s <Plug>Vsurround
+    xmap <buffer> S <Plug>VSurround
     nmap <buffer> yt <Plug>Ysurroundiw
   endif
-endfunction
-"}}}
+endfunction "}}}
 
 " toggle.vim
 nmap <C-a> <Plug>ToggleN
@@ -1419,7 +1369,7 @@ xmap S <Plug>(operator-sort)
 
 " vim-fontzoom
 let g:fontzoom_no_default_key_mappings = 1
-call submode#enter_with('fontzoom', 'n', '', '<C-z>', '<Nop>')
+call submode#enter_with('fontzoom', 'n', '', 'ZF', '<Nop>')
 call submode#map('fontzoom', 'n', 'r', '+', '<Plug>(fontzoom-larger)')
 call submode#map('fontzoom', 'n', 'r', '-', '<Plug>(fontzoom-smaller)')
 
