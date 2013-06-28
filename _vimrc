@@ -976,7 +976,7 @@ augroup MyAutocmd
 
         hi FoldColumn   guifg=#818698 guibg=#363946
         hi ColorColumn  guifg=NONE    guibg=#333366 gui=NONE
-        hi CursorLine   guifg=NONE    guibg=#101050 gui=underline
+        hi CursorLine   guifg=NONE    guibg=NONE   gui=underline
         hi SpecialKey   guifg=#444466 guibg=NONE    gui=NONE
     endfunction "}}}
 
@@ -1425,6 +1425,7 @@ nnoremap <silent> [Space]j :<C-u>Unite change jump<CR>
 nnoremap <silent> [Space]x :<C-u>Unite file_point<CR>
 nnoremap <silent> [Space]t :<C-u>Unite -buffer-name=tabs tab:no_current<CR>
 nnoremap <silent> [Space]y :<C-u>Unite history/yank<CR>
+nnoremap <silent> [Space]] :<C-u>UniteWithCursorWord -buffer-name=tag tag tag/include<CR>
 
 nnoremap [Unite] <Nop>
 nmap [Space]u   [Unite]
@@ -1439,7 +1440,7 @@ nnoremap <silent> [Unite]g :<C-u>Unite -buffer-name=search -no-quit -resume grep
 nnoremap <silent> [Unite]v :<C-u>Unite -auto-preview colorscheme<CR>
 nnoremap <silent> [Unite]c :<C-u>Unite history/command command<CR>
 nnoremap <silent> [Unite]q :<C-u>Unite qfixhowm<CR>
-nnoremap <silent> [Unite]t :<C-u>Unite -buffer-name=tag tag tag/include<CR>
+nnoremap <silent> [Unite]t :<C-u>UniteWithCursorWord -buffer-name=tag tag tag/include<CR>
 
 " neocomplete
 nmap [Space]nc [Neocom]
