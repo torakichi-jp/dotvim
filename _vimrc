@@ -1473,7 +1473,7 @@ nnoremap <silent> [Space]h :<C-u>UniteWithInput -buffer-name=help -resume help<C
 nnoremap <silent> [Space]q :<C-u>Unite -no-quit qf<CR>
 nnoremap <silent> [Space]j :<C-u>Unite change jump<CR>
 nnoremap <silent> [Space]x :<C-u>Unite file_point<CR>
-nnoremap <silent> [Space]t :<C-u>Unite -buffer-name=tag tag tag/include<CR>
+nnoremap <silent> [Space]t :<C-u>Unite -buffer-name=tabs tab:no_current<CR>
 nnoremap <silent> [Space]y :<C-u>Unite history/yank<CR>
 
 nnoremap [Unite] <Nop>
@@ -1489,6 +1489,7 @@ nnoremap <silent> [Unite]g :<C-u>Unite -buffer-name=search -no-quit -resume grep
 nnoremap <silent> [Unite]v :<C-u>Unite -auto-preview colorscheme<CR>
 nnoremap <silent> [Unite]c :<C-u>Unite history/command command<CR>
 nnoremap <silent> [Unite]q :<C-u>Unite qfixhowm<CR>
+nnoremap <silent> [Unite]t :<C-u>Unite -buffer-name=tag tag tag/include<CR>
 
 " neocomplete
 nmap [Space]nc [Neocom]
