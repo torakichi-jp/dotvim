@@ -1092,20 +1092,27 @@ nnoremap <expr> l foldclosed('.') < 0 ? 'l' : 'zo'
 nnoremap <silent><C-\> :<C-u>call <SID>smart_foldcloser()<CR>
 function! s:smart_foldcloser() "{{{
     if foldlevel('.') == 0
-        norm! zM
-        return
+        normal! zM
+    elseif foldclosed('.') == -1
+        normal! zc
+    else
+        normal! zo
     endif
+    "if foldlevel('.') == 0
+    "    norm! zM
+    "    return
+    "endif
 
-    let foldc_lnum = foldclosed('.')
-    norm! zc
-    if foldc_lnum == -1
-        return
-    endif
+    "let foldc_lnum = foldclosed('.')
+    "norm! zc
+    "if foldc_lnum == -1
+    "    return
+    "endif
 
-    if foldclosed('.') != foldc_lnum
-        return
-    endif
-    norm! zM
+    "if foldclosed('.') != foldc_lnum
+    "    return
+    "endif
+    "norm! zM
 endfunction
 "}}}
 
