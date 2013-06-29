@@ -1031,22 +1031,23 @@ augroup END
 "設定ファイル内でAlterCommandを使うためにロード
 call altercmd#load()
 
-AlterCommand u[nite] Unite
-AlterCommand maps Unite -resume mapping
-AlterCommand out[put] Unite -resume output
-AlterCommand rest[art] RestartWithSession
-AlterCommand cap[ture] Capture
-AlterCommand cdc[urrent] CdCurrent
-AlterCommand ack Ack
-AlterCommand ct[ags] !ctags -R
-AlterCommand t[ranslate] ExciteTranslate
-AlterCommand ej Ref webdict ej
-AlterCommand je Ref webdict je
-AlterCommand gitb UniteWithBufferDir giti/branch
-AlterCommand gitc UniteWithBufferDir giti/config
-AlterCommand gitl UniteWithBufferDir giti/log
-AlterCommand gitr UniteWithBufferDir giti/remote
-AlterCommand gits UniteWithBufferDir giti/status
+AlterCommand u[nite]        Unite
+AlterCommand maps           Unite -resume mapping
+AlterCommand out[put]       Unite -resume output
+AlterCommand gitb           UniteWithBufferDir giti/branch
+AlterCommand gitc           UniteWithBufferDir giti/config
+AlterCommand gitl           UniteWithBufferDir giti/log
+AlterCommand gitr           UniteWithBufferDir giti/remote
+AlterCommand gits           UniteWithBufferDir giti/status
+AlterCommand rest[art]      RestartWithSession
+AlterCommand cap[ture]      Capture
+AlterCommand cdc[urrent]    CdCurrent
+AlterCommand ack            Ack
+AlterCommand ct[ags]        VimProcBang ctags -R
+AlterCommand t[ranslate]    ExciteTranslate
+AlterCommand alc            Ref webdict alc
+AlterCommand ej             Ref webdict ej
+AlterCommand je             Ref webdict je
 
 
 " }}}
@@ -1216,7 +1217,10 @@ nnoremap <silent> <F1> :<C-u>help <C-r><C-w><CR>
 xnoremap <silent> <F1> :<C-u>help <C-r>=<SID>get_selected_text()<CR>
 
 " バッファのファイルがある場所をカレントディレクトリにする
-nnoremap <F2> :<C-u>cd %:p:h<Bar>pwd<CR>
+nnoremap <F2> :<C-u>cd %:p:h<Bar>echo 'cd :' expand('%:p:h')<CR>
+
+" バッファのファイルがある場所を表示
+nnoremap <F3> :<C-u>echohl StatusLine<Bar>echo expand('%:p:h')<Bar>echohl None<CR>
 
 " タグリスト
 nnoremap <silent> <F4> :<C-u>TlistToggle<CR>
