@@ -6,7 +6,7 @@
 
 
 "===============================================================================
-" Initializing: "{{{
+" Initializing: "{{{1
 "===============================================================================
 
 scriptencoding utf-8    " endoding of this script
@@ -66,7 +66,7 @@ augroup END
 " }}}
 
 "===============================================================================
-" Plugins: "{{{
+" Plugins: "{{{1
 "===============================================================================
 
 "-------------------------------------------------------------------------------
@@ -154,10 +154,37 @@ NeoBundle 'Shougo/vinarise', {
 NeoBundle 'thinca/vim-visualstar'
 NeoBundle 'thinca/vim-tabrecent'
 NeoBundle 'thinca/vim-qfreplace'
-NeoBundle 'thinca/vim-ref'
-NeoBundle 'thinca/vim-fontzoom'
+" Ref "{{{
+NeoBundle 'thinca/vim-ref', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'commands' : [
+            \ {
+                \ 'name' : 'Ref',
+                \ 'complete' : 'customlist,ref#complate',
+            \ },
+        \ ],
+    \ }
+\ } "}}}
+" fontzoom "{{{
+NeoBundle 'thinca/vim-fontzoom', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'mappings' : [
+            \ ['n', '<Plug>(fontzoom-larger)'],
+            \ ['n', '<Plug>(fontzoom-smaller)'],
+        \ ]
+    \ }
+\ } "}}}
 NeoBundle 'thinca/vim-openbuf'
-NeoBundle 'thinca/vim-quickrun'
+" QuickRun "{{{
+NeoBundle 'thinca/vim-quickrun', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'mappings' : [['nxo', '<Plug>(quickrun)']],
+        \ 'commands' : 'QuickRun',
+    \ }
+\ } "}}}
 NeoBundle 'thinca/vim-singleton'
 NeoBundle 'thinca/vim-editvar'
 NeoBundle 'thinca/vim-localrc'
@@ -183,8 +210,8 @@ NeoBundle 'dannyob/quickfixstatus'
 NeoBundle 'jceb/vim-hier'
 NeoBundle 'deris/vim-rengbang'
 NeoBundle 'osyo-manga/vim-jplus'
-NeoBundle 'LeafCage/foldCC', {'lazy' : 1, 'autoload' : {'filetypes' : 'vim'}}
-NeoBundle 'tpope/vim-capslock'
+NeoBundle 'LeafCage/foldCC'
+NeoBundle 'tpope/vim-capslock', {'lazy' : 1, 'autoload' : {'insert' : 1}}
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'gregsexton/VimCalc'
 NeoBundle 't9md/vim-quickhl'
@@ -497,7 +524,7 @@ NeoBundleCheck
 " }}}
 
 "===============================================================================
-" Option Settings: "{{{
+" Option Settings: "{{{1
 "===============================================================================
 
 " Syntax settings "{{{
@@ -750,7 +777,7 @@ endfunction "}}}
 " }}}
 
 "===============================================================================
-" User Commands: "{{{
+" User Commands: "{{{1
 "===============================================================================
 
 " NormalモードマッピングとVisualモードマッピングを一度に定義する
@@ -893,7 +920,7 @@ AlterCommand je             Ref webdict je
 " }}}
 
 "===============================================================================
-" Functions: "{{{
+" Functions: "{{{1
 "===============================================================================
 
 " Return string used to comment line for current filetype.
@@ -944,7 +971,7 @@ endfunction "}}}
 " }}}
 
 "===============================================================================
-" Autocommands: "{{{
+" Autocommands: "{{{1
 "===============================================================================
 
 augroup MyAutocmd
@@ -1015,7 +1042,7 @@ augroup END
 " }}}
 
 "===============================================================================
-" Key Mappings: "{{{
+" Key Mappings: "{{{1
 "===============================================================================
 
 " prefix "{{{
@@ -1384,13 +1411,14 @@ xmap D <Plug>(operator-decamelize)
 xmap T <Plug>(operator-camelize-toggle)
 xmap S <Plug>(operator-sort)
 
-" vim-fontzoom
+" vim-fontzoom "{{{
 let g:fontzoom_no_default_key_mappings = 1
 call submode#enter_with('fontzoom', 'n', '', 'ZF', '<Nop>')
-call submode#map('fontzoom', 'n', 'r', '+', '<Plug>(fontzoom-larger)')
-call submode#map('fontzoom', 'n', 'r', '-', '<Plug>(fontzoom-smaller)')
+call submode#map('fontzoom', 'n', 'r', 'k', '<Plug>(fontzoom-larger)')
+call submode#map('fontzoom', 'n', 'r', 'j', '<Plug>(fontzoom-smaller)')
+"}}}
 
-" NERD_Commenter
+" NERD_Commenter "{{{
 nmap <Leader>cc <Plug>NERDCommenterAlignLeft
 xmap <Leader>c <Plug>NERDCommenterComment
 nmap <Leader>C <Plug>NERDCommenterToEOL
@@ -1402,8 +1430,9 @@ xmap <Leader>xm <Plug>NERDCommenterMinimal
 nmap <Leader>xs <Plug>NERDCommenterSexy
 xmap <Leader>xs <Plug>NERDCommenterSexy
 nmap <Leader>xa <Plug>NERDCommenterAltDelims
+"}}}
 
-" vimfiler
+" vimfiler "{{{
 nnoremap <silent> [Space]e :<C-u>VimFilerBufferDir
     \ -buffer-name=explorer -toggle -split -horizontal -no-quit -winheight=10<CR>
 autocmd MyAutocmd FileType vimfiler call <SID>vim_filer_settings()
@@ -1413,18 +1442,18 @@ function! s:vim_filer_settings()
     "nmap <buffer> q <Plug>(vimfiler_exit)
     "nmap <buffer> Q <Plug>(vimfiler_hide)
 endfunction
+"}}}
 
-" Ref
+" Ref "{{{
 nnoremap [Ref] <Nop>
 nmap [Space]r [Ref]
 nnoremap [Ref]e :<C-u>Ref webdict ej <C-r><C-w>
 nnoremap [Ref]j :<C-u>Ref webdict je <C-r><C-w>
 nnoremap [Ref]a :<C-u>Ref webdict alc <C-r><C-w>
 nnoremap [Ref]t :<C-u>Ref webdict thesaurus <C-r><C-w>
-
-" Ref
 nnoremap <silent> <expr> K
     \ ':Ref webdict alc ' . <SID>get_cursor_word('[a-zA-Z]*') . '<CR>'
+"}}}
 
 " VimShell
 nnoremap <silent> [Space]s :<C-u>VimShell<CR>
@@ -1585,7 +1614,7 @@ xnoremap id  i"
 " }}}
 
 "===============================================================================
-" Abbreviates: "{{{
+" Abbreviates: "{{{1
 "===============================================================================
 
 " 略記を展開する
@@ -1631,7 +1660,7 @@ cnoreabbrev @g $MYGVIMRC
 " }}}
 
 "===============================================================================
-" Terminating: "{{{
+" Terminating: "{{{1
 "===============================================================================
 
 " remove variables
