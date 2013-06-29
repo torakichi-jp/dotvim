@@ -6,7 +6,7 @@ let s:hooks = neobundle#get_hooks('vim-powerline')
 function! s:hooks.on_source(bundle)
 
     let g:Powerline_symbols = 'fancy'
-    let g:Powerline_stl_path_style = 'relative'
+    let g:Powerline_stl_path_style = 'filename'
     let g:Powerline_mode_n = 'Normal'
     let g:Powerline_mode_i = 'Insert'
     let g:Powerline_mode_R = 'Replace'

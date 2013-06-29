@@ -6,18 +6,18 @@
 
 
 "===============================================================================
-" Initialize:
+" Initialize: "{{{
 "===============================================================================
-" {{{
 
 scriptencoding utf-8    " endoding of this script
 set nocompatible        " Vi IMproved
 
-" switching variables
+" switching variables "{{{
 let s:is_gui = has('gui_running')
 let s:is_windows = has('win32') || has('win64')
 let s:is_unix = has('unix')
 let s:is_cygwin = has('win32unix')
+"}}}
 
 " disable filetypes temporarily
 filetype off
@@ -26,31 +26,33 @@ filetype plugin indent off
 " path delimiter is slash
 set shellslash
 
-" encoding
+" encoding "{{{
 if s:is_windows
     set termencoding=cp932
 endif
 "set encoding=utf-8      " internal encoding
+"}}}
 
 " set <leader> key
 let g:mapleader=','
 
-" path to .vim directory
+" path to .vim directory "{{{
 if s:is_windows
     let s:dotvimdir = expand('~/vimfiles')
 elseif s:is_unix
     let s:dotvimdir = expand('~/.vim')
 endif
 let $DOTVIM = s:dotvimdir
+"}}}
 
-" path to .gvimrc
+" path to .gvimrc "{{{
 if !exists($MYGVIMRC)
     if s:is_windows
         let $MYGVIMRC = expand('~/_gvimrc')
     else
         let $MYGVIMRC = expand('~/.gvimrc')
     endif
-endif
+endif "}}}
 
 " syntax
 syntax enable
@@ -64,9 +66,12 @@ augroup END
 " }}}
 
 "===============================================================================
-" Plugins:
+" Plugins: "{{{
 "===============================================================================
-" {{{
+
+"-------------------------------------------------------------------------------
+" Neobundle Setting: "{{{
+"-------------------------------------------------------------------------------
 
 " add backward 'runtimepath'
 let g:neobundle#enable_tail_path = 1
@@ -75,6 +80,11 @@ if has('vim_starting')
     let &runtimepath = &runtimepath . ',' . s:dotvimdir . '/bundle/neobundle.vim'
 endif
 call neobundle#rc(s:dotvimdir . '/bundle')
+"}}}
+
+"-------------------------------------------------------------------------------
+" Bundles: "{{{
+"-------------------------------------------------------------------------------
 
 " bundles "{{{
 NeoBundleFetch 'Shougo/neobundle.vim'
@@ -197,10 +207,9 @@ NeoBundle 'mattn/learn-vimscript'
 
 " }}}
 
-"===============================================================================
-" Plugin Settings:
-"===============================================================================
-" {{{
+"-------------------------------------------------------------------------------
+" Plugin Settings: "{{{
+"-------------------------------------------------------------------------------
 
 " disable GetLatestVimPlugin.vim
 let g:loaded_getscriptPlugin = 1
@@ -509,6 +518,7 @@ let g:toggle_pairs = {
     \ 'or' : 'and',
 \ }
 
+" }}}
 
 " required!
 filetype plugin indent on
@@ -520,10 +530,8 @@ NeoBundleCheck
 " }}}
 
 "===============================================================================
-" Option Settings:
+" Option Settings: "{{{
 "===============================================================================
-" {{{
-
 
 " Syntax settings "{{{
 
@@ -775,9 +783,8 @@ endfunction "}}}
 " }}}
 
 "===============================================================================
-" User Commands:
+" User Commands: "{{{
 "===============================================================================
-" {{{
 
 " NormalモードマッピングとVisualモードマッピングを一度に定義する
 command! -bar -nargs=+ NXmap call s:NXmap(<q-args>, 0)
@@ -896,9 +903,8 @@ endfunction
 " }}}
 
 "===============================================================================
-" Functions:
+" Functions: "{{{
 "===============================================================================
-" {{{
 
 " Return string used to comment line for current filetype.
 function! s:comment_str()
@@ -948,9 +954,8 @@ endfunction "}}}
 " }}}
 
 "===============================================================================
-" Autocommands:
+" Autocommands: "{{{
 "===============================================================================
-" {{{
 
 augroup MyAutocmd
 
@@ -1020,9 +1025,8 @@ augroup END
 " }}}
 
 "===============================================================================
-" AlterCommands:
+" AlterCommands: "{{{
 "===============================================================================
-" {{{
 
 "設定ファイル内でAlterCommandを使うためにロード
 call altercmd#load()
@@ -1048,9 +1052,8 @@ AlterCommand gits UniteWithBufferDir giti/status
 " }}}
 
 "===============================================================================
-" Key Mappings:
+" Key Mappings: "{{{
 "===============================================================================
-" {{{
 
 " prefix "{{{
 nmap        <Space>         [Space]
@@ -1616,9 +1619,8 @@ xnoremap id  i"
 " }}}
 
 "===============================================================================
-" Abbreviates:
+" Abbreviates: "{{{
 "===============================================================================
-" {{{
 
 " 略記を展開する
 function! s:abbrev_comment_line(head, body)
@@ -1663,9 +1665,8 @@ cnoreabbrev @g $MYGVIMRC
 " }}}
 
 "===============================================================================
-" Terminating:
+" Terminating: "{{{
 "===============================================================================
-" {{{
 
 " remove variables
 unlet s:hooks
