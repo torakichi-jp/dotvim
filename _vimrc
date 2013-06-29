@@ -76,6 +76,7 @@ augroup END
 " add backward 'runtimepath'
 let g:neobundle#enable_tail_path = 1
 
+" initialize neobundle
 if has('vim_starting')
     let &runtimepath = &runtimepath . ',' . s:dotvimdir . '/bundle/neobundle.vim'
 endif
@@ -89,13 +90,67 @@ call neobundle#rc(s:dotvimdir . '/bundle')
 " bundles "{{{
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc'
-NeoBundle 'Shougo/vimshell'
-NeoBundle 'yomi322/vim-gitcomplete'
-NeoBundle 'Shougo/vimfiler'
+" vimshell "{{{
+NeoBundle 'Shougo/vimshell', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'commands' : [
+            \ {
+                \ 'name' : 'VimShell',
+                \ 'complete' : 'customlist,vimshell#complete',
+            \ },
+        \ ],
+        \ 'mappings' : ['<Plug>(vimshell_switch)'],
+    \}
+\} "}}}
+" vim-gitcomplete "{{{
+NeoBundle 'yomi322/vim-gitcomplete', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'filetype' : 'vimshell',
+    \ }
+\ } "}}}
+" vimfiler "{{{
+NeoBundle 'Shougo/vimfiler', {
+    \ 'lazy' : 1,
+    \ 'depends' : 'Shougo/unite.vim',
+    \ 'autoload' : {
+        \ 'commands' : [
+            \ { 'name' : 'VimFiler',
+                \ 'complete' : 'customlist,vimfiler#complete' },
+            \ { 'name' : 'VimFilerExplorer',
+                \ 'complete' : 'customlist,vimfiler#complete' },
+            \ { 'name' : 'VimFilerBufferDir',
+                \ 'complete' : 'customlist,vimfiler#complete' },
+        \ ],
+        \ 'mappings' : ['<Plug>(vimfiler_switch)'],
+        \ 'explorer' : 1,
+    \ }
+\ } "}}}
 NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'Shougo/neocomplcache.vim'
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/vinarise'
+" neocomplcache "{{{
+NeoBundle 'Shougo/neocomplcache.vim', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'commands' : 'NeoCompleCacheEnable',
+    \ }
+\ } "}}}
+" neosnippet "{{{
+NeoBundle 'Shougo/neosnippet', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'insert' : 1,
+        \ 'filetype' : 'snippet',
+        \ 'unite_sources' : [
+            \ 'snippet', 'neosnippet/user', 'neosnippet/runtime'
+        \ ],
+    \ }
+\ } "}}}
+" vinarise "{{{
+NeoBundle 'Shougo/vinarise', {
+    \ 'lazy' : 1,
+    \ 'autoload' : { 'commands' : 'Vinarise' },
+\ } "}}}
 NeoBundle 'thinca/vim-visualstar'
 NeoBundle 'thinca/vim-tabrecent'
 NeoBundle 'thinca/vim-qfreplace'
@@ -129,25 +184,39 @@ NeoBundle 'jceb/vim-hier'
 NeoBundle 'deris/vim-rengbang'
 NeoBundle 'osyo-manga/vim-jplus'
 NeoBundle 'LeafCage/foldCC', {'lazy' : 1, 'autoload' : {'filetypes' : 'vim'}}
-NeoBundle 'ujihisa/quicklearn'
 NeoBundle 'tpope/vim-capslock'
-NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'gregsexton/VimCalc'
 NeoBundle 't9md/vim-quickhl'
-NeoBundle 't9md/vim-textmanip'
 NeoBundle 'fuenor/qfixhowm'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundleLazy 'Lokaltog/vim-powerline'
 NeoBundleLazy 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'h1mesuke/vim-alignta'
-NeoBundle 'basyura/TweetVim'
+" Tweetvim "{{{
+NeoBundle 'basyura/TweetVim', {
+    \ 'lazy' : 1,
+    \ 'depends' : [
+        \ 'basyura/twibill.vim', 'tyru/open-browser.vim',
+        \ 'basyura/bitly.vim', 'mattn/favstar-vim',
+    \ ],
+    \ 'autoload' : { 'commnads' : 'TweetVimHomeTimeline' },
+\ } "}}}
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'rhysd/accelerated-jk'
 NeoBundle 'tanabe/ToggleCase-vim'
-"NeoBundleLazy 'tpope/vim-surround'
-NeoBundle 'anyakichi/vim-surround'
+" surround "{{{
+NeoBundle 'anyakichi/vim-surround', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'mappings' : [
+            \ ['n', '<Plug>Dsurround'], ['n', '<Plug>Csurround' ],
+            \ ['n', '<Plug>Ysurround'], ['n', '<Plug>YSurround' ],
+            \ ['n', '<Plug>Vsurround'], ['n', '<Plug>VSurround' ],
+        \ ]
+    \ }
+\ } "}}}
 
 NeoBundle 'Colour-Sampler-Pack'
 NeoBundle 'SingleCompile'
@@ -265,88 +334,12 @@ function! s:hooks.on_source(bundle)
     let g:neocomplete#use_vimproc = 1
 endfunction
 
-" neocomplcache
-call neobundle#config(
-    \ 'neocomplcache.vim', {
-        \ 'lazy' : 1,
-        \ 'autoload' : {
-            \ 'commands' : 'NeoComplCacheEnable',
-        \ }
-    \ }
-\ )
-
-" neosnippet
-call neobundle#config(
-    \ 'neosnippet', {
-        \ 'lazy' : 1,
-        \ 'autoload' : {
-            \ 'insert' : 1,
-            \ 'filetype' : 'snippet',
-            \ 'unite_sources' : [
-                \ 'snippet', 'neosnippet/user', 'neosnippet/runtime'
-            \ ],
-        \ }
-    \ }
-\ )
-
 " vimfiler
-call neobundle#config(
-    \ 'vimfiler', {
-        \ 'lazy' : 1,
-        \ 'depends' : 'Shougo/unite.vim',
-        \ 'autoload' : {
-            \ 'commands' : [
-                \ { 'name' : 'VimFiler',
-                    \ 'complete' : 'customlist,vimfiler#complete' },
-                \ { 'name' : 'VimFilerExplorer',
-                    \ 'complete' : 'customlist,vimfiler#complete' },
-                \ { 'name' : 'VimFilerBufferDir',
-                    \ 'complete' : 'customlist,vimfiler#complete' },
-            \ ],
-            \ 'mappings' : ['<Plug>(vimfiler_switch)'],
-            \ 'explorer' : 1,
-        \ }
-    \ }
-\ )
 let s:hooks = neobundle#get_hooks('vimfiler')
 function! s:hooks.on_source(bundle)
     let g:vimfiler_as_default_explorer = 1
     let g:vimfiler_safe_mode_by_default = 0
 endfunction
-
-" vimshell
-call neobundle#config(
-    \'vimshell', {
-        \ 'lazy' : 1,
-        \ 'autoload' : {
-            \ 'commands' : [
-                \ {
-                    \ 'name' : 'VimShell',
-                    \ 'complete' : 'customlist,vimshell#complete',
-                \ },
-            \ ],
-            \ 'mappings' : ['<Plug>(vimshell_switch)'],
-        \}
-    \ }
-\ )
-
-" vim-gitcomplete
-call neobundle#config(
-    \ 'vim-gitcomplete', {
-        \ 'lazy' : 1,
-        \ 'autoload' : {
-            \ 'filetype' : 'vimshell',
-        \ }
-    \ }
-\ )
-
-" vinarise
-call neobundle#config(
-    \ 'vinarise', {
-        \ 'lazy' : 1,
-        \ 'autoload' : { 'commands' : 'Vinarise' },
-    \ }
-\ )
 
 " Unite設定
 call neobundle#config(
@@ -436,37 +429,11 @@ let g:ctrlp_mruf_max = 500
 let g:ctrlp_jump_to_buffer = 2
 let g:ctrlp_extensions = ['cmdline', 'yankring', 'menu']
 
-" TweetVim
-call neobundle#config(
-    \ 'TweetVim', {
-        \ 'lazy' : 1,
-        \ 'depends' : [
-            \ 'basyura/twibill.vim', 'tyru/open-browser.vim',
-            \ 'basyura/bitly.vim', 'mattn/favstar-vim',
-        \ ],
-        \ 'autoload' : { 'commnads' : 'TweetVimHomeTimeline' },
-    \ }
-\ )
-
 " powerline
 if s:is_gui || !s:is_windows
     NeoBundleSource vim-powerline
     " powerline setting is in dotvim/vimfiles/plugin/powerline-setting.vim
 endif
-
-" surround
-call neobundle#config(
-    \ 'vim-surround', {
-        \ 'lazy' : 1,
-        \ 'autoload' : {
-            \ 'mappings' : [
-                \ ['n', '<Plug>Dsurround'], ['n', '<Plug>Csurround' ],
-                \ ['n', '<Plug>Ysurround'], ['n', '<Plug>YSurround' ],
-                \ ['n', '<Plug>Vsurround'], ['n', '<Plug>VSurround' ],
-            \ ]
-        \ }
-    \ }
-\ )
 
 " QFixHowm
 let g:mygrep = 'grep'
@@ -903,6 +870,34 @@ endfunction
 " }}}
 
 "===============================================================================
+" AlterCommands: "{{{
+"===============================================================================
+
+"設定ファイル内でAlterCommandを使うためにロード
+call altercmd#load()
+
+AlterCommand u[nite]        Unite
+AlterCommand maps           Unite -resume mapping
+AlterCommand out[put]       Unite -resume output
+AlterCommand gitb           UniteWithBufferDir giti/branch
+AlterCommand gitc           UniteWithBufferDir giti/config
+AlterCommand gitl           UniteWithBufferDir giti/log
+AlterCommand gitr           UniteWithBufferDir giti/remote
+AlterCommand gits           UniteWithBufferDir giti/status
+AlterCommand rest[art]      RestartWithSession
+AlterCommand cap[ture]      Capture
+AlterCommand cdc[urrent]    CdCurrent
+AlterCommand ack            Ack
+AlterCommand ct[ags]        VimProcBang ctags -R
+AlterCommand t[ranslate]    ExciteTranslate
+AlterCommand alc            Ref webdict alc
+AlterCommand ej             Ref webdict ej
+AlterCommand je             Ref webdict je
+
+
+" }}}
+
+"===============================================================================
 " Functions: "{{{
 "===============================================================================
 
@@ -1020,34 +1015,6 @@ augroup MyAutocmd
     "}}}
 
 augroup END
-
-
-" }}}
-
-"===============================================================================
-" AlterCommands: "{{{
-"===============================================================================
-
-"設定ファイル内でAlterCommandを使うためにロード
-call altercmd#load()
-
-AlterCommand u[nite]        Unite
-AlterCommand maps           Unite -resume mapping
-AlterCommand out[put]       Unite -resume output
-AlterCommand gitb           UniteWithBufferDir giti/branch
-AlterCommand gitc           UniteWithBufferDir giti/config
-AlterCommand gitl           UniteWithBufferDir giti/log
-AlterCommand gitr           UniteWithBufferDir giti/remote
-AlterCommand gits           UniteWithBufferDir giti/status
-AlterCommand rest[art]      RestartWithSession
-AlterCommand cap[ture]      Capture
-AlterCommand cdc[urrent]    CdCurrent
-AlterCommand ack            Ack
-AlterCommand ct[ags]        VimProcBang ctags -R
-AlterCommand t[ranslate]    ExciteTranslate
-AlterCommand alc            Ref webdict alc
-AlterCommand ej             Ref webdict ej
-AlterCommand je             Ref webdict je
 
 
 " }}}
@@ -1493,16 +1460,6 @@ nnoremap [Neocom]l :<C-u>NeoCompleteLock<CR>
 nnoremap [Neocom]u :<C-u>NeoCompleteUnlock<CR>
 inoremap <C-x><C-l> :<C-u>NeoCompleteLock<CR>
 inoremap <C-x><C-u> :<C-u>NeoCompleteUnlock<CR>
-
-" textmanip
-" 選択したテキストの移動
-xmap <C-j> <Plug>(textmanip-move-down)
-xmap <C-k> <Plug>(textmanip-move-up)
-xmap <C-h> <Plug>(textmanip-move-left)
-xmap <C-l> <Plug>(textmanip-move-right)
-" 行の複製
-NXmap <M-d> <Plug>(textmanip-duplicate-down)
-NXmap <M-u> <Plug>(textmanip-duplicate-up)
 
 " winmove.vim
 let g:winmove_no_default_keymappings = 1
