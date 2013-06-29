@@ -6,7 +6,7 @@
 
 
 "===============================================================================
-" Initialize: "{{{
+" Initializing: "{{{
 "===============================================================================
 
 scriptencoding utf-8    " endoding of this script
@@ -867,15 +867,10 @@ function! s:show_option(opt)
 endfunction
 
 
-" }}}
-
-"===============================================================================
-" AlterCommands: "{{{
-"===============================================================================
-
-"設定ファイル内でAlterCommandを使うためにロード
+" 設定ファイル内でAlterCommandを使うためにロード
 call altercmd#load()
 
+" AlterCommands "{{{
 AlterCommand u[nite]        Unite
 AlterCommand maps           Unite -resume mapping
 AlterCommand out[put]       Unite -resume output
@@ -893,7 +888,7 @@ AlterCommand t[ranslate]    ExciteTranslate
 AlterCommand alc            Ref webdict alc
 AlterCommand ej             Ref webdict ej
 AlterCommand je             Ref webdict je
-
+" }}}
 
 " }}}
 
@@ -915,7 +910,7 @@ function! s:comment_str()
     return ''
 endfunction
 
-" カーソル下の単語を取得
+" get word under cursor
 function! s:get_cursor_word(pat) "{{{
     let line = getline('.')
     let pos = col('.')
@@ -932,7 +927,7 @@ function! s:get_cursor_word(pat) "{{{
     return ''
 endfunction "}}}
 
-" ビジュアルモードで選択されていたテキストを取得
+" get word selected for visual mode
 function! s:get_selected_text() "{{{
     let save_z = getreg('z', 1)
     let save_z_type = getregtype('z')
@@ -954,10 +949,10 @@ endfunction "}}}
 
 augroup MyAutocmd
 
-    " 81文字目以降に線を引く "{{{
+    " 81文字目以降に線を引く
     autocmd FileType * call <SID>set_colorcolumn(81)
     autocmd VimResized * call <SID>set_colorcolumn(81)
-    function! s:set_colorcolumn(line_col)
+    function! s:set_colorcolumn(line_col) "{{{
         if &wrap
             if &columns > a:line_col
                 execute "setlocal colorcolumn=" . join(range(a:line_col, &columns), ',')
@@ -1046,10 +1041,10 @@ nnoremap Q <Nop>
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 
-" open file using :browse
+" open file with :browse
 nnoremap <C-x><C-e> :<C-u>browse edit<CR>
 
-" write file using :browse
+" write file with :browse
 nnoremap <C-x><C-w> :<C-u>browse write<CR>
 
 " exit like emacs
@@ -1065,11 +1060,11 @@ nnoremap <C-x><C-o> :<C-u>ShowOption<Space>
 nnoremap <C-x><C-x> "*
 xnoremap <C-x><C-x> "*
 
-" switching buffers
+" switch buffers
 nnoremap <C-x><C-n> :<C-u>bnext<CR>
 nnoremap <C-x><C-p> :<C-u>bprevious<CR>
 
-" j, k mappings
+" j, k mappings "{{{
 if !neobundle#is_sourced('accelerated-jk')
     " j, k moves for view line (chages from gj, gk)
     nnoremap j gj
@@ -1077,18 +1072,20 @@ if !neobundle#is_sourced('accelerated-jk')
 endif
 nnoremap gj j
 nnoremap gk k
+"}}}
 
-" j, k mappings when loaded accelerated-jk
+" j, k mappings when loaded accelerated-jk "{{{
 let s:hooks = neobundle#get_hooks('accelerated-jk')
 function! s:hooks.on_source(bundle)
     nmap j <Plug>(accelerated_jk_gj)
     nmap k <Plug>(accelerated_jk_gk)
 endfunction
+"}}}
 
 " if cursor line is at foldclosed, l open folding
 nnoremap <expr> l foldclosed('.') < 0 ? 'l' : 'zo'
 
-" smart folding closing
+" smart folding close
 nnoremap <silent><C-\> :<C-u>call <SID>smart_foldcloser()<CR>
 function! s:smart_foldcloser() "{{{
     if foldlevel('.') == 0
@@ -1116,14 +1113,14 @@ function! s:smart_foldcloser() "{{{
 endfunction
 "}}}
 
-" すべて選択
+" all select
 nnoremap ga ggVG
 
 " grep
 nnoremap gr :<C-u>grep <C-r><C-w> *
 xnoremap gr :<C-u>grep <C-r>=<SID>get_selected_text()<CR> *
 
-" Google検索
+" Google search
 nnoremap <silent> gs :<C-u>GoogleSearch <C-r>=<SID>get_cursor_word('[a-zA-Z]*')<CR><CR>
 xnoremap <silent> gs :<C-u>GoogleSearch <C-r>=<SID>get_cursor_word()<CR><CR>
 
@@ -1132,13 +1129,13 @@ NXmap gh <Plug>(quickhl-toggle)
 NXmap gH <Plug>(quickhl-reset)
 nmap gm <Plug>(quickhl-match)
 
-" 画面再描画
+" reload screen
 nnoremap gl <C-l>
 
-" 単語を数える :%substitute/\<word\>/&/gn
+" count words :%substitute/\<word\>/&/gn
 nnoremap gw :<C-u>%substitute/\<<C-r><C-w>\>/&/gn<CR>
 
-" URLオープン
+" open URL
 nnoremap gx :<C-u>call openuri#cursorline()
 
 " YをDなどと同じような動作にする
@@ -1147,11 +1144,11 @@ nnoremap Y y$
 " Visualモードでの連続貼り付け
 xnoremap p "0p<CR>
 
-" インデント
+" indent
 nnoremap < <<
 nnoremap > >>
 
-" インデント後もビジュアルモードを維持
+" keep visual mode after indented
 xnoremap < <gv
 xnoremap > >gv
 
@@ -1161,14 +1158,14 @@ NXnoremap ]} ]M
 NXnoremap [{ [m
 NXnoremap [} [m
 
-" 単語移動
+" move words
 " TODO: 自作する？
 nmap w <Plug>(textobj-wiw-n)
 nmap b <Plug>(textobj-wiw-p)
 nmap e <Plug>(textobj-wiw-N)
 nmap ge <Plug>(textobj-wiw-P)
 
-" 行頭、行末へ移動
+" move begin/end of line
 nnoremap <C-h> g0
 xnoremap <C-h> g0
 onoremap <C-h> 0
@@ -1176,7 +1173,7 @@ nnoremap <C-l> g$
 xnoremap <C-l> g$
 onoremap <C-l> $
 
-" 括弧ペアに移動
+" move bracket pair
 map <C-j> %
 
 " 候補が複数ある場合は一度表示する
@@ -1199,13 +1196,16 @@ nnoremap <F3> :<C-u>echohl StatusLine<Bar>echo expand('%:p:h')<Bar>echohl None<C
 " タグリスト
 nnoremap <silent> <F4> :<C-u>TlistToggle<CR>
 
+" reload screen
+nnoremap <F5> <C-l>
+
 " make
 nnoremap <F7> :<C-u>make<CR>
 
 " カウント指定があれば<CR>で行移動
 " なければ再描画＆検索ハイライトオフ
 noremap <silent> <CR> :<C-u>call <SID>CrExec()<CR>
-function! s:CrExec()
+function! s:CrExec() "{{{
     if v:count == 0
         redraw!
         if exists(':Nohlsearch')
@@ -1217,9 +1217,9 @@ function! s:CrExec()
         execute 'normal! ' . string(v:count) . 'G'
     endif
     return ""
-endfunction
+endfunction "}}}
 
-" マーク関連
+" マーク関連 "{{{
 nnoremap [Mark] <Nop>
 nmap m [Mark]
 " ms{char}でマーク（通常のmと同じ）＆ShowMarksオン
@@ -1250,14 +1250,9 @@ nnoremap [Mark]k [`
 " TODO: mn, mp で（アルファベット順に）次のマークに移動するコードを書きたい
 " TODO: mcでマークを1行目に移動するのではなく、ちゃんと消したい
 " TODO: つーかShowMarksを自分用に書き直す？
+"}}}
 
-" ウィンドウ関連
-nnoremap <C-Down>   <C-w>j
-nnoremap <C-Up>     <C-w>k
-nnoremap <C-Left>   <C-w>h
-nnoremap <C-Right>  <C-w>l
-
-" タブページ用マップ
+" タブページ用マップ "{{{
 nnoremap [Tab] <Nop>
 nmap t [Tab]
 nnoremap            [Tab]l  gt
@@ -1281,6 +1276,7 @@ nnoremap            [Tab]6  6gt
 nnoremap            [Tab]7  7gt
 nnoremap            [Tab]8  8gt
 nnoremap            [Tab]9  9gt
+"}}}
 
 " 起動時設定を開く
 nnoremap <silent> [Space]v :<C-u>edit $MYVIMRC<CR>
@@ -1289,7 +1285,7 @@ nnoremap <silent> [Space]gv :<C-u>edit $MYGVIMRC<CR>
 " 現在のバッファを読み込み
 nnoremap [Space]<CR> :<C-u>source %<CR>
 
-" オプション切り替え
+" オプション切り替え "{{{
 nnoremap [Toggle] <Nop>
 nmap T [Toggle]
 nnoremap [Toggle]w :<C-u>call <SID>toggle_local_option('wrap')<CR>
@@ -1310,13 +1306,14 @@ nnoremap [Toggle]i :<C-u>call <SID>toggle_local_option('insertmode')<CR>
 nmap [Toggle]I [Toggle]i
 nnoremap [Toggle]f :<C-u>call <SID>toggle_folding()<CR>
 nmap [Toggle]F [Toggle]f
+"}}}
 
 " タブ展開切り替え
 nnoremap <silent> [Toggle]t :<C-u>setlocal expandtab! \| %retab!<CR>
 nmap [Toggle]T [Toggle]t
 
 " オプションの切り替えとその表示
-function! s:toggle_local_option(opt)
+function! s:toggle_local_option(opt) "{{{
     if exists('&' . a:opt)
         " トグルしてその値を表示
         execute 'setlocal ' . a:opt . '! | setlocal ' . a:opt . '?'
@@ -1325,17 +1322,18 @@ function! s:toggle_local_option(opt)
         echo a:opt . ' というオプションは存在しません'
         return 0
     endif
-endfunction
+endfunction "}}}
 
 " フォールディング切り替え
 nnoremap zi :<C-u>call <SID>toggle_folding()<CR>
-function! s:toggle_folding()
+function! s:toggle_folding() "{{{
     if <SID>toggle_local_option('foldenable')
         setlocal foldcolumn=5
     else
         setlocal foldcolumn=0
     endif
 endfunction
+"}}}
 
 "}}}
 
