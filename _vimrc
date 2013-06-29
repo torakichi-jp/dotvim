@@ -524,7 +524,11 @@ NeoBundleCheck
 "===============================================================================
 " {{{
 
-" Vimスクリプトのシンタックスフォールディング設定
+
+" Syntax settings "{{{
+
+" VimScript "{{{
+" syntax folding setting
 " foldmethod=syntaxでないと意味なし
 " augroup: a
 " function: f
@@ -534,7 +538,21 @@ NeoBundleCheck
 " python: P
 " tcl: t
 " mzscheme: m
-let g:vimsyn_folding = 'aflprPtm'
+let g:vimsyn_folding = 'aflprPm'
+
+" no error
+let g:vimsyn_noerror = 1
+
+" 行連結バックスラッシュをインデントしない
+" (インデントする幅の設定)
+let g:vim_indent_cont = 0
+"}}}
+
+"c, cpp, idlにdoxygenハイライトを設定する
+let g:load_doxygen_syntax = 1
+let g:doxygen_enhanced_color = 1
+
+"}}}
 
 " mouse behaves windows
 behave mswin
@@ -671,17 +689,10 @@ endif
 "augroup END
 "call HighlightZenkakuSpace()
 
-"c, cpp, idlにdoxygenハイライトを設定する
-let g:load_doxygen_syntax = 1
-let g:doxygen_enhanced_color = 1
-
-" VimScriptの行連結バックスラッシュをインデントしない
-let g:vim_indent_cont = 0
-
-" %による移動強化
+" matchit extension
 runtime macros/matchit.vim
 
-" タブページの表示行設定
+" tabline view setting
 function! MakeTabLine() "{{{
     " TODO: coding here at tabline view setting.
     let titles = map(range(1, tabpagenr('$')), 's:TabPageLabel(v:val)')
@@ -705,7 +716,7 @@ function! MakeTabLine() "{{{
     return tabpages . '%=' . info   " タブリストを左に、情報を右に表示
 endfunction "}}}
 
-" 各タブの表示設定
+" each tab view setting
 function! s:TabPageLabel(n) "{{{
     " t:title と言う変数があったらそれを使う
     let title = gettabvar(a:n, 'title')
