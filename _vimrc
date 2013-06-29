@@ -107,6 +107,7 @@ NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'tyru/open-browser-github.vim'
 NeoBundle 'tyru/winmove.vim'
 NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'sgur/ctrlp-extensions.vim'
 NeoBundle 'chrismetcalf/vim-taglist'
 NeoBundle 'taku-o/vim-toggle'
 NeoBundle 'taku-o/vim-batch-source'
@@ -116,6 +117,7 @@ NeoBundle 'kana/vim-submode'
 NeoBundle 'dannyob/quickfixstatus'
 NeoBundle 'jceb/vim-hier'
 NeoBundle 'deris/vim-rengbang'
+NeoBundle 'osyo-manga/vim-jplus'
 NeoBundle 'LeafCage/foldCC', {'lazy' : 1, 'autoload' : {'filetypes' : 'vim'}}
 NeoBundle 'ujihisa/quicklearn'
 NeoBundle 'tpope/vim-capslock'
@@ -177,6 +179,7 @@ NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'osyo-manga/unite-qfixhowm'
 NeoBundle 'kannokanno/unite-todo'
 NeoBundle 'Shougo/unite-build'
+NeoBundle 'kmnk/vim-unite-giti'
 "}}}
 
 " operator "{{{
@@ -214,7 +217,7 @@ call neobundle#config(
         \ }
     \ }
 \ )
-" if windows and if not installed msvc, must build manually
+" if you use windows and that is not installed msvc, you must build manually
 " $VCINSTALLDIR envvar have to declare in advance
 if has('win64') && isdirectory($VCINSTALLDIR)
     call neobundle#config(
@@ -318,7 +321,7 @@ call neobundle#config(
     \ }
 \ )
 
-" vimi-gitcomplete
+" vim-gitcomplete
 call neobundle#config(
     \ 'vim-gitcomplete', {
         \ 'lazy' : 1,
@@ -416,6 +419,13 @@ delfunction s:SetWebDictsFilter
 
 " default site of webdict
 let g:ref_source_webdict_sites.default = 'ej'
+
+" ctrlp.vim
+let g:ctrlp_use_migemo = 1
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_mruf_max = 500
+let g:ctrlp_jump_to_buffer = 2
+let g:ctrlp_extensions = ['cmdline', 'yankring', 'menu']
 
 " TweetVim
 call neobundle#config(
@@ -675,20 +685,22 @@ runtime macros/matchit.vim
 function! MakeTabLine() "{{{
     " TODO: coding here at tabline view setting.
     let titles = map(range(1, tabpagenr('$')), 's:TabPageLabel(v:val)')
-    let sep = ' '   " タブ間の区切り
+    let sep = ' '   " separator of tab
     let tabpages = join(titles, sep) . sep . '%#TabLineFill#%T'
-    let info = ''   " ここに好きな情報を入れる
-
-    let cur_dir = getcwd()
+    let info = ''   " you can insert infomation at here
 
     " view current directory
-    let info .= fnamemodify(cur_dir, ':~') . ' '
+    let cur_dir = fnamemodify(getcwd(), ':~')
+    if strlen(cur_dir) > &columns / 2
+        let cur_dir = '.../' . fnamemodify(cur_dir, ':t')
+    endif
+    let info .= cur_dir . ' '
 
     " view git branch
-    let branch_info = fugitive#head()
-    if !empty(branch_info)
-        let info .= '[' . branch_info . '] '
-    endif
+    "let branch_info = fugitive#head()
+    "if !empty(branch_info)
+    "    let info .= '[' . branch_info . '] '
+    "endif
 
     return tabpages . '%=' . info   " タブリストを左に、情報を右に表示
 endfunction "}}}
@@ -1015,6 +1027,11 @@ AlterCommand ct[ags] !ctags -R
 AlterCommand t[ranslate] ExciteTranslate
 AlterCommand ej Ref webdict ej
 AlterCommand je Ref webdict je
+AlterCommand gitb UniteWithBufferDir giti/branch
+AlterCommand gitc UniteWithBufferDir giti/config
+AlterCommand gitl UniteWithBufferDir giti/log
+AlterCommand gitr UniteWithBufferDir giti/remote
+AlterCommand gits UniteWithBufferDir giti/status
 
 
 " }}}
@@ -1023,6 +1040,19 @@ AlterCommand je Ref webdict je
 " Key Mappings:
 "===============================================================================
 " {{{
+
+" prefix "{{{
+nmap        <Space>         [Space]
+xmap        <Space>         [Space]
+nnoremap    [Space]         <Nop>
+xnoremap    [Space]         <Nop>
+nmap        [Space]<Space>  [WSpace]
+xmap        [Space]<Space>  [WSpace]
+nnoremap    [WSpace]        <Nop>
+xnoremap    [WSpace]        <Nop>
+nnoremap    <C-x>           <Nop>
+xnoremap    <C-x>           <Nop>
+"}}}
 
 "-------------------------------------------------------------------------------
 " Nomarl Key Mappings:
@@ -1033,13 +1063,6 @@ AlterCommand je Ref webdict je
 nnoremap Q <Nop>
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
-
-" prefix
-nmap        <Space>         [Space]
-nnoremap    [Space]         <Nop>
-nmap        [Space]<Space>  [WSpace]
-nnoremap    [WSpace]        <Nop>
-nnoremap    <C-x>           <Nop>
 
 " open file using :browse
 nnoremap <C-x><C-e> :<C-u>browse edit<CR>
@@ -1352,6 +1375,10 @@ function! s:define_surround_keymappings()
     nmap <buffer> yt <Plug>Ysurroundiw
   endif
 endfunction "}}}
+
+" jplus
+nmap [Space]J <Plug>(jplus-input)
+xmap [Space]J <Plug>(jplus-input)
 
 " toggle.vim
 nmap <C-a> <Plug>ToggleN
