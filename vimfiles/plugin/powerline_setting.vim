@@ -69,23 +69,23 @@ function! s:hooks.on_source(bundle)
         \ }),
       \
       \ Pl#Hi#Segments(['mode_indicator', 'filename'], {
-        \ 'i': ['white', 'darkestgreen', ['bold']],
-        \ 'n': ['white', 'darkestcyan', ['bold']],
-        \ 'v': ['white', 'darkestpurple', ['bold']],
+        \ 'i': ['white', 'brightorange', ['bold']],
+        \ 'n': ['white', 'darkestpurple', ['bold']],
+        \ 'v': ['white', 'darkestgreen', ['bold']],
         \ 'r': ['white', 'mediumred', ['bold']],
-        \ 's': ['white', 'gray5', ['bold']],
+        \ 'N': ['white', 'gray5', ['bold']],
         \ }),
       \
       \ Pl#Hi#Segments(['fileinfo'], {
-        \ 'i': ['darkestgreen', 'white', ['bold']],
-        \ 'n': ['darkestcyan', 'white', ['bold']],
-        \ 'v': ['darkestpurple', 'white', ['bold']],
+        \ 'i': ['brightorange', 'white', ['bold']],
+        \ 'n': ['darkestpurple', 'white', ['bold']],
+        \ 'v': ['darkestgreen', 'white', ['bold']],
         \ 'r': ['mediumred', 'white', ['bold']],
         \ 'N': ['gray0', 'gray2', ['bold']],
         \ }),
       \
       \ Pl#Hi#Segments(['branch', 'scrollpercent', 'raw', 'filesize'], {
-        \ 'n': ['gray2', 'gray7'],
+        \ 'n': ['black', 'mediumpurple'],
         \ 'N': ['gray0', 'gray2'],
         \ }),
       \
@@ -95,21 +95,21 @@ function! s:hooks.on_source(bundle)
         \ }),
       \
       \ Pl#Hi#Segments(['static_str'], {
-        \ 'n': ['white', 'gray4'],
+        \ 'n': ['white', 'gray6', ['underline']],
         \ 'N': ['gray1', 'gray1'],
         \ }),
       \
       \ Pl#Hi#Segments(['fileinfo.flags'], {
-        \ 'n': ['white'],
+        \ 'n': ['brightred'],
         \ 'N': ['gray4'],
         \ }),
       \
       \ Pl#Hi#Segments(['currenttag', 'fileformat', 'fileencoding', 'pwd', 'filetype', 'charcode', 'currhigroup'], {
-        \ 'n': ['gray9', 'gray4'],
+        \ 'n': ['white', 'darkestpurple'],
         \ }),
       \
       \ Pl#Hi#Segments(['lineinfo'], {
-        \ 'n': ['gray2', 'gray10'],
+        \ 'n': ['gray2', 'brightpurple'],
         \ 'N': ['gray2', 'gray4'],
         \ }),
       \
