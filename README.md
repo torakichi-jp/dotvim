@@ -1,17 +1,17 @@
-# dotvim
+## dotvim
 
 This is my vim setting files.
 
 http://github.com/torakichi-jp/dotvim
 
-#インストール
+##Installation
 
-##Vim本体のインストール
+#Install of Vim body
 *参考
 http://vim-jp.org/
 
 
-#プラグインのインストール
+#Install of plugins
 
 まずNeoBundle( http://github.com/Shougo/neobundle.vim ) とVimProc
 ( http://github.com/Shougo/vimproc ) を git clone して,dotvim/vimfiles/bundleに
