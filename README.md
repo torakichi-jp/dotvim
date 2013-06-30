@@ -6,12 +6,12 @@ http://github.com/torakichi-jp/dotvim
 
 #Installation
 
-##Install of Vim body
-*参考
+###Install of Vim body
+* 参考
 http://vim-jp.org/
 
 
-##Install of plugins
+###Install of plugins
 
 まずNeoBundle( http://github.com/Shougo/neobundle.vim ) とVimProc
 ( http://github.com/Shougo/vimproc ) を git clone して,dotvim/vimfiles/bundleに
