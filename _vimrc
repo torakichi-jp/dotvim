@@ -833,18 +833,6 @@ command! -bang -bar -nargs=? -complete=file Sjis
 command! -bang -bar -nargs=? -complete=file Unicode
     \ Utf16<bang> <args>
 
-" Google検索
-command! -nargs=? GoogleSearch call s:GoogleSearch(<q-args>)
-function! s:GoogleSearch(word) "{{{
-    if s:is_windows
-        let cmd = 'rundll32 url.dll,FileProtocolHandler'
-    elseif s:is_unix
-        let cmd = 'firefox'
-    endif
-    let search_engine = 'https://www.google.co.jp/#q='
-    exe 'VimProcBang ' . cmd . " '" . search_engine . a:word . "'"
-endfunction "}}}
-
 " Explorer
 command! -nargs=? -complete=dir Explorer call s:Explorer(<q-args>)
 function! s:Explorer(dir)
@@ -898,11 +886,11 @@ endfunction "}}}
 
 " オプション表示
 command! -nargs=1 -complete=option ShowOption call <SID>show_option(<q-args>)
-function! s:show_option(opt)
+function! s:show_option(opt) "{{{
     if !empty(a:opt)
         execute 'verb set ' . a:opt . '?'
     endif
-endfunction
+endfunction "}}}
 
 
 " 設定ファイル内でAlterCommandを使うためにロード
@@ -936,7 +924,7 @@ AlterCommand je             Ref webdict je
 "===============================================================================
 
 " Return string used to comment line for current filetype.
-function! s:comment_str()
+function! s:comment_str() "{{{
     if &ft == 'cpp' || &ft == 'java' || &ft == 'javascript'
         return '//'
     elseif &ft == 'vim'
@@ -947,7 +935,7 @@ function! s:comment_str()
         return ';'
     endif
     return ''
-endfunction
+endfunction "}}}
 
 " get word under cursor
 function! s:get_cursor_word(pat) "{{{
@@ -972,7 +960,6 @@ function! s:get_selected_text() "{{{
     let save_z_type = getregtype('z')
 
     try
-        set nosecure
         normal! gv"zy
         return @z
     finally
@@ -1095,10 +1082,6 @@ nnoremap <C-x><C-o> :<C-u>ShowOption<Space>
 nnoremap <C-x><C-n> :<C-u>bnext<CR>
 nnoremap <C-x><C-p> :<C-u>bprevious<CR>
 
-" clipboard register
-nnoremap _ "*
-xnoremap _ "*
-
 " j, k mappings "{{{
 if !neobundle#is_sourced('accelerated-jk')
     " j, k moves for view line (chages from gj, gk)
@@ -1147,6 +1130,10 @@ function! s:smart_foldcloser() "{{{
     "norm! zM
 endfunction
 "}}}
+
+" set folding marker
+nnoremap z[ A"{{{<ESC>
+nnoremap z] A"}}}<ESC>
 
 " move begin/end of line
 nnoremap gh g0
@@ -1205,7 +1192,7 @@ xnoremap <silent> <expr> K
 " Visualモードでの連続貼り付け
 xnoremap p "0p<CR>
 
-" indent
+" indent useful
 nnoremap < <<
 nnoremap > >>
 
@@ -1226,13 +1213,17 @@ nmap b <Plug>(textobj-wiw-p)
 nmap e <Plug>(textobj-wiw-N)
 nmap ge <Plug>(textobj-wiw-P)
 
-" move bracket pair
-map <C-j> %
+" clipboard register
+nnoremap <C-@> "*
+xnoremap <C-@> "*
 
 " 候補が複数ある場合は一度表示する
 nnoremap <C-]> g<C-]>
 
-" 数値増減
+" move match pair
+map <C-j> %
+
+" increment/decrement number
 nnoremap + <C-a>
 nnoremap - <C-x>
 
@@ -1251,9 +1242,6 @@ nnoremap <silent> <F4> :<C-u>TlistToggle<CR>
 
 " reload screen
 nnoremap <F5> <C-l>
-
-" make
-nnoremap <F7> :<C-u>make<CR>
 
 " カウント指定があれば<CR>で行移動
 " なければ再描画＆検索ハイライトオフ
