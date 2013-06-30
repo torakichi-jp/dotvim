@@ -185,9 +185,9 @@ NeoBundle 'thinca/vim-quickrun', {
         \ 'commands' : 'QuickRun',
     \ }
 \ } "}}}
-NeoBundle 'thinca/vim-singleton'
 NeoBundle 'thinca/vim-editvar'
 NeoBundle 'thinca/vim-localrc'
+NeoBundleLazy 'thinca/vim-singleton'
 NeoBundle 'mattn/calendar-vim'
 NeoBundle 'mattn/excitetranslate-vim'
 NeoBundle 'mattn/wwwrenderer-vim'
@@ -898,6 +898,7 @@ endfunction
 call altercmd#load()
 
 " AlterCommands "{{{
+AlterCommand ct[ags]        VimProcBang ctags -R
 AlterCommand u[nite]        Unite
 AlterCommand maps           Unite -resume mapping
 AlterCommand out[put]       Unite -resume output
@@ -909,8 +910,8 @@ AlterCommand gits           UniteWithBufferDir giti/status
 AlterCommand rest[art]      RestartWithSession
 AlterCommand cap[ture]      Capture
 AlterCommand cdc[urrent]    CdCurrent
+AlterCommand bat[ch]        Batch
 AlterCommand ack            Ack
-AlterCommand ct[ags]        VimProcBang ctags -R
 AlterCommand t[ranslate]    ExciteTranslate
 AlterCommand alc            Ref webdict alc
 AlterCommand ej             Ref webdict ej
@@ -1073,19 +1074,19 @@ nnoremap <C-x><C-w> :<C-u>browse write<CR>
 " exit like emacs
 nnoremap <C-x><C-c> ZQ
 
-" insertion filetypes
+" filetype insertion
 nnoremap <C-x><C-f> :<C-u>setfiletype<Space>
 
-" show option
+" option show
 nnoremap <C-x><C-o> :<C-u>ShowOption<Space>
 
-" clipboard register
-nnoremap <C-x><C-x> "*
-xnoremap <C-x><C-x> "*
-
-" switch buffers
+" buffer switch
 nnoremap <C-x><C-n> :<C-u>bnext<CR>
 nnoremap <C-x><C-p> :<C-u>bprevious<CR>
+
+" clipboard register
+nnoremap _ "*
+xnoremap _ "*
 
 " j, k mappings "{{{
 if !neobundle#is_sourced('accelerated-jk')
@@ -1105,10 +1106,10 @@ function! s:hooks.on_source(bundle)
 endfunction
 "}}}
 
-" if cursor line is at foldclosed, l open folding
+" if cursor line is at foldclosed, 'l' open folding
 nnoremap <expr> l foldclosed('.') < 0 ? 'l' : 'zo'
 
-" smart folding close
+" smart toggle folding
 nnoremap <silent><C-\> :<C-u>call <SID>smart_foldcloser()<CR>
 function! s:smart_foldcloser() "{{{
     if foldlevel('.') == 0
@@ -1144,21 +1145,25 @@ nnoremap gr :<C-u>grep <C-r><C-w> *
 xnoremap gr :<C-u>grep <C-r>=<SID>get_selected_text()<CR> *
 
 " quickhl
-NXmap gh <Plug>(quickhl-toggle)
-NXmap gH <Plug>(quickhl-reset)
+NXmap gm <Plug>(quickhl-toggle)
+NXmap gM <Plug>(quickhl-reset)
 nmap gm <Plug>(quickhl-match)
 
-" reload screen
-nnoremap gl <C-l>
-
-" count words :%substitute/\<word\>/&/gn
-nnoremap gw :<C-u>%substitute/\<<C-r><C-w>\>/&/gn<CR>
+" count words (:%substitute/\<word\>/&/gn)
+nnoremap gw :<C-u>call <SID>count_words('\<' . expand('<cword>' . '\>'))<CR>
+xnoremap gw :<C-u>call <SID>count_words(<SID>get_selected_text())<CR>
+function! s:count_words(word) "{{{
+    execute 'silent! %substitute/' . a:word . '/&/gn'
+    echohl Search
+    echo a:word . ' : ' . v:statusmsg
+    echohl None
+endfunction "}}}
 
 " OpenBrowser
 nmap gx <Plug>(openbrowser-open)
 xmap gx <Plug>(openbrowser-open)
 nnoremap <silent> gs
-    \ :<C-u>call openbrowser#smart_search(<SID>get_cursor_word('\v\f*'))<CR>
+    \ :<C-u>call openbrowser#smart_search(<SID>get_cursor_word('\v\w*'))<CR>
 xnoremap <silent> gs
     \ :<C-u>call openbrowser#smart_search(<SID>get_selected_text())<CR>
 
