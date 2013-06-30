@@ -662,30 +662,30 @@ colorscheme blued
 " use clipboard instead of unnamed register
 "set clipboard& clipboard+=unnamed
 
-set number                      " 行番号表示
-"set relativenumber             " 相対行番号表示
-set ruler                       " ルーラー表示
-set notitle                     " タイトル表示なし
-set showcmd                     " 入力中コマンドの表示
-set hidden                      " バッファ更新を破棄しない
-set confirm                     " エラーにせず確認ダイアログを出す
-set backspace=indent,eol,start  " Backspaceの挙動
-set cursorline                  " 現在行をハイライト
-set display=lastline            " 最後の行をできるだけ表示する
-set cmdheight=2                 " コマンドライン行数
-set noequalalways               " ウィンドウの自動サイズ調整をしない
-set wrap                        " 右端で折り返し
-set textwidth=0                 " テキスト幅
-set laststatus=2                " 常にステータス行を表示
-set showtabline=2               " タブ行を常に表示
-set autoindent                  " 自動インデント
-set switchbuf=split,newtab      " バッファの切り替えオプション
-set tabline=%!MakeTabLine()     " タブ行の表示設定
-set helpheight=0                " ヘルプの最小高
-set helplang=ja                 " 日本語ヘルプ
-set pumheight=10                " ポップアップメニューの最大高
-set previewheight=5             " プレビューウィンドウの高さ
-set shortmess& shortmess+=I     " 起動時のメッセージなし
+set number                      " show line numbers
+"set relativenumber             " show relative line numbers
+set ruler                       " show ruler
+set notitle                     " show not title of after exited Vim
+set showcmd                     " show inserting command
+set hidden                      " hide buffer instead to remove buffer updating
+set confirm                     " show confirm dialog instead of error
+set backspace=indent,eol,start  " delete each of these characters for backspace
+set cursorline                  " hilight line at current cursor
+set display=lastline            " show lastline as much as possible
+set cmdheight=2                 " set command line height
+set noequalalways               " disable automatical adjust window size
+set wrap                        " wrap line of right edge
+set textwidth=0                 " text width
+set laststatus=2                " show statusline always
+set showtabline=2               " show tabline always
+set autoindent                  " auto indent
+set switchbuf=split,newtab      " switch buffer option
+set tabline=%!MakeTabLine()     " tabline strings
+set helpheight=0                " min height of help
+set helplang=ja                 " help language is japanese
+set pumheight=10                " max height of popup menu
+set previewheight=5             " height of preview window
+set shortmess& shortmess+=I     " no launch message
 "set showbreak=>\               " 折り返し行頭の文字列（最後の空白に注意）
 "set cpoptions+=n               " 折り返し行を行番号列から表示
 set cmdwinheight=5              " コマンドラインウィンドウの高さ
