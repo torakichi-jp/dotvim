@@ -62,10 +62,7 @@ let g:Powerline#Colorschemes#my#colorscheme = Pl#Colorscheme#Init([
     \ }),
   \
   \ Pl#Hi#Segments(['fileinfo'], {
-    \ 'i': ['brightorange', 'white', ['bold']],
-    \ 'n': ['darkestpurple', 'white', ['bold']],
-    \ 'v': ['darkestgreen', 'white', ['bold']],
-    \ 'r': ['mediumred', 'white', ['bold']],
+    \ 'n': ['black', 'white', ['bold']],
     \ 'N': ['gray0', 'gray8'],
     \ }),
   \
