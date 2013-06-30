@@ -997,7 +997,7 @@ endfunction "}}}
 call altercmd#load()
 
 " AlterCommands "{{{
-AlterCommand ct[ags]        VimProcBang ctags -R
+AlterCommand ct[ags]        VimProcBang ctags -R --jcode=utf8
 AlterCommand u[nite]        Unite
 AlterCommand maps           Unite -resume mapping
 AlterCommand out[put]       Unite -resume output
