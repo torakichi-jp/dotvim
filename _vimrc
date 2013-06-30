@@ -960,6 +960,7 @@ function! s:get_selected_text() "{{{
     let save_z_type = getregtype('z')
 
     try
+        set nosecure
         normal! gv"zy
         return @z
     finally
@@ -1058,11 +1059,6 @@ nnoremap    <C-x>           <Nop>
 xnoremap    <C-x>           <Nop>
 "}}}
 
-"-------------------------------------------------------------------------------
-" Nomarl Key Mappings:
-"-------------------------------------------------------------------------------
-" {{{
-
 " has disabled
 nnoremap Q <Nop>
 nnoremap ZZ <Nop>
@@ -1147,10 +1143,6 @@ nnoremap ga ggVG
 nnoremap gr :<C-u>grep <C-r><C-w> *
 xnoremap gr :<C-u>grep <C-r>=<SID>get_selected_text()<CR> *
 
-" Google search
-nnoremap <silent> gs :<C-u>GoogleSearch <C-r>=<SID>get_cursor_word('[a-zA-Z]*')<CR><CR>
-xnoremap <silent> gs :<C-u>GoogleSearch <C-r>=<SID>get_cursor_word()<CR><CR>
-
 " quickhl
 NXmap gh <Plug>(quickhl-toggle)
 NXmap gH <Plug>(quickhl-reset)
@@ -1162,11 +1154,29 @@ nnoremap gl <C-l>
 " count words :%substitute/\<word\>/&/gn
 nnoremap gw :<C-u>%substitute/\<<C-r><C-w>\>/&/gn<CR>
 
-" open URL
-nnoremap gx :<C-u>call openuri#cursorline()
+" OpenBrowser
+nmap gx <Plug>(openbrowser-open)
+xmap gx <Plug>(openbrowser-open)
+nnoremap <silent> gs
+    \ :<C-u>call openbrowser#smart_search(<SID>get_cursor_word('\v\f*'))<CR>
+xnoremap <silent> gs
+    \ :<C-u>call openbrowser#smart_search(<SID>get_selected_text())<CR>
 
 " YをDなどと同じような動作にする
 nnoremap Y y$
+
+" Ref "{{{
+nnoremap [Ref] <Nop>
+nmap [Space]r [Ref]
+nnoremap [Ref]e :<C-u>Ref webdict ej <C-r><C-w>
+nnoremap [Ref]j :<C-u>Ref webdict je <C-r><C-w>
+nnoremap [Ref]a :<C-u>Ref webdict alc <C-r><C-w>
+nnoremap [Ref]t :<C-u>Ref webdict thesaurus <C-r><C-w>
+nnoremap <silent> <expr> K
+    \ ':<C-u>Ref webdict alc ' . <SID>get_cursor_word('\v[a-zA-Z]*') . '<CR>'
+xnoremap <silent> <expr> K
+    \ ':<C-u>Ref webdict alc ' . <SID>get_selected_text() . '<CR>'
+"}}}
 
 " Visualモードでの連続貼り付け
 xnoremap p "0p<CR>
@@ -1362,12 +1372,6 @@ function! s:toggle_folding() "{{{
 endfunction
 "}}}
 
-"}}}
-
-"-------------------------------------------------------------------------------
-" Plugin Mappings:
-"-------------------------------------------------------------------------------
-" {{{
 
 " surround.vim "{{{
 let g:surround_no_mappings = 1
@@ -1402,7 +1406,7 @@ nmap <C-a> <Plug>ToggleN
 imap <C-a> <Plug>ToggleI
 vmap <C-a> <Plug>ToggleV
 
-" operator
+" operator "{{{
 xmap P <Plug>(operator-replace)
 xmap O <Plug>(operator-reverse-lines)
 xmap R <Plug>(operator-reverse-text)
@@ -1410,6 +1414,7 @@ xmap C <Plug>(operator-camelize)
 xmap D <Plug>(operator-decamelize)
 xmap T <Plug>(operator-camelize-toggle)
 xmap S <Plug>(operator-sort)
+"}}}
 
 " vim-fontzoom "{{{
 let g:fontzoom_no_default_key_mappings = 1
@@ -1442,17 +1447,6 @@ function! s:vim_filer_settings()
     "nmap <buffer> q <Plug>(vimfiler_exit)
     "nmap <buffer> Q <Plug>(vimfiler_hide)
 endfunction
-"}}}
-
-" Ref "{{{
-nnoremap [Ref] <Nop>
-nmap [Space]r [Ref]
-nnoremap [Ref]e :<C-u>Ref webdict ej <C-r><C-w>
-nnoremap [Ref]j :<C-u>Ref webdict je <C-r><C-w>
-nnoremap [Ref]a :<C-u>Ref webdict alc <C-r><C-w>
-nnoremap [Ref]t :<C-u>Ref webdict thesaurus <C-r><C-w>
-nnoremap <silent> <expr> K
-    \ ':Ref webdict alc ' . <SID>get_cursor_word('[a-zA-Z]*') . '<CR>'
 "}}}
 
 " VimShell
@@ -1517,7 +1511,6 @@ call submode#map('winsize', 'n', '', '_', '<C-w>_')
 " ToggleCase
 nnoremap <silent> <C-k> :<C-u>call ToggleCase()<CR>
 
-" }}}
 
 "-------------------------------------------------------------------------------
 " Insertmode Mappings:
