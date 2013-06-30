@@ -271,21 +271,104 @@ NeoBundle 'https://bitbucket.org/anyakichi/vim-textobj-xbrackets'
 "}}}
 
 " unite, matchers, and sources "{{{
-NeoBundle 'Shougo/unite.vim'
+" unite.vim "{{{
+NeoBundle 'Shougo/unite.vim', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'commands' : [
+            \ { 'name' : 'Unite', 'complete' : 'customlist,unite#complete_source' },
+            \ 'UniteWithInput',
+            \ 'UniteWithBufferDir',
+            \ 'UniteWithCursorWord',
+        \ ]
+    \ }
+\ } "}}}
 NeoBundle 'basyura/unite-matcher-file-name'
-NeoBundle 'Shougo/unite-session'
-NeoBundle 'thinca/vim-unite-history'
-NeoBundle 'h1mesuke/unite-outline'
-NeoBundle 'tsukkee/unite-tag'
-NeoBundle 'tsukkee/unite-help'
-NeoBundle 'tacroe/unite-mark'
-NeoBundle 'sgur/unite-qf'
-NeoBundle 'choplin/unite-vim_hacks'
-NeoBundle 'ujihisa/unite-colorscheme'
-NeoBundle 'osyo-manga/unite-qfixhowm'
-NeoBundle 'kannokanno/unite-todo'
-NeoBundle 'Shougo/unite-build'
-NeoBundle 'kmnk/vim-unite-giti'
+" unite-session " {{{
+NeoBundle 'Shougo/unite-session', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'unite_sources' : 'session'
+    \ }
+\ } "}}}
+" unite-history "{{{
+NeoBundle 'thinca/vim-unite-history', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'unite_sources' : ['history/command', 'history/search']
+    \ }
+\ } "}}}
+" unite-outline "{{{
+NeoBundle 'h1mesuke/unite-outline', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'unite_sources' : 'outline'
+    \ }
+\ } "}}}
+" unite-tag "{{{
+NeoBundle 'tsukkee/unite-tag', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'unite_sources' : 'tag'
+    \ }
+\ } "}}}
+" unite-help "{{{
+NeoBundle 'tsukkee/unite-help', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'unite_sources' : 'help'
+    \ }
+\ } "}}}
+" unite-mark "{{{
+NeoBundle 'tacroe/unite-mark', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'unite_sources' : 'mark'
+    \ }
+\ } "}}}
+" unite-qf "{{{
+NeoBundle 'sgur/unite-qf', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'unite_sources' : 'qf'
+    \ }
+\ } "}}}
+" unite-colorscheme "{{{
+NeoBundle 'ujihisa/unite-colorscheme', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'unite_sources' : 'colorscheme'
+    \ }
+\ } "}}}
+" unite-qfixhowm "{{{
+NeoBundle 'osyo-manga/unite-qfixhowm', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'unite_sources' : 'qfixhowm'
+    \ }
+\ } "}}}
+" unite-todo "{{{
+NeoBundle 'kannokanno/unite-todo', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'unite_sources' : 'todo'
+    \ }
+\ } "}}}
+" unite-build "{{{
+NeoBundle 'Shougo/unite-build', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'unite_sources' : 'build'
+    \ }
+\ } "}}}
+" unite-giti "{{{
+NeoBundle 'kmnk/vim-unite-giti', {
+    \ 'lazy' : 1,
+    \ 'autoload' : {
+        \ 'unite_sources' : 'giti'
+    \ }
+\ } "}}}
+NeoBundleLazy 'choplin/unite-vim_hacks'
 "}}}
 
 " operator "{{{
@@ -1132,8 +1215,8 @@ endfunction
 "}}}
 
 " set folding marker
-nnoremap z[ A"{{{<ESC>
-nnoremap z] A"}}}<ESC>
+nnoremap z[ A "{{{<ESC>
+nnoremap z] A "}}}<ESC>
 
 " move begin/end of line
 nnoremap gh g0
