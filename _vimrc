@@ -344,13 +344,6 @@ elseif has('win32') && isdirectory($VCINSTALLDIR)
     \ )
 endif
 
-" NERD_commenter
-let s:hooks = neobundle#get_hooks('nerdcommenter')
-function! s:hooks.on_source(bundle)
-    let g:NERDCreateDefaultMappings = 0
-    let g:NERDSpaceDelims = 0
-endfunction
-
 " neocomplete
 let g:neocomplete#enable_at_startup = 1
 let s:hooks = neobundle#get_hooks('neocomplete.vim')
@@ -367,6 +360,17 @@ function! s:hooks.on_source(bundle)
     let g:vimfiler_as_default_explorer = 1
     let g:vimfiler_safe_mode_by_default = 0
 endfunction
+
+" vimshell
+let g:vimshell_user_prompt = 'fnamemodify(getcwd(), '':~'')'
+let g:vimshell_enable_smart_case = 1
+if has('win32') || has('win64')
+    " Display user name on Windows.
+    let g:vimshell_prompt = $USERNAME."% "
+else
+    " Display user name on Linux.
+    let g:vimshell_prompt = $USER."% "
+endif
 
 " Unite設定
 call neobundle#config(
@@ -448,6 +452,13 @@ delfunction s:SetWebDictsFilter
 
 " default site of webdict
 let g:ref_source_webdict_sites.default = 'ej'
+
+" NERD_commenter
+let s:hooks = neobundle#get_hooks('nerdcommenter')
+function! s:hooks.on_source(bundle)
+    let g:NERDCreateDefaultMappings = 0
+    let g:NERDSpaceDelims = 0
+endfunction
 
 " ctrlp.vim
 let g:ctrlp_use_migemo = 1
@@ -1137,6 +1148,14 @@ function! s:smart_foldcloser() "{{{
 endfunction
 "}}}
 
+" move begin/end of line
+nnoremap gh g0
+xnoremap gh g0
+onoremap gh 0
+nnoremap gl g$
+xnoremap gl g$
+onoremap gl $
+
 " all select
 nnoremap ga ggVG
 
@@ -1147,7 +1166,7 @@ xnoremap gr :<C-u>grep <C-r>=<SID>get_selected_text()<CR> *
 " quickhl
 NXmap gm <Plug>(quickhl-toggle)
 NXmap gM <Plug>(quickhl-reset)
-nmap gm <Plug>(quickhl-match)
+"nmap gm <Plug>(quickhl-match)
 
 " count words (:%substitute/\<word\>/&/gn)
 nnoremap gw :<C-u>call <SID>count_words('\<' . expand('<cword>' . '\>'))<CR>
@@ -1206,14 +1225,6 @@ nmap w <Plug>(textobj-wiw-n)
 nmap b <Plug>(textobj-wiw-p)
 nmap e <Plug>(textobj-wiw-N)
 nmap ge <Plug>(textobj-wiw-P)
-
-" move begin/end of line
-nnoremap <C-h> g0
-xnoremap <C-h> g0
-onoremap <C-h> 0
-nnoremap <C-l> g$
-xnoremap <C-l> g$
-onoremap <C-l> $
 
 " move bracket pair
 map <C-j> %
@@ -1390,7 +1401,7 @@ function! s:define_surround_keymappings()
     silent! nunmap <buffer> yS
     silent! xunmap <buffer> s
     silent! xunmap <buffer> S
-    silent! nunmap <buffer> yt
+    silent! nunmap <buffer> yp
   else
     nmap <buffer> ds <Plug>Dsurround
     nmap <buffer> cs <Plug>Csurround
@@ -1398,7 +1409,7 @@ function! s:define_surround_keymappings()
     nmap <buffer> yS <Plug>YSurround
     xmap <buffer> s <Plug>Vsurround
     xmap <buffer> S <Plug>VSurround
-    nmap <buffer> yt <Plug>Ysurroundiw
+    nmap <buffer> yp <Plug>Ysurroundiw
   endif
 endfunction "}}}
 
@@ -1457,7 +1468,7 @@ endfunction
 " VimShell
 nnoremap <silent> [Space]s :<C-u>VimShell<CR>
 
-" Unite関連
+" Unite関連 "{{{
 nnoremap <silent> [Space]f :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
 nnoremap <silent> [Space]m :<C-u>Unite -buffer-name=files file_mru bookmark<CR>
 nnoremap <silent> [Space]b :<C-u>Unite -buffer-name=buffers buffer<CR>
@@ -1471,7 +1482,6 @@ nnoremap <silent> [Space]x :<C-u>Unite file_point<CR>
 nnoremap <silent> [Space]t :<C-u>Unite -buffer-name=tabs tab:no_current<CR>
 nnoremap <silent> [Space]y :<C-u>Unite history/yank<CR>
 nnoremap <silent> [Space]] :<C-u>UniteWithCursorWord -buffer-name=tag tag tag/include<CR>
-
 nnoremap [Unite] <Nop>
 nmap [Space]u   [Unite]
 nmap U          [Unite]
@@ -1486,6 +1496,7 @@ nnoremap <silent> [Unite]v :<C-u>Unite -auto-preview colorscheme<CR>
 nnoremap <silent> [Unite]c :<C-u>Unite history/command command<CR>
 nnoremap <silent> [Unite]q :<C-u>Unite qfixhowm<CR>
 nnoremap <silent> [Unite]t :<C-u>UniteWithCursorWord -buffer-name=tag tag tag/include<CR>
+"}}}
 
 " neocomplete
 nmap [Space]nc [Neocom]
@@ -1502,7 +1513,7 @@ call submode#map('winmove', 'n', 'r', 'k', '<Plug>(winmove-up)')
 call submode#map('winmove', 'n', 'r', 'h', '<Plug>(winmove-left)')
 call submode#map('winmove', 'n', 'r', 'l', '<Plug>(winmove-right)')
 
-" ウィンドウサイズ変更
+" resize window
 call submode#enter_with('winsize', 'n', '', '<C-w>+', '<C-w>+')
 call submode#enter_with('winsize', 'n', '', '<C-w>-', '<C-w>-')
 call submode#enter_with('winsize', 'n', '', '<C-w>>', '<C-w>>')
@@ -1523,7 +1534,7 @@ nnoremap <silent> <C-k> :<C-u>call ToggleCase()<CR>
 " {{{
 
 " 補完
-inoremap <expr> <CR> pumvisible() ? neocomplete#smart_close_popup() : '<CR>'
+inoremap <expr> <CR> pumvisible() ? neocomplete#close_popup() : '<CR>'
 inoremap <expr> <C-y> neocomplete#close_popup()
 inoremap <expr> <C-e> neocomplete#cancel_popup()
 inoremap <expr> <C-g> neocomplete#undo_completion()
