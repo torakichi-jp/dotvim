@@ -883,6 +883,19 @@ function! s:NXmap(args, noremaped)
     execute 'x' . remap_str . 'map ' . a:args
 endfunction
 
+let s:map_option_default = {
+    \ 'remap' : 1,
+    \ 'buffer' : 0,
+    \ 'silent' : 0,
+    \ 'script' : 0,
+    \ 'expr' : 0,
+    \ 'unique' : 0,
+\ }
+function! s:map(mode, cmd, option)
+    " key map definition
+endfunction
+unlet s:map_option_default
+
 " セッション保存してリスタート
 command! -bar RestartWithSession
     \ let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
