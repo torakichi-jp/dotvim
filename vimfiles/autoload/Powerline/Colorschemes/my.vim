@@ -54,15 +54,15 @@ let g:Powerline#Colorschemes#my#colorscheme = Pl#Colorscheme#Init([
     \ }),
   \
   \ Pl#Hi#Segments(['mode_indicator', 'filename'], {
-    \ 'i': ['white', 'brightorange', ['bold']],
+    \ 'i': ['white', 'mediumred', ['bold']],
     \ 'n': ['white', 'darkestpurple', ['bold']],
     \ 'v': ['white', 'darkestgreen', ['bold']],
-    \ 'r': ['white', 'mediumred', ['bold']],
+    \ 'r': ['white', 'brightestorange', ['bold']],
     \ 's': ['white', 'gray0', ['bold']],
     \ }),
   \
   \ Pl#Hi#Segments(['fileinfo'], {
-    \ 'n': ['black', 'white', ['bold']],
+    \ 'n': ['darkestpurple', 'white', ['bold']],
     \ 'N': ['gray0', 'gray8'],
     \ }),
   \
@@ -82,7 +82,7 @@ let g:Powerline#Colorschemes#my#colorscheme = Pl#Colorscheme#Init([
     \ }),
   \
   \ Pl#Hi#Segments(['fileinfo.flags'], {
-    \ 'n': ['brightred', ['bold']],
+    \ 'n': ['mediumred', ['bold']],
     \ 'N': ['gray0'],
     \ }),
   \
