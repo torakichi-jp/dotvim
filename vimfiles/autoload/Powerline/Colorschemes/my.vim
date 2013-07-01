@@ -54,10 +54,10 @@ let g:Powerline#Colorschemes#my#colorscheme = Pl#Colorscheme#Init([
     \ }),
   \
   \ Pl#Hi#Segments(['mode_indicator', 'filename'], {
-    \ 'i': ['white', 'mediumred', ['bold']],
+    \ 'i': ['white', 'brightred', ['bold']],
     \ 'n': ['white', 'darkestpurple', ['bold']],
-    \ 'v': ['white', 'darkestgreen', ['bold']],
-    \ 'r': ['white', 'brightestorange', ['bold']],
+    \ 'v': ['white', 'darkgreen', ['bold']],
+    \ 'r': ['white', 'brightorange', ['bold']],
     \ 's': ['white', 'gray0', ['bold']],
     \ }),
   \

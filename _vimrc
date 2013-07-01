@@ -229,7 +229,13 @@ NeoBundle 'basyura/TweetVim', {
         \ 'basyura/twibill.vim', 'tyru/open-browser.vim',
         \ 'basyura/bitly.vim', 'mattn/favstar-vim',
     \ ],
-    \ 'autoload' : { 'commnads' : 'TweetVimHomeTimeline' },
+    \ 'autoload' : {
+        \ 'commnads' : [
+            \ 'TweetVimHomeTimeline',
+            \ 'TweetVimCommandSay',
+            \ 'TweetVimSay',
+        \ ]
+    \ },
 \ } "}}}
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'rhysd/accelerated-jk'
