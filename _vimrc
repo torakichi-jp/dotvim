@@ -230,7 +230,7 @@ NeoBundle 'basyura/TweetVim', {
         \ 'basyura/bitly.vim', 'mattn/favstar-vim',
     \ ],
     \ 'autoload' : {
-        \ 'commnads' : [
+        \ 'commands' : [
             \ 'TweetVimHomeTimeline',
             \ 'TweetVimCommandSay',
             \ 'TweetVimSay',
