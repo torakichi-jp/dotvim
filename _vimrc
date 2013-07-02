@@ -1564,13 +1564,13 @@ nnoremap <silent> [Space]s :<C-u>VimShell<CR>
 
 " Unite関連 "{{{
 nnoremap <silent> [Space]f :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
-nnoremap <silent> [Space]m :<C-u>Unite -buffer-name=files file_mru bookmark<CR>
+nnoremap <silent> [Space]m :<C-u>Unite -buffer-name=files bookmark file_mru directory_mru<CR>
 nnoremap <silent> [Space]b :<C-u>Unite -buffer-name=buffers buffer<CR>
 nnoremap <silent> [Space]/ :<C-u>Unite -buffer-name=search -start-insert line/fast<CR>
-nnoremap <silent> [Space]g/ :<C-u>Unite -buffer-name=search -start-insert line_migemo<CR>
 nnoremap <silent> [Space]* :<C-u>UniteWithCursorWord -buffer-name=search line/fast<CR>
 nnoremap <silent> [Space]h :<C-u>UniteWithInput -buffer-name=help -resume help<CR>
 nnoremap <silent> [Space]q :<C-u>Unite -no-quit qf<CR>
+nnoremap <silent> [Space]o :<C-u>Unite -resume output<CR>
 nnoremap <silent> [Space]j :<C-u>Unite change jump<CR>
 nnoremap <silent> [Space]x :<C-u>Unite file_point<CR>
 nnoremap <silent> [Space]t :<C-u>Unite -buffer-name=tabs tab:no_current<CR>
