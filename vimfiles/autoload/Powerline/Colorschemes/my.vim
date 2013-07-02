@@ -62,12 +62,12 @@ let g:Powerline#Colorschemes#my#colorscheme = Pl#Colorscheme#Init([
     \ }),
   \
   \ Pl#Hi#Segments(['fileinfo'], {
-    \ 'n': ['darkestpurple', 'white', ['bold']],
+    \ 'n': ['black', 'white', ['bold']],
     \ 'N': ['gray0', 'gray8'],
     \ }),
   \
   \ Pl#Hi#Segments(['branch', 'scrollpercent', 'raw', 'filesize'], {
-    \ 'n': ['black', 'mediumpurple'],
+    \ 'n': ['black', 'darkblue'],
     \ 'N': ['gray0', 'gray6'],
     \ }),
   \
@@ -87,11 +87,11 @@ let g:Powerline#Colorschemes#my#colorscheme = Pl#Colorscheme#Init([
     \ }),
   \
   \ Pl#Hi#Segments(['currenttag', 'fileformat', 'fileencoding', 'pwd', 'filetype', 'charcode', 'currhigroup', 'unite:status'], {
-    \ 'n': ['white', 'darkestpurple'],
+    \ 'n': ['white', 'darkestcyan'],
     \ }),
   \
   \ Pl#Hi#Segments(['lineinfo'], {
-    \ 'n': ['gray2', 'brightpurple'],
+    \ 'n': ['gray2', 'mediumcyan'],
     \ 'N': ['gray2', 'gray9'],
     \ }),
   \
