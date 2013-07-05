@@ -1075,7 +1075,7 @@ function! s:get_cursor_word(pat) "{{{
     return ''
 endfunction "}}}
 
-" get word selected for visual mode
+" get word selected on visual mode
 function! s:get_selected_text() "{{{
     let save_z = getreg('z', 1)
     let save_z_type = getregtype('z')
@@ -1196,10 +1196,10 @@ nnoremap <C-x><C-c> ZQ
 " filetype insertion
 nnoremap <C-x><C-f> :<C-u>setfiletype<Space>
 
-" option show
+" show option
 nnoremap <C-x><C-o> :<C-u>ShowOption<Space>
 
-" buffer switch
+" switch buffer
 nnoremap <C-x><C-n> :<C-u>bnext<CR>
 nnoremap <C-x><C-p> :<C-u>bprevious<CR>
 
@@ -1348,17 +1348,17 @@ map <C-j> %
 nnoremap + <C-a>
 nnoremap - <C-x>
 
-" cwordでヘルプを引く
+" view the help for <cword>
 nnoremap <silent> <F1> :<C-u>help <C-r><C-w><CR>
 xnoremap <silent> <F1> :<C-u>help <C-r>=<SID>get_selected_text()<CR>
 
-" バッファのファイルがある場所をカレントディレクトリにする
+" change directory at the buffer file
 nnoremap <F2> :<C-u>cd %:p:h<Bar>echo 'cd :' expand('%:p:h')<CR>
 
-" バッファのファイルがある場所を表示
+" view directory at the buffer file
 nnoremap <F3> :<C-u>echohl StatusLine<Bar>echo expand('%:p:h')<Bar>echohl None<CR>
 
-" タグリスト
+" taglist
 nnoremap <silent> <F4> :<C-u>TlistToggle<CR>
 
 " reload screen
@@ -1440,14 +1440,14 @@ nnoremap            [Tab]8  8gt
 nnoremap            [Tab]9  9gt
 "}}}
 
-" 起動時設定を開く
+" open .vimrc or .gvimrc
 nnoremap <silent> [Space]v :<C-u>edit $MYVIMRC<CR>
 nnoremap <silent> [Space]gv :<C-u>edit $MYGVIMRC<CR>
 
-" 現在のバッファを読み込み
+" source current buffer file
 nnoremap [Space]<CR> :<C-u>source %<CR>
 
-" オプション切り替え "{{{
+" toggle options "{{{
 nnoremap [Toggle] <Nop>
 nmap T [Toggle]
 nnoremap [Toggle]w :<C-u>call <SID>toggle_local_option('wrap')<CR>
@@ -1470,11 +1470,11 @@ nnoremap [Toggle]f :<C-u>call <SID>toggle_folding()<CR>
 nmap [Toggle]F [Toggle]f
 "}}}
 
-" タブ展開切り替え
+" toggle to expand tab
 nnoremap <silent> [Toggle]t :<C-u>setlocal expandtab! \| %retab!<CR>
 nmap [Toggle]T [Toggle]t
 
-" オプションの切り替えとその表示
+" toggle option and view it
 function! s:toggle_local_option(opt) "{{{
     if exists('&' . a:opt)
         " トグルしてその値を表示
@@ -1486,7 +1486,7 @@ function! s:toggle_local_option(opt) "{{{
     endif
 endfunction "}}}
 
-" フォールディング切り替え
+" toggle folding
 nnoremap zi :<C-u>call <SID>toggle_folding()<CR>
 function! s:toggle_folding() "{{{
     if <SID>toggle_local_option('foldenable')
@@ -1567,8 +1567,8 @@ nnoremap <silent> [Space]e :<C-u>VimFilerBufferDir
     \ -buffer-name=explorer -toggle -split -horizontal -no-quit -winheight=10<CR>
 autocmd MyAutocmd FileType vimfiler call <SID>vim_filer_settings()
 function! s:vim_filer_settings()
-    " qとQのキーマップ入れ替え
-    " （qでバッファに残さないように終了する）
+    " exchange keymaps for 'q' and 'Q'
+    " ('q' quit vimfiler not to remain on buffer)
     "nmap <buffer> q <Plug>(vimfiler_exit)
     "nmap <buffer> Q <Plug>(vimfiler_hide)
 endfunction
@@ -1577,7 +1577,7 @@ endfunction
 " VimShell
 nnoremap <silent> [Space]s :<C-u>VimShell<CR>
 
-" Unite関連 "{{{
+" Unite "{{{
 nnoremap <silent> [Space]f :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
 nnoremap <silent> [Space]m :<C-u>Unite -buffer-name=files bookmark file_mru directory_mru<CR>
 nnoremap <silent> [Space]b :<C-u>Unite -buffer-name=buffers buffer<CR>
