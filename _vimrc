@@ -440,6 +440,8 @@ let s:hooks = neobundle#get_hooks('neocomplete.vim')
 function! s:hooks.on_source(bundle)
     let g:neocomplete#enable_auto_select = 1
     "let g:neocomplete#disable_auto_complete = 1
+    "let g:neocomplete#enable_fuzzy_completion = 0
+    let g:neocomplete#enable_refresh_always = 0
     let g:neocomplete#auto_completion_start_length = 3
     let g:neocomplete#use_vimproc = 1
 endfunction
@@ -452,81 +454,91 @@ function! s:hooks.on_source(bundle)
 endfunction
 
 " vimshell
-let g:vimshell_user_prompt = 'fnamemodify(getcwd(), '':~'')'
-let g:vimshell_enable_smart_case = 1
-if has('win32') || has('win64')
-    " Display user name on Windows.
-    let g:vimshell_prompt = $USERNAME."% "
-else
-    " Display user name on Linux.
-    let g:vimshell_prompt = $USER."% "
-endif
+let s:hooks = neobundle#get_hooks('vimshell')
+function! s:hooks.on_source(bundle)
+    let g:vimshell_user_prompt = 'fnamemodify(getcwd(), '':~'')'
+    let g:vimshell_enable_smart_case = 1
+    if s:is_windows
+        " Display user name on Windows.
+        let g:vimshell_prompt = $USERNAME."% "
+    else
+        " Display user name on Linux.
+        let g:vimshell_prompt = $USER."% "
+    endif
+endfunction
 
-" Unite設定
-let g:unite_winheight = 10
-let g:unite_enable_start_insert = 0
-let g:unite_force_overwrite_statusline = 0
+" Unite
+let s:hooks = neobundle#get_hooks('unite.vim')
+function! s:hooks.on_source(bundle)
+    let g:unite_winheight = 10
+    let g:unite_enable_start_insert = 0
+    let g:unite_force_overwrite_statusline = 0
 
-" unite-menu
-if !exists('g:unite_source_menu_menus')
-    let g:unite_source_menu_menus = {}
-endif
+    " unite-menu
+    if !exists('g:unite_source_menu_menus')
+        let g:unite_source_menu_menus = {}
+    endif
 
-" add encoding items into unite-menu
-let g:unite_source_menu_menus.encoding = {
-    \'description' : 'Encoding',
-\ }
-let g:unite_source_menu_menus.encoding.command_candidates = [
-    \ ['UTF-8',     'Utf8'],
-    \ ['SHIFT-JIS', 'Sjis'],
-    \ ['EUC-JP',    'Euc'],
-    \ ['JIS',       'Jis'],
-    \ ['Unicode',   'Utf16'],
-    \ ['UCS-2',     'Utf16be'],
-\ ]
-
-" vim-ref
-let g:ref_use_vimproc = 1
-if s:is_windows
-    "let g:ref_source_webdict_encoding = 'EUC-JP'
-    let g:ref_source_webdict_encoding = 'UTF-8'
-endif
-
-" set webdict sites
-let g:ref_source_webdict_sites = {
-    \ 'je'          : {'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',},
-    \ 'ej'          : {'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',},
-    \ 'wiki'        : {'url': 'http://ja.wikipedia.org/wiki/%s',},
-    \ 'alc'         : {'url': 'http://eow.alc.co.jp/search?q=%s',},
-    \ 'weblio'      : {'url': 'http://www.weblio.jp/content/%s',},
-    \ 'thesaurus'   : {'url': 'http://thesaurus.weblio.jp/content/%s',},
-    \ 'wiktionary'  : {'url': 'http://ja.wiktionary.org/wiki/%s',},
-\ }
-
-" set filter for each sites
-function! s:SetWebDictsFilter()
-    let ref_webdict_filtering_lines = [
-        \ ['je',            15],
-        \ ['ej',            15],
-        \ ['wiki',          17],
-        \ ['alc',           38],
-        \ ['weblio',        17],
-        \ ['thesaurus',     28],
-        \ ['wiktionary',    17],
+    " add encoding items into unite-menu
+    let g:unite_source_menu_menus.encoding = {
+        \'description' : 'Encoding',
+    \ }
+    let g:unite_source_menu_menus.encoding.command_candidates = [
+        \ ['UTF-8',     'Utf8'],
+        \ ['SHIFT-JIS', 'Sjis'],
+        \ ['EUC-JP',    'Euc'],
+        \ ['JIS',       'Jis'],
+        \ ['Unicode',   'Utf16'],
+        \ ['UCS-2',     'Utf16be'],
     \ ]
 
-    for item in ref_webdict_filtering_lines
-        let g:ref_source_webdict_sites[item[0]].filtering_lines = item[1]
-        function! g:ref_source_webdict_sites[item[0]].filter(output) dict
-            return join(split(a:output, "\n")[self.filtering_lines :], "\n")
-        endfunction
-    endfor
 endfunction
-call <SID>SetWebDictsFilter()
-delfunction s:SetWebDictsFilter
 
-" default site of webdict
-let g:ref_source_webdict_sites.default = 'ej'
+" vim-ref
+let s:hooks = neobundle#get_hooks('vim-ref')
+function! s:hooks.on_source(bundle)
+    let g:ref_use_vimproc = 1
+    if s:is_windows
+        "let g:ref_source_webdict_encoding = 'EUC-JP'
+        let g:ref_source_webdict_encoding = 'UTF-8'
+    endif
+
+    " set webdict sites
+    let g:ref_source_webdict_sites = {
+        \ 'je'          : {'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',},
+        \ 'ej'          : {'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',},
+        \ 'wiki'        : {'url': 'http://ja.wikipedia.org/wiki/%s',},
+        \ 'alc'         : {'url': 'http://eow.alc.co.jp/search?q=%s',},
+        \ 'weblio'      : {'url': 'http://www.weblio.jp/content/%s',},
+        \ 'thesaurus'   : {'url': 'http://thesaurus.weblio.jp/content/%s',},
+        \ 'wiktionary'  : {'url': 'http://ja.wiktionary.org/wiki/%s',},
+    \ }
+
+    " set filter for each sites
+    function! s:SetWebDictsFilter()
+        let ref_webdict_filtering_lines = [
+            \ ['je',            15],
+            \ ['ej',            15],
+            \ ['wiki',          17],
+            \ ['alc',           38],
+            \ ['weblio',        17],
+            \ ['thesaurus',     28],
+            \ ['wiktionary',    17],
+        \ ]
+
+        for item in ref_webdict_filtering_lines
+            let g:ref_source_webdict_sites[item[0]].filtering_lines = item[1]
+            function! g:ref_source_webdict_sites[item[0]].filter(output) dict
+                return join(split(a:output, "\n")[self.filtering_lines :], "\n")
+            endfunction
+        endfor
+    endfunction
+    call <SID>SetWebDictsFilter()
+    delfunction s:SetWebDictsFilter
+
+    " default site of webdict
+    let g:ref_source_webdict_sites.default = 'ej'
+endfunction
 
 " NERD_commenter
 let s:hooks = neobundle#get_hooks('nerdcommenter')
@@ -536,17 +548,20 @@ function! s:hooks.on_source(bundle)
 endfunction
 
 " ctrlp.vim
-let g:ctrlp_use_migemo = 1
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_mruf_max = 500
-let g:ctrlp_jump_to_buffer = 2
-let g:ctrlp_extensions = ['cmdline', 'yankring', 'menu']
+let s:hooks = neobundle#get_hooks('ctrlp.vim')
+function! s:hooks.on_source(bundle)
+    let g:ctrlp_use_migemo = 1
+    let g:ctrlp_clear_cache_on_exit = 0
+    let g:ctrlp_mruf_max = 500
+    let g:ctrlp_jump_to_buffer = 2
+    let g:ctrlp_extensions = ['cmdline', 'yankring', 'menu']
+endfunction
 
 " powerline
 if s:is_gui || !s:is_windows
     NeoBundleSource vim-powerline
     NeoBundleSource vim-powerline-unite-theme
-    " powerline setting is in dotvim/vimfiles/plugin/powerline-setting.vim
+    " powerline settings is in dotvim/vimfiles/plugin/autoload/Powerline/
 endif
 let s:hooks = neobundle#get_hooks('vim-powerline')
 function! s:hooks.on_source(bundle)
