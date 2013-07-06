@@ -1177,6 +1177,8 @@ nnoremap    [WSpace]        <Nop>
 xnoremap    [WSpace]        <Nop>
 nnoremap    <C-x>           <Nop>
 xnoremap    <C-x>           <Nop>
+nnoremap    <C-g>           <Nop>
+xnoremap    <C-g>           <Nop>
 "}}}
 
 " has disabled
@@ -1267,6 +1269,10 @@ onoremap gl $
 " all select
 nnoremap ga ggVG
 
+" clipboard register
+nnoremap gc "*
+xnoremap gc "*
+
 " grep
 nnoremap gr :<C-u>grep <C-r><C-w> *
 xnoremap gr :<C-u>grep <C-r>=<SID>get_selected_text()<CR> *
@@ -1293,6 +1299,9 @@ nnoremap <silent> gs
     \ :<C-u>call openbrowser#smart_search(<SID>get_cursor_word('\v\w*'))<CR>
 xnoremap <silent> gs
     \ :<C-u>call openbrowser#smart_search(<SID>get_selected_text())<CR>
+
+" ToggleCase
+nnoremap <silent> <C-g>c :<C-u>call ToggleCase()<CR>
 
 " YをDなどと同じような動作にする
 nnoremap Y y$
@@ -1334,15 +1343,21 @@ nmap b <Plug>(textobj-wiw-p)
 nmap e <Plug>(textobj-wiw-N)
 nmap ge <Plug>(textobj-wiw-P)
 
-" clipboard register
-nnoremap <C-@> "*
-xnoremap <C-@> "*
+" search <cword> with split window
+nnoremap <C-w>*  <C-w>s*
+nnoremap <C-w>#  <C-w>s#
 
-" 候補が複数ある場合は一度表示する
+" preview tags if it is more candidates
 nnoremap <C-]> g<C-]>
 
-" move match pair
+" move to match pair
 map <C-j> %
+
+" <C-k> で <C-t> と逆の動作 (タグスタックの新しいエントリにジャンプ)
+nnoremap <C-k>  :<C-u>tag<CR>
+" ]t, [t でもタグを行き来する
+nnoremap ]t  :<C-u>tag<CR>
+nnoremap [t  :<C-u>pop<CR>
 
 " increment/decrement number
 nnoremap + <C-a>
@@ -1364,10 +1379,10 @@ nnoremap <silent> <F4> :<C-u>TlistToggle<CR>
 " reload screen
 nnoremap <F5> <C-l>
 
-" カウント指定があれば<CR>で行移動
-" なければ再描画＆検索ハイライトオフ
-noremap <silent> <CR> :<C-u>call <SID>CrExec()<CR>
-function! s:CrExec() "{{{
+" go to line if count is exist
+" else redraw screen
+noremap <silent> <CR> :<C-u>call <SID>cr_behavior()<CR>
+function! s:cr_behavior() "{{{
     if v:count == 0
         redraw!
         if exists(':Nohlsearch')
@@ -1376,7 +1391,7 @@ function! s:CrExec() "{{{
             nohlsearch
         endif
     else
-        execute 'normal! ' . string(v:count) . 'G'
+        execute 'normal! ' . string(v:count) . 'Gzz'
     endif
     return ""
 endfunction "}}}
@@ -1415,29 +1430,29 @@ nnoremap [Mark]k [`
 "}}}
 
 " タブページ用マップ "{{{
-nnoremap [Tab] <Nop>
-nmap t [Tab]
-nnoremap            [Tab]l  gt
-nnoremap            [Tab]h  gT
-nnoremap            [Tab]e  :<C-u>tabedit<Space>
-nnoremap <silent>   [Tab]n  :<C-u>tabedit<CR>
-nnoremap <silent>   [Tab]q  :<C-u>tabclose<CR>
-nnoremap <silent>   [Tab]c  :<C-u>tabclose<CR>
-nnoremap <silent>   [Tab]o  :<C-u>tabonly<CR>
-nnoremap <silent>   [Tab]t  :<C-u>tab stag <C-r><C-w><CR>
-nnoremap <silent>   [Tab]r  :<C-u>TabRecent<CR>
-nnoremap            [Tab]w  <C-w>T
-nnoremap <silent>   [Tab]L  :<C-u>TabMoveNext<CR>
-nnoremap <silent>   [Tab]H  :<C-u>TabMovePrev<CR>
-nnoremap            [Tab]1  1gt
-nnoremap            [Tab]2  2gt
-nnoremap            [Tab]3  3gt
-nnoremap            [Tab]4  4gt
-nnoremap            [Tab]5  5gt
-nnoremap            [Tab]6  6gt
-nnoremap            [Tab]7  7gt
-nnoremap            [Tab]8  8gt
-nnoremap            [Tab]9  9gt
+nnoremap <Plug>[Tab] <Nop>
+nmap t <Plug>[Tab]
+nnoremap            <Plug>[Tab]l  gt
+nnoremap            <Plug>[Tab]h  gT
+nnoremap            <Plug>[Tab]e  :<C-u>tabedit<Space>
+nnoremap <silent>   <Plug>[Tab]n  :<C-u>tabedit<CR>
+nnoremap <silent>   <Plug>[Tab]q  :<C-u>tabclose<CR>
+nnoremap <silent>   <Plug>[Tab]c  :<C-u>tabclose<CR>
+nnoremap <silent>   <Plug>[Tab]o  :<C-u>tabonly<CR>
+nnoremap <silent>   <Plug>[Tab]t  :<C-u>tab stag <C-r><C-w><CR>
+nnoremap <silent>   <Plug>[Tab]r  :<C-u>TabRecent<CR>
+nnoremap            <Plug>[Tab]w  <C-w>T
+nnoremap <silent>   <Plug>[Tab]L  :<C-u>TabMoveNext<CR>
+nnoremap <silent>   <Plug>[Tab]H  :<C-u>TabMovePrev<CR>
+nnoremap            <Plug>[Tab]1  1gt
+nnoremap            <Plug>[Tab]2  2gt
+nnoremap            <Plug>[Tab]3  3gt
+nnoremap            <Plug>[Tab]4  4gt
+nnoremap            <Plug>[Tab]5  5gt
+nnoremap            <Plug>[Tab]6  6gt
+nnoremap            <Plug>[Tab]7  7gt
+nnoremap            <Plug>[Tab]8  8gt
+nnoremap            <Plug>[Tab]9  9gt
 "}}}
 
 " open .vimrc or .gvimrc
@@ -1485,18 +1500,6 @@ function! s:toggle_local_option(opt) "{{{
         return 0
     endif
 endfunction "}}}
-
-" toggle folding
-nnoremap zi :<C-u>call <SID>toggle_folding()<CR>
-function! s:toggle_folding() "{{{
-    if <SID>toggle_local_option('foldenable')
-        setlocal foldcolumn=5
-    else
-        setlocal foldcolumn=0
-    endif
-endfunction
-"}}}
-
 
 " surround.vim "{{{
 let g:surround_no_mappings = 1
@@ -1632,9 +1635,6 @@ call submode#map('winsize', 'n', '', '<', '<C-w><')
 call submode#map('winsize', 'n', '', '+', '<C-w>+')
 call submode#map('winsize', 'n', '', '-', '<C-w>-')
 call submode#map('winsize', 'n', '', '_', '<C-w>_')
-
-" ToggleCase
-nnoremap <silent> <C-k> :<C-u>call ToggleCase()<CR>
 
 
 "-------------------------------------------------------------------------------
