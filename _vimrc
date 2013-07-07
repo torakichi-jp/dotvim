@@ -537,7 +537,7 @@ function! s:hooks.on_source(bundle)
     delfunction s:SetWebDictsFilter
 
     " default site of webdict
-    let g:ref_source_webdict_sites.default = 'ej'
+    let g:ref_source_webdict_sites.default = 'alc'
 endfunction
 
 " NERD_commenter
@@ -713,17 +713,18 @@ set previewheight=5             " height of preview window
 set shortmess& shortmess+=I     " no launch message
 "set showbreak=>\               " 折り返し行頭の文字列（最後の空白に注意）
 "set cpoptions+=n               " 折り返し行を行番号列から表示
-set cmdwinheight=5              " コマンドラインウィンドウの高さ
-set showmatch                   " 対応括弧にジャンプ
-set matchtime=0                 " 対応括弧にジャンプする時間
-set virtualedit+=block          " ビジュアル矩形モードで仮想編集
-set cinoptions=:0,l1,g0,m1      " C/C++インデントオプション
-set matchpairs& matchpairs+=<:> " 括弧ペアに<>を加える
-set winaltkeys=no               " GUIメニューのためにAltキーを使わない
-set path+=;/                    " 親ディレクトリも辿る
-set tags+=./tags;,./**/tags     " タグファイル検索パス
+set cmdwinheight=5              " height of cmdwindow
+set showmatch                   " jump to match pair temporarily
+set matchtime=0                 " times to jump match pair
+set virtualedit+=block          " virtual edit for visual block mode only
+set cinoptions=:0,l1,g0,m1      " C/C++ indent option
+set matchpairs& matchpairs+=<:> " add pair that is <>
+set winaltkeys=no               " do not use alt keys for GUI menu
+set path+=;/                    " file path follows parent directory
+set tags+=./tags;,./**/tags     " search path of tag files
 set complete-=it                " include,tagを補完検索対象から除外
-set completeopt=menu,preview,longest    " 補完オプション
+set completeopt=menu            " option of completion
+set showfulltag                 " show tag patter when tag completion
 set wildmenu                    " 拡張コマンドライン補完を有効
 set wildmode=longest,full       " コマンドライン補完最長一致
 set viminfo& viminfo+=/0        " 検索履歴をviminfoに記録しない
@@ -732,7 +733,7 @@ set nostartofline               " 縦移動で、できるだけ列を維持す�
 set timeout                     " マップ、キーコードで一定時間待つ
 set timeoutlen=3000             " マップ、キーコードの待ち時間(ms)
 set selectmode=                 " セレクトモードを使わない
-set sidescroll=1                " 水平スクロールの刻み幅
+set sidescroll=1                " step of horizontal scroll
 set sidescrolloff=1             " 水平スクロールでカーソル周辺の表示文字数
 set list                        " 不可視文字の表示設定
 set listchars=tab:>-,trail:_,extends:>,precedes:<
