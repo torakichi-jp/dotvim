@@ -240,6 +240,7 @@ NeoBundle 'basyura/TweetVim', {
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'rhysd/accelerated-jk'
 NeoBundle 'tanabe/ToggleCase-vim'
+NeoBundle 'rking/ag.vim'
 " surround "{{{
 NeoBundle 'anyakichi/vim-surround', {
     \ 'lazy' : 1,
