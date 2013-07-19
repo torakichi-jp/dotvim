@@ -1100,8 +1100,8 @@ endfunction "}}}
 augroup MyAutocmd
 
     " 81文字目以降に線を引く
-    autocmd FileType * call <SID>set_colorcolumn(81)
-    autocmd VimResized * call <SID>set_colorcolumn(81)
+    "autocmd FileType * call <SID>set_colorcolumn(81)
+    "autocmd VimResized * call <SID>set_colorcolumn(81)
     function! s:set_colorcolumn(line_col) "{{{
         if &wrap
             if &columns > a:line_col
@@ -1272,12 +1272,12 @@ onoremap gl $
 nnoremap ga ggVG
 
 " clipboard register
-nnoremap gc "*
-xnoremap gc "*
+nnoremap X "*
+xnoremap X "*
 
 " grep
-nnoremap gr :<C-u>grep <C-r><C-w> *
-xnoremap gr :<C-u>grep <C-r>=<SID>get_selected_text()<CR> *
+nnoremap gr :<C-u>Ag <C-r><C-w> *
+xnoremap gr :<C-u>Ag <C-r>=<SID>get_selected_text()<CR> *
 
 " quickhl
 NXmap gm <Plug>(quickhl-toggle)
