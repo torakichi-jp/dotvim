@@ -209,6 +209,7 @@ NeoBundle 'kana/vim-submode'
 NeoBundle 'dannyob/quickfixstatus'
 NeoBundle 'jceb/vim-hier'
 NeoBundle 'deris/vim-rengbang'
+NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'osyo-manga/vim-jplus'
 NeoBundle 'LeafCage/foldCC'
 NeoBundle 'tpope/vim-capslock', {'lazy' : 1, 'autoload' : {'insert' : 1}}
@@ -1255,6 +1256,13 @@ function! s:smart_foldcloser() "{{{
     "norm! zM
 endfunction
 "}}}
+
+" anzu.vim
+let g:anzu_search_limit = 500
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-sharp-with-echo)
 
 " set folding marker
 nnoremap z[ A "{{{<ESC>
