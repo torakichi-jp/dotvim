@@ -188,6 +188,7 @@ NeoBundle 'thinca/vim-quickrun', {
 NeoBundle 'thinca/vim-editvar'
 NeoBundle 'thinca/vim-localrc'
 NeoBundleLazy 'thinca/vim-singleton'
+NeoBundle 'koron/codic-vim'
 NeoBundle 'mattn/calendar-vim'
 NeoBundle 'mattn/excitetranslate-vim'
 NeoBundle 'mattn/wwwrenderer-vim'
@@ -199,6 +200,7 @@ NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'tyru/open-browser-github.vim'
 NeoBundle 'tyru/winmove.vim'
 NeoBundle 'kien/ctrlp.vim'
+"NeoBundle 'ynkdir/vim-guess'
 NeoBundle 'sgur/ctrlp-extensions.vim'
 NeoBundle 'chrismetcalf/vim-taglist'
 NeoBundle 'taku-o/vim-toggle'
@@ -218,11 +220,13 @@ NeoBundle 'gregsexton/VimCalc'
 NeoBundle 't9md/vim-quickhl'
 NeoBundle 'fuenor/qfixhowm'
 NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundleLazy 'Lokaltog/vim-powerline'
 NeoBundleLazy 'osyo-manga/vim-powerline-unite-theme'
 NeoBundleLazy 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'h1mesuke/vim-alignta'
+NeoBundle 'daisuzu/translategoogle.vim'
 " Tweetvim "{{{
 NeoBundle 'basyura/TweetVim', {
     \ 'lazy' : 1,
@@ -256,7 +260,6 @@ NeoBundle 'anyakichi/vim-surround', {
 
 NeoBundle 'Colour-Sampler-Pack'
 NeoBundle 'SingleCompile'
-NeoBundle 'ack.vim'
 NeoBundle 'sudo.vim'
 NeoBundleLazy 'colorsel.vim'
 NeoBundleLazy 'vimwiki'
@@ -437,7 +440,7 @@ elseif has('win32') && isdirectory($VCINSTALLDIR)
 endif
 
 " neocomplete
-let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_at_startup = 0
 let s:hooks = neobundle#get_hooks('neocomplete.vim')
 function! s:hooks.on_source(bundle)
     let g:neocomplete#enable_auto_select = 1
@@ -495,6 +498,30 @@ function! s:hooks.on_source(bundle)
     \ ]
 
 endfunction
+
+"quickrun
+if has('win32') || has('win64')
+    function! s:hook_quickrun_windows()
+        let l:hook = {
+            \    'name' : 'myHook',
+            \    'kind' : 'hook',
+            \}
+
+        function! l:hook.init(session)
+            set noshellslash
+        endfunction
+
+        function! l:hook.sweep()
+            set shellslash
+        endfunction
+
+        call quickrun#module#register(l:hook)
+        autocmd MyAutocmd FileType quickrun setl ff=dos
+
+    endfunction
+
+    call s:hook_quickrun_windows()
+endif
 
 " vim-ref
 let s:hooks = neobundle#get_hooks('vim-ref')
@@ -588,10 +615,15 @@ let g:mygrep = 'grep'
 let g:howm_fileencoding = 'utf-8'
 
 "indent-guides
-let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_enable_on_vim_startup = 0
 let g:indent_guides_color_change_percent = 10
 let g:indent_guides_guide_size = 1
 let g:indent_guides_start_level = 2
+
+"indentLine
+let g:indentLine_color_term = 111
+let g:indentLing_color_gui = '#708090'
+let g:indentLine_char = '|'
 
 " EasyMotion
 let g:EasyMotion_leader_key = '\'
@@ -739,6 +771,13 @@ set sidescroll=1                " step of horizontal scroll
 set sidescrolloff=1             " 水平スクロールでカーソル周辺の表示文字数
 set list                        " 不可視文字の表示設定
 set listchars=tab:>-,trail:_,extends:>,precedes:<
+
+" 行番号の幅
+augroup numberwidth
+autocmd!
+    autocmd BufEnter,WinEnter,BufWinEnter * let &l:numberwidth = len(line("$")) + 2
+augroup END
+
 "}}}
 
 " tab, indent option " {{{
@@ -746,6 +785,10 @@ set tabstop=4           " タブ幅
 set expandtab           " タブ展開する
 set shiftwidth=4        " インデント幅
 set softtabstop=4       " <Tab>や<BS>を入力したときの移動幅
+" 一部の言語ではインデント幅を変える
+augroup MyAutocmd
+    autocmd FileType ruby,python setlocal shiftwidth=2 softtabstop=2
+augroup END
 " }}}
 
 " searching option " {{{
@@ -1135,6 +1178,14 @@ augroup MyAutocmd
         \ if line('''"') > 1 && line('''"') <= line('$') |
             \ execute 'normal! g`"zz' |
         \ endif
+
+    " 直前の検索パターンと'hlsearch'をバッファローカルにする
+    autocmd WinLeave *
+        \ let b:vimrc_pattern = @/
+        \ | let b:vimrc_hlsearch = &hlsearch
+    autocmd WinEnter *
+        \ let @/ = get(b:, 'vimrc_pattern', @/)
+        \ | let &l:hlsearch = get(b:, 'vimrc_hlsearch', &l:hlsearch)
 
     " 設定されていないことが多い部分の色設定 "{{{
     autocmd ColorScheme * call <SID>set_guicolor()
