@@ -296,7 +296,15 @@ NeoBundle 'Shougo/unite.vim', {
     \ }
 \ } "}}}
 NeoBundle 'basyura/unite-matcher-file-name'
-" unite-session " {{{
+" neomru "{{{
+NeoBundle 'Shougo/neomru.vim', {
+    \ 'lazy' : 1,
+    \ 'depends' : 'Shougo/unite.vim',
+    \ 'autoload' : {
+        \ 'unite_sources' : ['neomru/file', 'neomru/directory']
+    \ }
+\ } "}}}
+" unite-session "{{{
 NeoBundle 'Shougo/unite-session', {
     \ 'lazy' : 1,
     \ 'autoload' : {
@@ -1643,7 +1651,8 @@ nnoremap <silent> [Space]s :<C-u>VimShell<CR>
 
 " Unite "{{{
 nnoremap <silent> [Space]f :<C-u>UniteWithBufferDir -buffer-name=files file file/new<CR>
-nnoremap <silent> [Space]m :<C-u>Unite -buffer-name=files bookmark file_mru directory_mru<CR>
+nnoremap <silent> [Space]m :<C-u>Unite -buffer-name=files neomru/file<CR>
+nnoremap <silent> [Space]d :<C-u>Unite -buffer-name=files -default-action=lcd neomru/directory<CR>
 nnoremap <silent> [Space]b :<C-u>Unite -buffer-name=buffers buffer<CR>
 nnoremap <silent> [Space]/ :<C-u>Unite -buffer-name=search -start-insert line/fast<CR>
 nnoremap <silent> [Space]* :<C-u>UniteWithCursorWord -buffer-name=search line/fast<CR>
