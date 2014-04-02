@@ -793,10 +793,6 @@ set tabstop=4           " タブ幅
 set expandtab           " タブ展開する
 set shiftwidth=4        " インデント幅
 set softtabstop=4       " <Tab>や<BS>を入力したときの移動幅
-" 一部の言語ではインデント幅を変える
-augroup MyAutocmd
-    autocmd FileType ruby,python setlocal shiftwidth=2 softtabstop=2
-augroup END
 " }}}
 
 " searching option " {{{
