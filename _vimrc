@@ -225,6 +225,8 @@ NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundleLazy 'Lokaltog/vim-powerline'
 NeoBundleLazy 'osyo-manga/vim-powerline-unite-theme'
 NeoBundleLazy 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
+NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'itchyny/landscape.vim'
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'daisuzu/translategoogle.vim'
 " Tweetvim "{{{
@@ -595,28 +597,38 @@ function! s:hooks.on_source(bundle)
 endfunction
 
 " powerline
-if s:is_gui || !s:is_windows
-    NeoBundleSource vim-powerline
-    NeoBundleSource vim-powerline-unite-theme
-    " powerline settings is in dotvim/vimfiles/plugin/autoload/Powerline/
-endif
-let s:hooks = neobundle#get_hooks('vim-powerline')
-function! s:hooks.on_source(bundle)
-    let g:Powerline_colorscheme='my'
-    let g:Powerline_theme = 'unite_status'
-    let g:Powerline_symbols = 'fancy'
-    let g:Powerline_stl_path_style = 'filename'
+"if s:is_gui || !s:is_windows
+"    NeoBundleSource vim-powerline
+"    NeoBundleSource vim-powerline-unite-theme
+"    " powerline settings is in dotvim/vimfiles/plugin/autoload/Powerline/
+"endif
+"let s:hooks = neobundle#get_hooks('vim-powerline')
+"function! s:hooks.on_source(bundle)
+"    let g:Powerline_colorscheme='my'
+"    let g:Powerline_theme = 'unite_status'
+"    let g:Powerline_symbols = 'fancy'
+"    let g:Powerline_stl_path_style = 'filename'
+"
+"    let g:Powerline_mode_n = 'Normal'
+"    let g:Powerline_mode_i = 'Insert'
+"    let g:Powerline_mode_R = 'Replace'
+"    let g:Powerline_mode_v = 'Visual'
+"    let g:Powerline_mode_V = 'V-Line'
+"    let g:Powerline_mode_cv = 'V-Block'
+"    let g:Powerline_mode_s = 'Select'
+"    let g:Powerline_mode_S = 'S-Line'
+"    let g:Powerline_mode_cs = 'S-Block'
+"endfunction
 
-    let g:Powerline_mode_n = 'Normal'
-    let g:Powerline_mode_i = 'Insert'
-    let g:Powerline_mode_R = 'Replace'
-    let g:Powerline_mode_v = 'Visual'
-    let g:Powerline_mode_V = 'V-Line'
-    let g:Powerline_mode_cv = 'V-Block'
-    let g:Powerline_mode_s = 'Select'
-    let g:Powerline_mode_S = 'S-Line'
-    let g:Powerline_mode_cs = 'S-Block'
-endfunction
+" lightline
+let g:lightline = {
+      \ 'colorscheme': 'landscape',
+      \ 'component': {
+      \   'readonly': '%{&readonly?"⭤":""}',
+      \ },
+      \ 'separator': { 'left': '⮀', 'right': '⮂' },
+      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+      \ }
 
 " QFixHowm
 let g:mygrep = 'grep'
