@@ -627,9 +627,29 @@ let g:lightline = {
       \ 'component': {
       \   'readonly': '%{&readonly?"\u2b64":""}',
       \ },
+      \ 'component_function': {
+      \     'currentdir': 'MyCurrentDir'
+      \ },
+      \ 'tab_component_function': {
+      \     'closetab': 'MyCloseTab'
+      \ },
       \ 'separator': { 'left': "\u2b80", 'right': "\u2b82" },
-      \ 'subseparator': { 'left': "\u2b81", 'right': "\u2b83" }
-      \ }
+      \ 'subseparator': { 'left': "\u2b81", 'right': "\u2b83" },
+      \ 'tabline': {
+      \     'left': [ [ 'tabs' ] ],
+      \     'right': [ [ 'close' ], [ 'currentdir' ] ]
+      \ },
+\ }
+function! MyCurrentDir()
+    let cur_dir = fnamemodify(getcwd(), ':~')
+    if strlen(cur_dir) > &columns / 2
+        let cur_dir = '.../' . fnamemodify(cur_dir, ':t')
+    endif
+    return cur_dir
+endfunction
+function! MyCloseTab(n)
+    return '%' . a:n . 'X X'
+endfunction
 
 " QFixHowm
 let g:mygrep = 'grep'
