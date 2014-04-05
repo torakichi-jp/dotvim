@@ -146,6 +146,7 @@ NeoBundle 'Shougo/neosnippet', {
         \ ],
     \ }
 \ } "}}}
+NeoBundle 'Shougo/neosnippet-snippets'
 " vinarise "{{{
 NeoBundle 'Shougo/vinarise', {
     \ 'lazy' : 1,
