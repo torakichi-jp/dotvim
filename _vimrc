@@ -228,6 +228,7 @@ NeoBundle 'itchyny/calendar.vim'
 NeoBundle 'itchyny/thumbnail.vim'
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'daisuzu/translategoogle.vim'
+NeoBundle 'haya14busa/vim-migemo'
 " Tweetvim "{{{
 NeoBundle 'basyura/TweetVim', {
     \ 'lazy' : 1,
