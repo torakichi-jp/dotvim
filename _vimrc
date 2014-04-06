@@ -220,12 +220,8 @@ NeoBundle 'gregsexton/gitv'
 NeoBundle 'gregsexton/VimCalc'
 NeoBundle 't9md/vim-quickhl'
 NeoBundle 'fuenor/qfixhowm'
-NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundleLazy 'Lokaltog/vim-powerline'
-NeoBundleLazy 'osyo-manga/vim-powerline-unite-theme'
-NeoBundleLazy 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'itchyny/landscape.vim'
 NeoBundle 'itchyny/calendar.vim'
@@ -264,7 +260,6 @@ NeoBundle 'anyakichi/vim-surround', {
 \ } "}}}
 
 NeoBundle 'Colour-Sampler-Pack'
-NeoBundle 'SingleCompile'
 NeoBundle 'sudo.vim'
 NeoBundleLazy 'colorsel.vim'
 NeoBundleLazy 'vimwiki'
@@ -642,6 +637,7 @@ let g:lightline = {
       \     'right': [ [ 'close' ], [ 'currentdir' ] ]
       \ },
 \ }
+" for windows CUI
 if s:is_windows && !s:is_gui
     let g:lightline.separator = { 'left': '', 'right': '' }
     let g:lightline.subseparator = { 'left': '>', 'right': '<' }
@@ -662,12 +658,6 @@ endfunction
 " QFixHowm
 let g:mygrep = 'grep'
 let g:howm_fileencoding = 'utf-8'
-
-"indent-guides
-let g:indent_guides_enable_on_vim_startup = 0
-let g:indent_guides_color_change_percent = 10
-let g:indent_guides_guide_size = 1
-let g:indent_guides_start_level = 2
 
 "indentLine
 let g:indentLine_color_term = 111
@@ -869,7 +859,7 @@ endif
 
 " 透明度(Windows only)
 if s:is_windows && s:is_gui
-    autocmd MyAutocmd VimEnter * set transparency=200
+    autocmd MyAutocmd VimEnter * set transparency=220
 endif
 
 " backup option " {{{
