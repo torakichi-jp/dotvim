@@ -229,6 +229,7 @@ NeoBundleLazy 'Lokaltog/powerline', { 'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'itchyny/landscape.vim'
 NeoBundle 'itchyny/calendar.vim'
+NeoBundle 'itchyny/thumbnail.vim'
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'daisuzu/translategoogle.vim'
 " Tweetvim "{{{
@@ -641,6 +642,12 @@ let g:lightline = {
       \     'right': [ [ 'close' ], [ 'currentdir' ] ]
       \ },
 \ }
+if s:is_windows && !s:is_gui
+    let g:lightline.separator = { 'left': '', 'right': '' }
+    let g:lightline.subseparator = { 'left': '>', 'right': '<' }
+    let g:lightline.component.readonly = '%{&readonly?"=":""}'
+endif
+
 function! MyCurrentDir()
     let cur_dir = fnamemodify(getcwd(), ':~')
     if strlen(cur_dir) > &columns / 2
@@ -756,7 +763,11 @@ behave mswin
 
 " colorscheme
 set t_Co=256
-colorscheme blued
+if s:is_windows && !s:is_gui
+    colorscheme default
+else
+    colorscheme landscape
+endif
 
 " normal options "{{{
 
@@ -858,7 +869,7 @@ endif
 
 " 透明度(Windows only)
 if s:is_windows && s:is_gui
-    autocmd MyAutocmd VimEnter * set transparency=240
+    autocmd MyAutocmd VimEnter * set transparency=200
 endif
 
 " backup option " {{{
