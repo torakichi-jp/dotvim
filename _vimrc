@@ -847,7 +847,7 @@ set gdefault            " 候補を全部置換する
 " folding option " {{{
 set foldenable          " 折りたたみを有効に
 set foldcolumn=0        " 折りたたみ列数
-set foldmethod=manual   " 手動で折りたたみ
+set foldmethod=marker   " 印で折りたたみ
 set foldtext=foldCC#foldtext()
 let g:foldCCtext_enable_autofdc_adjuster = 1
 " }}}
