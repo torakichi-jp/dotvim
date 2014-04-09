@@ -1441,10 +1441,10 @@ NXnoremap [} [m
 
 " move words
 " TODO: 自作する？
-nmap w <Plug>(textobj-wiw-n)
-nmap b <Plug>(textobj-wiw-p)
-nmap e <Plug>(textobj-wiw-N)
-nmap ge <Plug>(textobj-wiw-P)
+"nmap w <Plug>(textobj-wiw-n)
+"nmap b <Plug>(textobj-wiw-p)
+"nmap e <Plug>(textobj-wiw-N)
+"nmap ge <Plug>(textobj-wiw-P)
 
 " search <cword> with split window
 nnoremap <C-w>*  <C-w>s*
