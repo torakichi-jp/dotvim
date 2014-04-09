@@ -214,6 +214,7 @@ NeoBundle 'jceb/vim-hier'
 NeoBundle 'deris/vim-rengbang'
 NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'osyo-manga/vim-jplus'
+NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'LeafCage/foldCC'
 NeoBundle 'tpope/vim-capslock', {'lazy' : 1, 'autoload' : {'insert' : 1}}
 NeoBundle 'gregsexton/gitv'
