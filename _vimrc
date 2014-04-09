@@ -73,23 +73,21 @@ augroup END
 " Neobundle Setting: "{{{
 "-------------------------------------------------------------------------------
 
-" add backward 'runtimepath'
-let g:neobundle#enable_tail_path = 1
-
 " initialize neobundle
 if has('vim_starting')
     let &runtimepath = &runtimepath . ',' . s:dotvimdir . '/bundle/neobundle.vim'
 endif
-call neobundle#rc(s:dotvimdir . '/bundle')
 "}}}
 
 "-------------------------------------------------------------------------------
 " Bundles: "{{{
 "-------------------------------------------------------------------------------
 
+call neobundle#begin(s:dotvimdir . '/bundle')
+
 " bundles "{{{
-NeoBundleFetch 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/vimproc'
+NeoBundleFetch 'Shougo/neobundle.vim', { 'stay_same' : 1 }
+NeoBundle 'Shougo/vimproc.vim'
 " vimshell "{{{
 NeoBundle 'Shougo/vimshell', {
     \ 'lazy' : 1,
@@ -407,7 +405,16 @@ NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'mattn/learn-vimscript'
 "}}}
 
+call neobundle#end()
+
 " }}}
+
+
+" required!
+filetype plugin indent on
+
+" plugin installation check
+NeoBundleCheck
 
 "-------------------------------------------------------------------------------
 " Plugin Settings: "{{{
@@ -420,7 +427,7 @@ let g:loaded_netrwPlugin = 1
 
 " vimproc build setting
 call neobundle#config(
-    \ 'vimproc', {
+    \ 'vimproc.vim', {
         \ 'build' : {
             \ 'cygwin'    : 'make -f make_cygwin.mak',
             \ 'mac'       : 'make -f make_mac.mak',
@@ -432,7 +439,7 @@ call neobundle#config(
 " $VCINSTALLDIR envvar have to declare in advance
 if has('win64') && isdirectory($VCINSTALLDIR)
     call neobundle#config(
-        \ 'vimproc', {
+        \ 'vimproc.vim', {
             \ 'build' : {
                 \ 'windows' : '"' . $VCINSTALLDIR . '/vcvarsall.bat" amd64 & ' .
                     \ 'nmake /f make_msvc64.mak',
@@ -441,7 +448,7 @@ if has('win64') && isdirectory($VCINSTALLDIR)
     \ )
 elseif has('win32') && isdirectory($VCINSTALLDIR)
     call neobundle#config(
-        \ 'vimproc', {
+        \ 'vimproc.vim', {
             \ 'build' : {
                 \ 'windows' : '"' . $VCINSTALLDIR . '/vcvarsall.bat" x86 & ' .
                     \ 'nmake /f make_msvc32.mak',
@@ -708,13 +715,6 @@ let g:toggle_pairs = {
 \ }
 
 " }}}
-
-" required!
-filetype plugin indent on
-
-" plugin installation check
-NeoBundleCheck
-
 
 " }}}
 
