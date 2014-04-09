@@ -217,6 +217,7 @@ NeoBundle 'osyo-manga/vim-jplus'
 NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'LeafCage/foldCC'
 NeoBundle 'tpope/vim-capslock', {'lazy' : 1, 'autoload' : {'insert' : 1}}
+NeoBundle 'tpope/vim-rails'
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'gregsexton/VimCalc'
 NeoBundle 't9md/vim-quickhl'
@@ -450,12 +451,12 @@ elseif has('win32') && isdirectory($VCINSTALLDIR)
 endif
 
 " neocomplete
-let g:neocomplete#enable_at_startup = 0
+let g:neocomplete#enable_at_startup = 1
 let s:hooks = neobundle#get_hooks('neocomplete.vim')
 function! s:hooks.on_source(bundle)
     let g:neocomplete#enable_auto_select = 1
-    "let g:neocomplete#disable_auto_complete = 1
-    "let g:neocomplete#enable_fuzzy_completion = 0
+    let g:neocomplete#disable_auto_complete = 1
+    let g:neocomplete#enable_fuzzy_completion = 0
     let g:neocomplete#enable_refresh_always = 0
     let g:neocomplete#auto_completion_start_length = 3
     let g:neocomplete#use_vimproc = 1
