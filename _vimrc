@@ -816,8 +816,14 @@ set timeoutlen=3000             " マップ、キーコードの待ち時間(ms)
 set selectmode=                 " セレクトモードを使わない
 set sidescroll=1                " step of horizontal scroll
 set sidescrolloff=1             " 水平スクロールでカーソル周辺の表示文字数
-set list                        " 不可視文字の表示設定
-set listchars=tab:>-,trail:_,extends:>,precedes:<
+
+" display settings of non-printable character
+set list
+if match(&encoding, 'utf-8\|utf8')!=-1
+    let &listchars="tab:\u2192\ ,trail:_,extends:>,precedes:<"
+else
+    set listchars=tab:>\ ,trails:_,extends:>,precedes:<
+endif
 
 " 行番号の幅
 augroup numberwidth
