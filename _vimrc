@@ -819,7 +819,7 @@ set sidescrolloff=1             " 水平スクロールでカーソル周辺の�
 
 " display settings of non-printable character
 set list
-if match(&encoding, 'utf-8\|utf8')!=-1
+if &encoding =~? 'utf-8\|utf8'
     let &listchars="tab:\u2192\ ,trail:_,extends:>,precedes:<"
 else
     set listchars=tab:>\ ,trails:_,extends:>,precedes:<
