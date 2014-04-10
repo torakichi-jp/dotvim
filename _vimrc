@@ -68,21 +68,17 @@ augroup END
 " Plugins: "{{{1
 "===============================================================================
 
-"-------------------------------------------------------------------------------
-" Neobundle Setting: "{{{
-"-------------------------------------------------------------------------------
-
 " initialize neobundle
 if has('vim_starting')
     let &runtimepath = &runtimepath . ',' . s:dotvimdir . '/bundle/neobundle.vim'
 endif
-"}}}
+
+"call neobundle#begin(s:dotvimdir . '/bundle')
+call neobundle#rc(s:dotvimdir . '/bundle')
 
 "-------------------------------------------------------------------------------
 " Bundles: "{{{
 "-------------------------------------------------------------------------------
-
-call neobundle#begin(s:dotvimdir . '/bundle')
 
 " bundles "{{{
 NeoBundleFetch 'Shougo/neobundle.vim', { 'stay_same' : 1 }
@@ -405,17 +401,7 @@ NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'mattn/learn-vimscript'
 "}}}
 
-call neobundle#end()
-
 " }}}
-
-
-" required!
-filetype plugin indent on
-
-" plugin installation check
-NeoBundleCheck
-
 "-------------------------------------------------------------------------------
 " Plugin Settings: "{{{
 "-------------------------------------------------------------------------------
@@ -715,6 +701,14 @@ let g:toggle_pairs = {
 \ }
 
 " }}}
+
+"call neobundle#end()
+
+" required!
+filetype plugin indent on
+
+" plugin installation check
+NeoBundleCheck
 
 " }}}
 "===============================================================================
