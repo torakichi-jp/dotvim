@@ -87,6 +87,7 @@ call neobundle#begin(s:dotvimdir . '/bundle')
 
 " bundles "{{{
 NeoBundleFetch 'Shougo/neobundle.vim', { 'stay_same' : 1 }
+NeoBundle 'Shougo/neobundle-vim-recipes'
 NeoBundle 'Shougo/vimproc.vim'
 " vimshell "{{{
 NeoBundle 'Shougo/vimshell', {
