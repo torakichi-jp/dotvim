@@ -9,7 +9,7 @@
 " Initializing: "{{{1
 "===============================================================================
 
-scriptencoding utf-8    " endoding of this script
+scriptencoding utf-8    " encoding of this script
 set nocompatible        " Vi IMproved
 
 " switching variables "{{{
@@ -27,10 +27,12 @@ filetype plugin indent off
 set shellslash
 
 " encoding "{{{
-if s:is_windows
-    set termencoding=cp932
+if has('vim_starting')
+    if s:is_windows
+        set termencoding=cp932
+    endif
+    "set encoding=utf-8      " internal encoding
 endif
-"set encoding=utf-8      " internal encoding
 "}}}
 
 " set <leader> key
