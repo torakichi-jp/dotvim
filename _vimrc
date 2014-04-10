@@ -784,7 +784,7 @@ set wrap                        " wrap line of right edge
 set textwidth=0                 " text width
 set laststatus=2                " show statusline always
 set showtabline=2               " show tabline always
-set autoindent                  " auto indent
+set autoindent                  " enable auto indent
 set switchbuf=split,newtab      " switch buffer option
 set tabline=%!MakeTabLine()     " tabline strings
 set helpheight=0                " min height of help
@@ -792,32 +792,39 @@ set helplang=ja                 " help language is japanese
 set pumheight=10                " max height of popup menu
 set previewheight=5             " height of preview window
 set shortmess& shortmess+=I     " no launch message
-"set showbreak=>\               " 折り返し行頭の文字列（最後の空白に注意）
-"set cpoptions+=n               " 折り返し行を行番号列から表示
+"set showbreak=>\               " line head of wrap (attention: last space)
+"set cpoptions+=n               " use number column to start wrap line
 set cmdwinheight=5              " height of cmdwindow
 set showmatch                   " jump to match pair temporarily
 set matchtime=0                 " times to jump match pair
 set virtualedit+=block          " virtual edit for visual block mode only
 set cinoptions=:0,l1,g0,m1      " C/C++ indent option
 set matchpairs& matchpairs+=<:> " add pair that is <>
-set winaltkeys=no               " do not use alt keys for GUI menu
+set winaltkeys=no               " not use alt keys for GUI menu
 set path+=;/                    " file path follows parent directory
 set tags+=./tags;,./**/tags     " search path of tag files
-set complete-=it                " include,tagを補完検索対象から除外
+set complete-=it                " remove "include, tag" from candidates
 set completeopt=menu            " option of completion
-set showfulltag                 " show tag patter when tag completion
-set wildmenu                    " 拡張コマンドライン補完を有効
-set wildmode=longest,full       " コマンドライン補完最長一致
-set viminfo& viminfo+=/0        " 検索履歴をviminfoに記録しない
-"set lazyredraw                 " マクロ実行中の画面再描画なし
-set nostartofline               " 縦移動で、できるだけ列を維持する
-set timeout                     " マップ、キーコードで一定時間待つ
-set timeoutlen=3000             " マップ、キーコードの待ち時間(ms)
-set selectmode=                 " セレクトモードを使わない
+set showfulltag                 " show tag pattern when tag completion
+set viminfo& viminfo+=/0        " not write searching history
+set timeout                     " enable timeout of key mappings
+set timeoutlen=3000             " wait time of key mappings(ms)
+set selectmode=                 " not use select mode
 set sidescroll=1                " step of horizontal scroll
-set sidescrolloff=1             " 水平スクロールでカーソル周辺の表示文字数
+set sidescrolloff=1             " offset around cursor in horizontal scroll
 
-" display settings of non-printable character
+" keep column as much as possible in the vertical movement
+" (<C-d>, <C-u>, and so on)
+set nostartofline
+
+" not redraw of no typing command (key macros and so on)
+"set lazyredraw
+
+" enable extend command line complete and setting
+set wildmenu
+set wildmode=longest,full
+
+" non-printable character display settings
 set list
 if &encoding =~? 'utf-8\|utf8'
     let &listchars="tab:\u2192\ ,trail:_,extends:>,precedes:<"
@@ -825,8 +832,8 @@ else
     set listchars=tab:>\ ,trails:_,extends:>,precedes:<
 endif
 
-" 行番号の幅
-augroup numberwidth
+" width of number column
+augroup MyAutocmd
 autocmd!
     autocmd BufEnter,WinEnter,BufWinEnter * let &l:numberwidth = len(line("$")) + 2
 augroup END
