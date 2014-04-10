@@ -526,7 +526,10 @@ if has('win32') || has('win64')
 
     endfunction
 
-    call s:hook_quickrun_windows()
+    let s:hooks = neobundle#get_hooks('vim-quickrun')
+    function! s:hooks.on_source(bundle)
+        call s:hook_quickrun_windows()
+    endfunction
 endif
 
 " vim-ref
