@@ -4,27 +4,20 @@
 "
 "*******************************************************************************
 
-
 "===============================================================================
 " Initializing: "{{{1
 "===============================================================================
 
 scriptencoding utf-8    " encoding of this script
 set nocompatible        " Vi IMproved
+set shellslash          " path delimiter is slash
 
 " switching variables "{{{
 let s:is_gui = has('gui_running')
-let s:is_windows = has('win32') || has('win64')
+let s:is_windows = has('win16') || has('win32') || has('win64')
 let s:is_unix = has('unix')
 let s:is_cygwin = has('win32unix')
 "}}}
-
-" disable filetypes temporarily
-filetype off
-filetype plugin indent off
-
-" path delimiter is slash
-set shellslash
 
 " encoding "{{{
 if has('vim_starting')
@@ -39,22 +32,44 @@ endif
 let g:mapleader=','
 
 " path to .vim directory "{{{
-if s:is_windows
-    let s:dotvimdir = expand('~/vimfiles')
-elseif s:is_unix
-    let s:dotvimdir = expand('~/.vim')
-endif
-let $DOTVIM = s:dotvimdir
+function! s:get_dotvimdir_var()
+    " candidates of dotvim dir
+    let l:candidates = [
+        \ '~/vimfiles',
+        \ '~/.vim',
+        \ '~/dotvim/vimfiles',
+        \ '~/dotvim/.vim',
+        \ '~/dotvim',
+        \ ]
+
+    " set dir that found first
+    for dir in l:candidates
+        let l:dir = expand(dir)
+        if isdirectory(l:dir)
+            return l:dir
+        endif
+    endfor
+    return ''
+endfunction
+"}}}
+" path to .gvimrc "{{{
+function! s:get_gvimrc_var()
+    if filereadable(expand('~/_gvimrc'))
+        return expand('~_gvimrc')
+    elseif filereadable(expand('~/.gvimrc'))
+        return expand('~/.gvimrc')
+    endif
+    return ''
+endfunction
 "}}}
 
-" path to .gvimrc "{{{
-if !exists($MYGVIMRC)
-    if s:is_windows
-        let $MYGVIMRC = expand('~/_gvimrc')
-    else
-        let $MYGVIMRC = expand('~/.gvimrc')
-    endif
-endif "}}}
+if !exists('$DOTVIMDIR')
+    let $DOTVIMDIR = s:get_dotvimdir_var()
+endif
+
+if !exists('$MYGVIMRC')
+    let $MYGVIMRC = s:get_gvimrc_var()
+endif
 
 " syntax
 syntax enable
@@ -64,19 +79,22 @@ augroup MyAutocmd
     autocmd!
 augroup END
 
-
 " }}}
 "===============================================================================
 " Plugins: "{{{1
 "===============================================================================
 
+" disable filetypes temporarily
+filetype off
+filetype plugin indent off
+
 " initialize neobundle
 if has('vim_starting')
-    let &runtimepath = &runtimepath . ',' . s:dotvimdir . '/bundle/neobundle.vim'
+    let &runtimepath = &runtimepath . ',' . $DOTVIMDIR . '/bundle/neobundle.vim'
 endif
 
-"call neobundle#begin(s:dotvimdir . '/bundle')
-call neobundle#rc(s:dotvimdir . '/bundle')
+"call neobundle#begin($DOTVIMDIR . '/bundle')
+call neobundle#rc($DOTVIMDIR . '/bundle')
 
 "-------------------------------------------------------------------------------
 " Bundles: "{{{
@@ -878,9 +896,9 @@ endif
 
 " backup option " {{{
 set backup                                  " バックアップする
-let &backupdir = s:dotvimdir . '/.backup'   " バックアップを作成するディレクトリ
+let &backupdir = $DOTVIMDIR . '/.backup'   " バックアップを作成するディレクトリ
 set undofile                                " アンドゥファイルを作成する
-let &undodir = s:dotvimdir . '/.undo'       " アンドゥファイルを作成するディレクトリ
+let &undodir = $DOTVIMDIR . '/.undo'       " アンドゥファイルを作成するディレクトリ
 " バックアップディレクトリがなかったら作成する
 if &backupdir!=#'' && !isdirectory(&backupdir)
     call mkdir(&backupdir)
