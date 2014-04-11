@@ -1,6 +1,3 @@
-[submodule "bundle/neobundle.vim"]
-	path = bundle/neobundle.vim
-	url = git://github.com/Shougo/neobundle.vim.git
 [submodule "howm"]
 	path = howm
 	url = git@bitbucket.org:torakichi-jp/vim-howm.git
