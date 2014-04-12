@@ -770,39 +770,73 @@ NeoBundleCheck
 " Option Settings: "{{{1
 "===============================================================================
 
-" adjust 'runtimepath' "{{{
+" adjust 'runtimepath'
 function! s:adjust_rtp(runtimepath, dotvimdir) "{{{
-    let l:rtp = a:runtimepath
-    " use slash instead of backslash in 'runtimepath'
-    if stridx(l:rtp, '\\') < 0
-        let l:rtp = substitute(l:rtp, '\\\@>', '/', 'g')
-    endif
+ruby << END
+    DOTVIM_CANDIDATES = VIM::evaluate('s:dotvimdir_candidates').freeze
 
-    let l:paths = []
-    let l:rtps = map(split(l:rtp, ',\+'), 'expand(v:val)')
-    for l:path in l:rtps
-        if !isdirectory(l:path)
-            " do nothing if not directory
-            continue
-        elseif index(s:dotvimdir_candidates, l:path, 0, s:is_windows) >= 0
-            " do nothing if in dotvimdir candidates
-            continue
-        endif
+    class String
+      def expand
+        VIM::evaluate 'expand("' + self + '")'
+      end
 
-        call add(l:paths, expand(l:path))
-    endfor
+      def directory?
+        VIM::evaluate('isdirectory("' + self + '")').to_i != 0
+      end
+    end
 
-    " add '.vim' and '.vim/after'
-    call insert(l:paths, $DOTVIMDIR)
-    call add(l:paths, $DOTVIMDIR.'/after')
+    def adjust_rtp(rtp, dotvim)
+      # delimiter is slash instead of backslash
+      # create list split by comma
+      # expand path
+      rtps = rtp.gsub(/\\+/, '/').split(/,+/).map { |path| path.expand }
 
-    let l:rtp = join(l:paths, ',')
+      # delete path that is not directory or included candidates of dotvimdir
+      rtps.delete_if do |path|
+        not path.directory? or DOTVIM_CANDIDATES.include? path
+      end
+
+      # add dotvim dir and dotvim/after dir
+      rtps.insert(0, dotvim) << dotvim + '/after'
+
+      # delete duplication
+      rtps.uniq!
+
+      # join each path
+      rtps.join(',')
+    end
+
+    rtp = adjust_rtp VIM::evaluate('a:runtimepath'), VIM::evaluate('a:dotvimdir')
+    VIM::command 'let l:rtp = "' + rtp + '"'
+END
     return l:rtp
+"    " use slash instead of backslash in 'runtimepath'
+"    let l:rtp = substitute(a:runtimepath, '\\\@>', '/', 'g')
+"
+"    let l:paths = []
+"    let l:rtps = map(split(l:rtp, ',\+'), 'expand(v:val)')
+"    for l:path in l:rtps
+"        if !isdirectory(l:path)
+"            " do nothing if not directory
+"            continue
+"        elseif index(s:dotvimdir_candidates, l:path, 0, s:is_windows) >= 0
+"            " do nothing if in dotvimdir candidates
+"            continue
+"        endif
+"
+"        call add(l:paths, expand(l:path))
+"    endfor
+"
+"    " add '.vim' and '.vim/after'
+"    call insert(l:paths, $DOTVIMDIR)
+"    call add(l:paths, $DOTVIMDIR.'/after')
+"
+"    " return adjusted 'runtimepath'
+"    return join(l:paths, ',')
 endfunction "}}}
 if has('vim_starting')
     let &runtimepath = s:adjust_rtp(&runtimepath, $DOTVIMDIR)
 endif
-"}}}
 
 " Syntax settings "{{{
 
