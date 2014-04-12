@@ -31,20 +31,19 @@ endif
 " set <leader> key
 let g:mapleader=','
 
+" candidates of dotvimdir path ordered in priority
+let s:dotvimdir_candidates = [
+    \ expand('~/vimfiles'),
+    \ expand('~/.vim'),
+    \ expand('~/dotvim/vimfiles'),
+    \ expand('~/dotvim/.vim'),
+    \ expand('~/dotvim'),
+\ ]
+
 " path to .vim directory "{{{
 function! s:get_dotvimdir_var()
-    " candidates of dotvim dir
-    let l:candidates = [
-        \ '~/vimfiles',
-        \ '~/.vim',
-        \ '~/dotvim/vimfiles',
-        \ '~/dotvim/.vim',
-        \ '~/dotvim',
-        \ ]
-
-    " set dir that found first
-    for dir in l:candidates
-        let l:dir = expand(dir)
+    " return path that found first
+    for dir in s:dotvimdir_candidates
         if isdirectory(l:dir)
             return l:dir
         endif
@@ -737,6 +736,40 @@ NeoBundleCheck
 "===============================================================================
 " Option Settings: "{{{1
 "===============================================================================
+
+" adjust 'runtimepath' "{{{
+function! s:adjust_rtp(runtimepath, dotvimdir) "{{{
+    let l:rtp = a:runtimepath
+    " use slash instead of backslash in 'runtimepath'
+    if stridx(l:rtp, '\\') < 0
+        let l:rtp = substitute(l:rtp, '\\\@>', '/', 'g')
+    endif
+
+    let l:paths = []
+    let l:rtps = map(split(l:rtp, ',\+'), 'expand(v:val)')
+    for l:path in l:rtps
+        if !isdirectory(l:path)
+            " do nothing if not directory
+            continue
+        elseif index(s:dotvimdir_candidates, l:path, 0, s:is_windows) >= 0
+            " do nothing if in dotvimdir candidates
+            continue
+        endif
+
+        call add(l:paths, expand(l:path))
+    endfor
+
+    " add '.vim' and '.vim/after'
+    call insert(l:paths, $DOTVIMDIR)
+    call add(l:paths, $DOTVIMDIR.'/after')
+
+    let l:rtp = join(l:paths, ',')
+    return l:rtp
+endfunction "}}}
+if has('vim_starting')
+    let &runtimepath = s:adjust_rtp(&runtimepath, $DOTVIMDIR)
+endif
+"}}}
 
 " Syntax settings "{{{
 
