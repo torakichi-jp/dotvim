@@ -806,33 +806,11 @@ ruby << END
       rtps.join(',')
     end
 
+    # set local var of Vim
     rtp = adjust_rtp VIM::evaluate('a:runtimepath'), VIM::evaluate('a:dotvimdir')
     VIM::command 'let l:rtp = "' + rtp + '"'
 END
     return l:rtp
-"    " use slash instead of backslash in 'runtimepath'
-"    let l:rtp = substitute(a:runtimepath, '\\\@>', '/', 'g')
-"
-"    let l:paths = []
-"    let l:rtps = map(split(l:rtp, ',\+'), 'expand(v:val)')
-"    for l:path in l:rtps
-"        if !isdirectory(l:path)
-"            " do nothing if not directory
-"            continue
-"        elseif index(s:dotvimdir_candidates, l:path, 0, s:is_windows) >= 0
-"            " do nothing if in dotvimdir candidates
-"            continue
-"        endif
-"
-"        call add(l:paths, expand(l:path))
-"    endfor
-"
-"    " add '.vim' and '.vim/after'
-"    call insert(l:paths, $DOTVIMDIR)
-"    call add(l:paths, $DOTVIMDIR.'/after')
-"
-"    " return adjusted 'runtimepath'
-"    return join(l:paths, ',')
 endfunction "}}}
 if has('vim_starting')
     let &runtimepath = s:adjust_rtp(&runtimepath, $DOTVIMDIR)
