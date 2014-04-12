@@ -695,7 +695,41 @@ endif
 " ShowMarksでハイライトするマーク指定
 let g:showmarks_include = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>'
 " プラグインでマップされちゃうのでautocmdで定義
-autocmd MyAutocmd VimEnter * nmap m [Mark]
+autocmd MyAutocmd VimEnter * call s:init_marks()
+function! s:init_marks()    "{{{
+    " TODO: mn, mp で（アルファベット順に）次のマークに移動するコードを書きたい
+    " TODO: mcでマークを1行目に移動するのではなく、ちゃんと消したい
+    " TODO: つーかShowMarksを自分用に書き直す？
+    nnoremap <Plug>[Mark] <Nop>
+    nmap m <Plug>[Mark]
+    " ms{char}でマーク（通常のmと同じ）＆ShowMarksオン
+    nnoremap <silent> <Plug>[Mark]s
+    \ :<C-u>execute 'normal! m' . nr2char(getchar())<bar>ShowMarksOn<CR>
+    " マーク位置へジャンプ(Find mark)
+    nnoremap <Plug>[Mark]f `
+    " マーク行へジャンプ(Go to mark)
+    nnoremap <Plug>[Mark]g '
+    " 別ウィンドウを開いてマーク行へジャンプ
+    nnoremap <silent> <Plug>[Mark]w :<C-u>split +execute\ "normal!\ '".nr2char(getchar())<CR>
+    " 次のマークを置く
+    nnoremap <silent> <Plug>[Mark]m :<C-u>ShowMarksPlaceMark<CR>
+    " ShowMarks切り替え(Toggle)
+    nnoremap <silent> <Plug>[Mark]t :<C-u>ShowMarksToggle<CR>
+    " ShowMarksオン(On)
+    nnoremap <silent> <Plug>[Mark]o :<C-u>ShowMarksOn<CR>:echo 'ShowMarks On'<CR>
+    " マークを隠す(Hide)
+    nnoremap <silent> <Plug>[Mark]h :<C-u>ShowMarksHideAll<CR>:echo 'ShowMarks Off'<CR>
+    " 現在行のマークをクリア(Clear)
+    nnoremap <silent> <Plug>[Mark]c :<C-u>ShowMarksClearMark<CR>
+    " 全マークをクリア(clear All)
+    nnoremap <silent> <Plug>[Mark]a :<C-u>ShowMarksClearAll<CR>
+    " マークリスト(Unite mark)
+    nnoremap <silent> <Plug>[Mark]l :<C-u>:Unite -auto-preview mark<CR>
+    nnoremap <Plug>[Mark]j ]`
+    nnoremap <Plug>[Mark]k [`
+    echo "initialized mark settings"
+endfunction
+"}}}
 
 " QFixHowmのメニューバーを表示しない
 " （_gvimrcでplugin内に表示）
@@ -1555,39 +1589,6 @@ function! s:cr_behavior() "{{{
     endif
     return ""
 endfunction "}}}
-
-" マーク関連 "{{{
-nnoremap [Mark] <Nop>
-nmap m [Mark]
-" ms{char}でマーク（通常のmと同じ）＆ShowMarksオン
-nnoremap <silent> [Mark]s
-    \ :<C-u>execute 'normal! m' . nr2char(getchar())<bar>ShowMarksOn<CR>
-" マーク位置へジャンプ(Find mark)
-nnoremap [Mark]f `
-" マーク行へジャンプ(Go to mark)
-nnoremap [Mark]g '
-" 別ウィンドウを開いてマーク行へジャンプ
-nnoremap <silent> [Mark]w :<C-u>split +execute\ "normal!\ '".nr2char(getchar())<CR>
-" 次のマークを置く
-nnoremap <silent> [Mark]m :<C-u>ShowMarksPlaceMark<CR>
-" ShowMarks切り替え(Toggle)
-nnoremap <silent> [Mark]t :<C-u>ShowMarksToggle<CR>
-" ShowMarksオン(On)
-nnoremap <silent> [Mark]o :<C-u>ShowMarksOn<CR>:echo 'ShowMarks On'<CR>
-" マークを隠す(Hide)
-nnoremap <silent> [Mark]h :<C-u>ShowMarksHideAll<CR>:echo 'ShowMarks Off'<CR>
-" 現在行のマークをクリア(Clear)
-nnoremap <silent> [Mark]c :<C-u>ShowMarksClearMark<CR>
-" 全マークをクリア(clear All)
-nnoremap <silent> [Mark]a :<C-u>ShowMarksClearAll<CR>
-" マークリスト(Unite mark)
-nnoremap <silent> [Mark]l :<C-u>:Unite -auto-preview mark<CR>
-nnoremap [Mark]j ]`
-nnoremap [Mark]k [`
-" TODO: mn, mp で（アルファベット順に）次のマークに移動するコードを書きたい
-" TODO: mcでマークを1行目に移動するのではなく、ちゃんと消したい
-" TODO: つーかShowMarksを自分用に書き直す？
-"}}}
 
 " タブページ用マップ "{{{
 nnoremap <Plug>[Tab] <Nop>
