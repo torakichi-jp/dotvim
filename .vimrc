@@ -727,7 +727,6 @@ function! s:init_marks()    "{{{
     nnoremap <silent> <Plug>[Mark]l :<C-u>:Unite -auto-preview mark<CR>
     nnoremap <Plug>[Mark]j ]`
     nnoremap <Plug>[Mark]k [`
-    echo "initialized mark settings"
 endfunction
 "}}}
 
