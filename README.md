@@ -4,24 +4,29 @@ This is my vim setting files.
 
 http://github.com/torakichi-jp/dotvim
 
-# Installation
+---
 
-### Vim
+## Installation
 
-* *for Windows*
- + Download from [KaoriYa]
+#### Vim
 
-* *for Linux*
- + Note: http://vim-jp.org/docs/build_linux.html
+ * *for Windows*
+  - Download from [KaoriYa]
+
+ * *for Linux*
+  - http://vim-jp.org/docs/build_linux.html
+  - http://d.hatena.ne.jp/h_east/20130409/p1
+
+#### plugins
+
+ 1. `git clone` [neobundle.vim] into `bundle/*` in advance.
+
+ 2. At first, clone and build [vimproc.vim]. 
+
+ 3. Run Vim and asked "Install Bundles ?", so answer "Yes" to install plugins.
 
 
-### plugins
-
-1. `git clone` [neobundle] into bundle directory in advance.
-
-2. Run Vim and asked "Install Bundles ?" so answer "Yes" to install plugins.
-
-
-[KaoriYa]:   http://www.kaoriya.net/software/vim/
-[neobundle]: http://github.com/Shougo/neobundle.vim
+[KaoriYa]:       http://www.kaoriya.net/software/vim
+[neobundle.vim]: http://github.com/Shougo/neobundle.vim
+[vimproc.vim]:   http://github.com/Shougo/vimproc.vim
 
