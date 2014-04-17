@@ -204,7 +204,6 @@ NeoBundle 'thinca/vim-localrc'
 NeoBundleLazy 'thinca/vim-singleton'
 NeoBundle 'koron/codic-vim'
 NeoBundleLazy 'mattn/calendar-vim'
-NeoBundle 'mattn/excitetranslate-vim'
 NeoBundle 'mattn/wwwrenderer-vim'
 NeoBundle 'mattn/webapi-vim'
 NeoBundleLazy 'mattn/zencoding-vim'
@@ -1305,9 +1304,6 @@ augroup MyAutocmd
 
     " （ヘルプとかを）qで終了
     autocmd FileType help,ref-* nnoremap <buffer> <silent> q :<C-u>close<CR>
-
-    " Excitetranslateバッファをqで閉じる
-    autocmd BufEnter ==Translate==\ Excite nnoremap <buffer> <silent> q :<C-u>close<CR>
 
     " gitのコミットメッセージを編集する時は、バックアップファイルを作らない
     autocmd FileType gitcommit setlocal nobackup noundofile noswapfile
