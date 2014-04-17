@@ -281,6 +281,24 @@ NeoBundleLazy 'vimwiki'
 NeoBundleLazy 'CSApprox'
 "}}}
 
+" Ruby "{{{
+" Ruby static code analyzer.
+NeoBundleLazy 'ngmy/vim-rubocop', {
+    \ 'autoload' : { 'filetypes' : ['ruby'] }
+\ }
+NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'tpope/vim-rails'
+NeoBundle 'tpope/vim-rvm'
+NeoBundle 'tpope/vim-rake'
+NeoBundle 'tpope/vim-bundler'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'ngmy/vim-rubocop'
+NeoBundle 'nono/jquery.vim'
+NeoBundle 'astashov/vim-ruby-debugger'
+" }}}
+NeoBundle 'lucapette/vim-jquery-doc'
+NeoBundle 'kchmck/vim-coffee-script'
+
 " textobj "{{{
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-textobj-line'
@@ -1021,11 +1039,11 @@ function! MakeTabLine() "{{{
     endif
     let info .= cur_dir . ' '
 
-    " view git branch
-    "let branch_info = fugitive#head()
-    "if !empty(branch_info)
-    "    let info .= '[' . branch_info . '] '
-    "endif
+     view git branch
+    let branch_info = fugitive#head()
+    if !empty(branch_info)
+        let info .= '[' . branch_info . '] '
+    endif
 
     return tabpages . '%=' . info   " タブリストを左に、情報を右に表示
 endfunction "}}}
