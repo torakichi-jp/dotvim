@@ -1398,6 +1398,9 @@ nnoremap Q <Nop>
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 
+" vertical split window with cursor word on line number
+nnoremap <C-w><S-v> <C-W>vgF
+
 " open file with :browse
 nnoremap <C-x><C-e> :<C-u>browse edit<CR>
 
