@@ -1398,8 +1398,13 @@ nnoremap Q <Nop>
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 
-" vertical split window with cursor word on line number
-nnoremap <C-w><S-v> <C-W>vgF
+" split window with cursor word on line number and
+" move to center of window
+nnoremap <C-w><S-f> <C-w>Fzz
+
+" vertical split window with cursor word on line number and
+" move to center of window (like <C-w>F)
+nnoremap <C-w><S-v> <C-W>vgFzz
 
 " open file with :browse
 nnoremap <C-x><C-e> :<C-u>browse edit<CR>
