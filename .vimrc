@@ -1,3 +1,4 @@
+" vim: set sw=4 ts=4 et fdm=marker:
 "*******************************************************************************
 "
 " Vim Settings:
@@ -12,12 +13,11 @@ scriptencoding utf-8    " encoding of this script
 set nocompatible        " Vi IMproved
 set shellslash          " path delimiter is slash
 
-" switching variables "{{{
+" switching variables
 let s:is_gui = has('gui_running')
 let s:is_windows = has('win16') || has('win32') || has('win64')
 let s:is_unix = has('unix')
 let s:is_cygwin = has('win32unix')
-"}}}
 
 " encoding "{{{
 if has('vim_starting')
@@ -40,7 +40,7 @@ let s:dotvimdir_candidates = [
     \ expand('~/dotvim'),
 \ ]
 
-" path to .vim directory "{{{
+" path to .vim directory
 function! s:get_dotvimdir_var()
     " return path that found first
     for dir in s:dotvimdir_candidates
@@ -50,8 +50,8 @@ function! s:get_dotvimdir_var()
     endfor
     return ''
 endfunction
-"}}}
-" path to .gvimrc "{{{
+
+" path to .gvimrc
 function! s:get_gvimrc_var()
     if filereadable(expand('~/_gvimrc'))
         return expand('~_gvimrc')
@@ -60,7 +60,6 @@ function! s:get_gvimrc_var()
     endif
     return ''
 endfunction
-"}}}
 
 if !exists('$DOTVIMDIR')
     let $DOTVIMDIR = s:get_dotvimdir_var()
@@ -96,14 +95,12 @@ endif
 call neobundle#rc($DOTVIMDIR . '/bundle')
 
 "-------------------------------------------------------------------------------
-" Bundles: "{{{
+" Bundles: "{{{2
 "-------------------------------------------------------------------------------
 
-" bundles "{{{
 NeoBundleFetch 'Shougo/neobundle.vim', { 'stay_same' : 1 }
 NeoBundle 'Shougo/neobundle-vim-recipes'
 NeoBundle 'Shougo/vimproc.vim'
-" vimshell "{{{
 NeoBundle 'Shougo/vimshell', {
     \ 'lazy' : 1,
     \ 'autoload' : {
@@ -115,15 +112,13 @@ NeoBundle 'Shougo/vimshell', {
         \ ],
         \ 'mappings' : ['<Plug>(vimshell_switch)'],
     \}
-\} "}}}
-" vim-gitcomplete "{{{
+\}
 NeoBundle 'yomi322/vim-gitcomplete', {
     \ 'lazy' : 1,
     \ 'autoload' : {
         \ 'filetype' : 'vimshell',
     \ }
-\ } "}}}
-" vimfiler "{{{
+\ }
 NeoBundle 'Shougo/vimfiler', {
     \ 'lazy' : 1,
     \ 'depends' : 'Shougo/unite.vim',
@@ -139,16 +134,14 @@ NeoBundle 'Shougo/vimfiler', {
         \ 'mappings' : ['<Plug>(vimfiler_switch)'],
         \ 'explorer' : 1,
     \ }
-\ } "}}}
+\ }
 NeoBundle 'Shougo/neocomplete.vim'
-" neocomplcache "{{{
 NeoBundle 'Shougo/neocomplcache.vim', {
     \ 'lazy' : 1,
     \ 'autoload' : {
         \ 'commands' : 'NeoCompleCacheEnable',
     \ }
-\ } "}}}
-" neosnippet "{{{
+\ }
 NeoBundle 'Shougo/neosnippet', {
     \ 'lazy' : 1,
     \ 'autoload' : {
@@ -158,17 +151,15 @@ NeoBundle 'Shougo/neosnippet', {
             \ 'snippet', 'neosnippet/user', 'neosnippet/runtime'
         \ ],
     \ }
-\ } "}}}
+\ }
 NeoBundle 'Shougo/neosnippet-snippets'
-" vinarise "{{{
 NeoBundle 'Shougo/vinarise', {
     \ 'lazy' : 1,
     \ 'autoload' : { 'commands' : 'Vinarise' },
-\ } "}}}
+\ }
 NeoBundle 'thinca/vim-visualstar'
 NeoBundle 'thinca/vim-tabrecent'
 NeoBundle 'thinca/vim-qfreplace'
-" Ref "{{{
 NeoBundle 'thinca/vim-ref', {
     \ 'lazy' : 1,
     \ 'autoload' : {
@@ -179,8 +170,7 @@ NeoBundle 'thinca/vim-ref', {
             \ },
         \ ],
     \ }
-\ } "}}}
-" fontzoom "{{{
+\ }
 NeoBundle 'thinca/vim-fontzoom', {
     \ 'lazy' : 1,
     \ 'autoload' : {
@@ -189,16 +179,15 @@ NeoBundle 'thinca/vim-fontzoom', {
             \ ['n', '<Plug>(fontzoom-smaller)'],
         \ ]
     \ }
-\ } "}}}
+\ }
 NeoBundle 'thinca/vim-openbuf'
-" QuickRun "{{{
 NeoBundle 'thinca/vim-quickrun', {
     \ 'lazy' : 1,
     \ 'autoload' : {
         \ 'mappings' : [['nxo', '<Plug>(quickrun)']],
         \ 'commands' : 'QuickRun',
     \ }
-\ } "}}}
+\ }
 NeoBundle 'thinca/vim-editvar'
 NeoBundle 'thinca/vim-localrc'
 NeoBundleLazy 'thinca/vim-singleton'
@@ -243,7 +232,6 @@ NeoBundle 'itchyny/thumbnail.vim'
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'daisuzu/translategoogle.vim'
 NeoBundle 'haya14busa/vim-migemo'
-" Tweetvim "{{{
 NeoBundle 'basyura/TweetVim', {
     \ 'lazy' : 1,
     \ 'depends' : [
@@ -257,12 +245,11 @@ NeoBundle 'basyura/TweetVim', {
             \ 'TweetVimSay',
         \ ]
     \ },
-\ } "}}}
+\ }
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'rhysd/accelerated-jk'
 NeoBundle 'tanabe/ToggleCase-vim'
 NeoBundle 'rking/ag.vim'
-" surround "{{{
 NeoBundle 'anyakichi/vim-surround', {
     \ 'lazy' : 1,
     \ 'autoload' : {
@@ -272,16 +259,14 @@ NeoBundle 'anyakichi/vim-surround', {
             \ ['n', '<Plug>Vsurround'], ['n', '<Plug>VSurround' ],
         \ ]
     \ }
-\ } "}}}
+\ }
 
 NeoBundle 'Colour-Sampler-Pack'
 NeoBundle 'sudo.vim'
 NeoBundleLazy 'colorsel.vim'
 NeoBundleLazy 'vimwiki'
 NeoBundleLazy 'CSApprox'
-"}}}
 
-" Ruby "{{{
 " Ruby static code analyzer.
 NeoBundleLazy 'ngmy/vim-rubocop', {
     \ 'autoload' : { 'filetypes' : ['ruby'] }
@@ -295,11 +280,10 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'ngmy/vim-rubocop'
 NeoBundle 'nono/jquery.vim'
 NeoBundle 'astashov/vim-ruby-debugger'
-" }}}
 NeoBundle 'lucapette/vim-jquery-doc'
 NeoBundle 'kchmck/vim-coffee-script'
 
-" textobj "{{{
+" textobj
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-textobj-line'
 NeoBundle 'kana/vim-textobj-underscore'
@@ -313,10 +297,9 @@ NeoBundle 'thinca/vim-textobj-plugins'
 NeoBundle 'h1mesuke/textobj-wiw'
 NeoBundle 'deris/vim-textobj-enclosedsyntax'
 NeoBundle 'https://bitbucket.org/anyakichi/vim-textobj-xbrackets'
-"}}}
 
-" unite, matchers, and sources "{{{
-" unite.vim "{{{
+" unite, matchers, and sources
+" unite.vim 
 NeoBundle 'Shougo/unite.vim', {
     \ 'lazy' : 1,
     \ 'autoload' : {
@@ -327,117 +310,99 @@ NeoBundle 'Shougo/unite.vim', {
             \ 'UniteWithCursorWord',
         \ ]
     \ }
-\ } "}}}
+\ }
 NeoBundle 'basyura/unite-matcher-file-name'
-" neomru "{{{
 NeoBundle 'Shougo/neomru.vim', {
     \ 'lazy' : 1,
     \ 'depends' : 'Shougo/unite.vim',
     \ 'autoload' : {
         \ 'unite_sources' : ['neomru/file', 'neomru/directory']
     \ }
-\ } "}}}
-" unite-session "{{{
+\ }
 NeoBundle 'Shougo/unite-session', {
     \ 'lazy' : 1,
     \ 'autoload' : {
         \ 'unite_sources' : 'session'
     \ }
-\ } "}}}
-" unite-history "{{{
+\ }
 NeoBundle 'thinca/vim-unite-history', {
     \ 'lazy' : 1,
     \ 'autoload' : {
         \ 'unite_sources' : ['history/command', 'history/search']
     \ }
-\ } "}}}
-" unite-outline "{{{
+\ }
 NeoBundle 'h1mesuke/unite-outline', {
     \ 'lazy' : 1,
     \ 'autoload' : {
         \ 'unite_sources' : 'outline'
     \ }
-\ } "}}}
-" unite-tag "{{{
+\ }
 NeoBundle 'tsukkee/unite-tag', {
     \ 'lazy' : 1,
     \ 'autoload' : {
         \ 'unite_sources' : 'tag'
     \ }
-\ } "}}}
-" unite-help "{{{
+\ }
 NeoBundle 'tsukkee/unite-help', {
     \ 'lazy' : 1,
     \ 'autoload' : {
         \ 'unite_sources' : 'help'
     \ }
-\ } "}}}
-" unite-mark "{{{
+\ }
 NeoBundle 'tacroe/unite-mark', {
     \ 'lazy' : 1,
     \ 'autoload' : {
         \ 'unite_sources' : 'mark'
     \ }
-\ } "}}}
-" unite-qf "{{{
+\ }
 NeoBundle 'sgur/unite-qf', {
     \ 'lazy' : 1,
     \ 'autoload' : {
         \ 'unite_sources' : 'qf'
     \ }
-\ } "}}}
-" unite-colorscheme "{{{
+\ }
 NeoBundle 'ujihisa/unite-colorscheme', {
     \ 'lazy' : 1,
     \ 'autoload' : {
         \ 'unite_sources' : 'colorscheme'
     \ }
-\ } "}}}
-" unite-qfixhowm "{{{
+\ }
 NeoBundle 'osyo-manga/unite-qfixhowm', {
     \ 'lazy' : 1,
     \ 'autoload' : {
         \ 'unite_sources' : 'qfixhowm'
     \ }
-\ } "}}}
-" unite-todo "{{{
+\ }
 NeoBundle 'kannokanno/unite-todo', {
     \ 'lazy' : 1,
     \ 'autoload' : {
         \ 'unite_sources' : 'todo'
     \ }
-\ } "}}}
-" unite-build "{{{
+\ }
 NeoBundle 'Shougo/unite-build', {
     \ 'lazy' : 1,
     \ 'autoload' : {
         \ 'unite_sources' : 'build'
     \ }
-\ } "}}}
-" unite-giti "{{{
+\ }
 NeoBundle 'kmnk/vim-unite-giti', {
     \ 'lazy' : 1,
     \ 'autoload' : {
         \ 'unite_sources' : 'giti'
     \ }
-\ } "}}}
+\ }
 NeoBundleLazy 'choplin/unite-vim_hacks'
-"}}}
 
-" operator "{{{
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'tyru/operator-camelize.vim'
 NeoBundle 'tyru/operator-reverse.vim'
 NeoBundle 'emonkak/vim-operator-sort'
-"}}}
 
-" helps "{{{
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'mattn/learn-vimscript'
-"}}}
 
-" }}}
+"2}}}
 "-------------------------------------------------------------------------------
 " Plugin Settings: "{{{
 "-------------------------------------------------------------------------------
@@ -1984,5 +1949,4 @@ filetype plugin indent on
 NeoBundleCheck
 
 " }}}
-" vim: set sw=4 ts=4 et fdm=marker:
 
