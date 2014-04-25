@@ -1514,10 +1514,6 @@ xnoremap <silent> <expr> K
 " Visualモードでの連続貼り付け
 xnoremap p "0p<CR>
 
-" indent useful
-nnoremap < <<
-nnoremap > >>
-
 " keep visual mode after indented
 xnoremap < <gv
 xnoremap > >gv
@@ -1795,6 +1791,12 @@ call submode#map('winsize', 'n', '', '<', '<C-w><')
 call submode#map('winsize', 'n', '', '+', '<C-w>+')
 call submode#map('winsize', 'n', '', '-', '<C-w>-')
 call submode#map('winsize', 'n', '', '_', '<C-w>_')
+
+" indentation
+call submode#enter_with('indent', 'n', '', '>>', '>>')
+call submode#enter_with('indent', 'n', '', '<<', '<<')
+call submode#map('indent', 'n', '', '>', '>>')
+call submode#map('indent', 'n', '', '<', '<<')
 
 
 "-------------------------------------------------------------------------------
