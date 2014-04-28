@@ -7,13 +7,13 @@
 scriptencoding utf-8
 
 " switching variables
-let s:is_windows = has('win32') || has('win64')
+let s:is_windows = has('win16') || has('win32') || has('win64')
 let s:is_unix = has('unix')
 
 "set guioptions=mgt              " gui menu, grayed menu, tearoff menu
-set guioptions=                 " GUIオプションなし
-set browsedir=buffer            " browse時のディレクトリをカレントバッファと同じに
-set nohlsearch                  " 検索ハイライトなし
+set guioptions=                 " no GUI options
+set browsedir=buffer            " current directry when browsing
+"set nohlsearch                  " 検索ハイライトなし
 set cursorline                  " 現在行をハイライト
 set title                       " タイトルを表示
 "set mousefocus                 " マウス移動でウィンドウフォーカス

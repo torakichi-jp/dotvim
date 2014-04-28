@@ -18,9 +18,10 @@ let s:is_gui = has('gui_running')
 let s:is_windows = has('win16') || has('win32') || has('win64')
 let s:is_unix = has('unix')
 let s:is_cygwin = has('win32unix')
+let s:is_starting = has('vim_starting')
 
 " encoding "{{{
-if has('vim_starting')
+if s:is_starting
     if s:is_windows
         set termencoding=cp932
     endif
@@ -87,12 +88,11 @@ filetype off
 filetype plugin indent off
 
 " initialize neobundle
-if has('vim_starting')
+if s:is_starting
     let &runtimepath = &runtimepath . ',' . $DOTVIMDIR . '/bundle/neobundle.vim'
 endif
 
-"call neobundle#begin($DOTVIMDIR . '/bundle')
-call neobundle#rc($DOTVIMDIR . '/bundle')
+call neobundle#begin($DOTVIMDIR . '/bundle')
 
 "-------------------------------------------------------------------------------
 " Bundles: "{{{2
@@ -261,11 +261,8 @@ NeoBundle 'anyakichi/vim-surround', {
     \ }
 \ }
 
-NeoBundle 'Colour-Sampler-Pack'
 NeoBundle 'sudo.vim'
-NeoBundleLazy 'colorsel.vim'
 NeoBundleLazy 'vimwiki'
-NeoBundleLazy 'CSApprox'
 
 " Ruby static code analyzer.
 NeoBundleLazy 'ngmy/vim-rubocop', {
@@ -393,12 +390,14 @@ NeoBundle 'kmnk/vim-unite-giti', {
 \ }
 NeoBundleLazy 'choplin/unite-vim_hacks'
 
+" operator
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'tyru/operator-camelize.vim'
 NeoBundle 'tyru/operator-reverse.vim'
 NeoBundle 'emonkak/vim-operator-sort'
 
+" docs
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'mattn/learn-vimscript'
 
@@ -739,7 +738,7 @@ let g:toggle_pairs = {
 
 " }}}
 
-"call neobundle#end()
+call neobundle#end()
 
 " required!
 filetype plugin indent on
@@ -794,7 +793,7 @@ ruby << END
 END
     return l:rtp
 endfunction "}}}
-if has('vim_starting')
+if s:is_starting
     let &runtimepath = s:adjust_rtp(&runtimepath, $DOTVIMDIR)
 endif
 
@@ -940,7 +939,7 @@ set foldtext=foldCC#foldtext()
 let g:foldCCtext_enable_autofdc_adjuster = 1
 " }}}
 
-" タイトル行の表示設定
+" setting of title string
 "set titlestring=%t%(\ %M%)%(\ (%{expand(\"%:p:~:h\")})%)%(\ %a%)%(\ -\ %{v:servername}%)
 
 " use mouse
@@ -948,7 +947,7 @@ if has('mouse')
     set mouse=a
 endif
 
-" 透明度(Windows only)
+" transparency(Windows only)
 if s:is_windows && s:is_gui
     autocmd MyAutocmd VimEnter * set transparency=220
 endif
@@ -1207,7 +1206,7 @@ AlterCommand cap[ture]      Capture
 AlterCommand cdc[urrent]    CdCurrent
 AlterCommand bat[ch]        Batch
 AlterCommand ack            Ack
-AlterCommand t[ranslate]    ExciteTranslate
+AlterCommand t[ranslate]    TranslateGoogle
 AlterCommand alc            Ref webdict alc
 AlterCommand ej             Ref webdict ej
 AlterCommand je             Ref webdict je
@@ -1285,19 +1284,19 @@ augroup MyAutocmd
         endif
     endfunction "}}}
 
-    " （ヘルプとかを）qで終了
+    " close window with q in help and so on windows
     autocmd FileType help,ref-* nnoremap <buffer> <silent> q :<C-u>close<CR>
 
-    " gitのコミットメッセージを編集する時は、バックアップファイルを作らない
+    " no backups when edit git commit message
     autocmd FileType gitcommit setlocal nobackup noundofile noswapfile
 
-    " コマンドラインウィンドウ用設定
-    " 挿入モードではじめる
+    " settings of cmdline window
+    " start with insert mode
     autocmd CmdwinEnter * startinsert
-    " qで終了する
+    " terminate with q
     autocmd CmdwinEnter * nnoremap <buffer> <silent> q :<C-u>close<CR>
 
-    " 前回のカーソル位置を復元
+    " recover cursor position
     autocmd BufRead *
         \ if line('''"') > 1 && line('''"') <= line('$') |
             \ execute 'normal! g`"zz' |
@@ -1372,19 +1371,20 @@ nnoremap <C-w><S-f> <C-w>Fzz
 nnoremap <C-w><S-v> <C-W>vgFzz
 
 " open file with :browse
-nnoremap <C-x><C-e> :<C-u>browse edit<CR>
+"nnoremap <C-x><C-e> :<C-u>browse edit<CR>
 
 " write file with :browse
-nnoremap <C-x><C-w> :<C-u>browse write<CR>
+"nnoremap <C-x><C-w> :<C-u>browse write<CR>
 
 " exit like emacs
 nnoremap <C-x><C-c> ZQ
+inoremap <C-x><C-c> <C-o>ZQ
 
 " filetype insertion
-nnoremap <C-x><C-f> :<C-u>setfiletype<Space>
+"nnoremap <C-x><C-f> :<C-u>setfiletype<Space>
 
 " show option
-nnoremap <C-x><C-o> :<C-u>ShowOption<Space>
+"nnoremap <C-x><C-o> :<C-u>ShowOption<Space>
 
 " switch buffer
 nnoremap <C-x><C-n> :<C-u>bnext<CR>
@@ -1458,14 +1458,7 @@ nnoremap gl g$
 xnoremap gl g$
 onoremap gl $
 
-" all select
-nnoremap ga ggVG
-
-" clipboard register
-nnoremap X "*
-xnoremap X "*
-
-" grep
+" grep (use ag)
 nnoremap gr :<C-u>Ag <C-r><C-w> *
 xnoremap gr :<C-u>Ag <C-r>=<SID>get_selected_text()<CR> *
 
