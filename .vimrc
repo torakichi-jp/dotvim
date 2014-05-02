@@ -266,20 +266,20 @@ NeoBundle 'sudo.vim'
 NeoBundleLazy 'vimwiki'
 
 " Ruby static code analyzer.
-NeoBundleLazy 'ngmy/vim-rubocop', {
-    \ 'autoload' : { 'filetypes' : ['ruby'] }
-\ }
-NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'tpope/vim-rails'
-NeoBundle 'tpope/vim-rvm'
-NeoBundle 'tpope/vim-rake'
-NeoBundle 'tpope/vim-bundler'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'ngmy/vim-rubocop'
-NeoBundle 'nono/jquery.vim'
-NeoBundle 'astashov/vim-ruby-debugger'
-NeoBundle 'lucapette/vim-jquery-doc'
-NeoBundle 'kchmck/vim-coffee-script'
+"NeoBundleLazy 'ngmy/vim-rubocop', {
+"    \ 'autoload' : { 'filetypes' : ['ruby'] }
+"\ }
+"NeoBundle 'vim-ruby/vim-ruby'
+"NeoBundle 'tpope/vim-rails'
+"NeoBundle 'tpope/vim-rvm'
+"NeoBundle 'tpope/vim-rake'
+"NeoBundle 'tpope/vim-bundler'
+"NeoBundle 'tpope/vim-fugitive'
+"NeoBundle 'ngmy/vim-rubocop'
+"NeoBundle 'nono/jquery.vim'
+"NeoBundle 'astashov/vim-ruby-debugger'
+"NeoBundle 'lucapette/vim-jquery-doc'
+"NeoBundle 'kchmck/vim-coffee-script'
 
 " textobj
 NeoBundle 'kana/vim-textobj-user'
