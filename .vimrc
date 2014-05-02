@@ -26,6 +26,7 @@ if s:is_starting
         set termencoding=cp932
     endif
     "set encoding=utf-8      " internal encoding
+    set fileencodings=cp932,ucs-bom,utf-8,default,latin1
 endif
 "}}}
 
