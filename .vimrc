@@ -92,13 +92,14 @@ if s:is_starting
     let &runtimepath = &runtimepath . ',' . $DOTVIMDIR . '/bundle/neobundle.vim'
 endif
 
+" begin bundling
 call neobundle#begin($DOTVIMDIR . '/bundle')
 
 "-------------------------------------------------------------------------------
 " Bundles: "{{{2
 "-------------------------------------------------------------------------------
 
-NeoBundleFetch 'Shougo/neobundle.vim', { 'stay_same' : 1 }
+NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/neobundle-vim-recipes'
 NeoBundle 'Shougo/vimproc.vim'
 NeoBundle 'Shougo/vimshell', {
@@ -536,11 +537,10 @@ endif
 " vim-ref
 let s:hooks = neobundle#get_hooks('vim-ref')
 function! s:hooks.on_source(bundle)
-    let g:ref_use_vimproc = 1
-    if s:is_windows
-        "let g:ref_source_webdict_encoding = 'EUC-JP'
-        let g:ref_source_webdict_encoding = 'UTF-8'
-    endif
+    "let g:ref_use_vimproc = 1
+    "if s:is_windows
+    "    let g:ref_source_webdict_encoding = 'UTF-8'
+    "endif
 
     " set webdict sites
     let g:ref_source_webdict_sites = {
@@ -741,6 +741,7 @@ let g:toggle_pairs = {
 
 " }}}
 
+" end bundling
 call neobundle#end()
 
 " required!
