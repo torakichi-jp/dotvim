@@ -30,7 +30,7 @@ endif
 "}}}
 
 " set <leader> key
-let g:mapleader=','
+"let g:mapleader=','
 
 " candidates of dotvimdir path ordered in priority
 let s:dotvimdir_candidates = [
@@ -292,7 +292,6 @@ NeoBundle 'kana/vim-textobj-function'
 NeoBundle 'kana/vim-textobj-entire'
 NeoBundle 'thinca/vim-textobj-comment'
 NeoBundle 'thinca/vim-textobj-plugins'
-NeoBundle 'h1mesuke/textobj-wiw'
 NeoBundle 'deris/vim-textobj-enclosedsyntax'
 NeoBundle 'https://bitbucket.org/anyakichi/vim-textobj-xbrackets'
 
@@ -1394,15 +1393,11 @@ inoremap <C-x><C-c> <C-o>ZQ
 nnoremap <C-x><C-n> :<C-u>bnext<CR>
 nnoremap <C-x><C-p> :<C-u>bprevious<CR>
 
-" j, k mappings "{{{
-if !neobundle#is_sourced('accelerated-jk')
-    " j, k moves for view line (chages from gj, gk)
-    nnoremap j gj
-    nnoremap k gk
-endif
+" j, k moves for view line (exchages from gj, gk)
+nnoremap j gj
+nnoremap k gk
 nnoremap gj j
 nnoremap gk k
-"}}}
 
 " j, k mappings when loaded accelerated-jk "{{{
 let s:hooks = neobundle#get_hooks('accelerated-jk')
@@ -1790,10 +1785,10 @@ call submode#map('winsize', 'n', '', '-', '<C-w>-')
 call submode#map('winsize', 'n', '', '_', '<C-w>_')
 
 " indentation
-call submode#enter_with('indent', 'n', '', '>>', '>>')
-call submode#enter_with('indent', 'n', '', '<<', '<<')
-call submode#map('indent', 'n', '', '>', '>>')
-call submode#map('indent', 'n', '', '<', '<<')
+"call submode#enter_with('indent', 'n', '', '>>', '>>')
+"call submode#enter_with('indent', 'n', '', '<<', '<<')
+"call submode#map('indent', 'n', '', '>', '>>')
+"call submode#map('indent', 'n', '', '<', '<<')
 
 
 "-------------------------------------------------------------------------------
