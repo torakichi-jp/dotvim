@@ -657,8 +657,9 @@ function! MyCloseTab(n)
 endfunction
 
 " QFixHowm
-let g:mygrep = 'grep'
+let g:mygrepprg = 'ag'
 let g:howm_fileencoding = 'utf-8'
+let g:qfixmemo_mapleader = 'g\'
 
 "indentLine
 let g:indentLine_color_term = 111
