@@ -219,7 +219,6 @@ NeoBundle 'osyo-manga/vim-jplus'
 NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'LeafCage/foldCC'
 NeoBundle 'tpope/vim-capslock', {'lazy' : 1, 'autoload' : {'insert' : 1}}
-NeoBundle 'tpope/vim-rails'
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'gregsexton/VimCalc'
 NeoBundle 't9md/vim-quickhl'
@@ -266,20 +265,20 @@ NeoBundle 'sudo.vim'
 NeoBundleLazy 'vimwiki'
 
 " Ruby static code analyzer.
-NeoBundleLazy 'ngmy/vim-rubocop', {
-    \ 'autoload' : { 'filetypes' : ['ruby'] }
-\ }
-NeoBundle 'vim-ruby/vim-ruby'
-NeoBundle 'tpope/vim-rails'
-NeoBundle 'tpope/vim-rvm'
-NeoBundle 'tpope/vim-rake'
-NeoBundle 'tpope/vim-bundler'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'ngmy/vim-rubocop'
-NeoBundle 'nono/jquery.vim'
-NeoBundle 'astashov/vim-ruby-debugger'
-NeoBundle 'lucapette/vim-jquery-doc'
-NeoBundle 'kchmck/vim-coffee-script'
+"NeoBundleLazy 'ngmy/vim-rubocop', {
+"    \ 'autoload' : { 'filetypes' : ['ruby'] }
+"\ }
+"NeoBundle 'vim-ruby/vim-ruby'
+"NeoBundle 'tpope/vim-rails'
+"NeoBundle 'tpope/vim-rvm'
+"NeoBundle 'tpope/vim-rake'
+"NeoBundle 'tpope/vim-bundler'
+"NeoBundle 'tpope/vim-fugitive'
+"NeoBundle 'ngmy/vim-rubocop'
+"NeoBundle 'nono/jquery.vim'
+"NeoBundle 'astashov/vim-ruby-debugger'
+"NeoBundle 'lucapette/vim-jquery-doc'
+"NeoBundle 'kchmck/vim-coffee-script'
 
 " textobj
 NeoBundle 'kana/vim-textobj-user'
