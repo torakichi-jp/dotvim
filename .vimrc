@@ -676,10 +676,14 @@ if s:is_windows
     let openuri_cmd = '!start "rundll32.exe" url.dll,FileProtocolHandler %s'
 endif
 
+" ShowMarks {{{
+" エラーが出るようになったので一時的に切る
+let g:loaded_showmarks = 1
 " ShowMarksでハイライトするマーク指定
 let g:showmarks_include = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>'
 " プラグインでマップされちゃうのでautocmdで定義
-autocmd MyAutocmd VimEnter * call s:init_marks()
+" エラーが出るようになったので一時的に切る
+"autocmd MyAutocmd VimEnter * call s:init_marks()
 function! s:init_marks()    "{{{
     " TODO: mn, mp で（アルファベット順に）次のマークに移動するコードを書きたい
     " TODO: mcでマークを1行目に移動するのではなく、ちゃんと消したい
@@ -712,6 +716,7 @@ function! s:init_marks()    "{{{
     nnoremap <Plug>[Mark]j ]`
     nnoremap <Plug>[Mark]k [`
 endfunction
+"}}}
 "}}}
 
 " QFixHowmのメニューバーを表示しない
