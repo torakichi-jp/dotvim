@@ -31,7 +31,7 @@ endif
 "}}}
 
 " set <leader> key
-let g:mapleader=','
+"let g:mapleader=','
 
 " candidates of dotvimdir path ordered in priority
 let s:dotvimdir_candidates = [
@@ -93,13 +93,14 @@ if s:is_starting
     let &runtimepath = &runtimepath . ',' . $DOTVIMDIR . '/bundle/neobundle.vim'
 endif
 
+" begin bundling
 call neobundle#begin($DOTVIMDIR . '/bundle')
 
 "-------------------------------------------------------------------------------
 " Bundles: "{{{2
 "-------------------------------------------------------------------------------
 
-NeoBundleFetch 'Shougo/neobundle.vim', { 'stay_same' : 1 }
+NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/neobundle-vim-recipes'
 NeoBundle 'Shougo/vimproc.vim'
 NeoBundle 'Shougo/vimshell', {
@@ -219,7 +220,6 @@ NeoBundle 'osyo-manga/vim-jplus'
 NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'LeafCage/foldCC'
 NeoBundle 'tpope/vim-capslock', {'lazy' : 1, 'autoload' : {'insert' : 1}}
-NeoBundle 'tpope/vim-rails'
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'gregsexton/VimCalc'
 NeoBundle 't9md/vim-quickhl'
@@ -292,7 +292,6 @@ NeoBundle 'kana/vim-textobj-function'
 NeoBundle 'kana/vim-textobj-entire'
 NeoBundle 'thinca/vim-textobj-comment'
 NeoBundle 'thinca/vim-textobj-plugins'
-NeoBundle 'h1mesuke/textobj-wiw'
 NeoBundle 'deris/vim-textobj-enclosedsyntax'
 NeoBundle 'https://bitbucket.org/anyakichi/vim-textobj-xbrackets'
 
@@ -537,11 +536,10 @@ endif
 " vim-ref
 let s:hooks = neobundle#get_hooks('vim-ref')
 function! s:hooks.on_source(bundle)
-    let g:ref_use_vimproc = 1
-    if s:is_windows
-        "let g:ref_source_webdict_encoding = 'EUC-JP'
-        let g:ref_source_webdict_encoding = 'UTF-8'
-    endif
+    "let g:ref_use_vimproc = 1
+    "if s:is_windows
+    "    let g:ref_source_webdict_encoding = 'UTF-8'
+    "endif
 
     " set webdict sites
     let g:ref_source_webdict_sites = {
@@ -659,8 +657,9 @@ function! MyCloseTab(n)
 endfunction
 
 " QFixHowm
-let g:mygrep = 'grep'
+let g:mygrepprg = 'ag'
 let g:howm_fileencoding = 'utf-8'
+let g:qfixmemo_mapleader = 'g\'
 
 "indentLine
 let g:indentLine_color_term = 111
@@ -742,6 +741,7 @@ let g:toggle_pairs = {
 
 " }}}
 
+" end bundling
 call neobundle#end()
 
 " required!
@@ -1394,15 +1394,11 @@ inoremap <C-x><C-c> <C-o>ZQ
 nnoremap <C-x><C-n> :<C-u>bnext<CR>
 nnoremap <C-x><C-p> :<C-u>bprevious<CR>
 
-" j, k mappings "{{{
-if !neobundle#is_sourced('accelerated-jk')
-    " j, k moves for view line (chages from gj, gk)
-    nnoremap j gj
-    nnoremap k gk
-endif
+" j, k moves for view line (exchages from gj, gk)
+nnoremap j gj
+nnoremap k gk
 nnoremap gj j
 nnoremap gk k
-"}}}
 
 " j, k mappings when loaded accelerated-jk "{{{
 let s:hooks = neobundle#get_hooks('accelerated-jk')
@@ -1790,10 +1786,10 @@ call submode#map('winsize', 'n', '', '-', '<C-w>-')
 call submode#map('winsize', 'n', '', '_', '<C-w>_')
 
 " indentation
-call submode#enter_with('indent', 'n', '', '>>', '>>')
-call submode#enter_with('indent', 'n', '', '<<', '<<')
-call submode#map('indent', 'n', '', '>', '>>')
-call submode#map('indent', 'n', '', '<', '<<')
+"call submode#enter_with('indent', 'n', '', '>>', '>>')
+"call submode#enter_with('indent', 'n', '', '<<', '<<')
+"call submode#map('indent', 'n', '', '>', '>>')
+"call submode#map('indent', 'n', '', '<', '<<')
 
 
 "-------------------------------------------------------------------------------
