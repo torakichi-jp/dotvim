@@ -281,20 +281,6 @@ NeoBundleLazy 'vimwiki'
 "NeoBundle 'lucapette/vim-jquery-doc'
 "NeoBundle 'kchmck/vim-coffee-script'
 
-" textobj
-NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'kana/vim-textobj-line'
-NeoBundle 'kana/vim-textobj-underscore'
-NeoBundle 'kana/vim-textobj-indent'
-NeoBundle 'kana/vim-textobj-syntax'
-NeoBundle 'kana/vim-textobj-fold'
-NeoBundle 'kana/vim-textobj-function'
-NeoBundle 'kana/vim-textobj-entire'
-NeoBundle 'thinca/vim-textobj-comment'
-NeoBundle 'thinca/vim-textobj-plugins'
-NeoBundle 'deris/vim-textobj-enclosedsyntax'
-NeoBundle 'https://bitbucket.org/anyakichi/vim-textobj-xbrackets'
-
 " unite, matchers, and sources
 " unite.vim 
 NeoBundle 'Shougo/unite.vim', {
@@ -390,12 +376,27 @@ NeoBundle 'kmnk/vim-unite-giti', {
 \ }
 NeoBundleLazy 'choplin/unite-vim_hacks'
 
+" textobj
+NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'kana/vim-textobj-line'
+NeoBundle 'kana/vim-textobj-underscore'
+NeoBundle 'kana/vim-textobj-indent'
+NeoBundle 'kana/vim-textobj-syntax'
+NeoBundle 'kana/vim-textobj-fold'
+NeoBundle 'kana/vim-textobj-function'
+NeoBundle 'kana/vim-textobj-entire'
+NeoBundle 'thinca/vim-textobj-comment'
+NeoBundle 'thinca/vim-textobj-plugins'
+NeoBundle 'deris/vim-textobj-enclosedsyntax'
+NeoBundle 'https://bitbucket.org/anyakichi/vim-textobj-xbrackets'
+
 " operator
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'tyru/operator-camelize.vim'
 NeoBundle 'tyru/operator-reverse.vim'
 NeoBundle 'emonkak/vim-operator-sort'
+NeoBundle 'rhysd/vim-operator-surround'
 
 " docs
 NeoBundle 'vim-jp/vimdoc-ja'
