@@ -265,6 +265,8 @@ NeoBundle 'anyakichi/vim-surround', {
 NeoBundle 'sudo.vim'
 NeoBundleLazy 'vimwiki'
 
+NeoBundle 'slim-template/vim-slim'
+
 " Ruby static code analyzer.
 "NeoBundleLazy 'ngmy/vim-rubocop', {
 "    \ 'autoload' : { 'filetypes' : ['ruby'] }
