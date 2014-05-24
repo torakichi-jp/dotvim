@@ -15,7 +15,7 @@ set shellslash          " path delimiter is slash
 
 " switching variables
 let s:is_gui = has('gui_running')
-let s:is_windows = has('win16') || has('win32') || has('win64')
+let s:is_windows = has('win32') || has('win64')
 let s:is_unix = has('unix')
 let s:is_cygwin = has('win32unix')
 let s:is_starting = has('vim_starting')
@@ -429,24 +429,24 @@ call neobundle#config(
 \ )
 " if you use windows and that is not installed msvc, you must build manually
 " $VCINSTALLDIR envvar have to declare in advance
-if has('win64') && isdirectory($VCINSTALLDIR)
-    call neobundle#config(
-        \ 'vimproc.vim', {
-            \ 'build' : {
-                \ 'windows' : '"' . $VCINSTALLDIR . '/vcvarsall.bat" amd64 & ' .
-                    \ 'nmake /f make_msvc64.mak',
-            \ }
-        \ }
-    \ )
-elseif has('win32') && isdirectory($VCINSTALLDIR)
-    call neobundle#config(
-        \ 'vimproc.vim', {
-            \ 'build' : {
-                \ 'windows' : '"' . $VCINSTALLDIR . '/vcvarsall.bat" x86 & ' .
-                    \ 'nmake /f make_msvc32.mak',
-            \ }
-        \ }
-    \ )
+if s:is_windows && isdirectory($VCINSTALLDIR)
+    function! s:set_vimproc_config(architecture)
+        let l:vcvars_cmd = '"' . $VCINSTALLDIR . '/vcvarsall.bat" ' . a:architecture
+        let l:make_cmd = 'nmake /f make_msvc.mak'
+        let l:config_dict = {}
+        let l:config_dict.build = {}
+        let l:config_dict.build.windows = l:vcvars_cmd . ' & ' . l:make_cmd
+
+        call neobundle#config('vimproc.vim', l:config_dict)
+    endfunction
+
+    if has('win64')
+        call s:set_vimproc_config('amd64')
+    elseif has('win32')
+        call s:set_vimproc_config('x86')
+    endif
+
+    delfunction s:set_vimproc_config
 endif
 
 " neocomplete
