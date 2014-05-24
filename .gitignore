@@ -14,3 +14,4 @@
 !/.gitignore
 !/.gitmodules
 !/README.md
+!/vimrc_local_on_windows.vim
