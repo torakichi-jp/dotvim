@@ -42,33 +42,35 @@ let s:dotvimdir_candidates = [
     \ expand('~/dotvim'),
 \ ]
 
-" path to .vim directory
-function! s:get_dotvimdir_var()
-    " return path that found first
-    for dir in s:dotvimdir_candidates
-        if isdirectory(l:dir)
-            return l:dir
-        endif
-    endfor
-    return ''
-endfunction
-
-" path to .gvimrc
-function! s:get_gvimrc_var()
-    if filereadable(expand('~/_gvimrc'))
-        return expand('~_gvimrc')
-    elseif filereadable(expand('~/.gvimrc'))
-        return expand('~/.gvimrc')
-    endif
-    return ''
-endfunction
-
 if !exists('$DOTVIMDIR')
+    " path to .vim directory
+    function! s:get_dotvimdir_var()
+        " return path that found first
+        for dir in s:dotvimdir_candidates
+            if isdirectory(l:dir)
+                return l:dir
+            endif
+        endfor
+        return ''
+    endfunction
+
     let $DOTVIMDIR = s:get_dotvimdir_var()
+    delfunction s:get_dotvimdir_var
 endif
 
 if !exists('$MYGVIMRC')
+    " path to .gvimrc
+    function! s:get_gvimrc_var()
+        if filereadable(expand('~/_gvimrc'))
+            return expand('~_gvimrc')
+        elseif filereadable(expand('~/.gvimrc'))
+            return expand('~/.gvimrc')
+        endif
+        return ''
+    endfunction
+
     let $MYGVIMRC = s:get_gvimrc_var()
+    delfunction s:get_gvimrc_var
 endif
 
 " syntax
@@ -414,7 +416,7 @@ let g:loaded_getscriptPlugin = 1
 " disable netrw.vim
 let g:loaded_netrwPlugin = 1
 
-" used to remove files for NeoBundleClean command 
+" used to remove files for NeoBundleClean command
 let g:neobundle#rm_command = 'rm -rf'
 
 " vimproc build setting
