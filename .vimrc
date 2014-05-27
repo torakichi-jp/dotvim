@@ -600,30 +600,6 @@ function! s:hooks.on_source(bundle)
     let g:ctrlp_extensions = ['cmdline', 'yankring', 'menu']
 endfunction
 
-" powerline
-"if s:is_gui || !s:is_windows
-"    NeoBundleSource vim-powerline
-"    NeoBundleSource vim-powerline-unite-theme
-"    " powerline settings is in dotvim/vimfiles/plugin/autoload/Powerline/
-"endif
-"let s:hooks = neobundle#get_hooks('vim-powerline')
-"function! s:hooks.on_source(bundle)
-"    let g:Powerline_colorscheme='my'
-"    let g:Powerline_theme = 'unite_status'
-"    let g:Powerline_symbols = 'fancy'
-"    let g:Powerline_stl_path_style = 'filename'
-"
-"    let g:Powerline_mode_n = 'Normal'
-"    let g:Powerline_mode_i = 'Insert'
-"    let g:Powerline_mode_R = 'Replace'
-"    let g:Powerline_mode_v = 'Visual'
-"    let g:Powerline_mode_V = 'V-Line'
-"    let g:Powerline_mode_cv = 'V-Block'
-"    let g:Powerline_mode_s = 'Select'
-"    let g:Powerline_mode_S = 'S-Line'
-"    let g:Powerline_mode_cs = 'S-Block'
-"endfunction
-
 " lightline
 let g:lightline = {
       \ 'colorscheme': 'landscape',
