@@ -1784,7 +1784,7 @@ call submode#map('winsize', 'n', '', '_', '<C-w>_')
 " {{{
 
 " 補完
-inoremap <expr> <CR> pumvisible() ? neocomplete#close_popup() : '<CR>'
+"inoremap <expr> <CR> pumvisible() ? neocomplete#close_popup() : '<CR>'
 inoremap <expr> <C-y> neocomplete#close_popup()
 inoremap <expr> <C-e> neocomplete#cancel_popup()
 inoremap <expr> <C-g> neocomplete#undo_completion()
