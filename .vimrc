@@ -214,6 +214,7 @@ NeoBundle 'taku-o/vim-batch-source'
 NeoBundle 'kana/vim-tabpagecd'
 NeoBundle 'kana/vim-niceblock'
 NeoBundle 'kana/vim-submode'
+NeoBundle 'kana/vim-smartword'
 NeoBundle 'dannyob/quickfixstatus'
 NeoBundle 'jceb/vim-hier'
 NeoBundle 'deris/vim-rengbang'
@@ -1397,6 +1398,12 @@ endfunction
 " if cursor line is at foldclosed, 'l' open folding
 nnoremap <expr> l foldclosed('.') < 0 ? 'l' : 'zo'
 
+" move words
+nmap w <Plug>(smartword-w)
+nmap b <Plug>(smartword-b)
+nmap e <Plug>(smartword-e)
+nmap ge <Plug>(smartword-ge)
+
 " smart toggle folding
 nnoremap <silent><C-\> :<C-u>call <SID>smart_foldcloser()<CR>
 function! s:smart_foldcloser() "{{{
@@ -1502,13 +1509,6 @@ NXnoremap ]{ ]m
 NXnoremap ]} ]M
 NXnoremap [{ [m
 NXnoremap [} [m
-
-" move words
-" TODO: 自作する？
-"nmap w <Plug>(textobj-wiw-n)
-"nmap b <Plug>(textobj-wiw-p)
-"nmap e <Plug>(textobj-wiw-N)
-"nmap ge <Plug>(textobj-wiw-P)
 
 " search <cword> with split window
 nnoremap <C-w>*  <C-w>s*
