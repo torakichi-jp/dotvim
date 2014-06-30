@@ -1908,13 +1908,6 @@ endfunction
 " ファイルタイプ設定時に略記定義
 autocmd MyAutocmd FileType * call <SID>abbrev_def()
 
-" 単語境界挿入
-cnoreabbrev @b \<\><Left><Left>
-" $MYVIMRC,$MYGVIMRC
-cnoreabbrev @v $MYVIMRC
-cnoreabbrev @g $MYGVIMRC
-
-
 " }}}
 "===============================================================================
 " Terminating: "{{{1
