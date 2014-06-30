@@ -1361,21 +1361,9 @@ nnoremap <C-w><S-f> <C-w>Fzz
 " move to center of window (like <C-w>F)
 nnoremap <C-w><S-v> <C-W>vgFzz
 
-" open file with :browse
-"nnoremap <C-x><C-e> :<C-u>browse edit<CR>
-
-" write file with :browse
-"nnoremap <C-x><C-w> :<C-u>browse write<CR>
-
 " exit like emacs
 nnoremap <C-x><C-c> ZQ
 inoremap <C-x><C-c> <C-o>ZQ
-
-" filetype insertion
-"nnoremap <C-x><C-f> :<C-u>setfiletype<Space>
-
-" show option
-"nnoremap <C-x><C-o> :<C-u>ShowOption<Space>
 
 " switch buffer
 nnoremap <C-x><C-n> :<C-u>bnext<CR>
