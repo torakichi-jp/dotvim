@@ -1386,7 +1386,7 @@ endfunction
 " if cursor line is at foldclosed, 'l' open folding
 nnoremap <expr> l foldclosed('.') < 0 ? 'l' : 'zo'
 
-" move words
+" smart word moving
 nmap w <Plug>(smartword-w)
 nmap b <Plug>(smartword-b)
 nmap e <Plug>(smartword-e)
@@ -1469,7 +1469,7 @@ xnoremap <silent> gs
 " ToggleCase
 nnoremap <silent> <C-g>c :<C-u>call ToggleCase()<CR>
 
-" YをDなどと同じような動作にする
+" 'Y' is like 'D'
 nnoremap Y y$
 
 " Ref "{{{
@@ -1485,14 +1485,14 @@ xnoremap <silent> <expr> K
     \ ':<C-u>Ref webdict alc ' . <SID>get_selected_text() . '<CR>'
 "}}}
 
-" Visualモードでの連続貼り付け
+" put text no change the latest yanked on visual mode
 xnoremap p "0p<CR>
 
 " keep visual mode after indented
 xnoremap < <gv
 xnoremap > >gv
 
-" 前後の関数の始め／終わりに移動
+" move to begin or end of curly blacket block
 NXnoremap ]{ ]m
 NXnoremap ]} ]M
 NXnoremap [{ [m
@@ -1508,9 +1508,9 @@ nnoremap <C-]> g<C-]>
 " move to match pair
 map <C-j> %
 
-" <C-k> で <C-t> と逆の動作 (タグスタックの新しいエントリにジャンプ)
+" reverse <C-t> (jump to new entry of tagstack)
 nnoremap <C-k>  :<C-u>tag<CR>
-" ]t, [t でもタグを行き来する
+" jump forward/backward of tagstack
 nnoremap ]t  :<C-u>tag<CR>
 nnoremap [t  :<C-u>pop<CR>
 
@@ -1551,7 +1551,7 @@ function! s:cr_behavior() "{{{
     return ""
 endfunction "}}}
 
-" タブページ用マップ "{{{
+" mappings of tabpage "{{{
 nnoremap <Plug>[Tab] <Nop>
 nmap t <Plug>[Tab]
 nnoremap            <Plug>[Tab]l  gt
@@ -1771,13 +1771,13 @@ call submode#map('winsize', 'n', '', '_', '<C-w>_')
 "-------------------------------------------------------------------------------
 " {{{
 
-" 補完
+" completion
 "inoremap <expr> <CR> pumvisible() ? neocomplete#close_popup() : '<CR>'
 inoremap <expr> <C-y> neocomplete#close_popup()
 inoremap <expr> <C-e> neocomplete#cancel_popup()
 inoremap <expr> <C-g> neocomplete#undo_completion()
 
-" IME切り替え
+" switch IME
 if s:is_windows
     inoremap <C-@> <C-^>
 elseif s:is_unix
@@ -1787,7 +1787,7 @@ endif
 " capslock
 imap <C-l> <C-o><Plug>CapsLockToggle
 cmap <C-l> <Plug>CapsLockToggle
-" TODO: ステータスラインで状態表示
+" TODO: show capslock status on statusline
 
 " }}}
 
@@ -1804,12 +1804,10 @@ cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-k> <C-\>e getcmdpos() == 1 ? "" : getcmdline()[:getcmdpos()-2]<CR>
 cnoremap <C-y> <C-r>"
-" 単語境界入力
-cnoremap <C-t> \<\><Left><Left>
-" 置換
+" replace
 cnoremap <C-s> %substitute/
-" 検索パターン入力中の特定の文字のエスケープ
-" <C-v>に続ければそのまま入力
+" escape specialy character
+" <C-v> next as it is
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 cnoremap <expr> [ match(getcmdtype(), '[/?]') != -1 ? '\[' : '['
