@@ -1740,6 +1740,9 @@ nnoremap [Neocom]u :<C-u>NeoCompleteUnlock<CR>
 inoremap <C-x><C-l> :<C-u>NeoCompleteLock<CR>
 inoremap <C-x><C-u> :<C-u>NeoCompleteUnlock<CR>
 
+" thumbnail.vim
+nnoremap [Space]t :<C-u>Thumbnail<CR>
+
 " winmove.vim
 let g:winmove_no_default_keymappings = 1
 call submode#enter_with('winmove', 'n', '', '<C-w>m', '<Nop>')
