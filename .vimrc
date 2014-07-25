@@ -1759,12 +1759,6 @@ call submode#map('winsize', 'n', '', '+', '<C-w>+')
 call submode#map('winsize', 'n', '', '-', '<C-w>-')
 call submode#map('winsize', 'n', '', '_', '<C-w>_')
 
-" indentation
-"call submode#enter_with('indent', 'n', '', '>>', '>>')
-"call submode#enter_with('indent', 'n', '', '<<', '<<')
-"call submode#map('indent', 'n', '', '>', '>>')
-"call submode#map('indent', 'n', '', '<', '<<')
-
 
 "-------------------------------------------------------------------------------
 " Insertmode Mappings:
