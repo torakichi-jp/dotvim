@@ -1,31 +1,19 @@
 "*******************************************************************************
-" ƒ[ƒJƒ‹İ’è on Windows
+" local settings on Windows
 "*******************************************************************************
 
-" ƒz[ƒ€ƒfƒBƒŒƒNƒgƒŠ
+scriptencoding utf-8    " encoding of this script
+
+" ãƒ›ãƒ¼ãƒ ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
 if !exists('$HOME')
     let $HOME=$USERPROFILE
 endif
 
-" GitiMsysGitj‚ÌƒpƒX’Ç‰Á
+" Gitï¼ˆMsysGitï¼‰ã®ãƒ‘ã‚¹è¿½åŠ 
 let $PATH='C:\Program Files (x86)\Git\bin;'.$PATH
 let $PATH='C:\Program Files (x86)\Git\cmd;'.$PATH
 
-" MinGW‚ÌƒpƒX’Ç‰Á
-"let $PATH='C:\MinGW\bin;'.$PATH
-
-" gnupack‚ÌƒpƒX’Ç‰Á
-let $PATH.=';C:\gnupack\gnupack_basic-11.00\app\cygwin\cygwin\bin'
-
-" ƒCƒ“ƒNƒ‹[ƒhƒfƒBƒŒƒNƒgƒŠ‚ğpath‚É’Ç‰Á
-augroup IncDir
-    autocmd!
-    autocmd FileType c,cpp setlocal path+=C:/Program\\\ Files\\\ (x86)/Microsoft\\\ Visual\\\ Studio\\\ 9.0/VC/include/
-    autocmd FileType c,cpp setlocal path+=C:/Program\\\ Files\\\ (x86)/Microsoft\\\ SDKs/Windows/v5.0/Include/
-    autocmd FileType c,cpp setlocal path+=C:/Program\\\ Files\\\ (x86)/Microsoft\\\ DirectX\\\ SDK\\\ (June\\\ 2010)/Include/
-augroup END
-
-" Visual Studio ‚ÌŠÂ‹«•Ï”İ’è
+" Visual Studio ã®ç’°å¢ƒå¤‰æ•°è¨­å®š
 let s:msvc_dirs = []
 call add(s:msvc_dirs, "C:/Program\ Files\ (x86)/Microsoft\ Visual\ Studio\ 11.0")
 call add(s:msvc_dirs, "C:/Program\ Files\ (x86)/Microsoft\ Visual\ Studio\ 10.0")
@@ -57,6 +45,23 @@ endfunction
 
 call s:set_msvc_path(get(filter(copy(s:msvc_dirs), "isdirectory(v:val)"), 0, ""))
 
-" MSBuild‚ÌƒpƒX’Ç‰Á
+" MSBuildã®ãƒ‘ã‚¹è¿½åŠ 
 let $PATH.=';C:/Windows/Microsoft.NET/Framework/v4.0.30319/'
+
+" ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’(ãƒ­ãƒ¼ã‚«ãƒ«ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã®)pathã«è¿½åŠ  " {{{
+function s:add_path_local(path)
+    let &l:path .= ',' . a:path
+endfunction
+let s:msvc_include_path = 'C:/Program\ Files\ (x86)/Microsoft\ Visual\ Studio\ 12.0/VC/include/'
+let s:winsdk_include_path = 'C:/Program\ Files\ (x86)/Microsoft\ SDKs/Windows/v6.0/Include/'
+let s:dxsdk_include_path = 'C:/Program\ Files\ (x86)/Microsoft\ DirectX\ SDK\ (June\ 2010)/Include/'
+
+augroup IncDir
+    autocmd!
+    autocmd FileType c,cpp setlocal path<
+    autocmd FileType c,cpp call s:add_path_local(s:msvc_include_path)
+    autocmd FileType c,cpp call s:add_path_local(s:winsdk_include_path)
+    autocmd FileType c,cpp call s:add_path_local(s:dxsdk_include_path)
+augroup END
+" }}}
 
