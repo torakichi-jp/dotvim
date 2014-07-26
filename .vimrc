@@ -1749,7 +1749,7 @@ inoremap <C-x><C-l> :<C-u>NeoCompleteLock<CR>
 inoremap <C-x><C-u> :<C-u>NeoCompleteUnlock<CR>
 
 " thumbnail.vim
-nnoremap [Space]t :<C-u>Thumbnail<CR>
+nnoremap [Space]t :<C-u>Thumbnail -here<CR>
 
 " winmove.vim
 let g:winmove_no_default_keymappings = 1
