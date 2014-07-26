@@ -19,6 +19,7 @@ let $PATH.=';C:\gnupack\gnupack_basic-11.00\app\cygwin\cygwin\bin'
 
 " インクルードディレクトリをpathに追加
 augroup IncDir
+    autocmd!
     autocmd FileType c,cpp setlocal path+=C:/Program\\\ Files\\\ (x86)/Microsoft\\\ Visual\\\ Studio\\\ 9.0/VC/include/
     autocmd FileType c,cpp setlocal path+=C:/Program\\\ Files\\\ (x86)/Microsoft\\\ SDKs/Windows/v5.0/Include/
     autocmd FileType c,cpp setlocal path+=C:/Program\\\ Files\\\ (x86)/Microsoft\\\ DirectX\\\ SDK\\\ (June\\\ 2010)/Include/
