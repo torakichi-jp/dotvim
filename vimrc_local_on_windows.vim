@@ -11,13 +11,13 @@ endif
 
 " Visual Studio の最新版のパスを取得
 let s:msvc_dirs = []
-call add(s:msvc_dirs, "C:/Program Files (x86)/Microsoft Visual Studio 12.0")
-call add(s:msvc_dirs, "C:/Program Files (x86)/Microsoft Visual Studio 11.0")
-call add(s:msvc_dirs, "C:/Program Files (x86)/Microsoft Visual Studio 10.0")
-call add(s:msvc_dirs, "C:/Program Files (x86)/Microsoft Visual Studio 9.0")
-call add(s:msvc_dirs, "C:/Program Files (x86)/Microsoft Visual Studio 8.0")
+call add(s:msvc_dirs, 'C:/Program Files (x86)/Microsoft Visual Studio 12.0')
+call add(s:msvc_dirs, 'C:/Program Files (x86)/Microsoft Visual Studio 11.0')
+call add(s:msvc_dirs, 'C:/Program Files (x86)/Microsoft Visual Studio 10.0')
+call add(s:msvc_dirs, 'C:/Program Files (x86)/Microsoft Visual Studio 9.0')
+call add(s:msvc_dirs, 'C:/Program Files (x86)/Microsoft Visual Studio 8.0')
 
-let s:msvc_latest = get(filter(copy(s:msvc_dirs), "isdirectory(v:val)"), 0, "")
+let s:msvc_latest = get(filter(copy(s:msvc_dirs), 'isdirectory(v:val)'), 0, '')
 
 " Visual Studio の環境変数設定 "{{{
 function! s:set_msvc_path(msvc_path)
