@@ -784,7 +784,7 @@ ruby << END
 END
     return l:rtp
 endfunction "}}}
-if s:is_starting
+if s:is_starting && has('ruby')
     let &runtimepath = s:adjust_rtp(&runtimepath, $DOTVIMDIR)
 endif
 
@@ -938,7 +938,7 @@ if has('mouse')
     set mouse=a
 endif
 
-" transparency(Windows only)
+" transparency(Windows GUI only)
 if s:is_windows && s:is_gui
     autocmd MyAutocmd VimEnter * set transparency=220
 endif
@@ -1274,6 +1274,9 @@ augroup MyAutocmd
             execute "setlocal colorcolumn=" . join(range(a:line_col, 9999), ',')
         endif
     endfunction "}}}
+
+    " add path when cpp
+    autocmd FileType cpp setlocal path+=,/usr/include,/usr/local/include
 
     " close window with q in help and so on windows
     autocmd FileType help,ref-* nnoremap <buffer> <silent> q :<C-u>close<CR>
