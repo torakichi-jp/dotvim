@@ -744,6 +744,7 @@ NeoBundleCheck
 
 " adjust 'runtimepath'
 function! s:adjust_rtp(runtimepath, dotvimdir) "{{{
+    if has('ruby')
 ruby << END
     DOTVIM_CANDIDATES = VIM::evaluate('s:dotvimdir_candidates').freeze
 
@@ -782,9 +783,13 @@ ruby << END
     rtp = adjust_rtp VIM::evaluate('a:runtimepath'), VIM::evaluate('a:dotvimdir')
     VIM::command 'let l:rtp = "' + rtp + '"'
 END
-    return l:rtp
+        return l:rtp
+    else
+        return a:runtimepath
+    endif
+
 endfunction "}}}
-if s:is_starting && has('ruby')
+if s:is_starting
     let &runtimepath = s:adjust_rtp(&runtimepath, $DOTVIMDIR)
 endif
 
@@ -869,7 +874,7 @@ set winaltkeys=no               " not use alt keys for GUI menu
 set path+=;/                    " file path follows parent directory
 set tags+=./tags;,./**/tags     " search path of tag files
 set complete-=it                " remove "include, tag" from candidates
-set completeopt=menu            " option of completion
+set completeopt=menuone,preview " option of completion
 set showfulltag                 " show tag pattern when tag completion
 set viminfo& viminfo+=/0        " not write searching history
 set timeout                     " enable timeout of key mappings
@@ -1276,7 +1281,7 @@ augroup MyAutocmd
     endfunction "}}}
 
     " add path when cpp
-    autocmd FileType cpp setlocal path+=,/usr/include,/usr/local/include
+    autocmd FileType cpp setlocal path+=/usr/include,/usr/local/include
 
     " close window with q in help and so on windows
     autocmd FileType help,ref-* nnoremap <buffer> <silent> q :<C-u>close<CR>
