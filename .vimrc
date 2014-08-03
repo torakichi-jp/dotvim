@@ -51,7 +51,7 @@ if !exists('$DOTVIMDIR')
                 return l:dir
             endif
         endfor
-        return ''
+        return $HOME
     endfunction
 
     let $DOTVIMDIR = s:get_dotvimdir_var()
@@ -797,7 +797,7 @@ endif
 
 " VimScript "{{{
 " syntax folding setting
-" foldmethod=syntaxでないと意味なし
+" required foldmethod=syntax
 " augroup: a
 " function: f
 " lua: l
@@ -833,7 +833,7 @@ else
     colorscheme landscape
 endif
 
-" normal options "{{{
+" general options "{{{
 
 " use clipboard instead of unnamed register
 "set clipboard& clipboard+=unnamed
@@ -841,12 +841,12 @@ endif
 set number                      " show line numbers
 "set relativenumber             " show relative line numbers
 set ruler                       " show ruler
-set notitle                     " show not title of after exited Vim
+set notitle                     " not show title of exited Vim
 set showcmd                     " show inserting command
 set hidden                      " hide buffer instead to remove buffer updating
 set confirm                     " show confirm dialog instead of error
 set backspace=indent,eol,start  " delete each of these characters for backspace
-set cursorline                  " hilight line at current cursor
+set cursorline                  " highlight line at current cursor
 set display=lastline            " show lastline as much as possible
 set cmdheight=2                 " set command line height
 set noequalalways               " disable automatical adjust window size
@@ -862,8 +862,6 @@ set helplang=ja                 " help language is japanese
 set pumheight=10                " max height of popup menu
 set previewheight=5             " height of preview window
 set shortmess& shortmess+=I     " no launch message
-"set showbreak=>\               " line head of wrap (attention: last space)
-"set cpoptions+=n               " use number column to start wrap line
 set cmdwinheight=5              " height of cmdwindow
 set showmatch                   " jump to match pair temporarily
 set matchtime=0                 " times to jump match pair
@@ -873,15 +871,18 @@ set matchpairs& matchpairs+=<:> " add pair that is <>
 set winaltkeys=no               " not use alt keys for GUI menu
 set path+=;/                    " file path follows parent directory
 set tags+=./tags;,./**/tags     " search path of tag files
-set complete-=it                " remove "include, tag" from candidates
+set complete-=it                " remove 'include, tag' from candidates
 set completeopt=menuone,preview " option of completion
 set showfulltag                 " show tag pattern when tag completion
 set viminfo& viminfo+=/0        " not write searching history
 set timeout                     " enable timeout of key mappings
-set timeoutlen=3000             " wait time of key mappings(ms)
+set timeoutlen=3000             " wait time(ms) of key mappings
 set selectmode=                 " not use select mode
 set sidescroll=1                " step of horizontal scroll
 set sidescrolloff=1             " offset around cursor in horizontal scroll
+
+let &showbreak='+++ '           " string of wrapped line head
+set cpoptions& cpoptions+=n     " use number column for wrapped line
 
 " keep column as much as possible in the vertical movement
 " (<C-d>, <C-u>, and so on)
@@ -895,6 +896,7 @@ set wildmenu
 set wildmode=longest,full
 
 " non-printable character display settings
+" when enable utf-8, use unicode character
 set list
 if &encoding =~? 'utf-8\|utf8'
     let &listchars="tab:\u2192\ ,trail:_,extends:>,precedes:<"
@@ -909,14 +911,14 @@ augroup END
 
 "}}}
 
-" tab, indent option " {{{
+" tab, indent options " {{{
 set tabstop=4           " タブ幅
 set expandtab           " タブ展開する
 set shiftwidth=4        " インデント幅
 set softtabstop=4       " <Tab>や<BS>を入力したときの移動幅
 " }}}
 
-" searching option " {{{
+" searching options " {{{
 set incsearch           " インクリメンタルサーチを有効
 set nohlsearch          " 検索ハイライト無効
 set ignorecase          " 大文字小文字を無視
@@ -927,7 +929,7 @@ set grepprg=grep\ -nH   " grepプログラム
 set gdefault            " 候補を全部置換する
 " }}}
 
-" folding option " {{{
+" folding options " {{{
 set foldenable          " 折りたたみを有効に
 set foldcolumn=0        " 折りたたみ列数
 set foldmethod=marker   " 印で折りたたみ
@@ -948,18 +950,18 @@ if s:is_windows && s:is_gui
     autocmd MyAutocmd VimEnter * set transparency=220
 endif
 
-" backup option " {{{
-set backup                                  " バックアップする
-let &backupdir = $DOTVIMDIR . '/.backup'   " バックアップを作成するディレクトリ
-set undofile                                " アンドゥファイルを作成する
-let &undodir = $DOTVIMDIR . '/.undo'       " アンドゥファイルを作成するディレクトリ
-" バックアップディレクトリがなかったら作成する
+" backup options " {{{
+set backup                                  " create backup file
+let &backupdir = $DOTVIMDIR . '/.backup'    " directory of backup file
+set undofile                                " create undo file
+let &undodir = $DOTVIMDIR . '/.undo'        " directory of undo file
+" create backup directory if not exist
 if &backupdir!=#'' && !isdirectory(&backupdir)
     call mkdir(&backupdir)
 endif
-" スワップファイルを作成するディレクトリ
+" directory of swap file
 let &directory=&backupdir
-" アンドゥファイルディレクトリがなかったら作成する
+" create undo file directory if not exist
 if &undodir!=#'' && !isdirectory(&undodir)
     call mkdir(&undodir)
 endif
