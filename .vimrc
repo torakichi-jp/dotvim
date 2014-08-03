@@ -912,27 +912,28 @@ augroup END
 "}}}
 
 " tab, indent options " {{{
-set tabstop=4           " タブ幅
-set expandtab           " タブ展開する
-set shiftwidth=4        " インデント幅
-set softtabstop=4       " <Tab>や<BS>を入力したときの移動幅
+set tabstop=4           " tab width
+set expandtab           " tab expanding
+set shiftwidth=4        " indent width
+set softtabstop=4       " width when enter <Tab> or <BS>
 " }}}
 
 " searching options " {{{
-set incsearch           " インクリメンタルサーチを有効
-set nohlsearch          " 検索ハイライト無効
-set ignorecase          " 大文字小文字を無視
-set smartcase           " 大文字が含まれるときのみ無視しない
-set wrapscan            " 最後まで行ったら最初に戻る
-set grepprg=grep\ -nH   " grepプログラム
-"set grepprg=ack\ -H    " grepにackを使う
-set gdefault            " 候補を全部置換する
+set incsearch           " enable incremental search
+set nohlsearch          " disable highlight of search
+set ignorecase          " ignore case
+set smartcase           " ignore case if searching pattern include upper case
+set wrapscan            " back for the first line when go to the end line
+set grepprg=grep\ -nH   " grep command
+"set grepprg=ack\ -H    " use ack for grep
+set gdefault            " replace all candidates
 " }}}
 
 " folding options " {{{
-set foldenable          " 折りたたみを有効に
-set foldcolumn=0        " 折りたたみ列数
-set foldmethod=marker   " 印で折りたたみ
+set foldenable          " enable folding
+set foldcolumn=0        " width of folding column
+set foldmethod=marker   " folding use marker
+" folding line text
 set foldtext=foldCC#foldtext()
 let g:foldCCtext_enable_autofdc_adjuster = 1
 " }}}
