@@ -725,6 +725,15 @@ let g:toggle_pairs = {
     \ 'or' : 'and',
 \ }
 
+" j, k mappings when loaded accelerated-jk "{{{
+let s:hooks = neobundle#get_hooks('accelerated-jk')
+function! s:hooks.on_source(bundle)
+    nmap j <Plug>(accelerated_jk_gj)
+    nmap k <Plug>(accelerated_jk_gk)
+endfunction
+
+"}}}
+
 " }}}
 
 " end bundling
@@ -1379,19 +1388,13 @@ inoremap <C-x><C-c> <C-o>ZQ
 nnoremap <C-x><C-n> :<C-u>bnext<CR>
 nnoremap <C-x><C-p> :<C-u>bprevious<CR>
 
-" j, k moves for view line (exchages from gj, gk)
-nnoremap j gj
-nnoremap k gk
+" j, k move for viewed line (exchage from gj, gk)
+if !neobundle#is_sourced('accelerated-jk')
+    nnoremap j gj
+    nnoremap k gk
+endif
 nnoremap gj j
 nnoremap gk k
-
-" j, k mappings when loaded accelerated-jk "{{{
-let s:hooks = neobundle#get_hooks('accelerated-jk')
-function! s:hooks.on_source(bundle)
-    nmap j <Plug>(accelerated_jk_gj)
-    nmap k <Plug>(accelerated_jk_gk)
-endfunction
-"}}}
 
 " if cursor line is at foldclosed, 'l' open folding
 nnoremap <expr> l foldclosed('.') < 0 ? 'l' : 'zo'
