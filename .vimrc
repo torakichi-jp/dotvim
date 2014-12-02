@@ -9,10 +9,6 @@
 " Initializing: "{{{1
 "===============================================================================
 
-scriptencoding utf-8    " encoding of this script
-set nocompatible        " Vi IMproved
-set shellslash          " path delimiter is slash
-
 " switching variables
 let s:is_gui = has('gui_running')
 let s:is_windows = has('win32') || has('win64')
@@ -29,6 +25,9 @@ if s:is_starting
     set fileencodings=cp932,ucs-bom,utf-8,default,latin1
 endif
 "}}}
+
+scriptencoding utf-8    " encoding of this script
+set shellslash          " path delimiter is slash
 
 " set <leader> key
 "let g:mapleader=','
@@ -319,7 +318,7 @@ NeoBundle 'thinca/vim-unite-history', {
         \ 'unite_sources' : ['history/command', 'history/search']
     \ }
 \ }
-NeoBundle 'h1mesuke/unite-outline', {
+NeoBundle 'Shougo/unite-outline', {
     \ 'lazy' : 1,
     \ 'autoload' : {
         \ 'unite_sources' : 'outline'
@@ -735,7 +734,7 @@ call neobundle#end()
 filetype plugin indent on
 
 " plugin installation check
-NeoBundleCheck
+"NeoBundleCheck
 
 " }}}
 "===============================================================================
