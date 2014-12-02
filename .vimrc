@@ -838,7 +838,7 @@ set t_Co=256
 if s:is_windows && !s:is_gui
     colorscheme default
 else
-    colorscheme landscape
+    colorscheme home_color
 endif
 
 " general options "{{{

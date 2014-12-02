@@ -30,7 +30,7 @@ function! s:toggle_menu()
 endfunction
 
 " カラースキーム
-colorscheme landscape
+colorscheme home_color
 
 " ビジュアルベル（使用しない）
 set visualbell t_vb=
