@@ -872,7 +872,7 @@ set previewheight=5             " height of preview window
 set shortmess& shortmess+=I     " no launch message
 set cmdwinheight=5              " height of cmdwindow
 set showmatch                   " jump to match pair temporarily
-set matchtime=0                 " times to jump match pair
+set matchtime=1                 " time (0.1 sec) to jump match pair
 set virtualedit+=block          " virtual edit for visual block mode only
 set cinoptions=:0,l1,g0,m1      " C/C++ indent option
 set matchpairs& matchpairs+=<:> " add pair that is <>
