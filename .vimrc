@@ -1276,7 +1276,7 @@ endfunction "}}}
 
 augroup MyAutocmd
 
-    " 81文字目以降に線を引く
+    " draw vertical line in 81
     "autocmd FileType * call <SID>set_colorcolumn(81)
     "autocmd VimResized * call <SID>set_colorcolumn(81)
     function! s:set_colorcolumn(line_col) "{{{
@@ -1294,11 +1294,14 @@ augroup MyAutocmd
     " add path when cpp
     autocmd FileType cpp setlocal path+=/usr/include,/usr/local/include
 
-    " close window with q in help and so on windows
+    " close window with q
     autocmd FileType help,ref-* nnoremap <buffer> <silent> q :<C-u>close<CR>
 
     " no backups when edit git commit message
     autocmd FileType gitcommit setlocal nobackup noundofile noswapfile
+
+    " open read-only if exist swapfile
+    autocmd SwapExists * let v:swapchoice = 'o'
 
     " settings of cmdline window
     " start with insert mode
