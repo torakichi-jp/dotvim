@@ -1016,41 +1016,41 @@ function! MakeTabLine() "{{{
         let info .= '[' . branch_info . '] '
     endif
 
-    return tabpages . '%=' . info   " タブリストを左に、情報を右に表示
+    return tabpages . '%=' . info   " view tab list at left, information at right
 endfunction "}}}
 
 " each tab view setting
 function! s:TabPageLabel(n) "{{{
-    " t:title と言う変数があったらそれを使う
+    " use t:title if exists
     let title = gettabvar(a:n, 'title')
     if title !=# ''
         return title . ' %#TabLineFill#'
     else
-        " タブページ内のバッファのリスト
+        " buffer list on tabpage
         let bufnrs = tabpagebuflist(a:n)
 
-        " カレントタブページかどうかでハイライトを切り替える
+        " switch highlight whether current tabpage
         let hi = a:n is tabpagenr() ? '%#TabLineSel#' : '%#TabLine#'
 
-        " バッファが複数あったらバッファ数を表示
+        " view num buffers if exist multiple
         let no = len(bufnrs)
         if no is 1
             let no = ""
         endif
-        " タブページ内に変更ありのバッファがあったら '+' を付ける
+        " add '+' if exist modified buffer
         let mod = len(filter(copy(bufnrs), 'getbufvar(v:val, ''&modified'')')) ? '+' : ''
-        let sp = (no . mod) ==# "" ? "" : ' '  " 隙間空ける
+        let sp = (no . mod) ==# "" ? "" : ' '  " make gap
 
-        " カレントバッファを取得
-        let curbufnr = bufnrs[tabpagewinnr(a:n) - 1]  " tabpagewinnr() は 1 origin
+        " get current buffer
+        let curbufnr = bufnrs[tabpagewinnr(a:n) - 1]  " tabpagewinnr() is 1 origin
         let curbufname = bufname(curbufnr)
 
-        " b:title という変数があったらそれを使う
+        " use b:title if exists
         let title = getbufvar(curbufnr, 'title')
         if !empty(title)
             let fname = title
         elseif empty(curbufname)
-            " バッファタイプによって名前を変える
+            " change name by buffer type
             if &buftype ==# 'nofile'
                 let fname = '[下書き]'
             elseif &buftype ==# 'quickfix'
@@ -1069,7 +1069,7 @@ function! s:TabPageLabel(n) "{{{
 
     let labeltext = no . mod . sp . fname
     let label = '%' . a:n . 'T' . hi . ' ' . labeltext . '%T'
-    "let closelabel = '%' . a:n . 'X x %X'      " 閉じるラベル
+    "let closelabel = '%' . a:n . 'X x %X'      " closing label
 
     "return label . closelabel . '%#TabLineFill#'
     return label . ' %#TabLineFill#'
