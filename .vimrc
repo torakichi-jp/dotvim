@@ -567,7 +567,7 @@ function! s:hooks.on_source(bundle)
             \ ['je',            15],
             \ ['ej',            15],
             \ ['wiki',          17],
-            \ ['alc',           38],
+            \ ['alc',           25],
             \ ['weblio',        17],
             \ ['thesaurus',     28],
             \ ['wiktionary',    17],
