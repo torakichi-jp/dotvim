@@ -287,6 +287,7 @@ NeoBundle 'slim-template/vim-slim'
 
 " Haskell plugins
 NeoBundle 'kana/vim-filetype-haskell'
+NeoBundle 'dag/vim2hs'
 
 " unite, matchers, and sources
 " unite.vim 
@@ -736,6 +737,9 @@ function! s:hooks.on_source(bundle)
 endfunction
 
 "}}}
+
+" vim2hs
+let g:haskell_conceal = 0
 
 " }}}
 
