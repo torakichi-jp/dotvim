@@ -286,8 +286,12 @@ NeoBundle 'slim-template/vim-slim'
 "NeoBundle 'kchmck/vim-coffee-script'
 
 " Haskell plugins
+NeoBundle 'eagletmt/ghcmod-vim'
+NeoBundle 'eagletmt/unite-haddock'
 NeoBundle 'kana/vim-filetype-haskell'
 NeoBundle 'dag/vim2hs'
+NeoBundle 'ujihisa/neco-ghc'
+NeoBundle 'ujihisa/ref-hoogle'
 
 " unite, matchers, and sources
 " unite.vim 
