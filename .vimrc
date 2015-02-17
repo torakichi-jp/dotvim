@@ -382,7 +382,6 @@ NeoBundle 'kmnk/vim-unite-giti', {
         \ 'unite_sources' : 'giti'
     \ }
 \ }
-NeoBundleLazy 'choplin/unite-vim_hacks'
 
 " textobj
 NeoBundle 'kana/vim-textobj-user'
