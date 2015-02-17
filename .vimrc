@@ -285,6 +285,9 @@ NeoBundle 'slim-template/vim-slim'
 "NeoBundle 'lucapette/vim-jquery-doc'
 "NeoBundle 'kchmck/vim-coffee-script'
 
+" Haskell plugins
+NeoBundle 'kana/vim-filetype-haskell'
+
 " unite, matchers, and sources
 " unite.vim 
 NeoBundle 'Shougo/unite.vim', {
