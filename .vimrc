@@ -632,8 +632,9 @@ let g:qfixmemo_mapleader = 'g\'
 
 "indentLine
 let g:indentLine_color_term = 111
-let g:indentLing_color_gui = '#708090'
-let g:indentLine_char = '|'
+let g:indentLine_color_gui = '#708090'
+let g:indentLine_noConcealCursor = 1
+"let g:indentLine_char = '|'
 
 " EasyMotion
 let g:EasyMotion_leader_key = '\'
