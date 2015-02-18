@@ -1561,12 +1561,11 @@ nnoremap <silent> <F4> :<C-u>TlistToggle<CR>
 " reload screen
 nnoremap <F5> <C-l>
 
-" go to line if count is exist
-" else redraw screen
+" go to specified line if count is exist
+" else turn off search highlight
 noremap <silent> <CR> :<C-u>call <SID>cr_behavior()<CR>
 function! s:cr_behavior() "{{{
     if v:count == 0
-        redraw!
         if exists(':Nohlsearch')
             Nohlsearch
         else
