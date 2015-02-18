@@ -516,6 +516,11 @@ function! s:hooks.on_source(bundle)
         \ ['UCS-2',     'Utf16be'],
     \ ]
 
+    " neomru
+    let g:unite_sources_mru_update_interval=10
+    call unite#custom#source('neomru/file', 'ignore_pattern',
+        \ expand('$DOTVIMDIR') . '/bundle/*')
+
 endfunction
 
 "quickrun
@@ -940,7 +945,7 @@ set softtabstop=4       " width when enter <Tab> or <BS>
 set incsearch           " enable incremental search
 set nohlsearch          " disable highlight of search
 set ignorecase          " ignore case
-set smartcase           " ignore case if searching pattern include upper case
+set smartcase           " ignore case unless searching pattern include upper case
 set wrapscan            " back for the first line when go to the end line
 set grepprg=grep\ -nH   " grep command
 "set grepprg=ack\ -H    " use ack for grep
