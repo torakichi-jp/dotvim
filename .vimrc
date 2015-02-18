@@ -441,10 +441,9 @@ let s:hooks = neobundle#get_hooks('neocomplete.vim')
 function! s:hooks.on_source(bundle)
     let g:neocomplete#enable_auto_select = 1
     let g:neocomplete#disable_auto_complete = 1
-    let g:neocomplete#enable_fuzzy_completion = 0
-    let g:neocomplete#enable_refresh_always = 0
-    let g:neocomplete#auto_completion_start_length = 3
-    let g:neocomplete#use_vimproc = 1
+    let g:neocomplete#enable_fuzzy_completion = 1
+    "let g:neocomplete#auto_completion_start_length = 3
+    "let g:neocomplete#use_vimproc = 1
 endfunction
 
 " vimfiler
