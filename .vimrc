@@ -919,7 +919,7 @@ set wildmode=longest,full
 " when enable utf-8, use unicode character
 set list
 if &encoding =~? 'utf-8\|utf8'
-    let &listchars="tab:\u2192\ ,trail:_,extends:>,precedes:<"
+    let &listchars="tab:\uffeb\ ,trail:\u02fd,extends:>,precedes:<"
 else
     set listchars=tab:>\ ,trails:_,extends:>,precedes:<
 endif
