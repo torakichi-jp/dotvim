@@ -826,6 +826,21 @@ let g:doxygen_enhanced_color = 1
 " mouse behaves windows
 behave mswin
 
+augroup MyAutocmd
+    " specially color setting "{{{
+    autocmd ColorScheme * call <SID>set_guicolor()
+    function! s:set_guicolor()
+        hi TabLine      guifg=#777798 guibg=#444477 gui=NONE
+        hi TabLineFill  guifg=#666688 guibg=#CCCCFF
+        hi TabLineSel   guifg=#CCCCFF guibg=#111155 gui=bold
+        hi FoldColumn   guifg=#818698 guibg=#363946
+        hi ColorColumn  guifg=NONE    guibg=#333366 gui=NONE
+        "hi CursorLine   guifg=NONE    guibg=NONE   gui=underline
+        hi SpecialKey   guifg=#444466 guibg=NONE    gui=NONE
+        hi NonText      guifg=#ffffff ctermfg=White
+    endfunction "}}}
+augroup END
+
 " colorscheme
 set t_Co=256
 if neobundle#is_sourced('landscape.vim')
@@ -1335,19 +1350,6 @@ augroup MyAutocmd
     autocmd WinEnter *
         \ let @/ = get(b:, 'vimrc_pattern', @/)
         \ | let &l:hlsearch = get(b:, 'vimrc_hlsearch', &l:hlsearch)
-
-    " 設定されていないことが多い部分の色設定 "{{{
-    autocmd ColorScheme * call <SID>set_guicolor()
-    function! s:set_guicolor()
-        hi TabLine      guifg=#777798 guibg=#444477 gui=NONE
-        hi TabLineFill  guifg=#666688 guibg=#CCCCFF
-        hi TabLineSel   guifg=#CCCCFF guibg=#111155 gui=bold
-
-        hi FoldColumn   guifg=#818698 guibg=#363946
-        hi ColorColumn  guifg=NONE    guibg=#333366 gui=NONE
-        "hi CursorLine   guifg=NONE    guibg=NONE   gui=underline
-        hi SpecialKey   guifg=#444466 guibg=NONE    gui=NONE
-    endfunction "}}}
 
     " 起動時にファイル引数なしならスクラッチバッファを開く "{{{
     "autocmd VimEnter *
