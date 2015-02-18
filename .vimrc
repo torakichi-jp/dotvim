@@ -925,7 +925,7 @@ endif
 
 " width of number column
 augroup MyAutocmd
-    autocmd BufEnter,WinEnter,BufWinEnter * let &l:numberwidth = len(line("$")) + 2
+    autocmd BufEnter * let &l:numberwidth = len(line("$")) + 2
 augroup END
 
 "}}}
