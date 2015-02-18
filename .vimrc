@@ -1544,7 +1544,7 @@ nnoremap - <C-x>
 
 " view the help for <cword>
 nnoremap <silent> <F1> :<C-u>help <C-r><C-w><CR>
-xnoremap <silent> <F1> :<C-u>help <C-r>=<SID>get_selected_text()<CR>
+xnoremap <silent> <F1> :<C-u>help <C-r>=<SID>get_selected_text()<CR><CR>
 
 " change directory at the buffer file
 nnoremap <F2> :<C-u>cd %:p:h<Bar>echo 'cd :' expand('%:p:h')<CR>
