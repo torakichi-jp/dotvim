@@ -21,7 +21,7 @@ let s:msvc_latest = get(filter(copy(s:msvc_dirs), 'isdirectory(v:val)'), 0, '')
 
 " Visual Studio の環境変数設定 "{{{
 function! s:set_msvc_path(msvc_path)
-    if has_key(s:, "msvc_dirs") || !isdirectory(a:msvc_path)
+    if !has_key(s:, "msvc_dirs") || !isdirectory(a:msvc_path)
         return
     endif
 
@@ -37,9 +37,9 @@ function! s:set_msvc_path(msvc_path)
     let $PATH=$DevEnvDir.";".$PATH
 
     let $INCLUDE=$VCINSTALLDIR."/include;".$INCLUDE
-    let $INCLUDE='C:/Program Files/Microsoft SDKs/Windows/v6.0A/Include;'.$INCLUDE
-    let $LIB=$VCINSTALLDIR."/LIB;".$LIB
-    let $LIB='C:/Program Files/Microsoft SDKs/Windows/v6.0A/Lib;'.$LIB
+    let $INCLUDE='C:/Program Files (x86)/Microsoft SDKs/Windows/v7.1A/Include;'.$INCLUDE
+    let $LIB=$VCINSTALLDIR."/lib;".$LIB
+    let $LIB='C:/Program Files (x86)/Microsoft SDKs/Windows/v7.1A/Lib;'.$LIB
     let $LIBPATH=$LIB
 endfunction "}}}
 call s:set_msvc_path(s:msvc_latest)
@@ -50,7 +50,7 @@ let $PATH.=';C:/Windows/Microsoft.NET/Framework/v4.0.30319/'
 " インクルードディレクトリを(c,cppローカル)'path'に追加
 " 空白はエスケープが必要
 let s:msvc_include_path = substitute(s:msvc_latest, '\ ', '\\\ ', 'g') . '/VC/include/'
-let s:winsdk_include_path = 'C:/Program\ Files\ (x86)/Microsoft\ SDKs/Windows/v6.0A/Include/'
+let s:winsdk_include_path = 'C:/Program\ Files\ (x86)/Microsoft\ SDKs/Windows/v7.1A/Include/'
 let s:dxsdk_include_path = 'C:/Program\ Files\ (x86)/Microsoft\ DirectX\ SDK\ (June\ 2010)/Include/'
 
 augroup IncDir "{{{

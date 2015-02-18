@@ -441,7 +441,8 @@ call neobundle#config(
 if s:is_windows && isdirectory($VCINSTALLDIR)
     function! s:set_vimproc_config(architecture)
         let l:vcvars_cmd = '"' . $VCINSTALLDIR . '/vcvarsall.bat" ' . a:architecture
-        let l:make_cmd = 'nmake /f make_msvc.mak'
+        let l:make_cmd = 'nmake /f make_msvc.mak nodebug=1'
+
         let l:config_dict = {}
         let l:config_dict.build = {}
         let l:config_dict.build.windows = l:vcvars_cmd . ' & ' . l:make_cmd
