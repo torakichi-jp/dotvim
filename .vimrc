@@ -192,7 +192,6 @@ NeoBundle 'thinca/vim-quickrun', {
     \ }
 \ }
 NeoBundle 'thinca/vim-editvar'
-NeoBundle 'thinca/vim-localrc'
 NeoBundleLazy 'thinca/vim-singleton'
 NeoBundle 'koron/codic-vim'
 NeoBundleLazy 'mattn/calendar-vim'
