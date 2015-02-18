@@ -871,7 +871,7 @@ set laststatus=2                " show statusline always
 set showtabline=2               " show tabline always
 set autoindent                  " enable auto indent
 set switchbuf=split,newtab      " switch buffer option
-set tabline=%!MakeTabLine()     " tabline strings
+"set tabline=%!MakeTabLine()    " tabline strings
 set helpheight=0                " min height of help
 set helplang=ja                 " help language is japanese
 set pumheight=10                " max height of popup menu
@@ -1018,11 +1018,11 @@ function! MakeTabLine() "{{{
     endif
     let info .= cur_dir . ' '
 
-     view git branch
-    let branch_info = fugitive#head()
-    if !empty(branch_info)
-        let info .= '[' . branch_info . '] '
-    endif
+    " view git branch
+    "let branch_info = fugitive#head()
+    "if !empty(branch_info)
+    "    let info .= '[' . branch_info . '] '
+    "endif
 
     return tabpages . '%=' . info   " view tab list at left, information at right
 endfunction "}}}
