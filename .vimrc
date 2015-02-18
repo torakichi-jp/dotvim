@@ -827,10 +827,14 @@ behave mswin
 
 " colorscheme
 set t_Co=256
-if s:is_windows && !s:is_gui
-    colorscheme default
+if neobundle#is_sourced('landscape.vim')
+    colorscheme landscape
 else
-    colorscheme home_color
+    if s:is_windows && !s:is_gui
+        colorscheme default
+    else
+        colorscheme home_color
+    endif
 endif
 
 " Cygwin setting "{{{
@@ -1340,7 +1344,7 @@ augroup MyAutocmd
 
         hi FoldColumn   guifg=#818698 guibg=#363946
         hi ColorColumn  guifg=NONE    guibg=#333366 gui=NONE
-        hi CursorLine   guifg=NONE    guibg=NONE   gui=underline
+        "hi CursorLine   guifg=NONE    guibg=NONE   gui=underline
         hi SpecialKey   guifg=#444466 guibg=NONE    gui=NONE
     endfunction "}}}
 

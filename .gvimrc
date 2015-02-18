@@ -30,7 +30,9 @@ function! s:toggle_menu()
 endfunction
 
 " カラースキーム
-colorscheme home_color
+if neobundle#is_sourced('landscape.vim')
+    colorscheme landscape
+endif
 
 " ビジュアルベル（使用しない）
 set visualbell t_vb=
