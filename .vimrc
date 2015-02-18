@@ -518,7 +518,7 @@ function! s:hooks.on_source(bundle)
     \ ]
 
     " neomru
-    let g:unite_sources_mru_update_interval=10
+    let g:unite_sources_mru_update_interval=60
     call unite#custom#source('neomru/file', 'ignore_pattern',
         \ expand('$DOTVIMDIR') . '/bundle/*')
 
