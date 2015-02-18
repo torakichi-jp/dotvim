@@ -951,6 +951,7 @@ set gdefault            " replace all candidates
 set foldenable          " enable folding
 set foldcolumn=0        " width of folding column
 set foldmethod=marker   " folding use marker
+set foldlevelstart=99   " all folding is opened when opening new buffer
 " folding line text
 set foldtext=foldCC#foldtext()
 let g:foldCCtext_enable_autofdc_adjuster = 1
