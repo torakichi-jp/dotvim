@@ -631,10 +631,11 @@ let g:howm_fileencoding = 'utf-8'
 let g:qfixmemo_mapleader = 'g\'
 
 "indentLine
-let g:indentLine_color_term = 111
-let g:indentLine_color_gui = '#708090'
+"let g:indentLine_color_term = 111
+"let g:indentLine_color_gui = '#708090'
 let g:indentLine_noConcealCursor = 1
 "let g:indentLine_char = '|'
+let g:indentLine_fileTypeExclude = ['text', 'help']
 
 " EasyMotion
 let g:EasyMotion_leader_key = '\'
