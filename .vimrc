@@ -638,9 +638,17 @@ let g:indentLine_noConcealCursor = 1
 let g:indentLine_fileTypeExclude = ['text', 'help']
 
 " EasyMotion
-let g:EasyMotion_leader_key = '\'
 let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz0123456789'
 let g:EasyMotion_do_shade = 0
+let g:EasyMotion_do_mapping = 0
+let g:EasyMotion_use_migemo = 1
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_disable_two_key_combo = 1
+map <Leader>w <Plug>(easymotion-w)
+map <Leader>W <Plug>(easymotion-W)
+map <Leader>b <Plug>(easymotion-b)
+map <Leader>B <Plug>(easymotion-B)
+map <Leader>s <Plug>(easymotion-s)
 
 " openuri
 if s:is_windows
