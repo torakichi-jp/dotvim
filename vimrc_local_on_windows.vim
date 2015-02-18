@@ -42,7 +42,7 @@ function! s:set_msvc_path(msvc_path)
     let $LIB='C:/Program Files (x86)/Microsoft SDKs/Windows/v7.1A/Lib;'.$LIB
     let $LIBPATH=$LIB
 endfunction "}}}
-call s:set_msvc_path(s:msvc_latest)
+"call s:set_msvc_path(s:msvc_latest)
 
 " MSBuildのパス追加
 let $PATH.=';C:/Windows/Microsoft.NET/Framework/v4.0.30319/'
