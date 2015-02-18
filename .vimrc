@@ -423,9 +423,6 @@ let g:loaded_getscriptPlugin = 1
 " disable netrw.vim
 let g:loaded_netrwPlugin = 1
 
-" used to remove files for NeoBundleClean command
-let g:neobundle#rm_command = 'rm -rf'
-
 " vimproc build setting
 call neobundle#config(
     \ 'vimproc.vim', {
