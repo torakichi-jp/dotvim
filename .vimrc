@@ -424,6 +424,7 @@ let g:loaded_getscriptPlugin = 1
 let g:loaded_netrwPlugin = 1
 
 " vimproc build setting
+" build manually if using windows
 call neobundle#config(
     \ 'vimproc.vim', {
         \ 'build' : {
@@ -433,28 +434,6 @@ call neobundle#config(
         \ }
     \ }
 \ )
-" if you use windows and that is not installed msvc, you must build manually
-" $VCINSTALLDIR envvar have to declare in advance
-if s:is_windows && isdirectory($VCINSTALLDIR)
-    function! s:set_vimproc_config(architecture)
-        let l:vcvars_cmd = '"' . $VCINSTALLDIR . '/vcvarsall.bat" ' . a:architecture
-        let l:make_cmd = 'nmake /f make_msvc.mak nodebug=1'
-
-        let l:config_dict = {}
-        let l:config_dict.build = {}
-        let l:config_dict.build.windows = l:vcvars_cmd . ' & ' . l:make_cmd
-
-        call neobundle#config('vimproc.vim', l:config_dict)
-    endfunction
-
-    if has('win64')
-        call s:set_vimproc_config('amd64')
-    elseif has('win32')
-        call s:set_vimproc_config('x86')
-    endif
-
-    delfunction s:set_vimproc_config
-endif
 
 " neocomplete
 let g:neocomplete#enable_at_startup = 1
