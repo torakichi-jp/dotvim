@@ -1570,8 +1570,8 @@ nnoremap <F3> :<C-u>echohl StatusLine<Bar>echo expand('%:p:h')<Bar>echohl None<C
 " taglist
 nnoremap <silent> <F4> :<C-u>TlistToggle<CR>
 
-" reload screen
-nnoremap <F5> <C-l>
+" quickrun
+nmap <F5> <Plug>(quickrun)
 
 " go to specified line if count is exist
 " else turn off search highlight
