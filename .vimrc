@@ -833,6 +833,14 @@ else
     colorscheme home_color
 endif
 
+" cursor shape of Cygwin
+if s:is_cygwin
+    let &t_ti .= "\e[1 q"  " 端末を termcap モードにする
+    let &t_SI .= "\e[5 q"  " 挿入モード開始(バー型のカーソル)
+    let &t_EI .= "\e[1 q"  " 挿入モード終了(ブロック型カーソル)
+    let &t_te .= "\e[0 q"  " termcap モードから抜ける
+endif
+
 " general options "{{{
 
 " use clipboard instead of unnamed register
