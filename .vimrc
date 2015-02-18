@@ -1483,9 +1483,8 @@ nnoremap gr :<C-u>Ag <C-r><C-w> *
 xnoremap gr :<C-u>Ag <C-r>=<SID>get_selected_text()<CR> *
 
 " quickhl
-NXmap gm <Plug>(quickhl-toggle)
-NXmap gM <Plug>(quickhl-reset)
-"nmap gm <Plug>(quickhl-match)
+NXmap gm <Plug>(quickhl-manual-this)
+NXmap gM <Plug>(quickhl-manual-reset)
 
 " count words (:%substitute/\<word\>/&/gn)
 nnoremap gw :<C-u>call <SID>count_words('\<' . expand('<cword>' . '\>'))<CR>
