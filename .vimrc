@@ -833,13 +833,20 @@ else
     colorscheme home_color
 endif
 
-" cursor shape of Cygwin
+" Cygwin setting "{{{
 if s:is_cygwin
-    let &t_ti .= "\e[1 q"  " 端末を termcap モードにする
-    let &t_SI .= "\e[5 q"  " 挿入モード開始(バー型のカーソル)
-    let &t_EI .= "\e[1 q"  " 挿入モード終了(ブロック型カーソル)
-    let &t_te .= "\e[0 q"  " termcap モードから抜ける
+    " cursor shape
+    let &t_ti .= "\e[1 q"  " put terminal in 'termcap' mode
+    let &t_SI .= "\e[5 q"  " start insert mode (bar cursor shape)
+    let &t_EI .= "\e[1 q"  " end insert mode (block cursor shape)
+    let &t_te .= "\e[0 q"  " out of 'termcap' mode
+
+    " deal with the problem of <Esc> key code sequence
+    " see xterm-cursor-keys
+    set ttimeout
+    set ttimeoutlen=100
 endif
+"}}}
 
 " general options "{{{
 
