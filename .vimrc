@@ -914,7 +914,7 @@ set matchpairs& matchpairs+=<:> " add pair that is <>
 set winaltkeys=no               " not use alt keys for GUI menu
 set path+=;/                    " file path follows parent directory
 set tags+=./tags;,./**/tags     " search path of tag files
-set complete-=it                " remove 'include, tag' from candidates
+set complete& complete-=t,i     " remove 'include, tag' from candidates
 set completeopt=menuone,preview " option of completion
 set showfulltag                 " show tag pattern when tag completion
 set viminfo& viminfo+=/0        " not write searching history
@@ -1806,7 +1806,7 @@ call submode#map('winsize', 'n', '', '_', '<C-w>_')
 " {{{
 
 " completion
-"inoremap <expr> <CR> pumvisible() ? neocomplete#close_popup() : '<CR>'
+inoremap <expr> <C-n> neocomplete#start_manual_complete()
 inoremap <expr> <C-y> neocomplete#close_popup()
 inoremap <expr> <C-e> neocomplete#cancel_popup()
 inoremap <expr> <C-g> neocomplete#undo_completion()
