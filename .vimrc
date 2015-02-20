@@ -148,6 +148,8 @@ NeoBundle 'Shougo/vinarise', {
     \ 'autoload' : { 'commands' : 'Vinarise' },
 \ }
 NeoBundle 'thinca/vim-visualstar'
+NeoBundle 'haya14busa/vim-asterisk'
+NeoBundle 'haya14busa/incsearch.vim'
 NeoBundle 'thinca/vim-tabrecent'
 NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'thinca/vim-ref', {
@@ -178,9 +180,11 @@ NeoBundle 'thinca/vim-quickrun', {
         \ 'commands' : 'QuickRun',
     \ }
 \ }
+NeoBundle 'rhysd/wandbox-vim'
 NeoBundle 'thinca/vim-editvar'
 NeoBundleLazy 'thinca/vim-singleton'
 NeoBundle 'koron/codic-vim'
+NeoBundle 'rhysd/unite-codic.vim'
 NeoBundleLazy 'mattn/calendar-vim'
 NeoBundle 'mattn/wwwrenderer-vim'
 NeoBundle 'mattn/webapi-vim'
