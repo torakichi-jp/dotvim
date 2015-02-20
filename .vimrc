@@ -782,11 +782,16 @@ END
     else
         return a:runtimepath
     endif
-
 endfunction "}}}
+
 if s:is_starting
-    let &runtimepath = s:adjust_rtp(&runtimepath, $DOTVIMDIR)
+    let s:rtp_temp = s:adjust_rtp(&runtimepath, $DOTVIMDIR)
+    if !empty(s:rtp_temp)
+        let &runtimepath = s:rtp_temp
+    endif
+    unlet s:rtp_temp
 endif
+delfunction s:adjust_rtp
 
 " Syntax settings "{{{
 
