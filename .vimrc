@@ -923,6 +923,7 @@ set timeoutlen=3000             " wait time(ms) of key mappings
 set selectmode=                 " not use select mode
 set sidescroll=1                " step of horizontal scroll
 set sidescrolloff=1             " offset around cursor in horizontal scroll
+set formatoptions+=Bj           " formatoptions setting
 
 let &showbreak='+++ '           " string of wrapped line head
 set cpoptions& cpoptions+=n     " use number column for wrapped line
