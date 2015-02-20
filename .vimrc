@@ -126,12 +126,6 @@ NeoBundle 'Shougo/vimfiler', {
     \ }
 \ }
 NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'Shougo/neocomplcache.vim', {
-    \ 'lazy' : 1,
-    \ 'autoload' : {
-        \ 'commands' : 'NeoCompleCacheEnable',
-    \ }
-\ }
 NeoBundle 'Shougo/neosnippet', {
     \ 'lazy' : 1,
     \ 'autoload' : {
@@ -147,7 +141,6 @@ NeoBundle 'Shougo/vinarise', {
     \ 'lazy' : 1,
     \ 'autoload' : { 'commands' : 'Vinarise' },
 \ }
-NeoBundle 'thinca/vim-visualstar'
 NeoBundle 'haya14busa/vim-asterisk'
 NeoBundle 'haya14busa/incsearch.vim'
 NeoBundle 'thinca/vim-tabrecent'
@@ -163,16 +156,6 @@ NeoBundle 'thinca/vim-ref', {
         \ ],
     \ }
 \ }
-NeoBundle 'thinca/vim-fontzoom', {
-    \ 'lazy' : 1,
-    \ 'autoload' : {
-        \ 'mappings' : [
-            \ ['n', '<Plug>(fontzoom-larger)'],
-            \ ['n', '<Plug>(fontzoom-smaller)'],
-        \ ]
-    \ }
-\ }
-NeoBundle 'thinca/vim-openbuf'
 NeoBundle 'thinca/vim-quickrun', {
     \ 'lazy' : 1,
     \ 'autoload' : {
@@ -182,7 +165,6 @@ NeoBundle 'thinca/vim-quickrun', {
 \ }
 NeoBundle 'rhysd/wandbox-vim'
 NeoBundle 'thinca/vim-editvar'
-NeoBundleLazy 'thinca/vim-singleton'
 NeoBundle 'koron/codic-vim'
 NeoBundle 'rhysd/unite-codic.vim'
 NeoBundleLazy 'mattn/calendar-vim'
@@ -194,9 +176,6 @@ NeoBundle 'tyru/vim-altercmd'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'tyru/open-browser-github.vim'
 NeoBundle 'tyru/winmove.vim'
-NeoBundleLazy 'kien/ctrlp.vim'
-"NeoBundle 'ynkdir/vim-guess'
-NeoBundle 'sgur/ctrlp-extensions.vim'
 NeoBundle 'chrismetcalf/vim-taglist'
 NeoBundle 'taku-o/vim-toggle'
 NeoBundle 'taku-o/vim-batch-source'
@@ -211,7 +190,6 @@ NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'osyo-manga/vim-jplus'
 NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'LeafCage/foldCC'
-NeoBundle 'tpope/vim-capslock', {'lazy' : 1, 'autoload' : {'insert' : 1}}
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'gregsexton/VimCalc'
 NeoBundle 't9md/vim-quickhl'
@@ -1018,22 +996,6 @@ if &undodir!=#'' && !isdirectory(&undodir)
 endif
 " }}}
 
-" capslock.vim
-" capslockモード中なら表示を追加
-"set statusline^=%{exists('*CapsLockStatusline')?CapsLockStatusline():''}
-
-" 全角スペースの表示
-" TODO: あとでmatchadd()を使うように修正する
-"function! HighlightZenkakuSpace()
-"   hi ZenkakuSpace cterm=underline ctermfg=red gui=underline guifg=red
-"endfunction
-"augroup ZenkakuSpace
-"   autocmd!
-"   autocmd ColorScheme * call HighlightZenkakuSpace()
-"   autocmd VimEnter,BufWinEnter,WinEnter * match ZenkakuSpace /　/
-"augroup END
-"call HighlightZenkakuSpace()
-
 " matchit extension
 runtime macros/matchit.vim
 
@@ -1706,13 +1668,6 @@ xmap C <Plug>(operator-camelize)
 xmap D <Plug>(operator-decamelize)
 xmap T <Plug>(operator-camelize-toggle)
 xmap S <Plug>(operator-sort)
-"}}}
-
-" vim-fontzoom "{{{
-let g:fontzoom_no_default_key_mappings = 1
-call submode#enter_with('fontzoom', 'n', '', 'ZF', '<Nop>')
-call submode#map('fontzoom', 'n', 'r', 'k', '<Plug>(fontzoom-larger)')
-call submode#map('fontzoom', 'n', 'r', 'j', '<Plug>(fontzoom-smaller)')
 "}}}
 
 " NERD_Commenter "{{{
