@@ -874,6 +874,12 @@ endif
 " use clipboard instead of unnamed register
 "set clipboard& clipboard+=unnamed
 
+" terminal encoding
+" if not set Ref webdict was garbled on Windows
+if s:is_starting && s:is_windows
+    set termencoding=cp932
+endif
+
 " fileencoding list ordered in priority
 set fileencodings=utf-8,cp932,ucs-bom,default,latin1
 
