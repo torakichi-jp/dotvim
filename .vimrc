@@ -1408,11 +1408,16 @@ inoremap <C-x><C-c> <C-o>ZQ
 nnoremap <C-x><C-n> :<C-u>bnext<CR>
 nnoremap <C-x><C-p> :<C-u>bprevious<CR>
 
-" j, k move for viewed line (exchage from gj, gk)
-if !neobundle#is_sourced('accelerated-jk')
-    nnoremap j gj
-    nnoremap k gk
-endif
+" j, k move with display lines if not installed accelerated-jk
+autocmd MyAutocmd VimEnter * call <SID>define_jk_mappings()
+function! s:define_jk_mappings()
+    if !neobundle#is_sourced('accelerated-jk')
+        nnoremap j gj
+        nnoremap k gk
+    endif
+endfunction
+
+" backup j, k mappings
 nnoremap gj j
 nnoremap gk k
 
