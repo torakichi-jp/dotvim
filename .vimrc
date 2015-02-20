@@ -16,21 +16,8 @@ let s:is_unix = has('unix')
 let s:is_cygwin = has('win32unix')
 let s:is_starting = has('vim_starting')
 
-" encoding "{{{
-if s:is_starting
-    if s:is_windows
-        set termencoding=cp932
-    endif
-    "set encoding=utf-8      " internal encoding
-    set fileencodings=cp932,ucs-bom,utf-8,default,latin1
-endif
-"}}}
-
 scriptencoding utf-8    " encoding of this script
 set shellslash          " path delimiter is slash
-
-" set <leader> key
-"let g:mapleader=','
 
 " candidates of dotvimdir path ordered in priority
 let s:dotvimdir_candidates = [
@@ -881,6 +868,9 @@ endif
 
 " use clipboard instead of unnamed register
 "set clipboard& clipboard+=unnamed
+
+" fileencoding list ordered in priority
+set fileencodings=utf-8,cp932,ucs-bom,default,latin1
 
 set number                      " show line numbers
 "set relativenumber             " show relative line numbers
