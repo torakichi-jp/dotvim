@@ -811,12 +811,12 @@ let g:vimsyn_folding = 'aflprPm'
 " no error
 let g:vimsyn_noerror = 1
 
-" 行連結バックスラッシュをインデントしない
-" (インデントする幅の設定)
+" no indent backslash for VimScript
+" (this is width of indentation)
 let g:vim_indent_cont = 0
 "}}}
 
-"c, cpp, idlにdoxygenハイライトを設定する
+" set highlight of doxygen for c, cpp, and idl
 let g:load_doxygen_syntax = 1
 let g:doxygen_enhanced_color = 1
 
@@ -825,8 +825,9 @@ let g:doxygen_enhanced_color = 1
 " mouse behaves windows
 behave mswin
 
+" specially color setting "{{{
+" to override by autocmd, in front of colorscheme setting
 augroup MyAutocmd
-    " specially color setting "{{{
     autocmd ColorScheme * call <SID>set_mycolor()
     function! s:set_mycolor()
         hi TabLine      guifg=#777798 guibg=#444477 gui=NONE
@@ -839,8 +840,9 @@ augroup MyAutocmd
         hi NonText      guifg=#ffffff ctermfg=White
         hi LineNr       guifg=#999999 guibg=#262626
         hi CursorLineNr               guibg=#333333
-    endfunction "}}}
+    endfunction
 augroup END
+"}}}
 
 " colorscheme
 set t_Co=256
@@ -870,9 +872,6 @@ endif
 "}}}
 
 " general options "{{{
-
-" use clipboard instead of unnamed register
-"set clipboard& clipboard+=unnamed
 
 " terminal encoding
 " if not set Ref webdict was garbled on Windows
