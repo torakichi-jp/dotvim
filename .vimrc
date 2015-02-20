@@ -1430,8 +1430,16 @@ endfunction
 let g:anzu_search_limit = 500
 nmap n <Plug>(anzu-n-with-echo)
 nmap N <Plug>(anzu-N-with-echo)
-nmap * <Plug>(anzu-star-with-echo)
-nmap # <Plug>(anzu-sharp-with-echo)
+
+" asterisk with anzu
+map * <Plug>(asterisk-*)<Plug>(anzu-update-search-status-with-echo)
+map # <Plug>(asterisk-#)<Plug>(anzu-update-search-status-with-echo)
+map g* <Plug>(asterisk-g*)<Plug>(anzu-update-search-status-with-echo)
+map g# <Plug>(asterisk-g#)<Plug>(anzu-update-search-status-with-echo)
+map z* <Plug>(asterisk-z*)<Plug>(anzu-update-search-status-with-echo)
+map z# <Plug>(asterisk-z#)<Plug>(anzu-update-search-status-with-echo)
+map gz* <Plug>(asterisk-gz*)<Plug>(anzu-update-search-status-with-echo)
+map gz# <Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
 
 " set folding marker
 nnoremap z[ A "{{{<ESC>
