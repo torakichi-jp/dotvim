@@ -865,9 +865,7 @@ endif
 set fileencodings=utf-8,cp932,ucs-bom,default,latin1
 
 set number                      " show line numbers
-"set relativenumber             " show relative line numbers
 set ruler                       " show ruler
-set notitle                     " not show title of exited Vim
 set showcmd                     " show inserting command
 set hidden                      " hide buffer instead to remove buffer updating
 set confirm                     " show confirm dialog instead of error
@@ -900,7 +898,7 @@ set tags+=./tags;,./**/tags     " search path of tag files
 set complete& complete-=t,i     " remove 'include, tag' from candidates
 set completeopt=menuone,preview " option of completion
 set showfulltag                 " show tag pattern when tag completion
-set viminfo& viminfo+=/0        " not write searching history
+"set viminfo& viminfo+=/0       " not write searching history
 set timeout                     " enable timeout of key mappings
 set timeoutlen=3000             " wait time(ms) of key mappings
 set selectmode=                 " not use select mode
@@ -974,9 +972,9 @@ if has('mouse')
     set mouse=a
 endif
 
-" transparency(Windows GUI only)
-if s:is_windows && s:is_gui
-    autocmd MyAutocmd VimEnter * set transparency=220
+" transparency (Windows GUI only)
+if exists('&transparency') && s:is_windows && s:is_gui
+    set transparency=220
 endif
 
 " backup options " {{{
