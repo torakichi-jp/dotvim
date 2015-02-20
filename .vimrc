@@ -835,8 +835,8 @@ behave mswin
 
 augroup MyAutocmd
     " specially color setting "{{{
-    autocmd ColorScheme * call <SID>set_guicolor()
-    function! s:set_guicolor()
+    autocmd ColorScheme * call <SID>set_mycolor()
+    function! s:set_mycolor()
         hi TabLine      guifg=#777798 guibg=#444477 gui=NONE
         hi TabLineFill  guifg=#666688 guibg=#CCCCFF
         hi TabLineSel   guifg=#CCCCFF guibg=#111155 gui=bold
@@ -845,6 +845,8 @@ augroup MyAutocmd
         "hi CursorLine   guifg=NONE    guibg=NONE   gui=underline
         hi SpecialKey   guifg=#444466 guibg=NONE    gui=NONE
         hi NonText      guifg=#ffffff ctermfg=White
+        hi LineNr       guifg=#999999 guibg=#262626
+        hi CursorLineNr               guibg=#333333
     endfunction "}}}
 augroup END
 
