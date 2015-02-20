@@ -200,7 +200,6 @@ NeoBundle 'mattn/webapi-vim'
 NeoBundleLazy 'mattn/emmet-vim'
 NeoBundleLazy 'mattn/benchvimrc-vim'
 NeoBundle 'tyru/vim-altercmd'
-NeoBundle 'tyru/restart.vim'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'tyru/open-browser-github.vim'
 NeoBundle 'tyru/winmove.vim'
@@ -1139,11 +1138,6 @@ function! s:map(mode, cmd, option)
 endfunction
 unlet s:map_option_default
 
-" セッション保存してリスタート
-command! -bar RestartWithSession
-    \ let g:restart_sessionoptions = 'blank,curdir,folds,help,localoptions,tabpages'
-    \ | Restart
-
 " タブページの移動
 command! -bar TabMoveNext
     \ execute 'tabmove' tabpagenr() % tabpagenr('$')
@@ -1245,7 +1239,6 @@ AlterCommand gitc           UniteWithBufferDir giti/config
 AlterCommand gitl           UniteWithBufferDir giti/log
 AlterCommand gitr           UniteWithBufferDir giti/remote
 AlterCommand gits           UniteWithBufferDir giti/status
-AlterCommand rest[art]      RestartWithSession
 AlterCommand cap[ture]      Capture
 AlterCommand cdc[urrent]    CdCurrent
 AlterCommand bat[ch]        Batch
