@@ -948,6 +948,7 @@ set softtabstop=4       " width when enter <Tab> or <BS>
 " searching options " {{{
 set incsearch           " enable incremental search
 set hlsearch            " enable highlight of search
+nohlsearch              " turn off highlight temporarily
 set ignorecase          " ignore case
 set smartcase           " ignore case unless searching pattern include upper case
 set wrapscan            " back for the first line when go to the end line
@@ -1549,15 +1550,9 @@ xmap <Leader>r <Plug>(quickrun)
 
 " go to specified line if count is exist
 " else turn off search highlight
-noremap <silent> <CR> :<C-u>call <SID>cr_behavior()<CR>
+nnoremap <silent> <CR> :<C-u>let v:hlsearch = v:count<bar>call <SID>cr_behavior()<CR>
 function! s:cr_behavior() "{{{
-    if v:count == 0
-        if exists(':Nohlsearch')
-            Nohlsearch
-        else
-            nohlsearch
-        endif
-    else
+    if v:count != 0
         execute 'normal! ' . string(v:count) . 'Gzz'
     endif
     return ""
