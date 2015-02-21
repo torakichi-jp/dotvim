@@ -1550,11 +1550,13 @@ nmap <Leader>r <Plug>(quickrun)
 xmap <Leader>r <Plug>(quickrun)
 
 " go to specified line if count is exist
-" else turn off search highlight
-nnoremap <silent> <CR> :<C-u>let v:hlsearch = v:count<bar>call <SID>cr_behavior()<CR>
+" else turn off search highlight temporarily
+nnoremap <silent><expr> <CR> <SID>cr_behavior()
 function! s:cr_behavior() "{{{
-    if v:count != 0
-        execute 'normal! ' . string(v:count) . 'Gzz'
+    if v:count == 0
+        return ":\<C-u>nohlsearch\<CR>"
+    else
+        return ":\<C-u>normal! " . string(v:count) . "Gzz\<CR>"
     endif
     return ""
 endfunction "}}}
