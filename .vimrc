@@ -823,6 +823,7 @@ augroup MyAutocmd
         hi NonText      guifg=#ffffff ctermfg=White
         hi LineNr       guifg=#999999 guibg=#262626
         hi CursorLineNr               guibg=#333333
+        hi Cursor       guifg=#000000 guibg=#ffffff gui=NONE
     endfunction
 augroup END
 "}}}
