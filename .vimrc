@@ -1562,29 +1562,29 @@ function! s:cr_behavior() "{{{
 endfunction "}}}
 
 " mappings of tabpage "{{{
-nnoremap <Plug>[Tab] <Nop>
-nmap t <Plug>[Tab]
-nnoremap            <Plug>[Tab]l  gt
-nnoremap            <Plug>[Tab]h  gT
-nnoremap            <Plug>[Tab]e  :<C-u>tabedit<Space>
-nnoremap <silent>   <Plug>[Tab]n  :<C-u>tabedit<CR>
-nnoremap <silent>   <Plug>[Tab]q  :<C-u>tabclose<CR>
-nnoremap <silent>   <Plug>[Tab]c  :<C-u>tabclose<CR>
-nnoremap <silent>   <Plug>[Tab]o  :<C-u>tabonly<CR>
-nnoremap <silent>   <Plug>[Tab]t  :<C-u>tab stag <C-r><C-w><CR>
-nnoremap <silent>   <Plug>[Tab]r  :<C-u>TabRecent<CR>
-nnoremap            <Plug>[Tab]w  <C-w>T
-nnoremap <silent>   <Plug>[Tab]L  :<C-u>TabMoveNext<CR>
-nnoremap <silent>   <Plug>[Tab]H  :<C-u>TabMovePrev<CR>
-nnoremap            <Plug>[Tab]1  1gt
-nnoremap            <Plug>[Tab]2  2gt
-nnoremap            <Plug>[Tab]3  3gt
-nnoremap            <Plug>[Tab]4  4gt
-nnoremap            <Plug>[Tab]5  5gt
-nnoremap            <Plug>[Tab]6  6gt
-nnoremap            <Plug>[Tab]7  7gt
-nnoremap            <Plug>[Tab]8  8gt
-nnoremap            <Plug>[Tab]9  9gt
+nnoremap [Tab] <Nop>
+nmap t [Tab]
+nnoremap            [Tab]l  gt
+nnoremap            [Tab]h  gT
+nnoremap            [Tab]e  :<C-u>tabedit<Space>
+nnoremap <silent>   [Tab]n  :<C-u>tabedit<CR>
+nnoremap <silent>   [Tab]q  :<C-u>tabclose<CR>
+nnoremap <silent>   [Tab]c  :<C-u>tabclose<CR>
+nnoremap <silent>   [Tab]o  :<C-u>tabonly<CR>
+nnoremap <silent>   [Tab]t  :<C-u>tab stag <C-r><C-w><CR>
+nnoremap <silent>   [Tab]r  :<C-u>TabRecent<CR>
+nnoremap            [Tab]w  <C-w>T
+nnoremap <silent>   [Tab]L  :<C-u>TabMoveNext<CR>
+nnoremap <silent>   [Tab]H  :<C-u>TabMovePrev<CR>
+nnoremap            [Tab]1  1gt
+nnoremap            [Tab]2  2gt
+nnoremap            [Tab]3  3gt
+nnoremap            [Tab]4  4gt
+nnoremap            [Tab]5  5gt
+nnoremap            [Tab]6  6gt
+nnoremap            [Tab]7  7gt
+nnoremap            [Tab]8  8gt
+nnoremap            [Tab]9  9gt
 "}}}
 
 " open .vimrc or .gvimrc
