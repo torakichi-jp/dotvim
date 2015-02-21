@@ -160,7 +160,7 @@ NeoBundle 'thinca/vim-ref', {
 NeoBundle 'thinca/vim-quickrun', {
     \ 'lazy' : 1,
     \ 'autoload' : {
-        \ 'mappings' : [['nxo', '<Plug>(quickrun)']],
+        \ 'mappings' : [['nxo', '<Plug>(quickrun']],
         \ 'commands' : 'QuickRun',
     \ }
 \ }
@@ -1544,7 +1544,8 @@ nnoremap <F3> :<C-u>echohl StatusLine<Bar>echo expand('%:p:h')<Bar>echohl None<C
 nnoremap <silent> <F4> :<C-u>TlistToggle<CR>
 
 " quickrun
-nmap <F5> <Plug>(quickrun)
+nmap <Leader>r <Plug>(quickrun)
+xmap <Leader>r <Plug>(quickrun)
 
 " go to specified line if count is exist
 " else turn off search highlight
