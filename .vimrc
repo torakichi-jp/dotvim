@@ -1222,6 +1222,7 @@ AlterCommand t[ranslate]    TranslateGoogle
 AlterCommand alc            Ref webdict alc
 AlterCommand ej             Ref webdict ej
 AlterCommand je             Ref webdict je
+AlterCommand h              tab help
 " }}}
 
 " }}}
@@ -1539,8 +1540,8 @@ nnoremap + <C-a>
 nnoremap - <C-x>
 
 " view the help for <cword>
-nnoremap <silent> <F1> :<C-u>help <C-r><C-w><CR>
-xnoremap <silent> <F1> :<C-u>help <C-r>=<SID>get_selected_text()<CR><CR>
+nnoremap <silent> <F1> :<C-u>tab help <C-r><C-w><CR>
+xnoremap <silent> <F1> :<C-u>tab help <C-r>=<SID>get_selected_text()<CR><CR>
 
 " change directory at the buffer file
 nnoremap <F2> :<C-u>cd %:p:h<Bar>echo 'cd :' expand('%:p:h')<CR>
