@@ -975,10 +975,16 @@ if has('mouse')
     set mouse=a
 endif
 
-" transparency (Windows GUI only)
+" transparency (Windows GUI only) "{{{
+" must be autocmd
 if exists('&transparency') && s:is_windows && s:is_gui
-    set transparency=220
+    augroup MyAutocmd
+        autocmd GUIEnter * set transparency=220
+        autocmd FocusGained * set transparency=220
+        autocmd FocusLost * set transparency=150
+    augroup END
 endif
+"}}}
 
 " backup options " {{{
 set backup                                  " create backup file
