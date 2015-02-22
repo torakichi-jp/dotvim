@@ -618,6 +618,15 @@ map <Leader>W <Plug>(easymotion-W)
 map <Leader>b <Plug>(easymotion-b)
 map <Leader>B <Plug>(easymotion-B)
 map <Leader>s <Plug>(easymotion-s)
+map <Leader>f <Plug>(easymotion-fl)
+map <Leader>t <Plug>(easymotion-tl)
+map <Leader>F <Plug>(easymotion-Fl)
+map <Leader>T <Plug>(easymotion-Tl)
+
+" incsearch.vim
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
 
 " openuri
 if s:is_windows
