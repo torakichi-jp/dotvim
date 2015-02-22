@@ -1599,7 +1599,8 @@ nnoremap <silent> [Space]v :<C-u>edit $MYVIMRC<CR>
 nnoremap <silent> [Space]gv :<C-u>edit $MYGVIMRC<CR>
 
 " source current buffer file
-nnoremap [Space]<CR> :<C-u>source %<CR>
+nnoremap          [Space]<CR> :<C-u>source %<CR>
+xnoremap <silent> [Space]<CR> :QuickRun vim >null -runner/vimscript<CR>
 
 " toggle options "{{{
 nnoremap [Toggle] <Nop>
