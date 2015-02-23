@@ -1854,16 +1854,16 @@ onoremap ir  i]
 xnoremap ir  i]
 
 " (bracket)
-onoremap ab  a)
-xnoremap ab  a)
-onoremap ib  i)
-xnoremap ib  i)
+"onoremap ab  a)
+"xnoremap ab  a)
+"onoremap ib  i)
+"xnoremap ib  i)
 
 " {Bracket}
-onoremap aB  a}
-xnoremap aB  a}
-onoremap iB  i}
-xnoremap iB  i}
+"onoremap aB  a}
+"xnoremap aB  a}
+"onoremap iB  i}
+"xnoremap iB  i}
 
 " 'quote'
 onoremap aq  a'
