@@ -919,7 +919,12 @@ set sidescroll=1                " step of horizontal scroll
 set sidescrolloff=1             " offset around cursor in horizontal scroll
 
 " formatoptions setting
-set formatoptions& formatoptions+=Bj
+" when joining lines, don't insert a space between two multi-byte characters
+set formatoptions& formatoptions+=B
+if v:version >= 704
+    " when joining lines, remove a comment leader
+    set formatoptions+=j
+endif
 
 " keep column as much as possible in the vertical movement
 " (<C-d>, <C-u>, and so on)
