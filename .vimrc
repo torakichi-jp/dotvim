@@ -1582,7 +1582,7 @@ function! s:cr_behavior() "{{{
     return ""
 endfunction "}}}
 
-" mappings of tabpage "{{{
+" tabpage "{{{
 nnoremap [Tab] <Nop>
 nmap t [Tab]
 nnoremap            [Tab]l  gt
@@ -1615,45 +1615,6 @@ nnoremap <silent> [Space]gv :<C-u>edit $MYGVIMRC<CR>
 " source current buffer file
 nnoremap          [Space]<CR> :<C-u>source %<CR>
 xnoremap <silent> [Space]<CR> :QuickRun vim >null -runner/vimscript<CR>
-
-" toggle options "{{{
-nnoremap [Toggle] <Nop>
-nmap T [Toggle]
-nnoremap [Toggle]w :<C-u>call <SID>toggle_local_option('wrap')<CR>
-nmap [Toggle]W [Toggle]w
-nnoremap [Toggle]l :<C-u>call <SID>toggle_local_option('list')<CR>
-nmap [Toggle]L [Toggle]l
-nnoremap [Toggle]h :<C-u>call <SID>toggle_local_option('hlsearch')<CR>
-nmap [Toggle]H [Toggle]h
-nnoremap [Toggle]n :<C-u>call <SID>toggle_local_option('number')<CR>
-nmap [Toggle]N [Toggle]n
-nnoremap [Toggle]r :<C-u>call <SID>toggle_local_option('relativenumber')<CR>
-nmap [Toggle]R [Toggle]r
-nnoremap [Toggle]c :<C-u>call <SID>toggle_local_option('ignorecase')<CR>
-nmap [Toggle]C [Toggle]c
-nnoremap [Toggle]e :<C-u>call <SID>toggle_local_option('expandtab')<CR>
-nmap [Toggle]E [Toggle]e
-nnoremap [Toggle]i :<C-u>call <SID>toggle_local_option('insertmode')<CR>
-nmap [Toggle]I [Toggle]i
-nnoremap [Toggle]f :<C-u>call <SID>toggle_folding()<CR>
-nmap [Toggle]F [Toggle]f
-"}}}
-
-" toggle to expand tab
-nnoremap <silent> [Toggle]t :<C-u>setlocal expandtab! \| %retab!<CR>
-nmap [Toggle]T [Toggle]t
-
-" toggle option and view it
-function! s:toggle_local_option(opt) "{{{
-    if exists('&' . a:opt)
-        " トグルしてその値を表示
-        execute 'setlocal ' . a:opt . '! | setlocal ' . a:opt . '?'
-        return eval('&' . a:opt)
-    else
-        echo a:opt . ' というオプションは存在しません'
-        return 0
-    endif
-endfunction "}}}
 
 " surround.vim "{{{
 let g:surround_no_mappings = 1
@@ -1805,11 +1766,6 @@ if s:is_windows
 elseif s:is_unix
     inoremap <C-@> <C-Space>
 endif
-
-" capslock
-imap <C-l> <C-o><Plug>CapsLockToggle
-cmap <C-l> <Plug>CapsLockToggle
-" TODO: show capslock status on statusline
 
 " }}}
 
