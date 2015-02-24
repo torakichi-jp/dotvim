@@ -220,7 +220,6 @@ NeoBundle 'basyura/TweetVim', {
 \ }
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'rhysd/accelerated-jk'
-NeoBundle 'tanabe/ToggleCase-vim'
 NeoBundle 'rking/ag.vim'
 NeoBundle 'anyakichi/vim-surround', {
     \ 'lazy' : 1,
@@ -1500,9 +1499,6 @@ nnoremap <silent> gs
     \ :<C-u>call openbrowser#smart_search(<SID>get_cursor_word('\v\w*'))<CR>
 xnoremap <silent> gs
     \ :<C-u>call openbrowser#smart_search(<SID>get_selected_text())<CR>
-
-" ToggleCase
-nnoremap <silent> <C-g>c :<C-u>call ToggleCase()<CR>
 
 " 'Y' is like 'D'
 nnoremap Y y$
