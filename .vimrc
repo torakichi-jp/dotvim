@@ -1117,6 +1117,24 @@ endfunction "}}}
 " User Commands: "{{{1
 "===============================================================================
 
+" help with tabpage
+command! -nargs=? -complete=help Help call <SID>help_with_tabpage(<q-args>)
+function! s:help_with_tabpage(word)
+    " search help buffer in each of tabpages
+    for tab_nr in range(tabpagenr('$'))
+        for buf_nr in tabpagebuflist(tab_nr + 1)
+            if getbufvar(buf_nr, '&l:filetype') == 'help'
+                " go to tabpage there is a found help buffer
+                execute 'tabnext ' . string(tab_nr + 1)
+                execute 'help ' . a:word
+                return
+            endif
+        endfor
+    endfor
+    " if not found, open help with new tabpage
+    execute 'tab help ' . a:word
+endfunction
+
 " define mappings in both of Normal and Visual
 command! -bar -nargs=+ NXmap call s:NXmap(<q-args>, 0)
 command! -bar -nargs=+ NXnoremap call s:NXmap(<q-args>, 1)
@@ -1249,7 +1267,7 @@ AlterCommand t              TranslateGoogle
 AlterCommand alc            Ref webdict alc
 AlterCommand ej             Ref webdict ej
 AlterCommand je             Ref webdict je
-AlterCommand h              tab help
+AlterCommand h              Help
 AlterCommand line           IndentLinesReset
 " }}}
 
@@ -1535,8 +1553,8 @@ nnoremap + <C-a>
 nnoremap - <C-x>
 
 " view the help for <cword>
-nnoremap <silent> <F1> :<C-u>tab help <C-r><C-w><CR>
-xnoremap <silent> <F1> :<C-u>tab help <C-r>=<SID>get_selected_text()<CR><CR>
+nnoremap <silent> <F1> :<C-u>Help <C-r><C-w><CR>
+xnoremap <silent> <F1> :<C-u>Help <C-r>=<SID>get_selected_text()<CR><CR>
 
 " change directory at the buffer file
 nnoremap <F2> :<C-u>cd %:p:h<Bar>echo 'cd :' expand('%:p:h')<CR>
