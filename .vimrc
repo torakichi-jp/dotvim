@@ -469,7 +469,9 @@ function! s:hooks.on_source(bundle)
             \ expand('$DOTVIMDIR/bundle/.neobundle/doc'),
             \ expand('$VIMRUNTIME/doc'),
             \ expand('$VIM/plugins/vimdoc-ja/doc'),
-        \ ], 'isdirectory(v:val)')
+        \ ],
+        \ 'isdirectory(v:val)'
+    \ )
     call unite#custom#source('neomru/file', 'ignore_pattern',
         \ '\v(' . join(helpfiledirs, '|') . ')/.*\.(txt|jax)')
 
@@ -1232,21 +1234,23 @@ call altercmd#load()
 AlterCommand ct[ags]        VimProcBang ctags -R --jcode=utf8
 AlterCommand u[nite]        Unite
 AlterCommand maps           Unite -resume mapping
-AlterCommand out[put]       Unite -resume output
+AlterCommand out            Unite -resume output
+AlterCommand va             Unite -resume variable
 AlterCommand gitb           UniteWithBufferDir giti/branch
 AlterCommand gitc           UniteWithBufferDir giti/config
 AlterCommand gitl           UniteWithBufferDir giti/log
 AlterCommand gitr           UniteWithBufferDir giti/remote
 AlterCommand gits           UniteWithBufferDir giti/status
 AlterCommand cap[ture]      Capture
-AlterCommand cdc[urrent]    CdCurrent
 AlterCommand bat[ch]        Batch
-AlterCommand ack            Ack
-AlterCommand t[ranslate]    TranslateGoogle
+AlterCommand ag             LAg
+AlterCommand vg             vimgrep
+AlterCommand t              TranslateGoogle
 AlterCommand alc            Ref webdict alc
 AlterCommand ej             Ref webdict ej
 AlterCommand je             Ref webdict je
 AlterCommand h              tab help
+AlterCommand line           IndentLinesReset
 " }}}
 
 " }}}
