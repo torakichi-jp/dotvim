@@ -845,14 +845,12 @@ augroup END
 
 " colorscheme
 set t_Co=256
-if neobundle#is_sourced('landscape.vim')
+if s:is_windows && !s:is_gui
+    colorscheme default
+elseif neobundle#is_sourced('landscape.vim')
     colorscheme landscape
 else
-    if s:is_windows && !s:is_gui
-        colorscheme default
-    else
-        colorscheme home_color
-    endif
+    colorscheme desert
 endif
 
 " Cygwin setting "{{{
