@@ -552,7 +552,7 @@ function! s:hooks.on_source(bundle)
     let g:NERDSpaceDelims = 0
 endfunction
 
-" lightline
+" lightline.vim "{{{
 let g:lightline = {
       \ 'colorscheme': 'landscape',
       \ 'component': {
@@ -571,6 +571,16 @@ let g:lightline = {
       \     'right': [ [ 'close' ], [ 'currentdir' ] ]
       \ },
 \ }
+
+let s:hooks = neobundle#get_hooks('lightline.vim')
+function! s:hooks.on_source(bundle)
+    " specially color setting
+    let palette = g:lightline#colorscheme#landscape#palette
+    let palette.inactive.middle = [['#121212', '#606060', 233, 241]]
+    let palette.inactive.right = palette.normal.right
+    let palette.inactive.left = palette.inactive.right[1 :]
+endfunction
+
 " for windows CUI
 if s:is_windows && !s:is_gui
     let g:lightline.separator = { 'left': '', 'right': '' }
@@ -588,6 +598,7 @@ endfunction
 function! MyCloseTab(n)
     return '%' . a:n . 'X X'
 endfunction
+"}}}
 
 " QFixHowm
 let g:mygrepprg = 'ag'
@@ -1776,7 +1787,7 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ? "" : getcmdline()[:getcmdpos()-2]<CR>
 cnoremap <C-y> <C-r>"
 " replace
 cnoremap <C-s> %substitute/
-" escape specialy character
+" escape specially character
 " <C-v> next as it is
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
