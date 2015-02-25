@@ -461,9 +461,15 @@ function! s:hooks.on_source(bundle)
     \ ]
 
     " neomru
-    let g:unite_sources_mru_update_interval=60
+    "let g:unite#update_interval=60
+    " ignore help files
+    let l:helpfiledirs = [
+        \ expand('$DOTVIMDIR/bundle/.neobundle/doc'),
+        \ expand('$VIMRUNTIME/doc'),
+    \ ]
     call unite#custom#source('neomru/file', 'ignore_pattern',
-        \ expand('$DOTVIMDIR') . '/bundle/*')
+        \ '\v(' . join(l:helpfiledirs, '|') . ')/.*\.(txt|jax)')
+    unlet l:helpfiledirs
 
 endfunction
 
