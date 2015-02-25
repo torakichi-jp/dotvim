@@ -1588,6 +1588,8 @@ function! s:cr_behavior() "{{{
     endif
     return ""
 endfunction "}}}
+" when in quickfix, use default behavior
+autocmd MyAutocmd FileType qf nnoremap <buffer> <CR> <CR>
 
 " tabpage "{{{
 nnoremap [Tab] <Nop>
