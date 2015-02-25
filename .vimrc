@@ -841,12 +841,13 @@ augroup MyAutocmd
         hi TabLineSel   guifg=#CCCCFF guibg=#111155 gui=bold
         hi FoldColumn   guifg=#818698 guibg=#363946
         hi ColorColumn  guifg=NONE    guibg=#333366 gui=NONE
-        "hi CursorLine   guifg=NONE    guibg=NONE   gui=underline
         hi SpecialKey   guifg=#444466 guibg=NONE    gui=NONE
         hi NonText      guifg=#ffffff ctermfg=White
         hi LineNr       guifg=#999999 guibg=#262626
         hi CursorLineNr               guibg=#333333
         hi Cursor       guifg=#000000 guibg=#ffffff gui=NONE
+
+        hi Cursor       ctermfg=15  ctermbg=0
     endfunction
 augroup END
 "}}}
@@ -899,7 +900,6 @@ set shortmess& shortmess+=I     " no launch message
 set hidden                      " hide buffer instead to remove buffer updating
 set confirm                     " show confirm dialog instead of error
 set backspace=indent,eol,start  " delete each of these characters for backspace
-set cursorline                  " highlight line at current cursor
 set cmdheight=2                 " set command line height
 set noequalalways               " disable automatical adjust window size
 set autoindent                  " enable auto indent
@@ -929,6 +929,9 @@ set timeoutlen=3000             " wait time(ms) of key mappings
 set selectmode=                 " not use select mode
 set sidescroll=1                " step of horizontal scroll
 set sidescrolloff=1             " offset around cursor in horizontal scroll
+
+ " highlight line at current cursor
+let &cursorline = !s:is_windows_cui
 
 " formatoptions setting
 " when joining lines, don't insert a space between two multi-byte characters
