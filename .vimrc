@@ -606,11 +606,15 @@ let g:howm_fileencoding = 'utf-8'
 let g:qfixmemo_mapleader = 'g\'
 
 "indentLine
-"let g:indentLine_color_term = 111
-"let g:indentLine_color_gui = '#708090'
-let g:indentLine_noConcealCursor = 1
-"let g:indentLine_char = '|'
-let g:indentLine_fileTypeExclude = ['text', 'help']
+let s:hooks = neobundle#get_hooks('indentLine')
+function! s:hooks.on_source(bundle)
+    let g:indentLine_noConcealCursor = 1
+    let g:indentLine_fileTypeExclude = ['text', 'help']
+    if s:is_windows && !s:is_gui
+        let g:indentLine_char = '|'
+        let g:indentLine_color_term = 8
+    endif
+endfunction
 
 " EasyMotion
 let g:EasyMotion_keys = 'abcdefghijklmnopqrstuvwxyz0123456789'
