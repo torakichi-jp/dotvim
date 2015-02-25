@@ -1398,22 +1398,6 @@ nnoremap Q <Nop>
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 
-" split window with cursor word on line number and
-" move to center of window
-nnoremap <C-w><S-f> <C-w>Fzz
-
-" vertical split window with cursor word on line number and
-" move to center of window (like <C-w>F)
-nnoremap <C-w><S-v> <C-W>vgFzz
-
-" exit like emacs
-nnoremap <C-x><C-c> ZQ
-inoremap <C-x><C-c> <C-o>ZQ
-
-" switch buffer
-nnoremap <C-x><C-n> :<C-u>bnext<CR>
-nnoremap <C-x><C-p> :<C-u>bprevious<CR>
-
 " j, k move with display lines if not installed accelerated-jk
 autocmd MyAutocmd VimEnter * call <SID>define_jk_mappings()
 function! s:define_jk_mappings()
@@ -1479,11 +1463,7 @@ map z# <Plug>(asterisk-z#)<Plug>(anzu-update-search-status-with-echo)
 map gz* <Plug>(asterisk-gz*)<Plug>(anzu-update-search-status-with-echo)
 map gz# <Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
 
-" set folding marker
-nnoremap z[ A "{{{<ESC>
-nnoremap z] A "}}}<ESC>
-
-" move begin/end of line
+" move to begin/end of line
 nnoremap gh g0
 xnoremap gh g0
 onoremap gh 0
@@ -1540,12 +1520,6 @@ xnoremap p "0p<CR>
 xnoremap < <gv
 xnoremap > >gv
 
-" move to begin or end of curly blacket block
-NXnoremap ]{ ]m
-NXnoremap ]} ]M
-NXnoremap [{ [m
-NXnoremap [} [m
-
 " search <cword> with split window
 nnoremap <C-w>*  <C-w>s*
 nnoremap <C-w>#  <C-w>s#
@@ -1553,14 +1527,8 @@ nnoremap <C-w>#  <C-w>s#
 " preview tags if it is more candidates
 nnoremap <C-]> g<C-]>
 
-" move to match pair
-map <C-j> %
-
 " reverse <C-t> (jump to new entry of tagstack)
-nnoremap <C-k>  :<C-u>tag<CR>
-" jump forward/backward of tagstack
-nnoremap ]t  :<C-u>tag<CR>
-nnoremap [t  :<C-u>pop<CR>
+nnoremap g<C-t>  :<C-u>tag<CR>
 
 " increment/decrement number
 nnoremap + <C-a>
