@@ -552,16 +552,6 @@ function! s:hooks.on_source(bundle)
     let g:NERDSpaceDelims = 0
 endfunction
 
-" ctrlp.vim
-let s:hooks = neobundle#get_hooks('ctrlp.vim')
-function! s:hooks.on_source(bundle)
-    let g:ctrlp_use_migemo = 1
-    let g:ctrlp_clear_cache_on_exit = 0
-    let g:ctrlp_mruf_max = 500
-    let g:ctrlp_jump_to_buffer = 2
-    let g:ctrlp_extensions = ['cmdline', 'yankring', 'menu']
-endfunction
-
 " lightline
 let g:lightline = {
       \ 'colorscheme': 'landscape',
