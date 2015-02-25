@@ -1258,6 +1258,8 @@ function! s:comment_str() "{{{
         return '#'
     elseif &ft == 'lisp'
         return ';'
+    elseif &ft == 'haskell'
+        return '--'
     endif
     return ''
 endfunction "}}}
