@@ -962,9 +962,7 @@ else
 endif
 
 " width of number column
-augroup MyAutocmd
-    autocmd BufEnter * let &l:numberwidth = len(line("$")) + 2
-augroup END
+autocmd MyAutocmd BufEnter * let &l:numberwidth = len(line("$")) + 2
 
 "}}}
 
@@ -983,7 +981,6 @@ set ignorecase          " ignore case
 set smartcase           " ignore case unless searching pattern include upper case
 set wrapscan            " back for the first line when go to the end line
 set grepprg=grep\ -nH   " grep command
-"set grepprg=ack\ -H    " use ack for grep
 " }}}
 
 " folding options " {{{
@@ -1374,22 +1371,11 @@ augroup MyAutocmd
 
     " do buffer local the previous search pattern and hightlight
     autocmd WinLeave *
-        \ let b:vimrc_pattern = @/
-        \ | let b:vimrc_hlsearch = &hlsearch
+        \ let b:prev_pattern = @/
+        \ | let b:prev_hlsearch = &hlsearch
     autocmd WinEnter *
-        \ let @/ = get(b:, 'vimrc_pattern', @/)
-        \ | let &l:hlsearch = get(b:, 'vimrc_hlsearch', &l:hlsearch)
-
-    " 起動時にファイル引数なしならスクラッチバッファを開く "{{{
-    "autocmd VimEnter *
-    "    \ redir => mes |
-    "    \ args |
-    "    \ redir END |
-    "    \ if empty(mes) |
-    "        \ drop Scratch |
-    "    \ endif |
-    "    \ unlet mes
-    "}}}
+        \ let @/ = get(b:, 'prev_pattern', @/)
+        \ | let &l:hlsearch = get(b:, 'prev_hlsearch', &l:hlsearch)
 
 augroup END
 
@@ -1408,10 +1394,6 @@ nmap        [Space]<Space>  [WSpace]
 xmap        [Space]<Space>  [WSpace]
 nnoremap    [WSpace]        <Nop>
 xnoremap    [WSpace]        <Nop>
-nnoremap    <C-x>           <Nop>
-xnoremap    <C-x>           <Nop>
-nnoremap    <C-g>           <Nop>
-xnoremap    <C-g>           <Nop>
 "}}}
 
 " has disabled
@@ -1470,7 +1452,6 @@ endfunction
 "}}}
 
 " anzu.vim
-let g:anzu_search_limit = 500
 nmap n <Plug>(anzu-n-with-echo)
 nmap N <Plug>(anzu-N-with-echo)
 
@@ -1493,21 +1474,19 @@ xnoremap gl g$
 onoremap gl $
 
 " grep (use ag)
-nnoremap gr :<C-u>Ag <C-r><C-w> *
-xnoremap gr :<C-u>Ag <C-r>=<SID>get_selected_text()<CR> *
+nnoremap gr :<C-u>LAg <C-r><C-w> *
+xnoremap gr :<C-u>LAg <C-r>=<SID>get_selected_text()<CR> *
 
 " quickhl
 NXmap gm <Plug>(quickhl-manual-this)
 NXmap gM <Plug>(quickhl-manual-reset)
 
 " count words (:%substitute/\<word\>/&/gn)
-nnoremap gw :<C-u>call <SID>count_words('\<' . expand('<cword>' . '\>'))<CR>
+nnoremap gw :<C-u>call <SID>count_words('\<' . expand('<cword>') . '\>')<CR>
 xnoremap gw :<C-u>call <SID>count_words(<SID>get_selected_text())<CR>
 function! s:count_words(word) "{{{
     execute 'silent! %substitute/' . a:word . '/&/gn'
-    echohl Search
     echo a:word . ' : ' . v:statusmsg
-    echohl None
 endfunction "}}}
 
 " OpenBrowser
