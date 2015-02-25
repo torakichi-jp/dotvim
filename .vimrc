@@ -12,6 +12,7 @@
 " switching variables
 let s:is_gui = has('gui_running')
 let s:is_windows = has('win32') || has('win64')
+let s:is_windows_cui = s:is_windows && !s:is_gui
 let s:is_unix = has('unix')
 let s:is_cygwin = has('win32unix')
 let s:is_starting = has('vim_starting')
@@ -475,7 +476,7 @@ function! s:hooks.on_source(bundle)
 endfunction
 
 "quickrun
-if has('win32') || has('win64')
+if s:is_windows
     function! s:hook_quickrun_windows()
         let l:hook = {
             \    'name' : 'myHook',
@@ -583,7 +584,7 @@ function! s:hooks.on_source(bundle)
 endfunction
 
 " for windows CUI
-if s:is_windows && !s:is_gui
+if s:is_windows_cui
     let g:lightline.separator = { 'left': '', 'right': '' }
     let g:lightline.subseparator = { 'left': '>', 'right': '<' }
     let g:lightline.component.readonly = '%{&readonly?"=":""}'
@@ -611,7 +612,7 @@ let s:hooks = neobundle#get_hooks('indentLine')
 function! s:hooks.on_source(bundle)
     let g:indentLine_noConcealCursor = 1
     let g:indentLine_fileTypeExclude = ['text', 'help']
-    if s:is_windows && !s:is_gui
+    if s:is_windows_cui
         let g:indentLine_char = '|'
         let g:indentLine_color_term = 8
     endif
@@ -850,7 +851,7 @@ augroup END
 
 " colorscheme
 set t_Co=256
-if s:is_windows && !s:is_gui
+if s:is_windows_cui
     colorscheme default
 elseif neobundle#is_sourced('landscape.vim')
     colorscheme landscape
