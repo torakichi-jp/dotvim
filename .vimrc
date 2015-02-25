@@ -1109,7 +1109,7 @@ endfunction "}}}
 " User Commands: "{{{1
 "===============================================================================
 
-" NormalモードマッピングとVisualモードマッピングを一度に定義する
+" define mappings in both of Normal and Visual
 command! -bar -nargs=+ NXmap call s:NXmap(<q-args>, 0)
 command! -bar -nargs=+ NXnoremap call s:NXmap(<q-args>, 1)
 function! s:NXmap(args, noremaped)
@@ -1131,13 +1131,13 @@ function! s:map(mode, cmd, option)
 endfunction
 unlet s:map_option_default
 
-" タブページの移動
+" move tabpage itself
 command! -bar TabMoveNext
     \ execute 'tabmove' tabpagenr() % tabpagenr('$')
 command! -bar TabMovePrev
     \ execute 'tabmove' (tabpagenr('$') + tabpagenr() - 2) % tabpagenr('$')
 
-" エンコーディングを変えて開き直す
+" reopen with change encoding
 command! -bang -bar -nargs=? -complete=file Utf8
     \ edit<bang> ++enc=utf-8 <args>
 command! -bang -bar -nargs=? -complete=file Cp932
@@ -1151,7 +1151,7 @@ command! -bang -bar -nargs=? -complete=file Utf16
 command! -bang -bar -nargs=? -complete=file Utf16be
     \ edit<bang> ++enc=ucs-2 <args>
 
-" 別名
+" aliases
 command! -bang -bar -nargs=? -complete=file Jis
     \ Iso2022jp<bang> <args>
 command! -bang -bar -nargs=? -complete=file Sjis
@@ -1182,21 +1182,21 @@ command! -nargs=? -complete=file Diff
         \ vertical diffsplit <args> |
     \ endif
 
-" DiffOrig
+" diff between loaded from this
 if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
           \ | wincmd p | diffthis
 endif
 
-" Capture :mapとかのメッセージをキャプチャ
+" capture the messages such as :messages
 command! -nargs=+ -complete=command Capture call s:CmdCapture(<q-args>)
 function! s:CmdCapture(args) "{{{
-    " コマンドのリダイレクト
+    " redirect of commands
     redir => result
     silent execute a:args
     redir END
 
-    " 特別にオプションを設定して別ウィンドウに表示
+    " view on the new buffer with set specially options
     new
     setlocal bufhidden=unload
     setlocal nobuflisted
@@ -1206,11 +1206,11 @@ function! s:CmdCapture(args) "{{{
     "silent file `='[Capture ('' . a:args . '')]'`
     silent put =result
     1,2delete _
-    " qでウィンドウを閉じられるようにする
+    " press q with close window
     nnoremap <buffer> <silent> q :<C-u>close<CR>
 endfunction "}}}
 
-" オプション表示
+" show the option
 command! -nargs=1 -complete=option ShowOption call <SID>show_option(<q-args>)
 function! s:show_option(opt) "{{{
     if !empty(a:opt)
@@ -1219,7 +1219,7 @@ function! s:show_option(opt) "{{{
 endfunction "}}}
 
 
-" 設定ファイル内でAlterCommandを使うためにロード
+" load to use AlterCommand in this file
 call altercmd#load()
 
 " AlterCommands "{{{
@@ -1248,7 +1248,7 @@ AlterCommand h              tab help
 " Functions: "{{{1
 "===============================================================================
 
-" Return string used to comment line for current filetype.
+" Return comment head for current filetype.
 function! s:comment_str() "{{{
     if &ft == 'cpp' || &ft == 'java' || &ft == 'javascript'
         return '//'
@@ -1326,7 +1326,7 @@ augroup MyAutocmd
     " no backups when edit git commit message
     autocmd FileType gitcommit setlocal nobackup noundofile noswapfile
 
-    " open read-only if exist swapfile
+    " open as read-only if exist swapfile
     autocmd SwapExists * let v:swapchoice = 'o'
 
     " settings of cmdline window
@@ -1341,7 +1341,7 @@ augroup MyAutocmd
             \ execute 'normal! g`"zz' |
         \ endif
 
-    " 直前の検索パターンと'hlsearch'をバッファローカルにする
+    " do buffer local the previous search pattern and hightlight
     autocmd WinLeave *
         \ let b:vimrc_pattern = @/
         \ | let b:vimrc_hlsearch = &hlsearch
