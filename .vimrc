@@ -10,12 +10,12 @@
 "===============================================================================
 
 " switching variables
-let s:is_gui = has('gui_running')
-let s:is_windows = has('win32') || has('win64')
+let s:is_gui         = has('gui_running')
+let s:is_windows     = has('win32') || has('win64')
 let s:is_windows_cui = s:is_windows && !s:is_gui
-let s:is_unix = has('unix')
-let s:is_cygwin = has('win32unix')
-let s:is_starting = has('vim_starting')
+let s:is_unix        = has('unix')
+let s:is_cygwin      = has('win32unix')
+let s:is_starting    = has('vim_starting')
 
 set encoding=utf-8      " internal encoding
 scriptencoding utf-8    " encoding of this script
@@ -393,7 +393,7 @@ let g:loaded_getscriptPlugin = 1
 let g:loaded_netrwPlugin = 1
 
 " vimproc build setting
-" build manually if using windows
+" should build manually if using windows
 call neobundle#config(
     \ 'vimproc.vim', {
         \ 'build' : {
@@ -558,22 +558,26 @@ endfunction
 
 " lightline.vim "{{{
 let g:lightline = {
-      \ 'colorscheme': 'landscape',
-      \ 'component': {
-      \   'readonly': '%{&readonly?"\u2b64":""}',
-      \ },
-      \ 'component_function': {
-      \     'currentdir': 'MyCurrentDir'
-      \ },
-      \ 'tab_component_function': {
-      \     'closetab': 'MyCloseTab'
-      \ },
-      \ 'separator': { 'left': "\u2b80", 'right': "\u2b82" },
-      \ 'subseparator': { 'left': "\u2b81", 'right': "\u2b83" },
-      \ 'tabline': {
-      \     'left': [ [ 'tabs' ] ],
-      \     'right': [ [ 'close' ], [ 'currentdir' ] ]
-      \ },
+    \ 'colorscheme': 'landscape',
+    \ 'component': {
+        \ 'readonly': '%{&readonly?"\u2b64":""}',
+    \ },
+    \ 'component_function': {
+        \ 'currentdir': 'MyCurrentDir'
+    \ },
+    \ 'tab_component_function': {
+        \ 'closetab': 'MyCloseTab'
+    \ },
+    \ 'separator': {
+        \ 'left': "\u2b80", 'right': "\u2b82"
+    \ },
+    \ 'subseparator': {
+        \ 'left': "\u2b81", 'right': "\u2b83"
+    \ },
+    \ 'tabline': {
+        \ 'left': [ [ 'tabs' ] ],
+        \ 'right': [ [ 'close' ], [ 'currentdir' ] ]
+    \ },
 \ }
 
 let s:hooks = neobundle#get_hooks('lightline.vim')
@@ -644,7 +648,7 @@ map g/ <Plug>(incsearch-stay)
 
 " openuri
 if s:is_windows
-    let openuri_cmd = '!start "rundll32.exe" url.dll,FileProtocolHandler %s'
+    let openuri_cmd = 'VimProcBang "rundll32.exe" url.dll,FileProtocolHandler %s'
 endif
 
 " ShowMarks {{{
@@ -734,9 +738,6 @@ call neobundle#end()
 
 " required!
 filetype plugin indent on
-
-" plugin installation check
-"NeoBundleCheck
 
 " }}}
 "===============================================================================
@@ -1350,7 +1351,7 @@ augroup MyAutocmd
     autocmd FileType cpp setlocal path+=/usr/include,/usr/local/include
 
     " close window with q
-    autocmd FileType help,ref-* nnoremap <buffer> <silent> q :<C-u>close<CR>
+    autocmd FileType help,ref-*,qf nnoremap <buffer> <silent> q :<C-u>close<CR>
 
     " no backups when edit git commit message
     autocmd FileType gitcommit setlocal nobackup noundofile noswapfile
