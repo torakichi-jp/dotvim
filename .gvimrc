@@ -6,6 +6,11 @@
 
 scriptencoding utf-8
 
+" init autocmd
+augroup MyAutocmdGUI
+    autocmd!
+augroup END
+
 " switching variables
 let s:is_windows = has('win16') || has('win32') || has('win64')
 let s:is_unix = has('unix')
@@ -30,6 +35,11 @@ function! s:toggle_menu()
 endfunction
 
 " カラースキーム
+autocmd MyAutocmdGUI ColorScheme *
+    \ if has('multi_byte_ime')
+        \ | hi CursorIM guibg=#ff0000
+    \ | endif
+
 if neobundle#is_sourced('landscape.vim')
     colorscheme landscape
 endif
