@@ -1137,19 +1137,6 @@ function! s:help_with_tabpage(word)
     execute 'tab help ' . a:word
 endfunction
 
-let s:map_option_default = {
-    \ 'remap' : 1,
-    \ 'buffer' : 0,
-    \ 'silent' : 0,
-    \ 'script' : 0,
-    \ 'expr' : 0,
-    \ 'unique' : 0,
-\ }
-function! s:map(mode, cmd, option)
-    " key map definition
-endfunction
-unlet s:map_option_default
-
 " move tabpage itself
 command! -bar TabMoveNext
     \ execute 'tabmove' tabpagenr() % tabpagenr('$')
@@ -1256,7 +1243,7 @@ AlterCommand cap[ture]      Capture
 AlterCommand bat[ch]        Batch
 AlterCommand ag             LAg
 AlterCommand vg             vimgrep
-AlterCommand t              TranslateGoogle
+AlterCommand tr             TranslateGoogle
 AlterCommand alc            Ref webdict alc
 AlterCommand ej             Ref webdict ej
 AlterCommand je             Ref webdict je
@@ -1458,7 +1445,7 @@ map z# <Plug>(asterisk-z#)<Plug>(anzu-update-search-status-with-echo)
 map gz* <Plug>(asterisk-gz*)<Plug>(anzu-update-search-status-with-echo)
 map gz# <Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
 
-" move to begin/end of line
+" go to begin/end of line
 nnoremap gh g0
 xnoremap gh g0
 onoremap gh 0
@@ -1537,7 +1524,7 @@ xnoremap <silent> <F1> :<C-u>Help <C-r>=<SID>get_selected_text()<CR><CR>
 nnoremap <F2> :<C-u>cd %:p:h<Bar>echo 'cd :' expand('%:p:h')<CR>
 
 " view directory at the buffer file
-nnoremap <F3> :<C-u>echohl StatusLine<Bar>echo expand('%:p:h')<Bar>echohl None<CR>
+nnoremap <F3> :<C-u>echo expand('%:p:h')<CR>
 
 " taglist
 nnoremap <silent> <F4> :<C-u>TlistToggle<CR>
@@ -1683,7 +1670,6 @@ nnoremap <silent> [Space]y :<C-u>Unite history/yank<CR>
 nnoremap <silent> [Space]] :<C-u>UniteWithCursorWord -buffer-name=tag tag tag/include<CR>
 nnoremap [Unite] <Nop>
 nmap [Space]u   [Unite]
-nmap U          [Unite]
 nnoremap <silent> [Unite]f :<C-u>UniteWithBufferDir -buffer-name=files file_rec file/new<CR>
 nnoremap <silent> [Unite]m :<C-u>Unite -buffer-name=marks -auto-preview mark<CR>
 nnoremap <silent> [Unite]r :<C-u>Unite -buffer-name=registers register<CR>
@@ -1705,7 +1691,7 @@ inoremap <C-x><C-l> :<C-u>NeoCompleteLock<CR>
 inoremap <C-x><C-u> :<C-u>NeoCompleteUnlock<CR>
 
 " thumbnail.vim
-nnoremap [Space]t :<C-u>Thumbnail -here<CR>
+nnoremap [Space]gt :<C-u>Thumbnail -here<CR>
 
 " winmove.vim
 let g:winmove_no_default_keymappings = 1
@@ -1734,6 +1720,7 @@ call submode#map('winsize', 'n', '', '_', '<C-w>_')
 
 " completion
 inoremap <expr> <C-n> neocomplete#start_manual_complete()
+inoremap <expr> <C-p> neocomplete#start_manual_complete()
 inoremap <expr> <C-y> neocomplete#close_popup()
 inoremap <expr> <C-e> neocomplete#cancel_popup()
 inoremap <expr> <C-g> neocomplete#undo_completion()
@@ -1786,18 +1773,6 @@ onoremap ar  a]
 xnoremap ar  a]
 onoremap ir  i]
 xnoremap ir  i]
-
-" (bracket)
-"onoremap ab  a)
-"xnoremap ab  a)
-"onoremap ib  i)
-"xnoremap ib  i)
-
-" {Bracket}
-"onoremap aB  a}
-"xnoremap aB  a}
-"onoremap iB  i}
-"xnoremap iB  i}
 
 " 'quote'
 onoremap aq  a'
@@ -1860,9 +1835,6 @@ unlet s:hooks
 
 " Filetype setting
 filetype plugin indent on
-
-" Plugin installation check
-NeoBundleCheck
 
 " }}}
 
