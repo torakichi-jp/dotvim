@@ -1137,15 +1137,6 @@ function! s:help_with_tabpage(word)
     execute 'tab help ' . a:word
 endfunction
 
-" define mappings in both of Normal and Visual
-command! -bar -nargs=+ NXmap call s:NXmap(<q-args>, 0)
-command! -bar -nargs=+ NXnoremap call s:NXmap(<q-args>, 1)
-function! s:NXmap(args, noremaped)
-    let remap_str = a:noremaped ? 'nore' : ""
-    execute 'n' . remap_str . 'map ' . a:args
-    execute 'x' . remap_str . 'map ' . a:args
-endfunction
-
 let s:map_option_default = {
     \ 'remap' : 1,
     \ 'buffer' : 0,
@@ -1480,8 +1471,10 @@ nnoremap gr :<C-u>LAg <C-r><C-w> *
 xnoremap gr :<C-u>LAg <C-r>=<SID>get_selected_text()<CR> *
 
 " quickhl
-NXmap gm <Plug>(quickhl-manual-this)
-NXmap gM <Plug>(quickhl-manual-reset)
+nmap gm <Plug>(quickhl-manual-this)
+xmap gm <Plug>(quickhl-manual-this)
+nmap gM <Plug>(quickhl-manual-reset)
+xmap gM <Plug>(quickhl-manual-reset)
 
 " count words (:%substitute/\<word\>/&/gn)
 nnoremap gw :<C-u>call <SID>count_words('\<' . expand('<cword>') . '\>')<CR>
