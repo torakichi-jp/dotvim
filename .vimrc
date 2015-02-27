@@ -1120,21 +1120,34 @@ endfunction "}}}
 "===============================================================================
 
 " help with tabpage
-command! -nargs=? -complete=help Help call <SID>help_with_tabpage(<q-args>)
-function! s:help_with_tabpage(word)
-    " search help buffer in each of tabpages
+" with '!' force create tabpage
+command! -bang -nargs=? -complete=help Help
+    \ call <SID>help_with_tabpage(<q-args>, <q-bang>)
+
+function! s:help_with_tabpage(word, bang)
+    if empty(a:bang)
+        let tab_nr = s:search_help_tab()
+        if tab_nr != 0
+            execute 'tabnext ' . string(tab_nr)
+            execute 'help ' . a:word
+            return
+        endif
+    endif
+    execute 'tab help ' . a:word
+endfunction
+
+" search tabpage number which include help buffer
+" return found first tabpage number
+" or return 0 if not found
+function! s:search_help_tab()
     for tab_nr in range(tabpagenr('$'))
         for buf_nr in tabpagebuflist(tab_nr + 1)
             if getbufvar(buf_nr, '&l:filetype') == 'help'
-                " go to tabpage there is a found help buffer
-                execute 'tabnext ' . string(tab_nr + 1)
-                execute 'help ' . a:word
-                return
+                return tab_nr + 1
             endif
         endfor
     endfor
-    " if not found, open help with new tabpage
-    execute 'tab help ' . a:word
+    return 0
 endfunction
 
 " move tabpage itself
