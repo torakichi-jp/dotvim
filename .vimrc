@@ -1723,7 +1723,6 @@ inoremap <expr> <C-n> neocomplete#start_manual_complete()
 inoremap <expr> <C-p> neocomplete#start_manual_complete()
 inoremap <expr> <C-y> neocomplete#close_popup()
 inoremap <expr> <C-e> neocomplete#cancel_popup()
-inoremap <expr> <C-g> neocomplete#undo_completion()
 
 " switch IME
 if s:is_windows
@@ -1739,6 +1738,7 @@ endif
 "-------------------------------------------------------------------------------
 " {{{
 
+" like emacs
 cnoremap <C-n> <Down>
 cnoremap <C-p> <Up>
 cnoremap <C-b> <Left>
@@ -1747,13 +1747,6 @@ cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-k> <C-\>e getcmdpos() == 1 ? "" : getcmdline()[:getcmdpos()-2]<CR>
 cnoremap <C-y> <C-r>"
-" replace
-cnoremap <C-s> %substitute/
-" escape specially character
-" <C-v> next as it is
-cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
-cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
-cnoremap <expr> [ match(getcmdtype(), '[/?]') != -1 ? '\[' : '['
 
 " }}}
 
@@ -1804,22 +1797,22 @@ endfunction
 function! s:abbrev_def()
     " コメント文字の取得
     " 展開するときに定義されていないといけないので、b:で定義
-    let b:head = <SID>comment_str()
-    if empty(b:head)
+    let b:comment_head = <SID>comment_str()
+    if empty(b:comment_head)
         return
     endif
 
-    inoreabbrev <buffer> <expr> @= <SID>abbrev_comment_line(b:head, '=')
-    inoreabbrev <buffer> <expr> @- <SID>abbrev_comment_line(b:head, '-')
-    inoreabbrev <buffer> <expr> @+ <SID>abbrev_comment_line(b:head, '+')
-    inoreabbrev <buffer> <expr> @\| <SID>abbrev_comment_line(b:head, '\|')
-    inoreabbrev <buffer> <expr> @* <SID>abbrev_comment_line(b:head, '*')
-    inoreabbrev <buffer> <expr> @/ <SID>abbrev_comment_line(b:head, '/')
-    inoreabbrev <buffer> <expr> @# <SID>abbrev_comment_line(b:head, '#')
-    inoreabbrev <buffer> <expr> @> <SID>abbrev_comment_line(b:head, '>')
-    inoreabbrev <buffer> <expr> @< <SID>abbrev_comment_line(b:head, '<')
-    inoreabbrev <buffer> <expr> @x <SID>abbrev_comment_line(b:head, 'x')
-    inoreabbrev <buffer> <expr> @r <SID>abbrev_comment_line(b:head, '<>')
+    inoreabbrev <buffer> <expr> @= <SID>abbrev_comment_line(b:comment_head, '=')
+    inoreabbrev <buffer> <expr> @- <SID>abbrev_comment_line(b:comment_head, '-')
+    inoreabbrev <buffer> <expr> @+ <SID>abbrev_comment_line(b:comment_head, '+')
+    inoreabbrev <buffer> <expr> @\| <SID>abbrev_comment_line(b:comment_head, '\|')
+    inoreabbrev <buffer> <expr> @* <SID>abbrev_comment_line(b:comment_head, '*')
+    inoreabbrev <buffer> <expr> @/ <SID>abbrev_comment_line(b:comment_head, '/')
+    inoreabbrev <buffer> <expr> @# <SID>abbrev_comment_line(b:comment_head, '#')
+    inoreabbrev <buffer> <expr> @> <SID>abbrev_comment_line(b:comment_head, '>')
+    inoreabbrev <buffer> <expr> @< <SID>abbrev_comment_line(b:comment_head, '<')
+    inoreabbrev <buffer> <expr> @x <SID>abbrev_comment_line(b:comment_head, 'x')
+    inoreabbrev <buffer> <expr> @r <SID>abbrev_comment_line(b:comment_head, '<>')
 endfunction
 
 " ファイルタイプ設定時に略記定義
