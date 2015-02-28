@@ -1218,7 +1218,8 @@ AlterCommand alc            Ref webdict alc
 AlterCommand ej             Ref webdict ej
 AlterCommand je             Ref webdict je
 AlterCommand h              Help
-AlterCommand line           IndentLinesReset
+AlterCommand ind            IndentLinesReset
+AlterCommand no             nohlsearch
 " }}}
 
 " }}}
@@ -1326,6 +1327,7 @@ augroup MyAutocmd
     autocmd WinEnter *
         \ let @/ = get(b:, 'prev_pattern', @/)
         \ | let &l:hlsearch = get(b:, 'prev_hlsearch', &l:hlsearch)
+        \ | nohlsearch
 
 augroup END
 
