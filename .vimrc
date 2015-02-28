@@ -862,7 +862,6 @@ set helplang=ja                 " help language is japanese
 set pumheight=10                " max height of popup menu
 set previewheight=5             " height of preview window
 set cmdwinheight=5              " height of cmdwindow
-let &showbreak='+++ '           " string of wrapped line head
 set cpoptions& cpoptions+=n     " use number column for wrapped line
 set showmatch                   " jump to match pair temporarily
 set matchtime=1                 " time (0.1 sec) to jump match pair
@@ -915,7 +914,10 @@ else
 endif
 
 " width of number column
-autocmd MyAutocmd BufEnter * let &l:numberwidth = len(line("$")) + 2
+" and wrapped line head string which adjust according to numberwidth
+autocmd MyAutocmd BufEnter *
+    \ let &l:numberwidth = len(line('$')) + 2
+    \ | let &showbreak = '>> ' . repeat(' ', len(line('$')) - 1)
 
 "}}}
 
