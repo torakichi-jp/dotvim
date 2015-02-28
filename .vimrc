@@ -1642,14 +1642,6 @@ nnoremap [Space]gt :<C-u>Thumbnail -here<CR>
 " vim-external
 nmap [Space]ge <Plug>(external-explorer)
 
-" winmove.vim
-let g:winmove_no_default_keymappings = 1
-call submode#enter_with('winmove', 'n', '', '<C-w>m', '<Nop>')
-call submode#map('winmove', 'n', 'r', 'j', '<Plug>(winmove-down)')
-call submode#map('winmove', 'n', 'r', 'k', '<Plug>(winmove-up)')
-call submode#map('winmove', 'n', 'r', 'h', '<Plug>(winmove-left)')
-call submode#map('winmove', 'n', 'r', 'l', '<Plug>(winmove-right)')
-
 " resize window
 call submode#enter_with('winsize', 'n', '', '<C-w>+', '<C-w>+')
 call submode#enter_with('winsize', 'n', '', '<C-w>-', '<C-w>-')
@@ -1660,7 +1652,6 @@ call submode#map('winsize', 'n', '', '<', '<C-w><')
 call submode#map('winsize', 'n', '', '+', '<C-w>+')
 call submode#map('winsize', 'n', '', '-', '<C-w>-')
 call submode#map('winsize', 'n', '', '_', '<C-w>_')
-
 
 "-------------------------------------------------------------------------------
 " Insertmode Mappings:

@@ -78,6 +78,14 @@ nnoremap <C-s> :<C-u>update<CR>
 nnoremap <silent> <M-x> :<C-u>ScreenMode 4<CR>
 nnoremap <silent> <M-r> :<C-u>Revert<CR>
 
+" winmove.vim
+let g:winmove_no_default_keymappings = 1
+call submode#enter_with('winmove', 'n', '', '<C-w>m', '<Nop>')
+call submode#map('winmove', 'n', 'r', 'j', '<Plug>(winmove-down)')
+call submode#map('winmove', 'n', 'r', 'k', '<Plug>(winmove-up)')
+call submode#map('winmove', 'n', 'r', 'h', '<Plug>(winmove-left)')
+call submode#map('winmove', 'n', 'r', 'l', '<Plug>(winmove-right)')
+
 "*******************************************************************************
 " GUI Menus:
 "*******************************************************************************
