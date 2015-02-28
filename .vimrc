@@ -881,6 +881,7 @@ set selectmode=                 " not use select mode
 set selection=inclusive         " last character of selection is included in operation
 set sidescroll=1                " step of horizontal scroll
 set sidescrolloff=1             " offset around cursor in horizontal scroll
+set colorcolumn=81              " highlight column at 81
 
  " highlight line at current cursor
 let &cursorline = !s:is_windows_cui
