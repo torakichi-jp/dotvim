@@ -748,68 +748,6 @@ filetype plugin indent on
 "===============================================================================
 
 " adjust 'runtimepath'
-function! s:adjust_rtp(runtimepath, dotvimdir) "{{{
-    if has('ruby')
-ruby << END
-    DOTVIM_CANDIDATES = VIM::evaluate('s:dotvimdir_candidates').freeze
-
-    class String
-      def expand
-        VIM::evaluate 'expand(\'' + self + '\')'
-      end
-
-      def directory?
-        VIM::evaluate('isdirectory(\'' + self + '\')').to_i != 0
-      end
-    end
-
-    def adjust_rtp(rtp, dotvim)
-      # delimiter is slash instead of backslash
-      # create list split by comma
-      # expand path
-      delm = VIM::evaluate('&shellslash') ? '/' : '\\'
-      rtps = rtp.gsub(/\\+/, delm).split(/,+/).map do |path|
-        ex_p = path.expand
-        if ex_p[-1] == '\\'
-          ex_p[-1] = ''
-        end
-        ex_p
-      end
-
-      # delete path that is not directory or included candidates of dotvimdir
-      rtps.delete_if do |path|
-        not path.directory? or DOTVIM_CANDIDATES.include? path
-      end
-
-      # add dotvim dir and dotvim/after dir
-      rtps.insert(0, dotvim) << dotvim + '/after'
-
-      # delete duplication
-      rtps.uniq!
-
-      # join each path
-      rtps.join(',')
-    end
-
-    # set local var of Vim
-    rtp = adjust_rtp VIM::evaluate('a:runtimepath'), VIM::evaluate('a:dotvimdir')
-    VIM::command 'let l:rtp = \'' + rtp + '\''
-END
-        return l:rtp
-    else
-        return a:runtimepath
-    endif
-endfunction "}}}
-
-"if s:is_starting
-    "let s:rtp_temp = s:adjust_rtp(&runtimepath, $DOTVIMDIR)
-    "if !empty(s:rtp_temp)
-        "let &runtimepath = s:rtp_temp
-    "endif
-    "unlet s:rtp_temp
-"endif
-delfunction s:adjust_rtp
-
 if s:is_starting
     let s:rtp = $DOTVIMDIR . ',' . &runtimepath . ',' . $DOTVIMDIR . '/after'
     let s:rtps = filter(split(s:rtp, ','), 'isdirectory(v:val)')
