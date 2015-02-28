@@ -722,13 +722,6 @@ let g:toggle_pairs = {
     \ 'or' : 'and',
 \ }
 
-" j, k mappings when loaded accelerated-jk "{{{
-let s:hooks = neobundle#get_hooks('accelerated-jk')
-function! s:hooks.on_source(bundle)
-    nmap j <Plug>(accelerated_jk_gj)
-    nmap k <Plug>(accelerated_jk_gk)
-endfunction
-
 "}}}
 
 " vim2hs
@@ -1353,18 +1346,25 @@ nnoremap Q <Nop>
 nnoremap ZZ <Nop>
 nnoremap ZQ <Nop>
 
+" j, k mappings
+nmap j <Plug>(accelerated_jk_gj)
+xnoremap j gj
+nmap k <Plug>(accelerated_jk_gk)
+xnoremap k gk
+nnoremap gj j
+xnoremap gj j
+nnoremap gk k
+xnoremap gk k
+
 " j, k move with display lines if not installed accelerated-jk
 autocmd MyAutocmd VimEnter * call <SID>define_jk_mappings()
 function! s:define_jk_mappings()
-    if !neobundle#is_sourced('accelerated-jk')
+    if empty(mapcheck('<Plug>(accelerated_jk', 'n'))
         nnoremap j gj
         nnoremap k gk
     endif
 endfunction
 
-" backup j, k mappings
-nnoremap gj j
-nnoremap gk k
 
 " if cursor line is at foldclosed, 'l' open folding
 nnoremap <expr> l foldclosed('.') < 0 ? 'l' : 'zo'
