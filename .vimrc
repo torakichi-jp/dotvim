@@ -1656,7 +1656,7 @@ nmap <Leader>xa <Plug>NERDCommenterAltDelims
 
 " vimfiler "{{{
 nnoremap <silent> [Space]e :<C-u>VimFilerBufferDir
-    \ -buffer-name=explorer -toggle -split -horizontal -no-quit -winheight=10<CR>
+    \ -buffer-name=explorer -toggle -split -horizontal -winheight=10<CR>
 autocmd MyAutocmd FileType vimfiler call <SID>vim_filer_settings()
 function! s:vim_filer_settings()
     " exchange keymaps for 'q' and 'Q'
