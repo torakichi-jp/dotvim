@@ -467,14 +467,14 @@ function! s:hooks.on_source(bundle)
     " neomru
     "let g:unite#update_interval=60
     " ignore help files
-    let helpfiledirs = filter(
-        \ [
-            \ expand('$DOTVIMDIR/bundle/.neobundle/doc'),
-            \ expand('$VIMRUNTIME/doc'),
-            \ expand('$VIM/plugins/vimdoc-ja/doc'),
-        \ ],
-        \ 'isdirectory(v:val)'
-    \ )
+    let helpfiledirs = [
+        \ expand('$DOTVIMDIR/bundle/') . '.*/doc',
+        \ expand('$VIMRUNTIME/doc'),
+        \ expand('$VIM/plugins/vimdoc-ja/doc'),
+    \ ]
+    if !&shellslash
+        call map(helpfiledirs, 'substitute(v:val, ''\'', ''/'', ''g'')')
+    endif
     call unite#custom#source('neomru/file', 'ignore_pattern',
         \ '\v(' . join(helpfiledirs, '|') . ')/.*\.(txt|jax)')
 
