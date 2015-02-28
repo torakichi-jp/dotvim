@@ -232,6 +232,9 @@ NeoBundle 'anyakichi/vim-surround', {
         \ ]
     \ }
 \ }
+NeoBundle 'itchyny/vim-highlighturl'
+NeoBundle 'itchyny/vim-external'
+NeoBundle 'itchyny/vim-autoft'
 
 NeoBundle 'sudo.vim'
 NeoBundleLazy 'vimwiki'
