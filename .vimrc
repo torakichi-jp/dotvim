@@ -1445,12 +1445,6 @@ xnoremap <silent> gs
 nnoremap Y y$
 
 " Ref "{{{
-nnoremap [Ref] <Nop>
-nmap [Space]r [Ref]
-nnoremap [Ref]e :<C-u>Ref webdict ej <C-r><C-w>
-nnoremap [Ref]j :<C-u>Ref webdict je <C-r><C-w>
-nnoremap [Ref]a :<C-u>Ref webdict alc <C-r><C-w>
-nnoremap [Ref]t :<C-u>Ref webdict thesaurus <C-r><C-w>
 nnoremap <silent> <expr> K
     \ ':<C-u>Ref webdict alc ' . <SID>get_cursor_word('\v[a-zA-Z]*') . '<CR>'
 xnoremap <silent> <expr> K
@@ -1641,13 +1635,6 @@ nnoremap <silent> [Unite]c :<C-u>Unite history/command command<CR>
 nnoremap <silent> [Unite]q :<C-u>Unite qfixhowm<CR>
 nnoremap <silent> [Unite]t :<C-u>UniteWithCursorWord -buffer-name=tag tag tag/include<CR>
 "}}}
-
-" neocomplete
-nmap [Space]nc [Neocom]
-nnoremap [Neocom]l :<C-u>NeoCompleteLock<CR>
-nnoremap [Neocom]u :<C-u>NeoCompleteUnlock<CR>
-inoremap <C-x><C-l> :<C-u>NeoCompleteLock<CR>
-inoremap <C-x><C-u> :<C-u>NeoCompleteUnlock<CR>
 
 " thumbnail.vim
 nnoremap [Space]gt :<C-u>Thumbnail -here<CR>
