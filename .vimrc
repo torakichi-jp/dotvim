@@ -1474,18 +1474,10 @@ nnoremap gr :<C-u>LAg <C-r><C-w> *
 xnoremap gr :<C-u>LAg <C-r>=<SID>get_selected_text()<CR> *
 
 " quickhl
-nmap gm <Plug>(quickhl-manual-this)
-xmap gm <Plug>(quickhl-manual-this)
-nmap gM <Plug>(quickhl-manual-reset)
-xmap gM <Plug>(quickhl-manual-reset)
-
-" count words (:%substitute/\<word\>/&/gn)
-nnoremap gw :<C-u>call <SID>count_words('\<' . expand('<cword>') . '\>')<CR>
-xnoremap gw :<C-u>call <SID>count_words(<SID>get_selected_text())<CR>
-function! s:count_words(word) "{{{
-    execute 'silent! %substitute/' . a:word . '/&/gn'
-    echo a:word . ' : ' . v:statusmsg
-endfunction "}}}
+nmap gw <Plug>(quickhl-manual-this)
+xmap gw <Plug>(quickhl-manual-this)
+nmap gW <Plug>(quickhl-manual-reset)
+xmap gW <Plug>(quickhl-manual-reset)
 
 " OpenBrowser
 nmap gx <Plug>(openbrowser-open)
@@ -1674,9 +1666,6 @@ nnoremap <silent> [Space]f :<C-u>UniteWithBufferDir -buffer-name=files file file
 nnoremap <silent> [Space]m :<C-u>Unite -buffer-name=files neomru/file<CR>
 nnoremap <silent> [Space]d :<C-u>Unite -buffer-name=files -default-action=lcd neomru/directory<CR>
 nnoremap <silent> [Space]b :<C-u>Unite -buffer-name=buffers buffer<CR>
-nnoremap <silent> [Space]/ :<C-u>Unite -buffer-name=search -start-insert line/fast<CR>
-nnoremap <silent> [Space]* :<C-u>UniteWithCursorWord -buffer-name=search line/fast<CR>
-nnoremap <silent> [Space]h :<C-u>UniteWithInput -buffer-name=help -resume help<CR>
 nnoremap <silent> [Space]q :<C-u>Unite -no-quit qf<CR>
 nnoremap <silent> [Space]o :<C-u>Unite -resume output<CR>
 nnoremap <silent> [Space]j :<C-u>Unite change jump<CR>
