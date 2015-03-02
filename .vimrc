@@ -20,6 +20,7 @@ let s:is_starting    = has('vim_starting')
 set encoding=utf-8      " internal encoding
 scriptencoding utf-8    " encoding of this script
 "set shellslash         " path delimiter is slash
+                        " set in Windows local vimrc
 
 " candidates of dotvimdir path ordered in priority
 let s:dotvimdir_candidates = [

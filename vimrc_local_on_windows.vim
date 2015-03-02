@@ -4,6 +4,8 @@
 
 scriptencoding utf-8    " encoding of this script
 
+set shellslash
+
 " ホームディレクトリ
 if !exists('$HOME')
     let $HOME=$USERPROFILE
