@@ -31,7 +31,7 @@ let s:dotvimdir_candidates = [
     \ expand('~/dotvim'),
 \ ]
 
-if !exists('$DOTVIMDIR')
+if !exists('$DOTVIM')
     " path to .vim directory
     function! s:get_dotvimdir_var()
         " return path that found first
@@ -43,7 +43,7 @@ if !exists('$DOTVIMDIR')
         return $HOME
     endfunction
 
-    let $DOTVIMDIR = s:get_dotvimdir_var()
+    let $DOTVIM = s:get_dotvimdir_var()
     delfunction s:get_dotvimdir_var
 endif
 
@@ -81,11 +81,11 @@ filetype plugin indent off
 
 " initialize neobundle
 if s:is_starting
-    let &runtimepath = &runtimepath . ',' . $DOTVIMDIR . '/bundle/neobundle.vim'
+    let &runtimepath = &runtimepath . ',' . $DOTVIM . '/bundle/neobundle.vim'
 endif
 
 " begin bundling
-call neobundle#begin($DOTVIMDIR . '/bundle')
+call neobundle#begin($DOTVIM . '/bundle')
 
 "-------------------------------------------------------------------------------
 " Bundles: "{{{2
@@ -469,7 +469,7 @@ function! s:hooks.on_source(bundle)
     "let g:unite#update_interval=60
     " ignore help files
     let helpfiledirs = [
-        \ expand('$DOTVIMDIR/bundle/') . '.*/doc',
+        \ expand('$DOTVIM/bundle/') . '.*/doc',
         \ expand('$VIMRUNTIME/doc'),
         \ expand('$VIM/plugins/vimdoc-ja/doc'),
     \ ]
@@ -743,7 +743,7 @@ filetype plugin indent on
 
 " adjust 'runtimepath'
 if s:is_starting
-    let s:rtp = $DOTVIMDIR . ',' . &runtimepath . ',' . $DOTVIMDIR . '/after'
+    let s:rtp = $DOTVIM . ',' . &runtimepath . ',' . $DOTVIM . '/after'
     let s:rtps = filter(split(s:rtp, ','), 'isdirectory(v:val)')
     let s:rtp = join(s:rtps, ',')
     if !empty(s:rtp)
@@ -971,10 +971,10 @@ endif
 "}}}
 
 " backup options " {{{
-set backup                                  " create backup file
-let &backupdir = $DOTVIMDIR . '/.backup'    " directory of backup file
-set undofile                                " create undo file
-let &undodir = $DOTVIMDIR . '/.undo'        " directory of undo file
+set backup                              " create backup file
+let &backupdir = $DOTVIM . '/.backup'   " directory of backup file
+set undofile                            " create undo file
+let &undodir = $DOTVIM . '/.undo'       " directory of undo file
 " create backup directory if not exist
 if &backupdir!=#'' && !isdirectory(&backupdir)
     call mkdir(&backupdir)
