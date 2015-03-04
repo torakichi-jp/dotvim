@@ -1134,19 +1134,31 @@ command! -bang -bar -nargs=? -complete=file Sjis
 command! -bang -bar -nargs=? -complete=file Unicode
     \ Utf16<bang> <args>
 
-" Explorer
-command! -nargs=? -complete=dir Explorer call s:Explorer(<q-args>)
-function! s:Explorer(dir)
-    let l:dir = a:dir
-    if a:dir == ''
-        let l:dir = '.'
-    endif
+" external explorer
+command! -nargs=? -complete=dir Explorer call s:ex_explorer(<q-args>)
+function! s:ex_explorer(dir)
+    let l:dir = fnamemodify(empty(a:dir) ? expand('%') : a:dir, ':p')
     if s:is_windows
-        execute 'VimProcBang rundll32 url.dll,FileProtocolHandler ' . l:dir
-    elseif s:is_unix
-        execute 'VimProcBang nautilus ' . l:dir
+        let l:dir = substitute(l:dir, '/', '\', 'g')
     endif
 
+    let l:cmd = ''
+    if s:is_windows
+        let l:cmd = 'explorer /select,'
+    elseif s:is_unix
+        let l:cmd = 'nautilus '
+    endif
+    call confirm(l:cmd . l:dir)
+
+    if empty(l:cmd)
+        echoerr 'no explorer'
+    else
+        if exists('*vimproc#system')
+            silent! call vimproc#system(l:cmd . l:dir . '&')
+        else
+            silent! call system(l:cmd . l:dir)
+        endif
+    endif
 endfunction
 
 " Diff
