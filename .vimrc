@@ -1135,30 +1135,37 @@ command! -bang -bar -nargs=? -complete=file Unicode
     \ Utf16<bang> <args>
 
 " external explorer
-command! -nargs=? -complete=dir Explorer call s:ex_explorer(<q-args>)
-function! s:ex_explorer(dir)
-    let l:dir = fnamemodify(empty(a:dir) ? expand('%') : a:dir, ':p')
-    if s:is_windows
-        let l:dir = substitute(l:dir, '/', '\', 'g')
+command! -nargs=? -complete=dir -complete=file Explorer call s:ex_explorer(<q-args>)
+function! s:ex_explorer(path)
+    " path to open
+    let l:path = expand(a:path)
+    if filereadable(l:path) || isdirectory(l:path)
+        let l:path = fnamemodify(l:path, ':p')
+    elseif empty(l:path)
+        let l:path = fnamemodify(expand('%'), ':p')
+    else
+        echoerr '"' . l:path . '" is not file or directory'
+        return
     endif
 
+    " use backslash instead of slash in Windows
+    if s:is_windows
+        let l:path = substitute(l:path, '/', '\', 'g')
+    endif
+
+    " dispatch explorer command by OS
     let l:cmd = ''
     if s:is_windows
         let l:cmd = 'explorer /select,'
     elseif s:is_unix
         let l:cmd = 'nautilus '
-    endif
-    call confirm(l:cmd . l:dir)
-
-    if empty(l:cmd)
-        echoerr 'no explorer'
     else
-        if exists('*vimproc#system')
-            silent! call vimproc#system(l:cmd . l:dir . '&')
-        else
-            silent! call system(l:cmd . l:dir)
-        endif
+        echoerr 'no explorer'
+        return
     endif
+
+    " run command
+    silent! call system(l:cmd . l:path)
 endfunction
 
 " Diff
