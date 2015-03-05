@@ -1135,37 +1135,49 @@ command! -bang -bar -nargs=? -complete=file Unicode
     \ Utf16<bang> <args>
 
 " external explorer
-command! -nargs=? -complete=dir -complete=file Explorer call s:ex_explorer(<q-args>)
+command! -nargs=? -complete=dir -complete=file Explorer
+    \ call s:ex_explorer(<q-args>)
 function! s:ex_explorer(path)
-    " path to open
-    let l:path = expand(a:path)
-    if filereadable(l:path) || isdirectory(l:path)
-        let l:path = fnamemodify(l:path, ':p')
-    elseif empty(l:path)
-        let l:path = fnamemodify(expand('%'), ':p')
-    else
-        echoerr '"' . l:path . '" is not file or directory'
+    " get readable path
+    let l:path = s:conv_readable(!empty(a:path) ? a:path : '%')
+    if empty(l:path)
+        echoerr 'Explorer: "' . a:path . '" is not file or directory'
         return
     endif
+
+    " dispatch explorer command by OS
+    let explorer_cmd = ''
+    if s:is_windows
+        let explorer_cmd = 'explorer '
+    elseif s:is_unix
+        let explorer_cmd = 'nautilus '
+    else
+        echoerr 'Explorer: no explorer'
+        return
+    endif
+
+    " add file select option
+    if filereadable(l:path)
+        if s:is_windows
+            let explorer_cmd .= '/select,'
+        endif
+    endif
+
+    " run command
+    silent! call system(explorer_cmd . l:path)
+endfunction
+
+" convert path to readable file or directory
+" if path is invalid, return empty string
+function! s:conv_readable(path)
+    let l:path = fnamemodify(expand(a:path), ':p')
 
     " use backslash instead of slash in Windows
     if s:is_windows
         let l:path = substitute(l:path, '/', '\', 'g')
     endif
 
-    " dispatch explorer command by OS
-    let l:cmd = ''
-    if s:is_windows
-        let l:cmd = 'explorer /select,'
-    elseif s:is_unix
-        let l:cmd = 'nautilus '
-    else
-        echoerr 'no explorer'
-        return
-    endif
-
-    " run command
-    silent! call system(l:cmd . l:path)
+    return (filereadable(l:path) || isdirectory(l:path)) ? l:path : ''
 endfunction
 
 " Diff
