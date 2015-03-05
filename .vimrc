@@ -811,7 +811,7 @@ if s:is_windows_cui
 else
     try
         colorscheme landscape
-    catch
+    catch /^Vim(colorscheme):/
         colorscheme desert
     endtry
 endif
