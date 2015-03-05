@@ -1679,7 +1679,7 @@ nnoremap <silent> [Unite]t :<C-u>UniteWithCursorWord -buffer-name=tag tag tag/in
 nnoremap [Space]gt :<C-u>Thumbnail -here<CR>
 
 " vim-external
-nmap [Space]ge <Plug>(external-explorer)
+nnoremap [Space]ge :<C-u>Explorer<CR>
 
 " resize window
 call submode#enter_with('winsize', 'n', '', '<C-w>+', '<C-w>+')
