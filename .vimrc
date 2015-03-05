@@ -703,11 +703,6 @@ endfunction
 let g:qfixmemo_menubar = 0
 let g:MyGrep_MenuBar = 0
 
-" 開始時の行末空白ハイライトの自動表示あり
-"let g:auto_trailing_whitespace_enable = 1
-" 行末空白ハイライトをシンプルに
-"let g:auto_trailing_whitespace_simple = 1
-
 " TagList
 let Tlist_Compact_Format = 1        "空白行などを表示しない
 let Tlist_Enable_Fold_Column = 0    "折りたたみ列を表示しない
@@ -715,7 +710,7 @@ let Tlist_Exit_OnlyWindow = 1       "タグリストウィンドウのみにな�
 let Tlist_Sort_Type = 'name'        "タグを名前順にソートする
 
 " submode
-let g:submode_timeout=0     " サブモードでのタイムアウトなし
+let g:submode_timeout=0     " no timeout of submode
 
 " vim-toggle
 let g:toggle_pairs = {
@@ -780,11 +775,11 @@ let g:doxygen_enhanced_color = 1
 
 "}}}
 
-" mouse behaves windows
+" mouse behaves Windows
 behave mswin
 
 " specially color setting "{{{
-" to override by autocmd, in front of colorscheme setting
+" override by autocmd before colorscheme setting
 augroup MyAutocmd
     autocmd ColorScheme * call <SID>set_mycolor()
     function! s:set_mycolor()
@@ -834,7 +829,7 @@ endif
 " general options "{{{
 
 " terminal encoding
-" if not set then Ref webdict was garbled on Windows
+" Note: if not set, Ref webdict was garbled on Windows
 if s:is_starting && s:is_windows
     set termencoding=cp932
 endif
@@ -844,33 +839,33 @@ set fileencodings=utf-8,cp932,euc-jp,ucs-2le,default,latin1
 
 set number                      " show line numbers
 set ruler                       " show ruler
-set showcmd                     " show inserting command
+set showcmd                     " show inserted command
 set wrap                        " wrap line of right edge
 set display=lastline            " show lastline as much as possible
 set laststatus=2                " show statusline always
 set showtabline=2               " show tabline always
-set textwidth=0                 " text width
+set textwidth=0                 " disable automaticaclly line break
 set shortmess& shortmess+=I     " no launch message
-set hidden                      " hide buffer instead to remove buffer updating
+set hidden                      " hide buffer instead to remove modified buffer
 set confirm                     " show confirm dialog instead of error
-set backspace=indent,eol,start  " delete each of these characters for backspace
-set cmdheight=2                 " set command line height
+set backspace=indent,eol,start  " can be deleted these characters for backspace
+set cmdheight=2                 " command line height
 set noequalalways               " disable automatical adjust window size
 set autoindent                  " enable auto indent
 set cinoptions=:0,l1,g0,m1      " C/C++ indent option
 set switchbuf=split,newtab      " switch buffer option
 "set tabline=%!MakeTabLine()    " tabline string
 set helpheight=0                " min height of help
-set helplang=ja                 " help language is japanese
+set helplang=ja                 " help language priority
 set pumheight=10                " max height of popup menu
 set previewheight=5             " height of preview window
 set cmdwinheight=5              " height of cmdwindow
 set cpoptions& cpoptions+=n     " use number column for wrapped line
 set showmatch                   " jump to match pair temporarily
 set matchtime=1                 " time (0.1 sec) to jump match pair
-set virtualedit+=block          " virtual edit for visual block mode only
-set matchpairs& matchpairs+=<:> " add pair that is <>
-set winaltkeys=no               " not use alt keys for GUI menu
+set virtualedit=block           " virtual edit for visual block mode only
+set matchpairs& matchpairs+=<:> " add pair <>
+set winaltkeys=no               " not use Alt key for GUI menu
 set path+=;/                    " file path follows parent directory
 set tags+=./tags;,./**/tags     " search path of tag files
 set complete& complete-=t,i     " remove 'include, tag' from completion candidates
@@ -897,10 +892,10 @@ if v:version >= 704
 endif
 
 " keep column as much as possible in the vertical movement
-" (<C-d>, <C-u>, and so on)
+" (<C-d>, <C-u>, ...)
 set nostartofline
 
-" not redraw of no typing command (key macros and so on)
+" not redraw of no typing command (such as key macros)
 "set lazyredraw
 
 " enable extend command line complete and setting
@@ -925,7 +920,7 @@ autocmd MyAutocmd BufEnter *
 "}}}
 
 " tab, indent options " {{{
-set tabstop=4           " tab display width
+set tabstop=4           " tab width to display
 set expandtab           " tab expanding
 set shiftwidth=4        " indent width
 set softtabstop=4       " width when enter <Tab> or <BS>
@@ -933,7 +928,7 @@ set softtabstop=4       " width when enter <Tab> or <BS>
 
 " searching options " {{{
 set incsearch           " enable incremental search
-set hlsearch            " enable highlight of search
+set hlsearch            " enable highlight the searched
 nohlsearch              " turn off highlight temporarily
 set ignorecase          " ignore case
 set smartcase           " ignore case unless searching pattern include upper case
@@ -943,8 +938,8 @@ set grepprg=grep\ -nH   " grep command
 
 " folding options " {{{
 set foldenable          " enable folding
-set foldcolumn=0        " width of folding column
-set foldmethod=marker   " folding use marker
+set foldcolumn=0        " width of folding indicate column
+set foldmethod=marker   " fold using marker
 set foldlevelstart=99   " all folding is opened when opening new buffer
 " folding line text
 set foldtext=foldCC#foldtext()
