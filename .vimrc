@@ -1229,8 +1229,8 @@ endfunction "}}}
 call altercmd#load()
 
 " AlterCommands "{{{
-AlterCommand ct[ags]        VimProcBang ctags -R --jcode=utf8
-AlterCommand u[nite]        Unite
+AlterCommand ct             VimProcBang ctags -R --jcode=utf8
+AlterCommand u              Unite
 AlterCommand maps           Unite -resume mapping
 AlterCommand out            Unite -resume output
 AlterCommand va             Unite -resume variable
@@ -1239,10 +1239,9 @@ AlterCommand gitc           UniteWithBufferDir giti/config
 AlterCommand gitl           UniteWithBufferDir giti/log
 AlterCommand gitr           UniteWithBufferDir giti/remote
 AlterCommand gits           UniteWithBufferDir giti/status
-AlterCommand cap[ture]      Capture
-AlterCommand bat[ch]        Batch
+AlterCommand cap            Capture
+AlterCommand bat            Batch
 AlterCommand ag             LAg
-AlterCommand vg             vimgrep
 AlterCommand tr             TranslateGoogle
 AlterCommand alc            Ref webdict alc
 AlterCommand ej             Ref webdict ej
