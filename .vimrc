@@ -1228,27 +1228,29 @@ endfunction "}}}
 " load to use AlterCommand in this file
 call altercmd#load()
 
-" AlterCommands "{{{
-AlterCommand ct             VimProcBang ctags -R --jcode=utf8
-AlterCommand u              Unite
-AlterCommand maps           Unite -resume mapping
-AlterCommand out            Unite -resume output
-AlterCommand va             Unite -resume variable
-AlterCommand gitb           UniteWithBufferDir giti/branch
-AlterCommand gitc           UniteWithBufferDir giti/config
-AlterCommand gitl           UniteWithBufferDir giti/log
-AlterCommand gitr           UniteWithBufferDir giti/remote
-AlterCommand gits           UniteWithBufferDir giti/status
-AlterCommand cap            Capture
-AlterCommand bat            Batch
-AlterCommand ag             LAg
-AlterCommand tr             TranslateGoogle
-AlterCommand alc            Ref webdict alc
-AlterCommand ej             Ref webdict ej
-AlterCommand je             Ref webdict je
-AlterCommand h              Help
-AlterCommand ind            IndentLinesReset
-AlterCommand no             nohlsearch
+" define AlterCommand "{{{
+if exists(':AlterCommand')
+    AlterCommand ct     VimProcBang ctags -R --jcode=utf8
+    AlterCommand u      Unite
+    AlterCommand maps   Unite -resume mapping
+    AlterCommand out    Unite -resume output
+    AlterCommand va     Unite -resume variable
+    AlterCommand gitb   UniteWithBufferDir giti/branch
+    AlterCommand gitc   UniteWithBufferDir giti/config
+    AlterCommand gitl   UniteWithBufferDir giti/log
+    AlterCommand gitr   UniteWithBufferDir giti/remote
+    AlterCommand gits   UniteWithBufferDir giti/status
+    AlterCommand cap    Capture
+    AlterCommand bat    Batch
+    AlterCommand ag     LAg
+    AlterCommand tr     TranslateGoogle
+    AlterCommand alc    Ref webdict alc
+    AlterCommand ej     Ref webdict ej
+    AlterCommand je     Ref webdict je
+    AlterCommand h      Help
+    AlterCommand ind    IndentLinesReset
+    AlterCommand no     nohlsearch
+endif
 " }}}
 
 " }}}
