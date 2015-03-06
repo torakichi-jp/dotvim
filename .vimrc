@@ -1568,7 +1568,9 @@ nnoremap <silent> [Space]v :<C-u>edit $MYVIMRC<CR>
 nnoremap <silent> [Space]gv :<C-u>edit $MYGVIMRC<CR>
 
 " source current buffer file
-nnoremap          [Space]<CR> :<C-u>source %<CR>
+nnoremap <silent> [Space]<CR> :<C-u>echo 'sourcing...'<bar>so %<bar>do FileType<CR>
+
+" source selected
 xnoremap <silent> [Space]<CR> :QuickRun vim >null -runner/vimscript<CR>
 
 " surround.vim "{{{
