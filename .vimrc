@@ -832,7 +832,10 @@ endif
 " terminal encoding
 " Note: if not set, Ref webdict was garbled on Windows
 if s:is_starting && s:is_windows
-    set termencoding=cp932
+    " set cp932 only when cmd.exe (or command.exe)
+    if match(&shell, '\(cmd.exe\)\|\(command.exe\)') != -1
+        set termencoding=cp932
+    endif
 endif
 
 " file encoding list ordered in priority
