@@ -3,11 +3,21 @@
 "
 " Vim Settings:
 "
+" Author: とらきち
+"
 "*******************************************************************************
 
 "===============================================================================
 " Initializing: "{{{1
 "===============================================================================
+
+" no setting for vim-tiny or vim-small
+if !1 | finish | endif
+
+" Vi-Improved
+if &compatible
+    set nocompatible
+endif
 
 " switching variables
 let s:is_gui         = has('gui_running')
@@ -19,36 +29,40 @@ let s:is_starting    = has('vim_starting')
 
 set encoding=utf-8      " internal encoding
 scriptencoding utf-8    " encoding of this script
-"set shellslash         " path delimiter is slash
-                        " set in Windows local vimrc
+"set shellslash         " path separator is slash
+                        " Note: set in Windows local vimrc
 
-" candidates of dotvimdir path ordered in priority
-let s:dotvimdir_candidates = [
-    \ expand('~/vimfiles'),
-    \ expand('~/.vim'),
-    \ expand('~/dotvim/vimfiles'),
-    \ expand('~/dotvim/.vim'),
-    \ expand('~/dotvim'),
-\ ]
-
+" set $DOTVIM : path to .vim directory "{{{
 if !exists('$DOTVIM')
-    " path to .vim directory
+    "
     function! s:get_dotvimdir_var()
+        " candidates of dotvim path ordered in priority
+        let s:dotvimdir_candidates = [
+            \ '~/vimfiles',
+            \ '~/.vim',
+            \ '~/dotvim/vimfiles',
+            \ '~/dotvim/.vim',
+            \ '~/dotvim',
+        \ ]
+
         " return path that found first
-        for dir in s:dotvimdir_candidates
-            if isdirectory(l:dir)
-                return l:dir
+        for item in s:dotvimdir_candidates
+            let dotvim = expand(item)
+            if isdirectory(dotvim)
+                return dotvim
             endif
         endfor
+
+        " if not found, return home directory
         return $HOME
     endfunction
 
     let $DOTVIM = s:get_dotvimdir_var()
     delfunction s:get_dotvimdir_var
-endif
+endif "}}}
 
+" set $MYGVIMRC : path to .gvimrc "{{{
 if !exists('$MYGVIMRC')
-    " path to .gvimrc
     function! s:get_gvimrc_var()
         if filereadable(expand('~/_gvimrc'))
             return expand('~_gvimrc')
@@ -60,7 +74,7 @@ if !exists('$MYGVIMRC')
 
     let $MYGVIMRC = s:get_gvimrc_var()
     delfunction s:get_gvimrc_var
-endif
+endif "}}}
 
 " syntax
 syntax enable
@@ -518,7 +532,6 @@ function! s:hooks.on_source(bundle)
 
     " set webdict sites
     let g:ref_source_webdict_sites = {
-        \ 'default'    : {'line' : 'alc'},
         \ 'je'         : {'url': 'http://dictionary.infoseek.ne.jp/jeword/%s', 'line' : 24},
         \ 'ej'         : {'url': 'http://dictionary.infoseek.ne.jp/ejword/%s', 'line' : 19},
         \ 'wiki'       : {'url': 'http://ja.wikipedia.org/wiki/%s',            'line' : 3},
@@ -830,7 +843,8 @@ endif
 " general options "{{{
 
 " terminal encoding
-" Note: if not set, Ref webdict was garbled on Windows
+" Note: if not set on Windows, some external command was garbled.
+" maybe caused by cmd.exe strange behavior.
 if s:is_starting && s:is_windows
     " set cp932 only when cmd.exe (or command.exe)
     if match(&shell, '\(cmd.exe\)\|\(command.exe\)') != -1
