@@ -518,36 +518,37 @@ function! s:hooks.on_source(bundle)
 
     " set webdict sites
     let g:ref_source_webdict_sites = {
-        \ 'je'          : {'url': 'http://dictionary.infoseek.ne.jp/jeword/%s',},
-        \ 'ej'          : {'url': 'http://dictionary.infoseek.ne.jp/ejword/%s',},
-        \ 'wiki'        : {'url': 'http://ja.wikipedia.org/wiki/%s',},
-        \ 'alc'         : {'url': 'http://eow.alc.co.jp/search?q=%s',},
-        \ 'weblio'      : {'url': 'http://www.weblio.jp/content/%s',},
-        \ 'thesaurus'   : {'url': 'http://thesaurus.weblio.jp/content/%s',},
-        \ 'wiktionary'  : {'url': 'http://ja.wiktionary.org/wiki/%s',},
+        \ 'default'    : {'line' : 'alc'},
+        \ 'je'         : {'url': 'http://dictionary.infoseek.ne.jp/jeword/%s', 'line' : 24},
+        \ 'ej'         : {'url': 'http://dictionary.infoseek.ne.jp/ejword/%s', 'line' : 19},
+        \ 'wiki'       : {'url': 'http://ja.wikipedia.org/wiki/%s',            'line' : 3},
+        \ 'alc'        : {'url': 'http://eow.alc.co.jp/search?q=%s',           'line' : 31},
+        \ 'weblio'     : {'url': 'http://www.weblio.jp/content/%s',            'line' : 25},
+        \ 'thesaurus'  : {'url': 'http://thesaurus.weblio.jp/content/%s',      'line' : 37},
+        \ 'wiktionary' : {'url': 'http://ja.wiktionary.org/wiki/%s',           'line' : 3},
     \ }
 
     " set filter for each sites
-    function! s:SetWebDictsFilter()
-        let ref_webdict_filtering_lines = [
-            \ ['je',            15],
-            \ ['ej',            15],
-            \ ['wiki',          17],
-            \ ['alc',           25],
-            \ ['weblio',        17],
-            \ ['thesaurus',     28],
-            \ ['wiktionary',    17],
-        \ ]
+    "function! s:SetWebDictsFilter()
+        "let ref_webdict_filtering_lines = [
+            "\ ['je',            15],
+            "\ ['ej',            15],
+            "\ ['wiki',          17],
+            "\ ['alc',           25],
+            "\ ['weblio',        17],
+            "\ ['thesaurus',     28],
+            "\ ['wiktionary',    17],
+        "\ ]
 
-        for item in ref_webdict_filtering_lines
-            let g:ref_source_webdict_sites[item[0]].filtering_lines = item[1]
-            function! g:ref_source_webdict_sites[item[0]].filter(output) dict
-                return join(split(a:output, "\n")[self.filtering_lines :], "\n")
-            endfunction
-        endfor
-    endfunction
-    call s:SetWebDictsFilter()
-    delfunction s:SetWebDictsFilter
+        "for item in ref_webdict_filtering_lines
+            "let g:ref_source_webdict_sites[item[0]].filtering_lines = item[1]
+            "function! g:ref_source_webdict_sites[item[0]].filter(output) dict
+                "return join(split(a:output, "\n")[self.filtering_lines :], "\n")
+            "endfunction
+        "endfor
+    "endfunction
+    "call s:SetWebDictsFilter()
+    "delfunction s:SetWebDictsFilter
 
     " default site of webdict
     let g:ref_source_webdict_sites.default = 'alc'
