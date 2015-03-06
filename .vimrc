@@ -866,8 +866,7 @@ set matchtime=1                 " time (0.1 sec) to jump match pair
 set virtualedit=block           " virtual edit for visual block mode only
 set matchpairs& matchpairs+=<:> " add pair <>
 set winaltkeys=no               " not use Alt key for GUI menu
-set path+=;/                    " file path follows parent directory
-set tags+=./tags;,./**/tags     " search path of tag files
+set path& path+=;/              " file path follows parent directory
 set complete& complete-=t,i     " remove 'include, tag' from completion candidates
 set completeopt=menuone,preview " option of completion
 set showfulltag                 " show tag pattern when tag completion
