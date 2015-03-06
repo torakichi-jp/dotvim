@@ -546,7 +546,7 @@ function! s:hooks.on_source(bundle)
             endfunction
         endfor
     endfunction
-    call <SID>SetWebDictsFilter()
+    call s:SetWebDictsFilter()
     delfunction s:SetWebDictsFilter
 
     " default site of webdict
@@ -781,7 +781,7 @@ behave mswin
 " specially color setting "{{{
 " override by autocmd before colorscheme setting
 augroup MyAutocmd
-    autocmd ColorScheme * call <SID>set_mycolor()
+    autocmd ColorScheme * call s:set_mycolor()
     function! s:set_mycolor()
         hi TabLine      guifg=#777798 guibg=#444477 gui=NONE
         hi TabLineFill  guifg=#666688 guibg=#CCCCFF
@@ -1072,8 +1072,7 @@ endfunction "}}}
 " help with tabpage
 " with '!' force create tabpage
 command! -bang -nargs=? -complete=help Help
-    \ call <SID>help_with_tabpage(<q-args>, <q-bang>)
-
+    \ call s:help_with_tabpage(<q-args>, <q-bang>)
 function! s:help_with_tabpage(word, bang)
     if empty(a:bang)
         let tab_nr = s:search_help_tab()
@@ -1211,7 +1210,7 @@ function! s:CmdCapture(args) "{{{
 endfunction "}}}
 
 " show the option
-command! -nargs=1 -complete=option ShowOption call <SID>show_option(<q-args>)
+command! -nargs=1 -complete=option ShowOption call s:show_option(<q-args>)
 function! s:show_option(opt) "{{{
     if !empty(a:opt)
         execute 'verb set ' . a:opt . '?'
@@ -1307,8 +1306,8 @@ endfunction "}}}
 augroup MyAutocmd
 
     " draw vertical line in 81
-    "autocmd FileType * call <SID>set_colorcolumn(81)
-    "autocmd VimResized * call <SID>set_colorcolumn(81)
+    "autocmd FileType * call s:set_colorcolumn(81)
+    "autocmd VimResized * call s:set_colorcolumn(81)
     function! s:set_colorcolumn(line_col) "{{{
         if &wrap
             if &columns > a:line_col
@@ -1389,7 +1388,7 @@ nnoremap gk k
 xnoremap gk k
 
 " j, k move with display lines if not installed accelerated-jk
-autocmd MyAutocmd VimEnter * call <SID>define_jk_mappings()
+autocmd MyAutocmd VimEnter * call s:define_jk_mappings()
 function! s:define_jk_mappings()
     if empty(mapcheck('<Plug>(accelerated_jk', 'n'))
         nnoremap j gj
@@ -1633,7 +1632,7 @@ nmap <Leader>xa <Plug>NERDCommenterAltDelims
 " vimfiler "{{{
 nnoremap <silent> [Space]e :<C-u>VimFilerBufferDir
     \ -buffer-name=explorer -parent -force-quit -explorer<CR>
-autocmd MyAutocmd FileType vimfiler call <SID>vim_filer_settings()
+autocmd MyAutocmd FileType vimfiler call s:vim_filer_settings()
 function! s:vim_filer_settings()
     " exchange keymaps for 'q' and 'Q'
     " ('q' quit vimfiler not to remain on buffer)
@@ -1773,7 +1772,7 @@ endfunction
 function! s:abbrev_def()
     " コメント文字の取得
     " 展開するときに定義されていないといけないので、b:で定義
-    let b:comment_head = <SID>comment_str()
+    let b:comment_head = s:comment_str()
     if empty(b:comment_head)
         return
     endif
@@ -1792,7 +1791,7 @@ function! s:abbrev_def()
 endfunction
 
 " ファイルタイプ設定時に略記定義
-autocmd MyAutocmd FileType * call <SID>abbrev_def()
+autocmd MyAutocmd FileType * call s:abbrev_def()
 
 " }}}
 "===============================================================================
