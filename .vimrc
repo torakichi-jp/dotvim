@@ -892,7 +892,7 @@ else
     endtry
 endif
 
-" Cygwin setting "{{{
+" Cygwin settings "{{{
 if s:is_cygwin
     " cursor shape
     let &t_ti .= "\e[1 q"  " put terminal in 'termcap' mode
@@ -910,10 +910,10 @@ endif
 " general options "{{{
 
 " terminal encoding
+" set cp932 only when cmd.exe (or command.exe)
 " Note: if not set on Windows, some external command was garbled.
 " maybe caused by cmd.exe strange behavior.
 if s:is_starting && s:is_windows
-    " set cp932 only when cmd.exe (or command.exe)
     if &shell =~? 'cmd.exe\|command.exe'
         set termencoding=cp932
     endif
@@ -955,7 +955,6 @@ set path& path+=;/              " file path follows parent directory
 set complete& complete-=t,i     " remove 'include, tag' from completion candidates
 set completeopt=menuone,preview " option of completion
 set showfulltag                 " show tag pattern when tag completion
-"set viminfo& viminfo+=/0       " not write searching history
 set timeout                     " enable timeout of key mappings
 set timeoutlen=3000             " wait time(ms) of key mappings
 set selectmode=                 " not use select mode
@@ -986,7 +985,7 @@ set nostartofline
 set wildmenu
 set wildmode=longest,full
 
-" non-printable character display settings
+" non-printable characters display settings
 " when enable unicode, use unicode character
 set list
 if s:is_unicode_encoding()
@@ -1040,7 +1039,7 @@ if has('mouse')
 endif
 
 " transparency (Windows GUI only) "{{{
-" must be autocmd
+" Note: must be autocmd
 if exists('&transparency') && s:is_windows && s:is_gui
     augroup MyAutocmd
         autocmd GUIEnter * set transparency=220
@@ -1157,7 +1156,7 @@ endfunction "}}}
 
 " help with tabpage
 " with '!' force create tabpage
-command! -bang -nargs=? -complete=help Help
+command! -bang -bar -nargs=? -complete=help Help
     \ call s:help_with_tabpage(<q-args>, <q-bang>)
 function! s:help_with_tabpage(word, bang)
     " save the current tabpage
@@ -1295,8 +1294,8 @@ command! -nargs=? -complete=file Diff
 
 " diff between loaded from this
 if !exists(":DiffOrig")
-  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-          \ | wincmd p | diffthis
+    command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
+        \ | wincmd p | diffthis
 endif
 
 " capture the messages such as :messages
@@ -1365,7 +1364,7 @@ endif
 
 augroup MyAutocmd
 
-    " draw vertical line in 81
+    " draw vertical line behind 81
     "autocmd FileType * call s:set_colorcolumn(81)
     "autocmd VimResized * call s:set_colorcolumn(81)
     function! s:set_colorcolumn(line_col) "{{{
@@ -1498,7 +1497,7 @@ endfunction
 nmap n <Plug>(anzu-n-with-echo)
 nmap N <Plug>(anzu-N-with-echo)
 
-" asterisk with anzu
+" star with anzu
 map * <Plug>(asterisk-*)<Plug>(anzu-update-search-status-with-echo)
 map # <Plug>(asterisk-#)<Plug>(anzu-update-search-status-with-echo)
 map g* <Plug>(asterisk-g*)<Plug>(anzu-update-search-status-with-echo)
@@ -1537,12 +1536,11 @@ xnoremap <silent> gs
 " 'Y' is like 'D'
 nnoremap Y y$
 
-" Ref "{{{
+" Ref
 nnoremap <silent> <expr> K
     \ ':<C-u>Ref webdict alc ' . <SID>get_cursor_word('\v[a-zA-Z]*') . '<CR>'
 xnoremap <silent> <expr> K
     \ ':<C-u>Ref webdict alc ' . <SID>get_selected_text() . '<CR>'
-"}}}
 
 " put text no change the latest yanked on visual mode
 xnoremap p "0p<CR>
@@ -1734,7 +1732,7 @@ nnoremap <silent> [Unite]t :<C-u>UniteWithCursorWord -buffer-name=tag tag tag/in
 " thumbnail.vim
 nnoremap [Space]gt :<C-u>Thumbnail -here<CR>
 
-" vim-external
+" open external explorer
 nnoremap [Space]ge :<C-u>Explorer<CR>
 
 " resize window
@@ -1749,9 +1747,8 @@ call submode#map('winsize', 'n', '', '-', '<C-w>-')
 call submode#map('winsize', 'n', '', '_', '<C-w>_')
 
 "-------------------------------------------------------------------------------
-" Insertmode Mappings:
+" Insertmode Mappings: "{{{
 "-------------------------------------------------------------------------------
-" {{{
 
 " completion
 inoremap <expr> <C-n> neocomplete#start_manual_complete()
@@ -1767,11 +1764,9 @@ elseif s:is_unix
 endif
 
 " }}}
-
 "-------------------------------------------------------------------------------
-" Commandline Mappings:
+" Commandline Mappings: "{{{
 "-------------------------------------------------------------------------------
-" {{{
 
 " like emacs
 cnoremap <C-n> <Down>
@@ -1784,11 +1779,9 @@ cnoremap <C-k> <C-\>e getcmdpos() == 1 ? "" : getcmdline()[:getcmdpos()-2]<CR>
 cnoremap <C-y> <C-r>"
 
 " }}}
-
 "-------------------------------------------------------------------------------
-" Textobject Mappings:
+" Textobject Mappings: "{{{
 "-------------------------------------------------------------------------------
-" {{{
 
 " <angle>
 onoremap aa  a>
