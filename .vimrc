@@ -1,4 +1,7 @@
 " vim: set sw=4 ts=4 et fdm=marker:
+set encoding=utf-8      " internal encoding
+scriptencoding utf-8    " encoding of this script
+
 "*******************************************************************************
 "
 " Vim Settings:
@@ -19,16 +22,15 @@ if &compatible
     set nocompatible
 endif
 
-" switching variables
+" switching variables "{{{
 let s:is_gui         = has('gui_running')
 let s:is_windows     = has('win32') || has('win64')
 let s:is_windows_cui = s:is_windows && !s:is_gui
 let s:is_unix        = has('unix')
 let s:is_cygwin      = has('win32unix')
 let s:is_starting    = has('vim_starting')
+"}}}
 
-set encoding=utf-8      " internal encoding
-scriptencoding utf-8    " encoding of this script
 "set shellslash         " path separator is slash
                         " Note: set in Windows local vimrc
 
@@ -53,7 +55,7 @@ if !exists('$DOTVIM')
         endfor
 
         " if not found, return home directory
-        return $HOME
+        return expand('~')
     endfunction
 
     let $DOTVIM = s:get_dotvimdir_var()
@@ -83,15 +85,15 @@ augroup MyAutocmd
     autocmd!
 augroup END
 
-" }}}
+"}}}1
 "===============================================================================
 " Functions: "{{{1
 "===============================================================================
 
 " check whether encoding is Unicode
-function! s:is_unicode_encoding()
+function! s:is_unicode_encoding() "{{{
     return &encoding =~? '^utf-\=8$'
-endfunction
+endfunction "}}}
 
 " Return comment head for current filetype.
 function! s:comment_str() "{{{
@@ -140,12 +142,12 @@ function! s:get_selected_text() "{{{
 endfunction "}}}
 
 
-" }}}
+"}}}1
 "===============================================================================
 " Plugins: "{{{1
 "===============================================================================
 
-" disable filetypes temporarily
+" disable filetype plugin temporarily
 filetype off
 filetype plugin indent off
 
@@ -456,9 +458,9 @@ NeoBundle 'rhysd/vim-operator-surround'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'mattn/learn-vimscript'
 
-"2}}}
+"}}}2
 "-------------------------------------------------------------------------------
-" Plugin Settings: "{{{
+" Plugin Settings: "{{{2
 "-------------------------------------------------------------------------------
 
 " disable GetLatestVimPlugin.vim
@@ -799,7 +801,7 @@ let g:toggle_pairs = {
 " vim2hs
 let g:haskell_conceal = 0
 
-" }}}
+"}}}2
 
 " end bundling
 call neobundle#end()
@@ -807,20 +809,23 @@ call neobundle#end()
 " required!
 filetype plugin indent on
 
-" }}}
+"}}}1
 "===============================================================================
 " Option Settings: "{{{1
 "===============================================================================
 
-" adjust 'runtimepath'
+" adjust 'runtimepath' "{{{
 if s:is_starting
+    " add $DOTVIM on head and $DOTVIM/after on tail
     let s:rtp = $DOTVIM . ',' . &runtimepath . ',' . $DOTVIM . '/after'
     let s:rtps = filter(split(s:rtp, ','), 'isdirectory(v:val)')
-    let s:rtp = join(s:rtps, ',')
-    if !empty(s:rtp)
-        let &runtimepath = s:rtp
+    if !empty(s:rtps)
+        let &runtimepath = join(s:rtps, ',')
     endif
+    unlet s:rtps
+    unlet s:rtp
 endif
+"}}}
 
 " Syntax settings "{{{
 
@@ -909,7 +914,7 @@ endif
 " maybe caused by cmd.exe strange behavior.
 if s:is_starting && s:is_windows
     " set cp932 only when cmd.exe (or command.exe)
-    if match(&shell, '\(cmd.exe\)\|\(command.exe\)') != -1
+    if &shell =~? 'cmd.exe\|command.exe'
         set termencoding=cp932
     endif
 endif
@@ -1145,7 +1150,7 @@ function! s:TabPageLabel(n) "{{{
     return label . ' %#TabLineFill#'
 endfunction "}}}
 
-" }}}
+"}}}1
 "===============================================================================
 " User Commands: "{{{1
 "===============================================================================
@@ -1353,7 +1358,7 @@ if exists(':AlterCommand')
 endif
 " }}}
 
-" }}}
+"}}}1
 "===============================================================================
 " Autocommands: "{{{1
 "===============================================================================
@@ -1411,7 +1416,7 @@ augroup MyAutocmd
 augroup END
 
 
-" }}}
+"}}}1
 "===============================================================================
 " Key Mappings: "{{{1
 "===============================================================================
@@ -1810,23 +1815,23 @@ onoremap id  i"
 xnoremap id  i"
 " }}}
 
-" }}}
+"}}}1
 "===============================================================================
-" Abbreviates: "{{{1
+" Abbreviations: "{{{1
 "===============================================================================
 
-" 略記を展開する
-function! s:abbrev_comment_line(head, body)
-    let till = 80   " 80列目まで
-    let offset = 2  " 2文字分のオフセット
+" abbreviation string of comment line
+function! s:abbrev_comment_line(head, body) "{{{
+    let till = 80   " till 80 columns
+    let offset = 2  " 2 characters offset
     let repeats = till / len(a:body) - virtcol('.') - (len(a:head) - 1) + offset
     return a:head . repeat(a:body, repeats)
-endfunction
+endfunction "}}}
 
-" 略記を定義する
-function! s:abbrev_def()
-    " コメント文字の取得
-    " 展開するときに定義されていないといけないので、b:で定義
+" define the abbreviations
+function! s:abbrev_def() "{{{
+    " get the comment head
+    " Note: should define when it expand, so defines as buffer variable
     let b:comment_head = s:comment_str()
     if empty(b:comment_head)
         return
@@ -1843,12 +1848,12 @@ function! s:abbrev_def()
     inoreabbrev <buffer> <expr> @< <SID>abbrev_comment_line(b:comment_head, '<')
     inoreabbrev <buffer> <expr> @x <SID>abbrev_comment_line(b:comment_head, 'x')
     inoreabbrev <buffer> <expr> @r <SID>abbrev_comment_line(b:comment_head, '<>')
-endfunction
+endfunction "}}}
 
-" ファイルタイプ設定時に略記定義
+" define abbreviations when filetype setting
 autocmd MyAutocmd FileType * call s:abbrev_def()
 
-" }}}
+"}}}1
 "===============================================================================
 " Terminating: "{{{1
 "===============================================================================
@@ -1856,8 +1861,5 @@ autocmd MyAutocmd FileType * call s:abbrev_def()
 " remove variables
 unlet s:hooks
 
-" Filetype setting
-filetype plugin indent on
-
-" }}}
+"}}}1
 
