@@ -982,10 +982,11 @@ set wildmenu
 set wildmode=longest,full
 
 " non-printable character display settings
-" when enable utf-8, use unicode character
+" when enable unicode, use unicode character
 set list
 if s:is_unicode_encoding()
-    let &listchars="tab:\uffeb\ ,trail:\u02fd,extends:>,precedes:<"
+    " tab: '￫ ' trailing space: '˽'
+    let &listchars="tab:\uffeb ,trail:\u02fd,extends:>,precedes:<"
 else
     set listchars=tab:>\ ,trail:_,extends:>,precedes:<
 endif
