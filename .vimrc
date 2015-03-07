@@ -34,7 +34,6 @@ scriptencoding utf-8    " encoding of this script
 
 " set $DOTVIM : path to .vim directory "{{{
 if !exists('$DOTVIM')
-    "
     function! s:get_dotvimdir_var()
         " candidates of dotvim path ordered in priority
         let s:dotvimdir_candidates = [
@@ -83,6 +82,63 @@ syntax enable
 augroup MyAutocmd
     autocmd!
 augroup END
+
+" }}}
+"===============================================================================
+" Functions: "{{{1
+"===============================================================================
+
+" check whether encoding is Unicode
+function! s:is_unicode_encoding()
+    return &encoding =~? '^utf-\=8$'
+endfunction
+
+" Return comment head for current filetype.
+function! s:comment_str() "{{{
+    if &ft == 'cpp' || &ft == 'java' || &ft == 'javascript'
+        return '//'
+    elseif &ft == 'vim'
+        return '"'
+    elseif &ft == 'python' || &ft == 'perl' || &ft == 'sh' || &ft == 'R' || &ft == 'ruby'
+        return '#'
+    elseif &ft == 'lisp'
+        return ';'
+    elseif &ft == 'haskell'
+        return '--'
+    endif
+    return ''
+endfunction "}}}
+
+" get word under cursor
+function! s:get_cursor_word(pat) "{{{
+    let line = getline('.')
+    let pos = col('.')
+    let s = 0
+    while s < pos
+        let [s, e] = [match(line, a:pat, s), matchend(line, a:pat, s)]
+        if s < 0
+            break
+        elseif s < pos && pos <= e
+            return line[s : e - 1]
+        endif
+        let s += 1
+    endwhile
+    return ''
+endfunction "}}}
+
+" get word selected on visual mode
+function! s:get_selected_text() "{{{
+    let save_z = getreg('z', 1)
+    let save_z_type = getregtype('z')
+
+    try
+        normal! gv"zy
+        return @z
+    finally
+        call setreg('z', save_z, save_z_type)
+    endtry
+endfunction "}}}
+
 
 " }}}
 "===============================================================================
@@ -598,6 +654,14 @@ let g:lightline = {
     \ },
 \ }
 
+" when not Unicode, lightline disable
+if !s:is_unicode_encoding()
+    let g:lightline.enable = {
+        \ 'statusline' : 0,
+        \ 'tabline' : 0
+    \ }
+endif
+
 let s:hooks = neobundle#get_hooks('lightline.vim')
 function! s:hooks.on_source(bundle)
     " specially color setting
@@ -731,8 +795,6 @@ let g:toggle_pairs = {
     \ 'and' : 'or',
     \ 'or' : 'and',
 \ }
-
-"}}}
 
 " vim2hs
 let g:haskell_conceal = 0
@@ -922,10 +984,10 @@ set wildmode=longest,full
 " non-printable character display settings
 " when enable utf-8, use unicode character
 set list
-if &encoding =~? 'utf-8\|utf8'
+if s:is_unicode_encoding()
     let &listchars="tab:\uffeb\ ,trail:\u02fd,extends:>,precedes:<"
 else
-    set listchars=tab:>\ ,trails:_,extends:>,precedes:<
+    set listchars=tab:>\ ,trail:_,extends:>,precedes:<
 endif
 
 " width of number column
@@ -1289,58 +1351,6 @@ if exists(':AlterCommand')
     AlterCommand no     nohlsearch
 endif
 " }}}
-
-" }}}
-"===============================================================================
-" Functions: "{{{1
-"===============================================================================
-
-" Return comment head for current filetype.
-function! s:comment_str() "{{{
-    if &ft == 'cpp' || &ft == 'java' || &ft == 'javascript'
-        return '//'
-    elseif &ft == 'vim'
-        return '"'
-    elseif &ft == 'python' || &ft == 'perl' || &ft == 'sh' || &ft == 'R' || &ft == 'ruby'
-        return '#'
-    elseif &ft == 'lisp'
-        return ';'
-    elseif &ft == 'haskell'
-        return '--'
-    endif
-    return ''
-endfunction "}}}
-
-" get word under cursor
-function! s:get_cursor_word(pat) "{{{
-    let line = getline('.')
-    let pos = col('.')
-    let s = 0
-    while s < pos
-        let [s, e] = [match(line, a:pat, s), matchend(line, a:pat, s)]
-        if s < 0
-            break
-        elseif s < pos && pos <= e
-            return line[s : e - 1]
-        endif
-        let s += 1
-    endwhile
-    return ''
-endfunction "}}}
-
-" get word selected on visual mode
-function! s:get_selected_text() "{{{
-    let save_z = getreg('z', 1)
-    let save_z_type = getregtype('z')
-
-    try
-        normal! gv"zy
-        return @z
-    finally
-        call setreg('z', save_z, save_z_type)
-    endtry
-endfunction "}}}
-
 
 " }}}
 "===============================================================================
