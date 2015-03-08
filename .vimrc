@@ -861,12 +861,10 @@ behave mswin
 
 " specially color setting "{{{
 " to override by autocmd before colorscheme setting
-augroup MyAutocmd
-    autocmd ColorScheme *
+autocmd MyAutocmd ColorScheme *
         \ if s:is_gui | call s:set_my_gui_color()
         \ | else | call s:set_my_cterm_color()
         \ | endif
-augroup END
 
 " color for GUI
 function! s:set_my_gui_color()
@@ -874,18 +872,22 @@ function! s:set_my_gui_color()
     hi TabLineFill  guifg=#666688 guibg=#CCCCFF
     hi TabLineSel   guifg=#CCCCFF guibg=#111155 gui=bold
     hi FoldColumn   guifg=#818698 guibg=#363946
-    hi ColorColumn  guifg=NONE    guibg=#333366 gui=NONE
+    hi Folded       guifg=#cccccc guibg=#333366
+    hi ColorColumn  guifg=NONE    guibg=#333333 gui=NONE
     hi SpecialKey   guifg=#444466 guibg=NONE    gui=NONE
     hi NonText      guifg=#ffffff
-    hi LineNr       guifg=#999999 guibg=#262626
-    hi CursorLineNr               guibg=#333333
+    hi LineNr       guifg=#999999 guibg=#222222
+    hi CursorLineNr guifg=#9999ff guibg=#444444
     hi Cursor       guifg=#000000 guibg=#ffffff gui=NONE
 endfunction
 
-" color for color term
+" color for cterm
 function! s:set_my_cterm_color()
-    hi NonText      ctermfg=15
-    hi Cursor       ctermfg=15  ctermbg=0
+    hi TabLine      ctermfg=Black   ctermbg=DarkGray cterm=NONE
+    hi TabLineFill  ctermfg=Black   ctermbg=Gray     cterm=NONE
+    hi TabLineSel   ctermfg=Gray    ctermbg=Black    cterm=underline
+    hi NonText      ctermfg=White
+    hi Cursor       ctermfg=White   ctermbg=Black
 endfunction
 "}}}
 
