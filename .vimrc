@@ -806,7 +806,7 @@ let g:haskell_conceal = 0
 " end bundling
 call neobundle#end()
 
-" required!
+" enable plugins loading
 filetype plugin indent on
 
 "}}}1
@@ -934,7 +934,7 @@ endif
 set fileencodings=utf-8,cp932,euc-jp,ucs-2le,default,latin1
 
 set number                      " show line numbers
-set ruler                       " show ruler
+"set ruler                      " show ruler
 set showcmd                     " show inserted command
 set wrap                        " wrap line of right edge
 set display=lastline            " show lastline as much as possible
@@ -948,7 +948,8 @@ set backspace=indent,eol,start  " can be deleted these characters for backspace
 set cmdheight=2                 " command line height
 set noequalalways               " disable automatical adjust window size
 set autoindent                  " enable auto indent
-set cinoptions=:0,l1,g0,m1      " C/C++ indent option
+set smartindent                 " enable smart indent
+set cinoptions=:0,l1,g0,m1      " indent option for C/C++
 set switchbuf=split,newtab      " switch buffer option
 "set tabline=%!MakeTabLine()    " tabline string
 set helpheight=0                " min height of help
@@ -1038,7 +1039,7 @@ set foldmethod=marker   " fold using marker
 set foldlevelstart=99   " all folding is opened when opening new buffer
 " folding line text
 set foldtext=foldCC#foldtext()
-let g:foldCCtext_enable_autofdc_adjuster = 1
+"let g:foldCCtext_enable_autofdc_adjuster = 1
 " }}}
 
 " setting of title string
