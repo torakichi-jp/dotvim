@@ -151,13 +151,16 @@ endfunction "}}}
 filetype off
 filetype plugin indent off
 
+" bundle directory
+let s:bundle_dir = $DOTVIM . '/bundle'
+
 " initialize neobundle
 if s:is_starting
-    let &runtimepath = &runtimepath . ',' . $DOTVIM . '/bundle/neobundle.vim'
+    let &runtimepath = &runtimepath . ',' . s:bundle_dir . '/neobundle.vim'
 endif
 
 " begin bundling
-call neobundle#begin($DOTVIM . '/bundle')
+call neobundle#begin(s:bundle_dir)
 
 "-------------------------------------------------------------------------------
 " Bundles: "{{{2
@@ -1280,7 +1283,17 @@ function! s:ex_explorer(path)
     endif
 
     " run command
-    silent! call system(explorer_cmd . l:path)
+    " use vimproc if exists
+    if filereadable(s:bundle_dir . '/vimproc.vim/autoload/vimproc.vim')
+        call vimproc#system(explorer_cmd . escape(l:path, '\'))
+    else
+        " surround path by double quotation
+        if s:is_windows && &shell =~? 'cmd.exe\|command.exe'
+            let l:path = '"' . l:path . '"'
+        endif
+
+        call system(explorer_cmd . l:path)
+    endif
 endfunction
 
 " convert path to readable file or directory
@@ -1288,11 +1301,16 @@ endfunction
 function! s:conv_readable(path)
     let l:path = fnamemodify(expand(a:path), ':p')
 
-    " use backslash instead of slash in Windows
     if s:is_windows
+        " use backslash instead of slash
         let l:path = substitute(l:path, '/', '\', 'g')
+        " remove backslash at eol
+        if (l:path[-1:] == '\')
+            let l:path = l:path[:-2]
+        endif
     endif
 
+    " check whether readable and return
     return (filereadable(l:path) || isdirectory(l:path)) ? l:path : ''
 endfunction
 
