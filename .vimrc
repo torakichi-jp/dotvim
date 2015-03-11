@@ -95,20 +95,26 @@ function! s:is_unicode_encoding() "{{{
     return &encoding =~? '^utf-\=8$'
 endfunction "}}}
 
-" Return comment head for current filetype.
-function! s:comment_str() "{{{
-    if &ft == 'cpp' || &ft == 'java' || &ft == 'javascript'
-        return '//'
-    elseif &ft == 'vim'
-        return '"'
-    elseif &ft == 'python' || &ft == 'perl' || &ft == 'sh' || &ft == 'R' || &ft == 'ruby'
-        return '#'
-    elseif &ft == 'lisp'
-        return ';'
-    elseif &ft == 'haskell'
-        return '--'
-    endif
-    return ''
+" dict of comment heads
+let s:comment_heads = {
+    \ 'cpp' :           '//',
+    \ 'cs' :            '//',
+    \ 'java' :          '//',
+    \ 'javascript' :    '//',
+    \ 'vim' :           '"',
+    \ 'python' :        '#',
+    \ 'ruby' :          '#',
+    \ 'perl' :          '#',
+    \ 'sh' :            '#',
+    \ 'make' :          '#',
+    \ 'lua' :           '--',
+    \ 'haskell' :       '-- ',
+    \ 'lisp' :          ';',
+\ }
+
+" return comment head of filetype
+function! s:get_comment_head(filetype) "{{{
+    return get(s:comment_heads, a:filetype, '')
 endfunction "}}}
 
 " get word under cursor
@@ -1855,7 +1861,7 @@ endfunction "}}}
 function! s:abbrev_def() "{{{
     " get the comment head
     " Note: should define when it expand, so defines as buffer variable
-    let b:comment_head = s:comment_str()
+    let b:comment_head = s:get_comment_head(&l:filetype)
     if empty(b:comment_head)
         return
     endif
@@ -1867,6 +1873,8 @@ function! s:abbrev_def() "{{{
     inoreabbrev <buffer> <expr> @* <SID>abbrev_comment_line(b:comment_head, '*')
     inoreabbrev <buffer> <expr> @/ <SID>abbrev_comment_line(b:comment_head, '/')
     inoreabbrev <buffer> <expr> @# <SID>abbrev_comment_line(b:comment_head, '#')
+    inoreabbrev <buffer> <expr> @~ <SID>abbrev_comment_line(b:comment_head, '~')
+    inoreabbrev <buffer> <expr> @_ <SID>abbrev_comment_line(b:comment_head, '_')
     inoreabbrev <buffer> <expr> @> <SID>abbrev_comment_line(b:comment_head, '>')
     inoreabbrev <buffer> <expr> @< <SID>abbrev_comment_line(b:comment_head, '<')
     inoreabbrev <buffer> <expr> @x <SID>abbrev_comment_line(b:comment_head, 'x')
