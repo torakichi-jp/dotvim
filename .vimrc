@@ -1047,7 +1047,7 @@ set foldcolumn=0        " width of folding indicate column
 set foldmethod=marker   " fold using marker
 set foldlevelstart=99   " all folding is opened when opening new buffer
 " folding line text
-set foldtext=foldCC#foldtext()
+set foldtext=FoldCCtext()
 "let g:foldCCtext_enable_autofdc_adjuster = 1
 " }}}
 
