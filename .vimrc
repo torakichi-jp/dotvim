@@ -1850,14 +1850,15 @@ xnoremap id  i"
 "===============================================================================
 
 " abbreviation string of comment line
-function! s:abbrev_comment_line(head, body) "{{{
-    let till = 80   " till 80 columns
-    let offset = 2  " 2 characters offset
-    let repeats = till / len(a:body) - virtcol('.') - (len(a:head) - 1) + offset
-    return a:head . repeat(a:body, repeats)
+function! s:abbrev_comment_line(head, tail) "{{{
+    let till = 80   " draw till 80 columns
+    let cursor_offset = virtcol('.') - 1 - 2 " (-1):virtcol() returns as 1 base
+                                             " (-2):abbrev string length
+    let repeats = (till - cursor_offset - len(a:head)) / len(a:tail)
+    return a:head . repeat(a:tail, repeats)
 endfunction "}}}
 
-" define the abbreviations
+" define the abbreviation
 function! s:abbrev_def() "{{{
     " get the comment head
     " Note: should define when it expand, so defines as buffer variable
@@ -1866,19 +1867,44 @@ function! s:abbrev_def() "{{{
         return
     endif
 
-    inoreabbrev <buffer> <expr> @= <SID>abbrev_comment_line(b:comment_head, '=')
-    inoreabbrev <buffer> <expr> @- <SID>abbrev_comment_line(b:comment_head, '-')
-    inoreabbrev <buffer> <expr> @+ <SID>abbrev_comment_line(b:comment_head, '+')
-    inoreabbrev <buffer> <expr> @\| <SID>abbrev_comment_line(b:comment_head, '\|')
-    inoreabbrev <buffer> <expr> @* <SID>abbrev_comment_line(b:comment_head, '*')
-    inoreabbrev <buffer> <expr> @/ <SID>abbrev_comment_line(b:comment_head, '/')
-    inoreabbrev <buffer> <expr> @# <SID>abbrev_comment_line(b:comment_head, '#')
-    inoreabbrev <buffer> <expr> @~ <SID>abbrev_comment_line(b:comment_head, '~')
-    inoreabbrev <buffer> <expr> @_ <SID>abbrev_comment_line(b:comment_head, '_')
-    inoreabbrev <buffer> <expr> @> <SID>abbrev_comment_line(b:comment_head, '>')
-    inoreabbrev <buffer> <expr> @< <SID>abbrev_comment_line(b:comment_head, '<')
-    inoreabbrev <buffer> <expr> @x <SID>abbrev_comment_line(b:comment_head, 'x')
-    inoreabbrev <buffer> <expr> @r <SID>abbrev_comment_line(b:comment_head, '<>')
+    let line_compornents = {
+        \ '@=' : '=',
+        \ '@-' : '-',
+        \ '@*' : '*',
+        \ '@#' : '#',
+        \ '@+' : '+',
+        \ '@x' : 'x',
+        \ '@~' : '~',
+        \ '@_' : '_',
+        \ '@v' : 'v',
+        \ '@^' : '^',
+        \ '@>' : '>',
+        \ '@<' : '<',
+        \ '@/' : '/',
+        \ '@\' : '\',
+        \ '@\|' : '\|',
+        \ '@r' : '<>',
+    \ }
+    for abbrev in keys(line_compornents)
+        let body = line_compornents[abbrev]
+        let lval = '<buffer><expr> ' . abbrev . ' '
+        let rval = '<SID>abbrev_comment_line(b:comment_head, ''' . body . ''')'
+        execute 'inoreabbrev ' . lval . rval
+    endfor
+
+    "inoreabbrev <buffer> <expr> @= <SID>abbrev_comment_line(b:comment_head, '=')
+    "inoreabbrev <buffer> <expr> @- <SID>abbrev_comment_line(b:comment_head, '-')
+    "inoreabbrev <buffer> <expr> @+ <SID>abbrev_comment_line(b:comment_head, '+')
+    "inoreabbrev <buffer> <expr> @\| <SID>abbrev_comment_line(b:comment_head, '\|')
+    "inoreabbrev <buffer> <expr> @* <SID>abbrev_comment_line(b:comment_head, '*')
+    "inoreabbrev <buffer> <expr> @/ <SID>abbrev_comment_line(b:comment_head, '/')
+    "inoreabbrev <buffer> <expr> @# <SID>abbrev_comment_line(b:comment_head, '#')
+    "inoreabbrev <buffer> <expr> @~ <SID>abbrev_comment_line(b:comment_head, '~')
+    "inoreabbrev <buffer> <expr> @_ <SID>abbrev_comment_line(b:comment_head, '_')
+    "inoreabbrev <buffer> <expr> @> <SID>abbrev_comment_line(b:comment_head, '>')
+    "inoreabbrev <buffer> <expr> @< <SID>abbrev_comment_line(b:comment_head, '<')
+    "inoreabbrev <buffer> <expr> @x <SID>abbrev_comment_line(b:comment_head, 'x')
+    "inoreabbrev <buffer> <expr> @r <SID>abbrev_comment_line(b:comment_head, '<>')
 endfunction "}}}
 
 " define abbreviations when filetype setting
