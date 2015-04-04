@@ -1867,6 +1867,7 @@ function! s:abbrev_def() "{{{
         return
     endif
 
+    " comment line compornent
     let line_compornents = {
         \ '@=' : '=',
         \ '@-' : '-',
@@ -1892,19 +1893,6 @@ function! s:abbrev_def() "{{{
         execute 'inoreabbrev ' . lval . rval
     endfor
 
-    "inoreabbrev <buffer> <expr> @= <SID>abbrev_comment_line(b:comment_head, '=')
-    "inoreabbrev <buffer> <expr> @- <SID>abbrev_comment_line(b:comment_head, '-')
-    "inoreabbrev <buffer> <expr> @+ <SID>abbrev_comment_line(b:comment_head, '+')
-    "inoreabbrev <buffer> <expr> @\| <SID>abbrev_comment_line(b:comment_head, '\|')
-    "inoreabbrev <buffer> <expr> @* <SID>abbrev_comment_line(b:comment_head, '*')
-    "inoreabbrev <buffer> <expr> @/ <SID>abbrev_comment_line(b:comment_head, '/')
-    "inoreabbrev <buffer> <expr> @# <SID>abbrev_comment_line(b:comment_head, '#')
-    "inoreabbrev <buffer> <expr> @~ <SID>abbrev_comment_line(b:comment_head, '~')
-    "inoreabbrev <buffer> <expr> @_ <SID>abbrev_comment_line(b:comment_head, '_')
-    "inoreabbrev <buffer> <expr> @> <SID>abbrev_comment_line(b:comment_head, '>')
-    "inoreabbrev <buffer> <expr> @< <SID>abbrev_comment_line(b:comment_head, '<')
-    "inoreabbrev <buffer> <expr> @x <SID>abbrev_comment_line(b:comment_head, 'x')
-    "inoreabbrev <buffer> <expr> @r <SID>abbrev_comment_line(b:comment_head, '<>')
 endfunction "}}}
 
 " define abbreviations when filetype setting
