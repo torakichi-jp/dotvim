@@ -11,6 +11,11 @@ if !exists('$HOME')
     let $HOME=$USERPROFILE
 endif
 
+" Gitのパス追加
+if $PATH!~?'git'
+    let $PATH.=';C:/Git/cmd'
+endif
+
 " Visual Studio の最新版のパスを取得
 let s:msvc_dirs = []
 call add(s:msvc_dirs, 'C:/Program Files (x86)/Microsoft Visual Studio 12.0')
