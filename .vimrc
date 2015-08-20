@@ -273,6 +273,7 @@ NeoBundle 'deris/vim-rengbang'
 NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'osyo-manga/vim-jplus'
 NeoBundle 'osyo-manga/vim-over'
+NeoBundle 'osyo-manga/vim-cpp-syntax-reserved_identifiers'
 NeoBundle 'LeafCage/foldCC'
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'gregsexton/VimCalc'
@@ -889,6 +890,7 @@ function! s:set_my_gui_color()
     hi LineNr       guifg=#999999 guibg=#222222
     hi CursorLineNr guifg=#9999ff guibg=#444444
     hi Cursor       guifg=#000000 guibg=#ffffff gui=NONE
+    hi PmenuSel     guifg=#000000 guibg=#00cccc
 endfunction
 
 " color for cterm
