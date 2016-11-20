@@ -595,9 +595,9 @@ endif
 let s:hooks = neobundle#get_hooks('vim-ref')
 function! s:hooks.on_source(bundle)
     "let g:ref_use_vimproc = 1
-    "if s:is_windows
-    "    let g:ref_source_webdict_encoding = 'UTF-8'
-    "endif
+    if s:is_windows
+        let g:ref_source_webdict_encoding = 'UTF-8'
+    endif
 
     " set webdict sites
     let g:ref_source_webdict_sites = {
