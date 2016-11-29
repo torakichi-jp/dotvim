@@ -365,81 +365,55 @@ NeoBundle 'basyura/unite-matcher-file-name'
 NeoBundle 'Shougo/neomru.vim', {
     \ 'lazy' : 1,
     \ 'depends' : 'Shougo/unite.vim',
-    \ 'autoload' : {
-        \ 'unite_sources' : ['neomru/file', 'neomru/directory']
-    \ }
+    \ 'on_source' : 'unite.vim'
 \ }
 NeoBundle 'Shougo/unite-session', {
     \ 'lazy' : 1,
-    \ 'autoload' : {
-        \ 'unite_sources' : 'session'
-    \ }
+    \ 'on_source' : 'unite.vim'
 \ }
 NeoBundle 'thinca/vim-unite-history', {
     \ 'lazy' : 1,
-    \ 'autoload' : {
-        \ 'unite_sources' : ['history/command', 'history/search']
-    \ }
+    \ 'on_source' : 'unite.vim'
 \ }
 NeoBundle 'Shougo/unite-outline', {
     \ 'lazy' : 1,
-    \ 'autoload' : {
-        \ 'unite_sources' : 'outline'
-    \ }
+    \ 'on_source' : 'unite.vim'
 \ }
 NeoBundle 'tsukkee/unite-tag', {
     \ 'lazy' : 1,
-    \ 'autoload' : {
-        \ 'unite_sources' : 'tag'
-    \ }
+    \ 'on_source' : 'unite.vim'
 \ }
 NeoBundle 'tsukkee/unite-help', {
     \ 'lazy' : 1,
-    \ 'autoload' : {
-        \ 'unite_sources' : 'help'
-    \ }
+    \ 'on_source' : 'unite.vim'
 \ }
 NeoBundle 'tacroe/unite-mark', {
     \ 'lazy' : 1,
-    \ 'autoload' : {
-        \ 'unite_sources' : 'mark'
-    \ }
+    \ 'on_source' : 'unite.vim'
 \ }
 NeoBundle 'sgur/unite-qf', {
     \ 'lazy' : 1,
-    \ 'autoload' : {
-        \ 'unite_sources' : 'qf'
-    \ }
+    \ 'on_source' : 'unite.vim'
 \ }
 NeoBundle 'ujihisa/unite-colorscheme', {
     \ 'lazy' : 1,
-    \ 'autoload' : {
-        \ 'unite_sources' : 'colorscheme'
-    \ }
+    \ 'on_source' : 'unite.vim'
 \ }
 NeoBundle 'osyo-manga/unite-qfixhowm', {
     \ 'lazy' : 1,
-    \ 'autoload' : {
-        \ 'unite_sources' : 'qfixhowm'
-    \ }
+    \ 'on_source' : 'unite.vim'
 \ }
 NeoBundle 'kannokanno/unite-todo', {
     \ 'lazy' : 1,
-    \ 'autoload' : {
-        \ 'unite_sources' : 'todo'
-    \ }
+    \ 'on_source' : 'unite.vim'
 \ }
 NeoBundle 'Shougo/unite-build', {
     \ 'lazy' : 1,
-    \ 'autoload' : {
-        \ 'unite_sources' : 'build'
-    \ }
+    \ 'on_source' : 'unite.vim'
 \ }
 NeoBundle 'kmnk/vim-unite-giti', {
     \ 'lazy' : 1,
-    \ 'autoload' : {
-        \ 'unite_sources' : 'giti'
-    \ }
+    \ 'on_source' : 'unite.vim'
 \ }
 
 " textobj
