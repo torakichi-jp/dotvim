@@ -1234,12 +1234,6 @@ function! s:search_help_tab()
     return 0
 endfunction
 
-" move tabpage itself
-command! -bar TabMoveNext
-    \ execute 'tabmove' tabpagenr() % tabpagenr('$')
-command! -bar TabMovePrev
-    \ execute 'tabmove' (tabpagenr('$') + tabpagenr() - 2) % tabpagenr('$')
-
 " reopen with change encoding
 command! -bang -bar -nargs=? -complete=file Utf8
     \ edit<bang> ++enc=utf-8 <args>
@@ -1646,8 +1640,8 @@ nnoremap <silent>   [Tab]o  :<C-u>tabonly<CR>
 nnoremap <silent>   [Tab]t  :<C-u>tab stag <C-r><C-w><CR>
 nnoremap <silent>   [Tab]r  :<C-u>TabRecent<CR>
 nnoremap            [Tab]w  <C-w>T
-nnoremap <silent>   [Tab]L  :<C-u>TabMoveNext<CR>
-nnoremap <silent>   [Tab]H  :<C-u>TabMovePrev<CR>
+nnoremap <silent>   [Tab]L  :<C-u>tabmove +1<CR>
+nnoremap <silent>   [Tab]H  :<C-u>tabmove -1<CR>
 nnoremap            [Tab]1  1gt
 nnoremap            [Tab]2  2gt
 nnoremap            [Tab]3  3gt
