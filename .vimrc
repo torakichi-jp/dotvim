@@ -961,6 +961,7 @@ set scrolloff=0                 " offset around cursor in vertical scroll
 set sidescroll=1                " step of horizontal scroll
 set sidescrolloff=1             " offset around cursor in horizontal scroll
 set colorcolumn=81              " highlight column at 81
+set ambiwidth=double            " show wide character as twice as half character
 
  " highlight line at current cursor
 let &cursorline = !s:is_windows_cui
