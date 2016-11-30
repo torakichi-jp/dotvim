@@ -989,8 +989,8 @@ set wildmode=longest,full
 " when enable unicode, use unicode character
 set list
 if s:is_unicode_encoding()
-    " tab: '￫ ' trailing space: '˽'
-    let &listchars="tab:\uffeb ,trail:\u02fd,extends:>,precedes:<"
+    " tab: '￫   ' trailing space: '˽'
+    let &listchars="tab:\uffeb\ ,trail:\u02fd,extends:\uffeb,precedes:\uffe9"
 else
     set listchars=tab:>\ ,trail:_,extends:>,precedes:<
 endif
@@ -999,7 +999,7 @@ endif
 " and wrapped line head string which adjust according to numberwidth
 autocmd MyAutocmd BufEnter *
     \ let &l:numberwidth = len(line('$')) + 2
-    \ | let &showbreak = '>> ' . repeat(' ', len(line('$')) - 1)
+    \ | let &showbreak = " \uffeb" . repeat(' ', len(line('$')))
 
 "}}}
 
