@@ -999,7 +999,7 @@ endif
 " and wrapped line head string which adjust according to numberwidth
 autocmd MyAutocmd BufEnter *
     \ let &l:numberwidth = len(line('$')) + 2
-    \ | let &showbreak = " \uffeb" . repeat(' ', len(line('$')))
+    \ | let &showbreak = "\u00bb\u00bb" . repeat(' ', len(line('$')))
 
 "}}}
 
