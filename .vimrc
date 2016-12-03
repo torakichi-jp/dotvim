@@ -1718,7 +1718,7 @@ nnoremap <silent> [Space]m :<C-u>Unite -buffer-name=files neomru/file<CR>
 nnoremap <silent> [Space]d :<C-u>Unite -buffer-name=files -default-action=lcd neomru/directory<CR>
 nnoremap <silent> [Space]b :<C-u>Unite -buffer-name=buffers buffer<CR>
 nnoremap <silent> [Space]q :<C-u>Unite -no-quit qf<CR>
-nnoremap <silent> [Space]o :<C-u>Unite -resume output<CR>
+nnoremap <silent> [Space]o :<C-u>Unite -resume outline<CR>
 nnoremap <silent> [Space]j :<C-u>Unite change jump<CR>
 nnoremap <silent> [Space]x :<C-u>Unite file_point<CR>
 nnoremap <silent> [Space]t :<C-u>Unite -buffer-name=tabs tab:no_current<CR>
