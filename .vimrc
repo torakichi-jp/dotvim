@@ -6,7 +6,7 @@ scriptencoding utf-8    " encoding of this script
 "
 " Vim Settings:
 "
-" Author: とらきち
+" Author: とらきち(torakichi)
 "
 "*******************************************************************************
 
@@ -967,7 +967,7 @@ set ambiwidth=double            " show wide character as twice as half character
 let &cursorline = !s:is_windows_cui
 
 " formatoptions setting
-" when joining lines, don't insert a space between two multi-byte characters
+" when joining lines, don't insert a space between multi-byte characters
 set formatoptions& formatoptions+=B
 if v:version >= 704
     " when joining lines, remove a comment leader
@@ -989,7 +989,7 @@ set wildmode=longest,full
 " when enable unicode, use unicode character
 set list
 if s:is_unicode_encoding()
-    " tab: '￫   ' trailing space: '˽'
+    " tab: '￫   ', trailing space: '˽', extends: '»', precedes: '«'
     let &listchars="tab:\uffeb\ ,trail:\u02fd,extends:\u00bb,precedes:\u00ab"
 else
     set listchars=tab:>\ ,trail:_,extends:>,precedes:<
@@ -997,6 +997,7 @@ endif
 
 " width of number column
 " and wrapped line head string which adjust according to numberwidth
+" head: ' »»'
 autocmd MyAutocmd BufEnter *
     \ let &l:numberwidth = len(line('$')) + 2
     \ | let &showbreak = "\u00bb\u00bb" . repeat(' ', len(line('$')))
@@ -1050,19 +1051,19 @@ endif
 "}}}
 
 " backup options " {{{
-set backup                              " create backup file
-let &backupdir = $DOTVIM . '/.backup'   " directory of backup file
-set undofile                            " create undo file
-let &undodir = $DOTVIM . '/.undo'       " directory of undo file
-" create backup directory if not exist
-if &backupdir!=#'' && !isdirectory(&backupdir)
-    call mkdir(&backupdir)
+set writebackup                                 " create backup before file writing,
+set nobackup                                    " but not keep
+let &backupdir = '.,' . $DOTVIM . '/.backup'    " backup file directory list
+set backupskip& backupskip+=*~                  " pattern list when not create backup
+set undofile                                    " create undo file
+if !isdirectory($DOTVIM . '/.backup')
+    call mkdir($DOTVIM . '/.backup')            " create backup directory if not exist
 endif
-" directory of swap file
-let &directory=&backupdir
-" create undo file directory if not exist
-if &undodir!=#'' && !isdirectory(&undodir)
-    call mkdir(&undodir)
+
+" undofile options
+let &undodir = $DOTVIM . '/.undo'   " undo file directory
+if !isdirectory(&undodir)
+    call mkdir($DOTVIM . '/.undo')  " create undo file directory if not exist
 endif
 " }}}
 
