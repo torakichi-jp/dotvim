@@ -1571,7 +1571,11 @@ nnoremap g<C-t>  :<C-u>tag<CR>
 
 " increment/decrement number
 nnoremap + <C-a>
+xnoremap + <C-a>
+xnoremap g+ g<C-a>
 nnoremap - <C-x>
+xnoremap - <C-x>
+xnoremap g- g<C-x>
 
 " view the help for <cword>
 nnoremap <silent> <F1> :<C-u>Help <C-r><C-w><CR>
