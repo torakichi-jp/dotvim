@@ -18,11 +18,12 @@ let s:is_unix = has('unix')
 "set guioptions=mgt              " gui menu, grayed menu, tearoff menu
 set guioptions=                 " no GUI options
 set browsedir=buffer            " current directry when browsing
-"set nohlsearch                  " 検索ハイライトなし
-set cursorline                  " 現在行をハイライト
-set title                       " タイトルを表示
-"set mousefocus                 " マウス移動でウィンドウフォーカス
+"set nohlsearch                  " no search highlight
+set cursorline                  " highlight the current line
+set title                       " show title
+"set mousefocus                 " window focus with mouse
 "set mousemodel=popup_setpos    " 右クリックでカーソル移動＆メニュー表示
+set ambiwidth=double            " show wide character as twice as half character
 
 " メニューの表示切替
 nnoremap <M-m> :<C-u>call <SID>toggle_menu()<CR>
