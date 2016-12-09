@@ -1039,14 +1039,16 @@ if has('mouse')
     set mouse=a
 endif
 
-" transparency (Windows GUI only) "{{{
+" transparency (kaoriya only) "{{{
 " Note: must be autocmd
-if exists('&transparency') && s:is_windows && s:is_gui
-    augroup MyAutocmd
-        autocmd GUIEnter * set transparency=220
-        autocmd FocusGained * set transparency=220
-        autocmd FocusLost * set transparency=150
-    augroup END
+if exists('&transparency') && s:is_gui
+    if s:is_windows
+        augroup MyAutocmd
+            autocmd GUIEnter * set transparency=225
+            autocmd FocusGained * set transparency=225
+            autocmd FocusLost * set transparency=180
+        augroup END
+    endif
 endif
 "}}}
 
