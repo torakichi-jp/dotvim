@@ -607,7 +607,7 @@ function! s:hooks.on_source(bundle)
     "delfunction s:SetWebDictsFilter
 
     " default site of webdict
-    let g:ref_source_webdict_sites.default = 'alc'
+    let g:ref_source_webdict_sites.default = 'weblio'
 endfunction
 
 " NERD_commenter
@@ -1358,6 +1358,7 @@ if exists(':AlterCommand')
     AlterCommand ag     LAg
     AlterCommand tr     TranslateGoogle
     AlterCommand alc    Ref webdict alc
+    AlterCommand weblio Ref webdict weblio
     AlterCommand ej     Ref webdict ej
     AlterCommand je     Ref webdict je
     AlterCommand h      Help
@@ -1550,7 +1551,7 @@ nnoremap Y y$
 nnoremap <silent> K :<C-u>call <SID>ref_webdict(<SID>get_cursor_word('\v\w*'))<CR>
 xnoremap <silent> K :<C-u>call <SID>ref_webdict(<SID>get_selected_text())<CR>
 function! s:ref_webdict(word)
-    call ref#open('webdict', 'alc ' . a:word)
+    call ref#open('webdict', 'weblio ' . a:word)
 endfunction
 
 " put text no change the latest yanked on visual mode
