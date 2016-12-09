@@ -1547,10 +1547,11 @@ xnoremap <silent> gs
 nnoremap Y y$
 
 " Ref
-nnoremap <silent> <expr> K
-    \ ':<C-u>Ref webdict alc ' . <SID>get_cursor_word('\v[a-zA-Z]*') . '<CR>'
-xnoremap <silent> <expr> K
-    \ ':<C-u>Ref webdict alc ' . <SID>get_selected_text() . '<CR>'
+nnoremap <silent> K :<C-u>call <SID>ref_webdict(<SID>get_cursor_word('\v\w*'))<CR>
+xnoremap <silent> K :<C-u>call <SID>ref_webdict(<SID>get_selected_text())<CR>
+function! s:ref_webdict(word)
+    call ref#open('webdict', 'alc ' . a:word)
+endfunction
 
 " put text no change the latest yanked on visual mode
 xnoremap p "0p<CR>
