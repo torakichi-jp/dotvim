@@ -1165,7 +1165,7 @@ command! -bang -bar -nargs=? -complete=help Help
 command! -bang -bar -nargs=? -complete=help HelpGrep
     \ call s:help_with_tabpage('lhelpgrep', <q-args>, <q-bang>)
 
-function! s:help_with_tabpage(cmd, word, bang)
+function! s:help_with_tabpage(cmd, word, bang) abort
     " save the current tabpage
     let cur_tab_nr = tabpagenr()
 
@@ -1173,20 +1173,19 @@ function! s:help_with_tabpage(cmd, word, bang)
         if empty(a:bang)
             let tab_nr = s:search_help_tab()
             if tab_nr != 0
-                " move to tabpage and open help there
-                execute 'tabnext ' . string(tab_nr)
-                execute 'help ' . a:word
-
+                " move to found tabpage and open help there
+                call s:execute_with_tabpage(a:cmd . ' ' . a:word, tab_nr)
                 return
             endif
         endif
 
-        " when not exist help or set bang, create tabpage and open help
-        execute 'tab ' . a:cmd . ' ' . a:word
+        " when not exist help or set bang,
+        " create new tabpage and open help there
+        call s:execute_with_tabpage(a:cmd . ' ' . a:word, 0)
         return
 
     catch /^Vim(help):/
-        " if error occured, back to the tabpage
+        " if error occured, back to tabpage
         execute 'tabnext ' . string(cur_tab_nr)
         echoerr matchstr(v:exception, 'Vim(help):\zs.*$')
     endtry
@@ -1195,7 +1194,7 @@ endfunction
 " search tabpage number which include help buffer
 " return found first tabpage number
 " or return 0 if not found
-function! s:search_help_tab()
+function! s:search_help_tab() abort
     " help buffer list
     let buflist = filter(range(bufnr('$') + 1),
         \ 'bufloaded(v:val) && getbufvar(v:val, ''&l:buftype'') == ''help''')
@@ -1215,6 +1214,17 @@ function! s:search_help_tab()
 
     " should not reach
     return 0
+endfunction
+
+" execute command with tabpage
+" if a:tab_nr is not 0 then open at this tabpage
+" else open new tab and execute command
+function! s:execute_with_tabpage(cmd, tab_nr)
+    if a:tab_nr != 0
+        execute join(['tabnext', a:tab_nr, '|', a:cmd])
+    else
+        execute 'tab ' . a:cmd
+    endif
 endfunction
 
 " reopen with change encoding
