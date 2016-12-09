@@ -1158,8 +1158,12 @@ endfunction "}}}
 " help with tabpage
 " with '!' force create tabpage
 command! -bang -bar -nargs=? -complete=help Help
-    \ call s:help_with_tabpage(<q-args>, <q-bang>)
-function! s:help_with_tabpage(word, bang)
+    \ call s:help_with_tabpage('help', <q-args>, <q-bang>)
+" helpgrep (use location list) with tabpage
+command! -bang -bar -nargs=? -complete=help HelpGrep
+    \ call s:help_with_tabpage('lhelpgrep', <q-args>, <q-bang>)
+
+function! s:help_with_tabpage(cmd, word, bang)
     " save the current tabpage
     let cur_tab_nr = tabpagenr()
 
@@ -1176,7 +1180,7 @@ function! s:help_with_tabpage(word, bang)
         endif
 
         " when not exist help or set bang, create tabpage and open help
-        execute 'tab help ' . a:word
+        execute 'tab ' . a:cmd . ' ' . a:word
         return
 
     catch /^Vim(help):/
@@ -1362,6 +1366,7 @@ if exists(':AlterCommand')
     AlterCommand ej     Ref webdict ej
     AlterCommand je     Ref webdict je
     AlterCommand h      Help
+    AlterCommand hg     HelpGrep
     AlterCommand ind    IndentLinesReset
     AlterCommand no     nohlsearch
 endif
