@@ -1168,25 +1168,17 @@ command! -bang -bar -nargs=? -complete=help HelpGrep
 function! s:help_with_tabpage(cmd, word, bang) abort
     " save the current tabpage
     let cur_tab_nr = tabpagenr()
+    let tab_nr = 0
 
     try
         if empty(a:bang)
             let tab_nr = s:search_help_tab()
-            if tab_nr != 0
-                " move to found tabpage and open help there
-                call s:execute_with_tabpage(a:cmd . ' ' . a:word, tab_nr)
-                return
-            endif
         endif
-
-        " when not exist help or set bang,
-        " create new tabpage and open help there
-        call s:execute_with_tabpage(a:cmd . ' ' . a:word, 0)
-        return
+        call s:execute_with_tabpage(a:cmd . ' ' . a:word, tab_nr)
 
     catch /^Vim(help):/
         " if error occured, back to tabpage
-        execute 'tabnext ' . string(cur_tab_nr)
+        execute 'tabnext ' . cur_tab_nr
         echoerr matchstr(v:exception, 'Vim(help):\zs.*$')
     endtry
 endfunction
