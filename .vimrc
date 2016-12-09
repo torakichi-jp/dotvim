@@ -1187,24 +1187,15 @@ endfunction
 " return found first tabpage number
 " or return 0 if not found
 function! s:search_help_tab() abort
-    " help buffer list
-    let buflist = filter(range(bufnr('$') + 1),
-        \ 'bufloaded(v:val) && getbufvar(v:val, ''&l:buftype'') == ''help''')
-
-    if empty(buflist)
-        return 0
-    endif
-
-    " search help buffer each tabpages
     for tab_nr in range(tabpagenr('$'))
         for buf_nr in tabpagebuflist(tab_nr + 1)
-            if index(buflist, buf_nr) != -1
+            if getbufvar(buf_nr, '&l:buftype') == 'help'
                 return tab_nr + 1
             endif
         endfor
     endfor
 
-    " should not reach
+    " not found when if reached
     return 0
 endfunction
 
