@@ -1375,6 +1375,9 @@ endif
 
 augroup MyAutocmd
 
+    " open scratch-like buffer when Vim started without args
+    "autocmd VimEnter * if argc() == 0 | setlocal buftype=nofile noswf | endif
+
     " draw vertical line behind 81
     "autocmd FileType * call s:set_colorcolumn(81)
     "autocmd VimResized * call s:set_colorcolumn(81)
@@ -1400,7 +1403,8 @@ augroup MyAutocmd
     autocmd FileType gitcommit setlocal nobackup noundofile noswapfile
 
     " open as read-only if exist swapfile
-    autocmd SwapExists * let v:swapchoice = 'o'
+    autocmd SwapExists * let v:swapchoice = 'o' |
+        \ call confirm('swapfile exists. open as read-only.')
 
     " settings of cmdline window
     " start with insert mode
@@ -1548,11 +1552,13 @@ xnoremap <silent> gs
 nnoremap Y y$
 
 " Ref
-nnoremap <silent> K :<C-u>call <SID>ref_webdict(<SID>get_cursor_word('\v\w*'))<CR>
-xnoremap <silent> K :<C-u>call <SID>ref_webdict(<SID>get_selected_text())<CR>
+nnoremap <silent> gK :<C-u>call <SID>ref_webdict(<SID>get_cursor_word('\v\w*'))<CR>
+xnoremap <silent> gK :<C-u>call <SID>ref_webdict(<SID>get_selected_text())<CR>
 function! s:ref_webdict(word)
     call ref#open('webdict', 'weblio ' . a:word)
 endfunction
+nmap K gK
+xmap K gK
 
 " put text no change the latest yanked on visual mode
 xnoremap p "0p<CR>
