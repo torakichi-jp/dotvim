@@ -1404,7 +1404,8 @@ augroup MyAutocmd
 
     " open as read-only if exist swapfile
     autocmd SwapExists * let v:swapchoice = 'o' |
-        \ call confirm('swapfile exists. open as read-only.')
+        \ call confirm("Exists the swapfile for \"" . expand('%') . "\".\n
+            \ It will be opened as read-only.")
 
     " settings of cmdline window
     " start with insert mode
