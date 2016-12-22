@@ -1564,6 +1564,12 @@ xmap K gK
 " put text no change the latest yanked on visual mode
 xnoremap p "0p<CR>
 
+" replace text on the cursor with yanked
+" (by Vim テクニックバイブル:4-6; tiny edited to search and repeat)
+nnoremap <silent> cy ce<C-r>0<Esc>:let@/=getreg()<CR>:noh<CR>
+xnoremap <silent> cy c<C-r>0<Esc>:let@/=getreg()<CR>:noh<CR>
+nnoremap <silent> ciy ciw<C-r>0<Esc>:let@/=getreg()<CR>:noh<CR>
+
 " keep visual mode after indented
 xnoremap < <gv
 xnoremap > >gv
