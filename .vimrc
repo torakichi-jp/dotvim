@@ -118,7 +118,7 @@ function! s:get_comment_head(filetype) "{{{
 endfunction "}}}
 
 " get word under cursor
-function! s:get_cursor_word(pat) "{{{
+function! s:get_cword(pat) "{{{
     let line = getline('.')
     let pos = col('.')
     let s = 0
@@ -135,7 +135,7 @@ function! s:get_cursor_word(pat) "{{{
 endfunction "}}}
 
 " get word selected on visual mode
-function! s:get_selected_text() "{{{
+function! s:get_selected() "{{{
     let save_z = getreg('z', 1)
     let save_z_type = getregtype('z')
 
@@ -1533,7 +1533,7 @@ onoremap gl $
 
 " grep (use ag)
 nnoremap gr :<C-u>LAg <C-r><C-w> *
-xnoremap gr :<C-u>LAg <C-r>=<SID>get_selected_text()<CR> *
+xnoremap gr :<C-u>LAg <C-r>=<SID>get_selected()<CR> *
 
 " quickhl
 nmap gw <Plug>(quickhl-manual-this)
@@ -1545,16 +1545,16 @@ xmap gW <Plug>(quickhl-manual-reset)
 nmap gx <Plug>(openbrowser-open)
 xmap gx <Plug>(openbrowser-open)
 nnoremap <silent> gs
-    \ :<C-u>call openbrowser#smart_search(<SID>get_cursor_word('\v\w*'))<CR>
+    \ :<C-u>call openbrowser#smart_search(<SID>get_cword('\v\w*'))<CR>
 xnoremap <silent> gs
-    \ :<C-u>call openbrowser#smart_search(<SID>get_selected_text())<CR>
+    \ :<C-u>call openbrowser#smart_search(<SID>get_selected())<CR>
 
 " 'Y' is like 'D'
 nnoremap Y y$
 
 " Ref
-nnoremap <silent> gK :<C-u>call <SID>ref_webdict(<SID>get_cursor_word('\v\w*'))<CR>
-xnoremap <silent> gK :<C-u>call <SID>ref_webdict(<SID>get_selected_text())<CR>
+nnoremap <silent> gK :<C-u>call <SID>ref_webdict(<SID>get_cword('\v\w*'))<CR>
+xnoremap <silent> gK :<C-u>call <SID>ref_webdict(<SID>get_selected())<CR>
 function! s:ref_webdict(word)
     call ref#open('webdict', 'weblio ' . a:word)
 endfunction
@@ -1594,7 +1594,7 @@ xnoremap g- g<C-x>
 
 " view the help for <cword>
 nnoremap <silent> <F1> :<C-u>Help <C-r><C-w><CR>
-xnoremap <silent> <F1> :<C-u>Help <C-r>=<SID>get_selected_text()<CR><CR>
+xnoremap <silent> <F1> :<C-u>Help <C-r>=<SID>get_selected()<CR><CR>
 
 " change directory at the buffer file
 nnoremap <F2> :<C-u>cd %:p:h<Bar>echo 'cd :' expand('%:p:h')<CR>
