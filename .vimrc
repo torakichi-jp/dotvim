@@ -1052,22 +1052,25 @@ if exists('&transparency') && s:is_gui
 endif
 "}}}
 
-" backup options " {{{
+" backup options
 set writebackup                                 " create backup before file writing,
 set nobackup                                    " but not keep
 let &backupdir = '.,' . $DOTVIM . '/.backup'    " backup file directory list
-set backupskip& backupskip+=*~                  " pattern list when not create backup
-set undofile                                    " create undo file
-if !isdirectory($DOTVIM . '/.backup')
+set backupskip& backupskip+=*~                  " pattern list if not created the backup
+if &backup && !isdirectory($DOTVIM . '/.backup')
     call mkdir($DOTVIM . '/.backup')            " create backup directory if not exist
 endif
 
+" swapfile options
+set swapfile            " create swapfile
+set directory-=.        " remove current directory from swapfile directory list
+
 " undofile options
-let &undodir = $DOTVIM . '/.undo'   " undo file directory
+set undofile                        " create undofile
+let &undodir = $DOTVIM . '/.undo'   " undofile directory
 if !isdirectory(&undodir)
-    call mkdir($DOTVIM . '/.undo')  " create undo file directory if not exist
+    call mkdir($DOTVIM . '/.undo')  " create undofile directory if not exist
 endif
-" }}}
 
 " matchit extension
 runtime macros/matchit.vim
@@ -1404,8 +1407,8 @@ augroup MyAutocmd
 
     " open as read-only if exist swapfile
     autocmd SwapExists * let v:swapchoice = 'o' |
-        \ call confirm("Exists the swapfile for \"" . expand('%') . "\".\n
-            \ It will be opened as read-only.")
+        \ call confirm('Exists the swapfile for "' . expand('%') . "\".\n
+            \ Open it as read-only.")
 
     " settings of cmdline window
     " start with insert mode
@@ -1463,8 +1466,8 @@ nnoremap gk k
 xnoremap gk k
 
 " j, k move with display lines if not installed accelerated-jk
-autocmd MyAutocmd VimEnter * call s:define_jk_mappings()
-function! s:define_jk_mappings()
+autocmd MyAutocmd VimEnter * call s:define_jk()
+function! s:define_jk()
     if empty(mapcheck('<Plug>(accelerated_jk', 'n'))
         nnoremap j gj
         nnoremap k gk
@@ -1524,12 +1527,12 @@ map gz* <Plug>(asterisk-gz*)<Plug>(anzu-update-search-status-with-echo)
 map gz# <Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
 
 " go to begin/end of line
-nnoremap gh g0
-xnoremap gh g0
-onoremap gh 0
-nnoremap gl g$
-xnoremap gl g$
-onoremap gl $
+nnoremap [Space]h g0
+xnoremap [Space]h g0
+onoremap [Space]h 0
+nnoremap [Space]l g$
+xnoremap [Space]l g$
+onoremap [Space]l $
 
 " grep (use ag)
 nnoremap gr :<C-u>LAg <C-r><C-w> *
@@ -1556,7 +1559,7 @@ nnoremap Y y$
 nnoremap <silent> gK :<C-u>call <SID>ref_webdict(<SID>get_cword('\v\w*'))<CR>
 xnoremap <silent> gK :<C-u>call <SID>ref_webdict(<SID>get_selected())<CR>
 function! s:ref_webdict(word)
-    call ref#open('webdict', 'weblio ' . a:word)
+    call ref#open('webdict', 'alc ' . a:word)
 endfunction
 nmap K gK
 xmap K gK
@@ -1623,33 +1626,16 @@ endfunction "}}}
 " when in quickfix, use default behavior
 autocmd MyAutocmd FileType qf nnoremap <buffer> <CR> <CR>
 
-" tabpage "{{{
-nnoremap [Tab] <Nop>
-nmap t [Tab]
-nnoremap            [Tab]l  gt
-nnoremap            [Tab]h  gT
-nnoremap            [Tab]e  :<C-u>tabedit<Space>
-nnoremap <silent>   [Tab]n  :<C-u>tabedit<CR>
-nnoremap <silent>   [Tab]q  :<C-u>tabclose<CR>
-nnoremap <silent>   [Tab]c  :<C-u>tabclose<CR>
-nnoremap <silent>   [Tab]o  :<C-u>tabonly<CR>
-nnoremap <silent>   [Tab]t  :<C-u>tab stag <C-r><C-w><CR>
-nnoremap <silent>   [Tab]r  :<C-u>TabRecent<CR>
-nnoremap            [Tab]w  <C-w>T
-nnoremap <silent>   [Tab]L  :<C-u>tabmove +1<CR>
-nnoremap <silent>   [Tab]H  :<C-u>tabmove -1<CR>
-nnoremap            [Tab]1  1gt
-nnoremap            [Tab]2  2gt
-nnoremap            [Tab]3  3gt
-nnoremap            [Tab]4  4gt
-nnoremap            [Tab]5  5gt
-nnoremap            [Tab]6  6gt
-nnoremap            [Tab]7  7gt
-nnoremap            [Tab]8  8gt
-nnoremap            [Tab]9  9gt
-"}}}
+" tabpage
+nnoremap gl gt
+nnoremap gh gT
+nnoremap gt :<C-u>tabedit<Space>
+nnoremap <silent> gL :<C-u>tabmove +1<CR>
+nnoremap <silent> gH :<C-u>tabmove -1<CR>
+nnoremap <silent> Q :<C-u>tabclose<CR>
+nnoremap <silent> <C-Tab> :<C-u>TabRecent<CR>
 
-" open .vimrc or .gvimrc
+" open .vimrc / .gvimrc quickly
 nnoremap <silent> [Space]v :<C-u>edit $MYVIMRC<CR>
 nnoremap <silent> [Space]gv :<C-u>edit $MYGVIMRC<CR>
 
