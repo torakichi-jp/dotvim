@@ -24,6 +24,10 @@ set title                       " show title
 "set mousefocus                 " window focus with mouse
 "set mousemodel=popup_setpos    " 右クリックでカーソル移動＆メニュー表示
 set ambiwidth=double            " show wide character as twice as half character
+if s:is_windows && has('directx')
+    " use DirectX rendering
+    set renderoptions=type:directx,renmode:5
+endif
 
 " メニューの表示切替
 nnoremap <M-m> :<C-u>call <SID>toggle_menu()<CR>

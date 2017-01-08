@@ -1043,9 +1043,9 @@ endif
 " Note: must be autocmd
 if exists('&transparency') && s:is_gui
     if s:is_windows
+        set transparency=215
         augroup MyAutocmd
-            autocmd GUIEnter * set transparency=225
-            autocmd FocusGained * set transparency=225
+            autocmd FocusGained * set transparency=215
             autocmd FocusLost * set transparency=180
         augroup END
     endif
