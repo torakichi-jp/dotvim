@@ -1347,7 +1347,8 @@ call altercmd#load()
 " define AlterCommand "{{{
 if exists(':AlterCommand')
     AlterCommand ct     VimProcBang ctags -R --jcode=utf8
-    AlterCommand u      Unite
+    AlterCommand u      update
+    AlterCommand un     Unite
     AlterCommand maps   Unite -resume mapping
     AlterCommand out    Unite -resume output
     AlterCommand va     Unite -resume variable
