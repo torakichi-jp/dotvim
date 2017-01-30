@@ -52,21 +52,20 @@ endif
 " ビジュアルベル（使用しない）
 set visualbell t_vb=
 
-" 行数、列数、行間、フォント
+" 行数、列数、行間
 " TODO: 環境に依存するので、ローカル設定ファイルに移動すべき？
-set lines=34        " 行
+set lines=36        " 行
 set columns=99      " 列
-set linespace=0     " 行間
+set linespace=3     " 行間
+
+" フォント設定
+let fonts = []
 if s:is_windows
-    let fonts = [
-        \ "Ricty_Diminished_for_Powerline:h12:cDEFAULT",
-        \ "ＭＳ_ゴシック:h12:cDEFAULT",
-    \]
+    call add(fonts, 'Ricty_Diminished_for_Powerline:h12:cDEFAULT')
+    call add(fonts, 'ＭＳ_ゴシック:h12:cDEFAULT')
 elseif s:is_unix
-    let fonts = [
-        \ "Ricty\ for\ Powerline\ 12",
-        \ "UbuntuMono\ 11",
-    \]
+    call add(fonts, "Ricty\ for\ Powerline\ 12")
+    call add(fonts, "UbuntuMono\ 11")
 endif
 let &guifont=join(fonts, ",")
 unlet fonts
