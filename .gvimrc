@@ -59,7 +59,7 @@ set columns=99      " 列
 set linespace=0     " 行間
 if s:is_windows
     let fonts = [
-        \ "Ricty_Diminished_for_Powerline:h14:cDEFAULT",
+        \ "Ricty_Diminished_for_Powerline:h12:cDEFAULT",
         \ "ＭＳ_ゴシック:h12:cDEFAULT",
     \]
 elseif s:is_unix
