@@ -1528,12 +1528,12 @@ map gz* <Plug>(asterisk-gz*)<Plug>(anzu-update-search-status-with-echo)
 map gz# <Plug>(asterisk-gz#)<Plug>(anzu-update-search-status-with-echo)
 
 " go to begin/end of line
-nnoremap [Space]h g0
-xnoremap [Space]h g0
-onoremap [Space]h 0
-nnoremap [Space]l g$
-xnoremap [Space]l g$
-onoremap [Space]l $
+nnoremap gh g0
+xnoremap gh g0
+onoremap gh 0
+nnoremap gl g$
+xnoremap gl g$
+onoremap gl $
 
 " grep (use ag)
 nnoremap gr :<C-u>LAg <C-r><C-w> *
@@ -1628,11 +1628,11 @@ endfunction "}}}
 autocmd MyAutocmd FileType qf nnoremap <buffer> <CR> <CR>
 
 " tabpage
-nnoremap gl gt
-nnoremap gh gT
-nnoremap gt :<C-u>tabedit<Space>
-nnoremap <silent> gL :<C-u>tabmove +1<CR>
-nnoremap <silent> gH :<C-u>tabmove -1<CR>
+nnoremap <C-l> gt
+nnoremap <C-h> gT
+"nnoremap <C-t> :<C-u>tabedit<Space>
+nnoremap <silent> <C-Right> :<C-u>tabmove +1<CR>
+nnoremap <silent> <C-Left> :<C-u>tabmove -1<CR>
 nnoremap <silent> Q :<C-u>tabclose<CR>
 nnoremap <silent> <C-Tab> :<C-u>TabRecent<CR>
 
