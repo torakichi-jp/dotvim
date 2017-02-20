@@ -465,16 +465,20 @@ call neobundle#config(
 \ )
 
 " neocomplete
-let g:neocomplete#enable_at_startup = 1
-let s:hooks = neobundle#get_hooks('neocomplete.vim')
-function! s:hooks.on_source(bundle)
-    let g:neocomplete#enable_auto_select = 1
-    "let g:neocomplete#disable_auto_complete = 1
-    let g:neocomplete#enable_fuzzy_completion = 1
-    let g:neocomplete#auto_completion_start_length = 3
-    "let g:neocomplete#use_vimproc = 1
-    let g:neocomplete#enable_insert_char_pre = 1
-endfunction
+if has('patch-7.3.885') && has('lua')
+    let g:neocomplete#enable_at_startup = 1
+    let s:hooks = neobundle#get_hooks('neocomplete.vim')
+    function! s:hooks.on_source(bundle)
+        let g:neocomplete#enable_auto_select = 1
+        "let g:neocomplete#disable_auto_complete = 1
+        let g:neocomplete#enable_fuzzy_completion = 1
+        let g:neocomplete#auto_completion_start_length = 3
+        "let g:neocomplete#use_vimproc = 1
+        let g:neocomplete#enable_insert_char_pre = 1
+    endfunction
+else
+    let g:neocomplete#enable_at_startup = 0
+endif
 
 " vimfiler
 let s:hooks = neobundle#get_hooks('vimfiler')
@@ -1445,10 +1449,6 @@ nmap        <Space>         [Space]
 xmap        <Space>         [Space]
 nnoremap    [Space]         <Nop>
 xnoremap    [Space]         <Nop>
-nmap        [Space]<Space>  [WSpace]
-xmap        [Space]<Space>  [WSpace]
-nnoremap    [WSpace]        <Nop>
-xnoremap    [WSpace]        <Nop>
 "}}}
 
 " has disabled
@@ -1479,7 +1479,7 @@ endfunction
 " if cursor line is at foldclosed, 'l' open folding
 nnoremap <expr> l foldclosed('.') < 0 ? 'l' : 'zo'
 
-" smart word moving
+" smart moving with word
 nmap w <Plug>(smartword-w)
 nmap b <Plug>(smartword-b)
 nmap e <Plug>(smartword-e)
@@ -1512,6 +1512,9 @@ function! s:smart_foldcloser() "{{{
     "norm! zM
 endfunction
 "}}}
+
+" turn off the highlight temporarily
+nnoremap [Space]<Space> :<C-u>nohlsearch<CR>
 
 " anzu.vim
 nmap n <Plug>(anzu-n-with-echo)
@@ -1605,6 +1608,9 @@ nnoremap <F2> :<C-u>cd %:p:h<Bar>echo 'cd :' expand('%:p:h')<CR>
 
 " view directory at the buffer file
 nnoremap <F3> :<C-u>echo expand('%:p:h')<CR>
+
+" redraw window
+nnoremap <F5> <C-l>
 
 " taglist
 nnoremap <silent> <F4> :<C-u>TlistToggle<CR>
@@ -1767,10 +1773,12 @@ call submode#map('winsize', 'n', '', '_', '<C-w>_')
 "-------------------------------------------------------------------------------
 
 " completion
-inoremap <expr> <C-n> neocomplete#start_manual_complete()
-inoremap <expr> <C-p> neocomplete#start_manual_complete()
-inoremap <expr> <C-y> neocomplete#close_popup()
-inoremap <expr> <C-e> neocomplete#cancel_popup()
+if has('patch-7.3.885') && has('lua')
+    inoremap <expr> <C-n> neocomplete#start_manual_complete()
+    inoremap <expr> <C-p> neocomplete#start_manual_complete()
+    inoremap <expr> <C-y> neocomplete#close_popup()
+    inoremap <expr> <C-e> neocomplete#cancel_popup()
+endif
 
 " switch IME
 if s:is_windows

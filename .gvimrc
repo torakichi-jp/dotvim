@@ -16,7 +16,8 @@ let s:is_windows = has('win16') || has('win32') || has('win64')
 let s:is_unix = has('unix')
 
 "set guioptions=mgt              " gui menu, grayed menu, tearoff menu
-set guioptions=                 " no GUI options
+"set guioptions=                 " no GUI options
+set guioptions=r                " show right scroll bar always
 set browsedir=buffer            " current directry when browsing
 "set nohlsearch                  " no search highlight
 set cursorline                  " highlight the current line
@@ -76,7 +77,7 @@ unlet fonts
 "*******************************************************************************
 
 " 保存
-nnoremap <C-s> :<C-u>update<CR>
+"nnoremap <C-s> :<C-u>update<CR>
 
 " GUIウィンドウ最大化・元に戻す
 nnoremap <silent> <M-x> :<C-u>ScreenMode 4<CR>
