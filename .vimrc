@@ -403,10 +403,10 @@ NeoBundle 'osyo-manga/unite-qfixhowm', {
     \ 'lazy' : 1,
     \ 'on_source' : 'unite.vim'
 \ }
-NeoBundle 'kannokanno/unite-todo', {
-    \ 'lazy' : 1,
-    \ 'on_source' : 'unite.vim'
-\ }
+"NeoBundle 'kannokanno/unite-todo', {
+    "\ 'lazy' : 1,
+    "\ 'on_source' : 'unite.vim'
+"\ }
 NeoBundle 'Shougo/unite-build', {
     \ 'lazy' : 1,
     \ 'on_source' : 'unite.vim'
@@ -425,10 +425,12 @@ NeoBundle 'kana/vim-textobj-syntax'
 NeoBundle 'kana/vim-textobj-fold'
 NeoBundle 'kana/vim-textobj-function'
 NeoBundle 'kana/vim-textobj-entire'
+NeoBundle 'thinca/vim-textobj-between'
 NeoBundle 'thinca/vim-textobj-comment'
-NeoBundle 'thinca/vim-textobj-plugins'
+NeoBundle 'thinca/vim-textobj-function-javascript'
+NeoBundle 'thinca/vim-textobj-function-perl'
 NeoBundle 'deris/vim-textobj-enclosedsyntax'
-NeoBundle 'https://bitbucket.org/anyakichi/vim-textobj-xbrackets'
+NeoBundle 'anyakichi/vim-textobj-xbrackets'
 
 " operator
 NeoBundle 'kana/vim-operator-user'
@@ -1361,7 +1363,7 @@ if exists(':AlterCommand')
     AlterCommand gitl   UniteWithBufferDir giti/log
     AlterCommand gitr   UniteWithBufferDir giti/remote
     AlterCommand gits   UniteWithBufferDir giti/status
-    AlterCommand cap    Capture
+    AlterCommand c      Capture
     AlterCommand bat    Batch
     AlterCommand ag     LAg
     AlterCommand tr     TranslateGoogle
