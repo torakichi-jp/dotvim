@@ -274,6 +274,7 @@ NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'osyo-manga/vim-jplus'
 NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'osyo-manga/vim-cpp-syntax-reserved_identifiers'
+NeoBundle 'osyo-manga/vim-brightest'
 NeoBundle 'LeafCage/foldCC'
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'gregsexton/VimCalc'
@@ -963,7 +964,7 @@ set timeout                     " enable timeout of key mappings
 set timeoutlen=3000             " wait time(ms) of key mappings
 set selectmode=                 " not use select mode
 set selection=inclusive         " last character of selection is included in operation
-set scrolloff=0                 " offset around cursor in vertical scroll
+set scrolloff=3                 " offset around cursor in vertical scroll
 set sidescroll=1                " step of horizontal scroll
 set sidescrolloff=1             " offset around cursor in horizontal scroll
 set colorcolumn=81              " highlight column at 81
