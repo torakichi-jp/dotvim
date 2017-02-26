@@ -274,7 +274,14 @@ NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'osyo-manga/vim-jplus'
 NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'osyo-manga/vim-cpp-syntax-reserved_identifiers'
+
 NeoBundle 'osyo-manga/vim-brightest'
+autocmd MyAutocmd Colorscheme *
+    \ highlight MyBrightest term=underline cterm=underline gui=underline guifg=#ffff33
+let g:brightest#highlight = { 'group' : 'MyBrightest' }
+let g:brightest#highlight_in_cursorline = { 'group' : 'BrightestCursorLineBg' }
+let g:brightest#pattern = '\k\+'
+
 NeoBundle 'LeafCage/foldCC'
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'gregsexton/VimCalc'
